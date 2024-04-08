@@ -49,7 +49,7 @@ To design an alogorithm to perform this task, we would implement something simil
     b. Pick a new $x_{\frac{n}{2}}$ using the same process as step 2.
     c. Go to step 3.
 
-For each step in the algorithm, we are dividing the array in half, and then redefining the area in the array that we have to search.
+For each step in the algorithm, we are dividing the array in half, searching the middle index of the array, and then redefining the area in the array that we have to search. We do this until we have either found the index of the item, or we have exhausted all the possible indicies of the array to search, in which case we can conclude that the item does is not an element of the array.
 
 ### Problem 2
 
@@ -62,7 +62,7 @@ def binary_search(item, data, oper = False, diag = False):
 
    # item: item in the data that we are interested in finding
    # data: list or array of data with items we are interested in finding, assumes
-   # integer data
+   #       ordered integer data.
    # oper: Logical T or F. Choose weather to include the number of operations. 
    #        Default: False.
    # diag: T or F. Choose to see the inner workings of the algorithm.
@@ -141,18 +141,20 @@ To begin we must load the `numbers.txt` file.
 #| echo: true
 #| output: false
 
-## Importing the numbers data using the Pandas library
+## Importing the numbers data using the Pandas library as a dataframe
 
 numbers = pd.read_csv("C:\\Users\\ericf\\OneDrive\\Desktop\\WCC\\CS240 Data Structure and Algorithm Fundamentals\\Assignments\\Algorithms Assignment 1\\Data\\numbers.txt",
 header=None,
 sep='\t'
-) #importing the numbers data as a data frame
+)
 
-## Converting Numbers to an array using Numpy##
+## Converting Numbers to an array using Numpy ##
 numbers = numbers.to_numpy()
-#now back to base python for ease of use with the algorithm I just wrote:
+# now back to base python for ease of use with the algorithm I just wrote:
 numbers = numbers.tolist()
-#fixing some jankiness with importing the data so that all the elements of the list are integers instead of being lists of length 1, thanks ChatGPT.
+# fixing some jankiness with importing the data 
+# so that all the elements of the list are integers
+# instead of being lists of length 1, thanks ChatGPT.
 con_numbers = [num[0] for num in numbers]
 numbers = con_numbers
 ```
