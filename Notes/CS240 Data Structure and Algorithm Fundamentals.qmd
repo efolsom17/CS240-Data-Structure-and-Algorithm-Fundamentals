@@ -2,6 +2,22 @@
 title: "CS240 Data Structures and Algorithm Fundametals Notes"
 format: html
 ---
+```{r, setup_R}
+#| echo: false
+#| output: false
+
+library(tidyverse)
+library(reshape2)
+
+```
+
+```{python, setup_py}
+#| echo: false
+#| output: false
+
+import numpy as np
+import pandas as pd
+```
 
 # General Information
 
@@ -29,6 +45,19 @@ Again went over the basics and the course structure. A little bit of repetition 
 
 Lab Day, Going to work on homework and figuring out how python works. Hoping to transition to quarto vs. Rmarkdown.
 
+* Standups
+  - A chance to show off some of your code
+  - Show off your aproach to solving the problem / build the prject
+  - technical description of the solution
+  - What we are happy with
+  - What you would like to improve later
+
+* Code Review
+    - Be Polite and professional
+    - Review of syntax
+    - Evaluation of any edge cases missed
+    - Notes if you approached it in a different way, used a different library
+
 * To DO: 
    - Finish introductions - include a picture
    - Finish Readings
@@ -55,18 +84,38 @@ For the first question, we are writing pseudocode to write an alogrithm for perf
   |1Gig|30|
   |1 Tera| 40|
 
-* Standups
-  - A chance to show off some of your code
-  - Show off your aproach to solving the problem / build the prject
-  - technical description of the solution
-  - What we are happy with
-  - What you would like to improve later
+Big Oh Notation: $O(n)$ where $n$ usually refers to the size of the input or the number of elements in the input. The function $O(f(n))$ tells us the number of operations that some function of the number of elements $n$, $f(n)$ will take. This is not very mathematically rigorous because we usually drop constants in front of $n$ (number of elements). Computation time.
 
-* Code Review
-    - Be Polite and professional
-    - Review of syntax
-    - Evaluation of any edge cases missed
-    - Notes if you approached it in a different way, used a different library
+|Name|Notation|
+|:-:|:-:|
+|Linear Time|$O(n)$|
+|Constant Time| $O(1)$|
+|Quadratic Time| $O(n^2)$|
+
+* How to find the Time complexity of a given function of $n$:
+  1. Find the fastest growing term.
+  2. Take out the coefficeint.
+
+$T=an+b = O(n)$, here $an>b$ because $b$ is constant.
+
+$T=cn^2+dn+e=O(n^2)$, here $cn^2>dn>e$ (graph them itll make more sense)
+
+```{r, graph visualization thing}
+#| echo: false
+
+
+x<-c(1:5)
+y<-x
+y2<-x^2
+con<-rep(5,5)
+df<-data.frame(x,y,y2,con)
+
+df<-melt(df,id.vars="x")
+ggplot(df, aes(x=x, y= value, color= variable))+geom_line()
+```
+
+
+
 
 ```{r}
 
