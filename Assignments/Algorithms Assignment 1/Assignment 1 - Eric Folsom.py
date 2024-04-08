@@ -7,12 +7,14 @@ import pandas as pd
 #######################
 ## Problem 2 #####
 
-
-def binary_search(item, data, oper = False):
+def binary_search(item, data, oper = False, diag = False):
 
    # item: item in the data that we are interested in finding
-   # data: list or array of data with items we are interested in finding
+   # data: list or array of data with items we are interested in finding, assumes
+   # integer data
    # oper: Logical T or F. Choose weather to include the number of operations. 
+   #        Default: False.
+   # diag: T or F. Choose to see the inner workings of the algorithm.
    #        Default: False.
 
    # Begin by defining some variables for keeping track of x0 and xn
@@ -28,8 +30,14 @@ def binary_search(item, data, oper = False):
       mid = (xn + x0) // 2 #pick the middle index of the array (floor operation)
       search = data[mid] # Value of the middle index (the one we are searching in)
 
-      #print('Lowest Index: ', x0, "\nHigh Index: ", xn, "\nIndex we are searching is: ", mid, " value: ", search) #debugging
-
+      #Diagnostics/Inner workings
+      #I had to use this a few times
+      if diag == True:
+        print('Lowest Index: ', 
+         x0,"\nHigh Index: ",xn,
+         "\nIndex we are searching is: ",mid,
+          " Value: ",search) 
+      
       #if the item we are searching for is the same as the value of the array
       if search == item: 
          #if you want to see the number of operations
@@ -48,20 +56,23 @@ def binary_search(item, data, oper = False):
             return print("Item ", item,' is located at index', mid) 
 
       # if our guess is too low
-      elif search < item: 
+      elif search < item:
           #update the low index position to be the middle guess. 
           # Adding 1 so we don't recheck the same index twice
          x0 = mid + 1
+         #diagnostics
+         if diag == True:
+           print('Search was too low') #debugging
 
-         #print('too high') #debugging
       # if our guess is too high
       elif search > item: 
          # update the high position to be the middle guess. 
          # Subtracting 1 so we don't check the same index
          # twice, as that would be slow.
          xn = mid - 1 
-
-         #print("too low") #debugging
+         #diagnostics:
+         if diag == True:
+            print("Search was too high") #debugging
 
    # if we can't find the item in the array.
    return print("Item Not Found\nThis took ", operations, ' operations.') 
