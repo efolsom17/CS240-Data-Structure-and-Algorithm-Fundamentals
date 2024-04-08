@@ -1,0 +1,237 @@
+---
+title: "Algorithms Assignment 1"
+author: "Eric Folsom"
+format: html
+---
+
+```{python, setup_py}
+#| echo: false
+#| output: false
+
+# Setup Chunk for python, loading the required data
+import numpy as np
+import pandas as pd
+```
+
+
+```{r, setup_r}
+#| echo: false
+#| output: false
+
+#Setup Chunk for R and Reticulate so that I can use ggplot if I ever have to graph stuff.
+#This will most likely be useful for a later assignment.
+library(reticulate)
+library(tidyverse)
+```
+
+### Problem 1
+
+For this problem we are writing psuedocode for an itterative binary search algorithm that works over an array.
+
+To design an alogorithm to perform this task, we would implement something similar to the following:
+
+* Assume we have an ordered array $X=\{x_0,x_1,\ldots,x_n\}$, where $x_i \leq x_{i+1}$, where $i=1,2,3,\ldots,n$. 
+
+* We will define the value or object that we are looking for $y$. Also assume that $y\in X$
+   
+1. Find the largest index in the array, $n$.
+   - Define the largest index ($x_n$).
+   - Define the beginning (first) index to be the smallest ($x_0$).
+2. Find the middle index $\frac{n}{2}$ (round to the nearest integer if $n$ is odd).
+3. Inspect the value of the middle index $x_{\frac{n}{2}}$.
+   i) If the value of $x_{\frac{n}{2}}$ equals $y$, stop because we have found the index of $y$
+   ii) If the value of $y< x_{\frac{n}{2}}$.
+    a. Redefine $x_n=x_{\frac{n}{2}}$.
+    b. Pick a new $x_{\frac{n}{2}}$ using the same process as step 2. 
+    c. Go to step 3.
+   iii) If the value of $y > x_{\frac{n}{2}}$.
+    a. Redefine $x_0=x_{\frac{n}{2}}$
+    b. Pick a new $x_{\frac{n}{2}}$ using the same process as step 2.
+    c. Go to step 3.
+
+For each step in the algorithm, we are dividing the array in half, and then redefining the area in the array that we have to search.
+
+### Problem 2
+
+For this problem we have to write in code a binary search algorithm. For this I will be using Python.
+
+```{python, binary search function}
+#| echo: true 
+
+def binary_search(item, data, oper = False):
+
+   # item: item in the data that we are interested in finding
+   # data: list or array of data with items we are interested in finding
+   # oper: Logical T or F. Choose weather to include the number of operations. 
+   #        Default: False.
+
+   # Begin by defining some variables for keeping track of x0 and xn
+   # as well as keeping track of the number of operations
+
+   x0 = 0 #defining the index of first element of the array
+   xn = len(data)-1 #defining the index of the last element of the array
+   operations = 0 #creating a varaible to count the number of operations the 
+
+   # Beginning the actual function
+   while x0 <= xn: #while we are searching valid indicies of our array
+      operations = operations + 1 #count one operation
+      mid = (xn + x0) // 2 #pick the middle index of the array (floor operation)
+      search = data[mid] # Value of the middle index (the one we are searching in)
+
+      #print('Lowest Index: ', x0, "\nHigh Index: ", xn, "\nIndex we are searching is: ", mid, " value: ", search) #debugging
+
+      #if the item we are searching for is the same as the value of the array
+      if search == item: 
+         #if you want to see the number of operations
+         if oper == True: 
+            #return the index of the item and the number of
+            #  operations it took to find the item
+            return print("Item ",
+             item,
+             ' is located at index',
+              mid,
+               ".\n This took ",
+                operations,
+                ' operations.') 
+         else:
+            #return the position of the item
+            return print("Item ", item,' is located at index', mid) 
+
+      # if our guess is too low
+      elif search < item: 
+          #update the low index position to be the middle guess. 
+          # Adding 1 so we don't recheck the same index twice
+         x0 = mid + 1
+
+         #print('too high') #debugging
+      # if our guess is too high
+      elif search > item: 
+         # update the high position to be the middle guess. 
+         # Subtracting 1 so we don't check the same index
+         # twice, as that would be slow.
+         xn = mid - 1 
+
+         #print("too low") #debugging
+
+   # if we can't find the item in the array.
+   return print("Item Not Found\nThis took ", operations, ' operations.') 
+```
+
+
+### Problem 3 
+
+For this problem we are given an attached file `numbers.txt` and we must use the algorithm that we wrote in problem 2 to answer the following question:
+
+To begin we must load the `numbers.txt` file. 
+
+```{python, loading data}
+#| echo: true
+#| output: false
+
+## Importing the numbers data using the Pandas library
+
+numbers = pd.read_csv("C:\\Users\\ericf\\OneDrive\\Desktop\\WCC\\CS240 Data Structure and Algorithm Fundamentals\\Assignments\\Algorithms Assignment 1\\Data\\numbers.txt",
+header=None,
+sep='\t'
+) #importing the numbers data as a data frame
+
+## Converting Numbers to an array using Numpy##
+numbers = numbers.to_numpy()
+#now back to base python for ease of use with the algorithm I just wrote:
+numbers = numbers.tolist()
+#fixing some jankiness with importing the data so that all the elements of the list are integers instead of being lists of length 1, thanks ChatGPT.
+con_numbers = [num[0] for num in numbers]
+numbers = con_numbers
+```
+
+#### a. What is the position of 51216352 in the array? How many operations did it take to find?
+
+We can find the position of 51216352 using the following code:
+
+```{python, 3a}
+#| echo: true
+
+binary_search(51216352, numbers, oper=True)
+```
+
+#### b. What is the position of 198313119 in the array? How many operations did it take to find?
+
+We can find the position of 198313119 using the following code:
+
+```{python, 3b}
+#| echo: true
+
+binary_search(198313119, numbers, oper=True)
+```
+
+
+#### c. What is the position of 196614208 in the array? How many operations did it take to find?
+
+We can find the position of 196614208 using the following code:
+
+```{python, 3c}
+#| echo: true
+
+binary_search(196614208,numbers, oper=True)
+
+```
+
+#### d. What is the worst case time complexity? Evaluate line by line, create a time complexity function and then define its Big O value.
+
+#### e.  What would the worst case time complexity be if we have 4000 entries instead of 2000?
+
+```{r}
+#| echo: false
+
+log_2_2000<-round(log2(2000))
+log_2_4000<-round(log2(4000))
+
+```
+
+The time complexity function for this algorithm is $O(\log_2(n))$. Thus we can say that the worst case time complexity if we have 4000 entries is found by $\log_2(4000) \approx$ `{r} log_2_4000`. This is in contrast to if we only had 2000 entries where the worst case time complexity would be $\log_2(2000)\approx$ `r log_2_2000`.
+
+#### f. What do you think the average case time complexity is for binary search? Explain your reasoning.
+
+### Problem 4
+
+Evaluate the time complexity of the following code snippets. Evaluate line by line, create a time complexity function and then define its Big O value.
+
+#### a. 
+
+```{none}
+function sum(arr){
+  counter = 0
+
+  for (i = 0; i < arr.length; i++) {
+       counter += arr[i]
+  }
+
+     return counter
+}
+```
+
+#### b. 
+
+```{none}
+function getXOR(arr1, arr2){
+
+  arr3 = []
+
+  for (i = 0; i < arr1.length; i++){
+      let unique = True
+      for (j = 0; j < arr2.length; j++ }{
+        if(arr1[i] == arr2[j]) {unique = False;}
+      }
+      if (unique) {arr3.append(arr1[i]);}
+    }
+  }  
+  for (i = 0; i < arr2.length; i++){
+    let unique = True
+    for (j = 0; j < arr1.length; j++ }{
+      if(arr2[i] == arr1[j]) {unique = False;}
+    }
+    if (unique) {arr3.append(arr2[i]);}
+  }
+  return arr[3]
+}
+```

@@ -1,0 +1,73 @@
+---
+title: "CS240 Data Structures and Algorithm Fundametals Notes"
+format: html
+---
+
+# General Information
+
+* Instructor: Darrel Criss
+        
+    Office: Baker Hall 123
+
+* Class meets from 3:30-4:50, Monday, Tuesday, Wednesday. Baker Hall 115
+
+* Office Hours: By Appointment or Thursdays from 12:00pm-1:00pm.
+
+* Homeworks will be due Tuesdays at midnight
+
+# Course Notes
+
+### April 2, 2024
+
+We wnet over the basics of the course as well as talked about rules for Using ChatGPT. 
+
+### April 3, 2024 
+
+Again went over the basics and the course structure. A little bit of repetition as some of the class was not there on Tuesday April 2. Talked with Prof after class to ask about graduate certifficate vs Graduate degree as well as talked a little about AI.
+
+### April 4, 2024
+
+Lab Day, Going to work on homework and figuring out how python works. Hoping to transition to quarto vs. Rmarkdown.
+
+* To DO: 
+   - Finish introductions - include a picture
+   - Finish Readings
+   - Finish Algorithms Assignment 1
+
+###### Algorithms Assignment 1
+
+Binary Search and Time Complexity
+
+For the first question, we are writing pseudocode to write an alogrithm for performing the binary search across an Array.
+
+* Small Note on O-Notation:
+  
+   - $O(1)$ would be an example of an array like adding a value to an array, something in memory that is unchanging. Fairly Fast.
+   - $O(log_2(n))$ Is an example of Binary Search Trees. Fairly fast, as n increases, gets large slower and slower. 
+   - $O(n^2)$ Gets slow very fast.
+  
+* In more general:
+  
+  |$\#$ Items to search | $\#$ Number searches using BST|
+  |:------------------:|:----------------------------:|
+  |1 K|10|
+  |1Meg|20|
+  |1Gig|30|
+  |1 Tera| 40|
+
+* Standups
+  - A chance to show off some of your code
+  - Show off your aproach to solving the problem / build the prject
+  - technical description of the solution
+  - What we are happy with
+  - What you would like to improve later
+
+* Code Review
+    - Be Polite and professional
+    - Review of syntax
+    - Evaluation of any edge cases missed
+    - Notes if you approached it in a different way, used a different library
+
+```{r}
+
+```
