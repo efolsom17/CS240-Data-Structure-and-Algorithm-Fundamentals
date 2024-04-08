@@ -30,7 +30,7 @@ def binary_search(item, data, oper = False, diag = False):
       search = data[mid] # Value of the middle index (the one we are searching in)
 
       #Diagnostics/Inner workings
-      #I had to use this a few times
+      #I had to use this a few times to diagnose edge cases
       if diag == True:
         print("Target: ", item,
            '\nLowest Index: ', 
