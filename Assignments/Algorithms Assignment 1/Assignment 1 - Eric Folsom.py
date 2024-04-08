@@ -10,7 +10,7 @@ def binary_search(item, data, oper = False, diag = False):
 
    # item: item in the data that we are interested in finding
    # data: list or array of data with items we are interested in finding, assumes
-   # integer data
+   #       integer data
    # oper: Logical T or F. Choose weather to include the number of operations. 
    #        Default: False.
    # diag: T or F. Choose to see the inner workings of the algorithm.
