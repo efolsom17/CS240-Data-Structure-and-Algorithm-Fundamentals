@@ -8,7 +8,7 @@ format: html
 #| echo: false
 #| output: false
 
-# Setup Chunk for python, loading the required data
+# Setup Chunk for python, loading the required libraries
 import numpy as np
 import pandas as pd
 ```
@@ -58,11 +58,14 @@ For this problem we have to write in code a binary search algorithm. For this I 
 ```{python, binary search function}
 #| echo: true 
 
-def binary_search(item, data, oper = False):
+def binary_search(item, data, oper = False, diag = False):
 
    # item: item in the data that we are interested in finding
-   # data: list or array of data with items we are interested in finding
+   # data: list or array of data with items we are interested in finding, assumes
+   # integer data
    # oper: Logical T or F. Choose weather to include the number of operations. 
+   #        Default: False.
+   # diag: T or F. Choose to see the inner workings of the algorithm.
    #        Default: False.
 
    # Begin by defining some variables for keeping track of x0 and xn
@@ -78,8 +81,14 @@ def binary_search(item, data, oper = False):
       mid = (xn + x0) // 2 #pick the middle index of the array (floor operation)
       search = data[mid] # Value of the middle index (the one we are searching in)
 
-      #print('Lowest Index: ', x0, "\nHigh Index: ", xn, "\nIndex we are searching is: ", mid, " value: ", search) #debugging
-
+      #Diagnostics/Inner workings
+      #I had to use this a few times
+      if diag == True:
+        print('Lowest Index: ', 
+         x0,"\nHigh Index: ",xn,
+         "\nIndex we are searching is: ",mid,
+          " Value: ",search) 
+      
       #if the item we are searching for is the same as the value of the array
       if search == item: 
          #if you want to see the number of operations
@@ -98,23 +107,26 @@ def binary_search(item, data, oper = False):
             return print("Item ", item,' is located at index', mid) 
 
       # if our guess is too low
-      elif search < item: 
+      elif search < item:
           #update the low index position to be the middle guess. 
           # Adding 1 so we don't recheck the same index twice
          x0 = mid + 1
+         #diagnostics
+         if diag == True:
+           print('Search was too low') #debugging
 
-         #print('too high') #debugging
       # if our guess is too high
       elif search > item: 
          # update the high position to be the middle guess. 
          # Subtracting 1 so we don't check the same index
          # twice, as that would be slow.
          xn = mid - 1 
-
-         #print("too low") #debugging
+         #diagnostics:
+         if diag == True:
+            print("Search was too high") #debugging
 
    # if we can't find the item in the array.
-   return print("Item Not Found\nThis took ", operations, ' operations.') 
+   return print("Item Not Found\nThis took ", operations, ' operations.')  
 ```
 
 
@@ -177,6 +189,10 @@ binary_search(196614208,numbers, oper=True)
 ```
 
 #### d. What is the worst case time complexity? Evaluate line by line, create a time complexity function and then define its Big O value.
+
+
+Assume we have an ordered array $X=\{x_0,x_1,\ldots,x_n\}$, where $x_i \leq x_{i+1}$, where $i=1,2,3,\ldots,n$. To figure out what the worst case time complextiy for this algorithm is, lets take the case of the item we are searching for being $x_n$, the last item of our array. If we were searching one item at a time, our time complexity function would be $O(n)$. 
+
 
 #### e.  What would the worst case time complexity be if we have 4000 entries instead of 2000?
 

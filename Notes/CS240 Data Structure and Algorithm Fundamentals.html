@@ -115,6 +115,21 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="april-4-2024">April 4, 2024</h3>
 <p>Lab Day, Going to work on homework and figuring out how python works. Hoping to transition to quarto vs.&nbsp;Rmarkdown.</p>
 <ul>
+<li>Standups
+<ul>
+<li>A chance to show off some of your code</li>
+<li>Show off your aproach to solving the problem / build the prject</li>
+<li>technical description of the solution</li>
+<li>What we are happy with</li>
+<li>What you would like to improve later</li>
+</ul></li>
+<li>Code Review
+<ul>
+<li>Be Polite and professional</li>
+<li>Review of syntax</li>
+<li>Evaluation of any edge cases missed</li>
+<li>Notes if you approached it in a different way, used a different library</li>
+</ul></li>
 <li>To DO:
 <ul>
 <li>Finish introductions - include a picture</li>
@@ -160,22 +175,48 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></li>
-<li><p>Standups</p>
-<ul>
-<li>A chance to show off some of your code</li>
-<li>Show off your aproach to solving the problem / build the prject</li>
-<li>technical description of the solution</li>
-<li>What we are happy with</li>
-<li>What you would like to improve later</li>
-</ul></li>
-<li><p>Code Review</p>
-<ul>
-<li>Be Polite and professional</li>
-<li>Review of syntax</li>
-<li>Evaluation of any edge cases missed</li>
-<li>Notes if yo approached it in a different way, used a different library</li>
-</ul></li>
 </ul>
+<p>Big Oh Notation: <span class="math inline">\(O(n)\)</span> where <span class="math inline">\(n\)</span> usually refers to the size of the input or the number of elements in the input. The function <span class="math inline">\(O(f(n))\)</span> tells us the number of operations that some function of the number of elements <span class="math inline">\(n\)</span>, <span class="math inline">\(f(n)\)</span> will take. This is not very mathematically rigorous because we usually drop constants in front of <span class="math inline">\(n\)</span> (number of elements). Computation time.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Name</th>
+<th style="text-align: center;">Notation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Linear Time</td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Constant Time</td>
+<td style="text-align: center;"><span class="math inline">\(O(1)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Quadratic Time</td>
+<td style="text-align: center;"><span class="math inline">\(O(n^2)\)</span></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>How to find the Time complexity of a given function of <span class="math inline">\(n\)</span>:
+<ol type="1">
+<li>Find the fastest growing term.</li>
+<li>Take out the coefficeint.</li>
+</ol></li>
+</ul>
+<p><span class="math inline">\(T=an+b = O(n)\)</span>, here <span class="math inline">\(an&gt;b\)</span> because <span class="math inline">\(b\)</span> is constant.</p>
+<p><span class="math inline">\(T=cn^2+dn+e=O(n^2)\)</span>, here <span class="math inline">\(cn^2&gt;dn&gt;e\)</span> (graph them itll make more sense)</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CS240-Data-Structure-and-Algorithm-Fundamentals_files/figure-html/graph%20visualization%20thing-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
 </section>
