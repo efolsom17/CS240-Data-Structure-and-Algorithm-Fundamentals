@@ -32,7 +32,8 @@ def binary_search(item, data, oper = False, diag = False):
       #Diagnostics/Inner workings
       #I had to use this a few times
       if diag == True:
-        print('Lowest Index: ', 
+        print("Target: ", item,
+           '\nLowest Index: ', 
          x0,"\nHigh Index: ",xn,
          "\nIndex we are searching is: ",mid,
           " Value: ",search) 
