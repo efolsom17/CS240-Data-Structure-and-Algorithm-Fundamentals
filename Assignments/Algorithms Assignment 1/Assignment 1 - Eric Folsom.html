@@ -166,7 +166,7 @@ window.Quarto = {
 <li>Go to step 3.</li>
 </ol></li>
 </ol>
-<p>For each step in the algorithm, we are dividing the array in half, and then redefining the area in the array that we have to search. We do this until we have either found the index of the item, or we have exhausted all the possible indicies of the array to search, in which case we can conclude that the item does is not an element of the array.</p>
+<p>For each step in the algorithm, we are dividing the array in half, searching the middle index of the array, and then redefining the area in the array that we have to search. We do this until we have either found the index of the item, or we have exhausted all the possible indicies of the array to search, in which case we can conclude that the item does is not an element of the array.</p>
 </section>
 <section id="problem-2" class="level3">
 <h3 class="anchored" data-anchor-id="problem-2">Problem 2</h3>
@@ -249,20 +249,22 @@ window.Quarto = {
 <p>For this problem we are given an attached file <code>numbers.txt</code> and we must use the algorithm that we wrote in problem 2 to answer the following question:</p>
 <p>To begin we must load the <code>numbers.txt</code> file.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Importing the numbers data using the Pandas library</span></span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Importing the numbers data using the Pandas library as a dataframe</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> pd.read_csv(<span class="st">"C:</span><span class="ch">\\</span><span class="st">Users</span><span class="ch">\\</span><span class="st">ericf</span><span class="ch">\\</span><span class="st">OneDrive</span><span class="ch">\\</span><span class="st">Desktop</span><span class="ch">\\</span><span class="st">WCC</span><span class="ch">\\</span><span class="st">CS240 Data Structure and Algorithm Fundamentals</span><span class="ch">\\</span><span class="st">Assignments</span><span class="ch">\\</span><span class="st">Algorithms Assignment 1</span><span class="ch">\\</span><span class="st">Data</span><span class="ch">\\</span><span class="st">numbers.txt"</span>,</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>header<span class="op">=</span><span class="va">None</span>,</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>sep<span class="op">=</span><span class="st">'</span><span class="ch">\t</span><span class="st">'</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>) <span class="co">#importing the numbers data as a data frame</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">## Converting Numbers to an array using Numpy##</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">## Converting Numbers to an array using Numpy ##</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> numbers.to_numpy()</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#now back to base python for ease of use with the algorithm I just wrote:</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># now back to base python for ease of use with the algorithm I just wrote:</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> numbers.tolist()</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#fixing some jankiness with importing the data so that all the elements of the list are integers instead of being lists of length 1, thanks ChatGPT.</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>con_numbers <span class="op">=</span> [num[<span class="dv">0</span>] <span class="cf">for</span> num <span class="kw">in</span> numbers]</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> con_numbers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># fixing some jankiness with importing the data </span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># so that all the elements of the list are integers</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># instead of being lists of length 1, thanks ChatGPT.</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>con_numbers <span class="op">=</span> [num[<span class="dv">0</span>] <span class="cf">for</span> num <span class="kw">in</span> numbers]</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> con_numbers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="a.-what-is-the-position-of-51216352-in-the-array-how-many-operations-did-it-take-to-find" class="level4">
 <h4 class="anchored" data-anchor-id="a.-what-is-the-position-of-51216352-in-the-array-how-many-operations-did-it-take-to-find">a. What is the position of 51216352 in the array? How many operations did it take to find?</h4>
@@ -300,6 +302,7 @@ This took  11  operations.</code></pre>
 <section id="d.-what-is-the-worst-case-time-complexity-evaluate-line-by-line-create-a-time-complexity-function-and-then-define-its-big-o-value." class="level4">
 <h4 class="anchored" data-anchor-id="d.-what-is-the-worst-case-time-complexity-evaluate-line-by-line-create-a-time-complexity-function-and-then-define-its-big-o-value.">d.&nbsp;What is the worst case time complexity? Evaluate line by line, create a time complexity function and then define its Big O value.</h4>
 <p>Assume we have an ordered array <span class="math inline">\(X=\{x_0,x_1,\ldots,x_n\}\)</span>, where <span class="math inline">\(x_i \leq x_{i+1}\)</span>, where <span class="math inline">\(i=1,2,3,\ldots,n\)</span>. To figure out what the worst case time complextiy for this algorithm is, lets take the case of the item we are searching for being <span class="math inline">\(x_n\)</span>, the last item of our array. If we were searching one item at a time, our time complexity function would be <span class="math inline">\(O(n)\)</span>.</p>
+<p>The first time we divide the</p>
 </section>
 <section id="e.-what-would-the-worst-case-time-complexity-be-if-we-have-4000-entries-instead-of-2000" class="level4">
 <h4 class="anchored" data-anchor-id="e.-what-would-the-worst-case-time-complexity-be-if-we-have-4000-entries-instead-of-2000">e. What would the worst case time complexity be if we have 4000 entries instead of 2000?</h4>
@@ -307,6 +310,24 @@ This took  11  operations.</code></pre>
 </section>
 <section id="f.-what-do-you-think-the-average-case-time-complexity-is-for-binary-search-explain-your-reasoning." class="level4">
 <h4 class="anchored" data-anchor-id="f.-what-do-you-think-the-average-case-time-complexity-is-for-binary-search-explain-your-reasoning.">f.&nbsp;What do you think the average case time complexity is for binary search? Explain your reasoning.</h4>
+<p>I think that the average case time complexity for binary search is <span class="math inline">\(\log_2(n)\)</span>. I will demonstrate this with a simulation. For this I will use <code>numbers.txt</code>, which has <span class="math inline">\(1999\)</span> elements, and perform a random sample of the indicies of <code>numbers.txt</code>, where <span class="math inline">\(n=100000\)</span> random indicies of <code>numbers.txt</code>.</p>
+<p>We hypothesize that the average time complexity for binary search is <span class="math inline">\(\log_2(n)\)</span>, where <span class="math inline">\(n\)</span> is the number of items (indicies) of an array.</p>
+<p>It is important to note that, <span class="math inline">\(\log_2(2000)\approx\)</span> 11.</p>
+<p>To begin I will, using R, create a vector of random possible indicies of <code>numbers.txt</code> which has <span class="math inline">\(1999\approx 2000\)</span> indicies.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### Some R code to establish the average time complexity of </span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="do">#### the binary search function. I am using R to sample random</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="do">#### indicies of numbers.txt, which I will then use in python to save the numbers of operations</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="do">#### it takes to find that specific value in numbers.txt, then I will create a distribution of</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="do">#### the number of operations in R and find the average number of operations. Then I will compare my </span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="do">#### emperical average from my simulation to my hypothesized value of $log_2(1999)\approx 11$.  </span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="dv">100000</span>                           <span class="co">#number of random indicies we want to samples</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>ind_numbers<span class="ot">&lt;-</span><span class="fu">round</span>(<span class="fu">runif</span>(n,<span class="dv">0</span>,<span class="dv">1998</span>)) <span class="co">#drawing random indicies from a discrete uniform(0,1998) dist.</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                                    <span class="co">#rounding ensures integer values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now that we have our vector of random integers we can move on to python.</p>
 </section>
 </section>
 <section id="problem-4" class="level3">

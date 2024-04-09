@@ -196,6 +196,8 @@ binary_search(196614208,numbers, oper=True)
 
 Assume we have an ordered array $X=\{x_0,x_1,\ldots,x_n\}$, where $x_i \leq x_{i+1}$, where $i=1,2,3,\ldots,n$. To figure out what the worst case time complextiy for this algorithm is, lets take the case of the item we are searching for being $x_n$, the last item of our array. If we were searching one item at a time, our time complexity function would be $O(n)$. 
 
+The first time we divide the 
+
 
 #### e.  What would the worst case time complexity be if we have 4000 entries instead of 2000?
 
@@ -210,6 +212,38 @@ log_2_4000<-round(log2(4000))
 The time complexity function for this algorithm is $O(\log_2(n))$. Thus we can say that the worst case time complexity if we have 4000 entries is found by $\log_2(4000) \approx$ `{r} log_2_4000`. This is in contrast to if we only had 2000 entries where the worst case time complexity would be $\log_2(2000)\approx$ `r log_2_2000`.
 
 #### f. What do you think the average case time complexity is for binary search? Explain your reasoning.
+
+I think that the average case time complexity for binary search is $\log_2(n)$. I will demonstrate this with a simulation. For this I will use `numbers.txt`, which has $1999$ elements, and perform a random sample of the indicies of `numbers.txt`, where $n=100000$ random indicies of `numbers.txt`. 
+
+We hypothesize that the average time complexity for binary search is $\log_2(n)$, where $n$ is the number of items (indicies) of an array.
+
+It is important to note that, $\log_2(2000)\approx$ `r log_2_2000`. 
+
+To begin I will, using R, create a vector of random possible indicies of `numbers.txt` which has $1999\approx 2000$ indicies.
+
+```{r , simulation to show average time complexity r part one}
+#| echo: true
+
+#### Some R code to establish the average time complexity of 
+#### the binary search function. I am using R to sample random
+#### indicies of numbers.txt, which I will then use in python to save the numbers of operations
+#### it takes to find that specific value in numbers.txt, then I will create a distribution of
+#### the number of operations in R and find the average number of operations. Then I will compare my 
+#### emperical average from my simulation to my hypothesized value of $log_2(1999)\approx 11$.  
+
+
+n<-100000                           #number of random indicies we want to samples
+ind_numbers<-round(runif(n,0,1998)) #drawing random indicies from a discrete uniform(0,1998) dist.
+                                    #rounding ensures integer values
+```
+
+Now that we have our vector of random integers we can move on to python.
+
+```{python, simulation to show average time complexity python part one}
+#| echo: true
+
+
+```
 
 ### Problem 4
 
