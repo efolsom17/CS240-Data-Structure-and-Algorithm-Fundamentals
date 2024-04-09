@@ -96,16 +96,12 @@ def binary_search(item, data, oper = False, diag = False):
          if oper == True: 
             #return the index of the item and the number of
             #  operations it took to find the item
-            return print("Item ",
-             item,
-             ' is located at index',
-              mid,
-               ".\n This took ",
-                operations,
-                ' operations.') 
+            print(f"Item {item} is located at index {mid}.\nThis took {operations} operations.")
+            return item, mid, operations 
          else:
             #return the position of the item
-            return print("Item ", item,' is located at index', mid) 
+            print(f"Item {item} is located at index {mid}.") 
+            return item, mid, operations 
 
       # if our guess is too low
       elif search < item:
@@ -127,7 +123,7 @@ def binary_search(item, data, oper = False, diag = False):
             print("Search was too high") #debugging
 
    # if we can't find the item in the array.
-   return print("Item Not Found\nThis took ", operations, ' operations.')  
+   return print("Item Not Found\nThis took ", operations, ' operations.')
 ```
 
 
@@ -235,13 +231,23 @@ To begin I will, using R, create a vector of random possible indicies of `number
 n<-100000                           #number of random indicies we want to samples
 ind_numbers<-round(runif(n,0,1998)) #drawing random indicies from a discrete uniform(0,1998) dist.
                                     #rounding ensures integer values
+View(ind_numbers)
+write.table(ind_numbers, "clipboard", sep=",") 
 ```
 
 Now that we have our vector of random integers we can move on to python.
 
 ```{python, simulation to show average time complexity python part one}
 #| echo: true
+#| eval: false
 
+ind_data = r.ind_numbers #accessing the vector just created in R
+type(ind_data[10]).__name__
+
+operations_numbera = []
+
+for value in ind_data:
+ print(getattr(binary_search(item = value, data = numbers), 'operations')) 
 
 ```
 
