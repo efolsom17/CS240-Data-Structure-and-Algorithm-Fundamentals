@@ -203,4 +203,6 @@ Types of sarch, Linear search and Binary Search. Binary search is faster than li
    - ChatGPT for brainstorming
  - Time Complexity
    - bigocheatsheet.com
-   - 
+   - Space vs. Time Complexity
+     - Time - How long will it take
+     - Space - how much storage does it use
