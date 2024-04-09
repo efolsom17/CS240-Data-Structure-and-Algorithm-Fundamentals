@@ -134,14 +134,14 @@ window.Quarto = {
 
 <section id="problem-1" class="level3">
 <h3 class="anchored" data-anchor-id="problem-1">Problem 1</h3>
-<p>For this problem we are writing psuedocode for an itterative binary search algorithm that works over an array.</p>
+<p>For this problem we are writing psuedocode for an iterative binary search algorithm that works over an array.</p>
 <p>To design an alogorithm to perform this task, we would implement something similar to the following:</p>
 <ul>
-<li><p>Assume we have an ordered array <span class="math inline">\(X=\{x_0,x_1,\ldots,x_n\}\)</span>, where <span class="math inline">\(x_i \leq x_{i+1}\)</span>, where <span class="math inline">\(i=1,2,3,\ldots,n\)</span>.</p></li>
+<li><p>Assume we have an ordered array <span class="math inline">\(X=\{x_0,x_1,\ldots,x_n\}\)</span>, where <span class="math inline">\(x_i \leq x_{i+1}\)</span>, where <span class="math inline">\(i=0,1,2,\ldots,n\)</span>.</p></li>
 <li><p>We will define the value or object that we are looking for <span class="math inline">\(y\)</span>. Also assume that <span class="math inline">\(y\in X\)</span></p></li>
 </ul>
 <ol type="1">
-<li>Find the largest index in the array, <span class="math inline">\(n\)</span>.
+<li>Find the outer bounds of the array.
 <ul>
 <li>Define the largest index (<span class="math inline">\(x_n\)</span>).</li>
 <li>Define the beginning (first) index to be the smallest (<span class="math inline">\(x_0\)</span>).</li>
@@ -166,7 +166,7 @@ window.Quarto = {
 <li>Go to step 3.</li>
 </ol></li>
 </ol>
-<p>For each step in the algorithm, we are dividing the array in half, and then redefining the area in the array that we have to search.</p>
+<p>For each step in the algorithm, we are dividing the array in half, searching the middle index of the array, and then redefining the area in the array that we have to search. We do this until we have either found the index of the item, or we have exhausted all the possible indices of the array to search, in which case we can conclude that the item is not an element of the array.</p>
 </section>
 <section id="problem-2" class="level3">
 <h3 class="anchored" data-anchor-id="problem-2">Problem 2</h3>
@@ -176,7 +176,7 @@ window.Quarto = {
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>   <span class="co"># item: item in the data that we are interested in finding</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   <span class="co"># data: list or array of data with items we are interested in finding, assumes</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>   <span class="co"># integer data</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>   <span class="co">#       ordered integer data.</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>   <span class="co"># oper: Logical T or F. Choose weather to include the number of operations. </span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>   <span class="co">#        Default: False.</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>   <span class="co"># diag: T or F. Choose to see the inner workings of the algorithm.</span></span>
@@ -187,60 +187,57 @@ window.Quarto = {
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>   x0 <span class="op">=</span> <span class="dv">0</span> <span class="co">#defining the index of first element of the array</span></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>   xn <span class="op">=</span> <span class="bu">len</span>(data)<span class="op">-</span><span class="dv">1</span> <span class="co">#defining the index of the last element of the array</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>   operations <span class="op">=</span> <span class="dv">0</span> <span class="co">#creating a varaible to count the number of operations the </span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>   operations <span class="op">=</span> <span class="dv">0</span> <span class="co">#creating a varaible to count the number of operations. </span></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Beginning the actual function</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span> x0 <span class="op">&lt;=</span> xn: <span class="co">#while we are searching valid indicies of our array</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span> x0 <span class="op">&lt;=</span> xn: <span class="co">#while we are searching valid indices of our array</span></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>      operations <span class="op">=</span> operations <span class="op">+</span> <span class="dv">1</span> <span class="co">#count one operation</span></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>      mid <span class="op">=</span> (xn <span class="op">+</span> x0) <span class="op">//</span> <span class="dv">2</span> <span class="co">#pick the middle index of the array (floor operation)</span></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>      search <span class="op">=</span> data[mid] <span class="co"># Value of the middle index (the one we are searching in)</span></span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>      <span class="co">#Diagnostics/Inner workings</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>      <span class="co">#I had to use this a few times</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>      <span class="co">#I had to use this a few times to resolve edge cases</span></span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> diag <span class="op">==</span> <span class="va">True</span>:</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'Lowest Index: '</span>, </span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>         x0,<span class="st">"</span><span class="ch">\n</span><span class="st">High Index: "</span>,xn,</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>         <span class="st">"</span><span class="ch">\n</span><span class="st">Index we are searching is: "</span>,mid,</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>          <span class="st">" Value: "</span>,search) </span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>      <span class="co">#if the item we are searching for is the same as the value of the array</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> search <span class="op">==</span> item: </span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>         <span class="co">#if you want to see the number of operations</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>         <span class="cf">if</span> oper <span class="op">==</span> <span class="va">True</span>: </span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>            <span class="co">#return the index of the item and the number of</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>            <span class="co">#  operations it took to find the item</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="bu">print</span>(<span class="st">"Item "</span>,</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>             item,</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>             <span class="st">' is located at index'</span>,</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>              mid,</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>               <span class="st">".</span><span class="ch">\n</span><span class="st"> This took "</span>,</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>                operations,</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>                <span class="st">' operations.'</span>) </span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>         <span class="cf">else</span>:</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>            <span class="co">#return the position of the item</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="bu">print</span>(<span class="st">"Item "</span>, item,<span class="st">' is located at index'</span>, mid) </span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>      <span class="co"># if our guess is too low</span></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>      <span class="cf">elif</span> search <span class="op">&lt;</span> item:</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>          <span class="co">#update the low index position to be the middle guess. </span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>          <span class="co"># Adding 1 so we don't recheck the same index twice</span></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>         x0 <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>         <span class="co">#diagnostics</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>         <span class="cf">if</span> diag <span class="op">==</span> <span class="va">True</span>:</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>           <span class="bu">print</span>(<span class="st">'Search was too low'</span>) <span class="co">#debugging</span></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>      <span class="co"># if our guess is too high</span></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>      <span class="cf">elif</span> search <span class="op">&gt;</span> item: </span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>         <span class="co"># update the high position to be the middle guess. </span></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>         <span class="co"># Subtracting 1 so we don't check the same index</span></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>         <span class="co"># twice, as that would be slow.</span></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>         xn <span class="op">=</span> mid <span class="op">-</span> <span class="dv">1</span> </span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>         <span class="co">#diagnostics:</span></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>         <span class="cf">if</span> diag <span class="op">==</span> <span class="va">True</span>:</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"Search was too high"</span>) <span class="co">#debugging</span></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>   <span class="co"># if we can't find the item in the array.</span></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="bu">print</span>(<span class="st">"Item Not Found</span><span class="ch">\n</span><span class="st">This took "</span>, operations, <span class="st">' operations.'</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Target: "</span>, item,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>          <span class="st">'</span><span class="ch">\n</span><span class="st">Lowest Index: '</span>, </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>         x0,<span class="st">"</span><span class="ch">\n</span><span class="st">High Index: "</span>,xn,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>         <span class="st">"</span><span class="ch">\n</span><span class="st">Index we are searching is: "</span>,mid,</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>          <span class="st">" Value: "</span>,search) </span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>      <span class="co">#if the item we are searching for is the same as the value of the array</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> search <span class="op">==</span> item: </span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>         <span class="co">#if you want to see the number of operations</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>         <span class="cf">if</span> oper <span class="op">==</span> <span class="va">True</span>: </span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>            <span class="co">#return the index of the item and the number of</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>            <span class="co">#  operations it took to find the item</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Item </span><span class="sc">{</span>item<span class="sc">}</span><span class="ss"> is located at index </span><span class="sc">{</span>mid<span class="sc">}</span><span class="ss">.</span><span class="ch">\n</span><span class="ss">This took </span><span class="sc">{</span>operations<span class="sc">}</span><span class="ss"> operations."</span>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> item, mid, operations </span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>         <span class="cf">else</span>:</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>            <span class="co">#return the position of the item</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Item </span><span class="sc">{</span>item<span class="sc">}</span><span class="ss"> is located at index </span><span class="sc">{</span>mid<span class="sc">}</span><span class="ss">."</span>) </span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> item, mid, operations </span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>      <span class="co"># if our guess is too low</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>      <span class="cf">elif</span> search <span class="op">&lt;</span> item:</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>          <span class="co">#update the low index position to be the middle guess. </span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>          <span class="co"># Adding 1 so we don't recheck the same index twice</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>         x0 <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>         <span class="co">#diagnostics</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>         <span class="cf">if</span> diag <span class="op">==</span> <span class="va">True</span>:</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>           <span class="bu">print</span>(<span class="st">'Search was too low'</span>) <span class="co">#debugging</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>      <span class="co"># if our guess is too high</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>      <span class="cf">elif</span> search <span class="op">&gt;</span> item: </span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>         <span class="co"># update the high position to be the middle guess. </span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>         <span class="co"># Subtracting 1 so we don't check the same index</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>         <span class="co"># twice, as that would be slow.</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>         xn <span class="op">=</span> mid <span class="op">-</span> <span class="dv">1</span> </span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>         <span class="co">#diagnostics:</span></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>         <span class="cf">if</span> diag <span class="op">==</span> <span class="va">True</span>:</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"Search was too high"</span>) <span class="co">#debugging</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>   <span class="co"># if we can't find the item in the array.</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="bu">print</span>(<span class="st">"Item Not Found</span><span class="ch">\n</span><span class="st">This took "</span>, operations, <span class="st">' operations.'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="problem-3" class="level3">
@@ -248,29 +245,31 @@ window.Quarto = {
 <p>For this problem we are given an attached file <code>numbers.txt</code> and we must use the algorithm that we wrote in problem 2 to answer the following question:</p>
 <p>To begin we must load the <code>numbers.txt</code> file.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Importing the numbers data using the Pandas library</span></span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Importing the numbers data using the Pandas library as a dataframe</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> pd.read_csv(<span class="st">"C:</span><span class="ch">\\</span><span class="st">Users</span><span class="ch">\\</span><span class="st">ericf</span><span class="ch">\\</span><span class="st">OneDrive</span><span class="ch">\\</span><span class="st">Desktop</span><span class="ch">\\</span><span class="st">WCC</span><span class="ch">\\</span><span class="st">CS240 Data Structure and Algorithm Fundamentals</span><span class="ch">\\</span><span class="st">Assignments</span><span class="ch">\\</span><span class="st">Algorithms Assignment 1</span><span class="ch">\\</span><span class="st">Data</span><span class="ch">\\</span><span class="st">numbers.txt"</span>,</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>header<span class="op">=</span><span class="va">None</span>,</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>sep<span class="op">=</span><span class="st">'</span><span class="ch">\t</span><span class="st">'</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>) <span class="co">#importing the numbers data as a data frame</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">## Converting Numbers to an array using Numpy##</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">## Converting Numbers to an array using Numpy ##</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> numbers.to_numpy()</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#now back to base python for ease of use with the algorithm I just wrote:</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># now back to base python for ease of use with the algorithm I just wrote:</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> numbers.tolist()</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#fixing some jankiness with importing the data so that all the elements of the list are integers instead of being lists of length 1, thanks ChatGPT.</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>con_numbers <span class="op">=</span> [num[<span class="dv">0</span>] <span class="cf">for</span> num <span class="kw">in</span> numbers]</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> con_numbers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># fixing some jankiness with importing the data </span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># so that all the elements of the list are integers</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># instead of being lists of length 1, thanks ChatGPT.</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>con_numbers <span class="op">=</span> [num[<span class="dv">0</span>] <span class="cf">for</span> num <span class="kw">in</span> numbers]</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> con_numbers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="a.-what-is-the-position-of-51216352-in-the-array-how-many-operations-did-it-take-to-find" class="level4">
 <h4 class="anchored" data-anchor-id="a.-what-is-the-position-of-51216352-in-the-array-how-many-operations-did-it-take-to-find">a. What is the position of 51216352 in the array? How many operations did it take to find?</h4>
 <p>We can find the position of 51216352 using the following code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>binary_search(<span class="dv">51216352</span>, numbers, oper<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>p1<span class="op">=</span>binary_search(<span class="dv">51216352</span>, numbers, oper<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Item  51216352  is located at index 499 .
- This took  2  operations.</code></pre>
+<pre><code>Item 51216352 is located at index 499.
+This took 2 operations.</code></pre>
 </div>
 </div>
 </section>
@@ -278,10 +277,10 @@ window.Quarto = {
 <h4 class="anchored" data-anchor-id="b.-what-is-the-position-of-198313119-in-the-array-how-many-operations-did-it-take-to-find">b. What is the position of 198313119 in the array? How many operations did it take to find?</h4>
 <p>We can find the position of 198313119 using the following code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>binary_search(<span class="dv">198313119</span>, numbers, oper<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>p2<span class="op">=</span>binary_search(<span class="dv">198313119</span>, numbers, oper<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Item  198313119  is located at index 1980 .
- This took  11  operations.</code></pre>
+<pre><code>Item 198313119 is located at index 1980.
+This took 11 operations.</code></pre>
 </div>
 </div>
 </section>
@@ -289,7 +288,7 @@ window.Quarto = {
 <h4 class="anchored" data-anchor-id="c.-what-is-the-position-of-196614208-in-the-array-how-many-operations-did-it-take-to-find">c.&nbsp;What is the position of 196614208 in the array? How many operations did it take to find?</h4>
 <p>We can find the position of 196614208 using the following code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>binary_search(<span class="dv">196614208</span>,numbers, oper<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>p3<span class="op">=</span>binary_search(<span class="dv">196614208</span>,numbers, oper<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Item Not Found
 This took  11  operations.</code></pre>
@@ -298,14 +297,95 @@ This took  11  operations.</code></pre>
 </section>
 <section id="d.-what-is-the-worst-case-time-complexity-evaluate-line-by-line-create-a-time-complexity-function-and-then-define-its-big-o-value." class="level4">
 <h4 class="anchored" data-anchor-id="d.-what-is-the-worst-case-time-complexity-evaluate-line-by-line-create-a-time-complexity-function-and-then-define-its-big-o-value.">d.&nbsp;What is the worst case time complexity? Evaluate line by line, create a time complexity function and then define its Big O value.</h4>
-<p>Assume we have an ordered array <span class="math inline">\(X=\{x_0,x_1,\ldots,x_n\}\)</span>, where <span class="math inline">\(x_i \leq x_{i+1}\)</span>, where <span class="math inline">\(i=1,2,3,\ldots,n\)</span>. To figure out what the worst case time complextiy for this algorithm is, lets take the case of the item we are searching for being <span class="math inline">\(x_n\)</span>, the last item of our array. If we were searching one item at a time, our time complexity function would be <span class="math inline">\(O(n)\)</span>.</p>
+<p>Assume we have an ordered array <span class="math inline">\(X=\{x_0,x_1,\ldots,x_n\}\)</span>, where <span class="math inline">\(x_i \leq x_{i+1}\)</span>, where <span class="math inline">\(i=1,2,3,\ldots,n\)</span>. Lets consider the case of the item we are searching for being <span class="math inline">\(x_n\)</span>, the last item of our array. If we were searching one item at a time, as with linear search, our time complexity function would be <span class="math inline">\(O(n)\)</span>.</p>
+<p>To find the worst case time complexity for our binary search function we should consider the case where we are searching for the item in index <code>[0]</code> of our array, or the first item in the array (the same idea holds if we were searching for the item in index <code>[n-1]</code>, the last item in our array). Because we are dividing the search area in half for each iteration, we are solving the problem of <span class="math inline">\(\frac{n}{2^x}=1\)</span>. Where <span class="math inline">\(n\)</span> is the number of items in our array, and <span class="math inline">\(x\)</span> is the number of divisions required to have 1 element.</p>
+<p>We can show this via the following where we will solve this equation for <span class="math inline">\(x\)</span>, the number of iterations, for a given <span class="math inline">\(n\)</span>:</p>
+<p><span class="math display">\[
+\frac{n}{2^x}=1
+\]</span></p>
+<p><span class="math display">\[
+n\cdot (2^{-x})=1
+\]</span></p>
+<p><span class="math display">\[
+\log_2(n\cdot (2^{-x}))=\log_2(1)
+\]</span></p>
+<p><span class="math display">\[
+\log_2(n)+\log_2(2^{-x})=\log_2(1)
+\]</span></p>
+<p><span class="math display">\[
+\log_2(n)-x=0
+\]</span></p>
+<p><span class="math display">\[
+\log_2(n)=x
+\]</span></p>
+<p>above we have shown that it will take at most <span class="math inline">\(\log_2(n)\)</span> steps to reduce the size of our search area to <span class="math inline">\(1\)</span> index, given an array of size <span class="math inline">\(n\)</span>. Thus we can say that the worst case time complexity of our binary search algorithm is <span class="math inline">\(O(\log_2(n))\)</span>.</p>
 </section>
 <section id="e.-what-would-the-worst-case-time-complexity-be-if-we-have-4000-entries-instead-of-2000" class="level4">
 <h4 class="anchored" data-anchor-id="e.-what-would-the-worst-case-time-complexity-be-if-we-have-4000-entries-instead-of-2000">e. What would the worst case time complexity be if we have 4000 entries instead of 2000?</h4>
-<p>The time complexity function for this algorithm is <span class="math inline">\(O(\log_2(n))\)</span>. Thus we can say that the worst case time complexity if we have 4000 entries is found by <span class="math inline">\(\log_2(4000) \approx\)</span> 12. This is in contrast to if we only had 2000 entries where the worst case time complexity would be <span class="math inline">\(\log_2(2000)\approx\)</span> 11.</p>
+<p>The worst case time complexity function for this algorithm is <span class="math inline">\(O(\log_2(n))\)</span>. Thus we can say that the worst case time complexity if we have <span class="math inline">\(4000\)</span> entries is found by <span class="math inline">\(\log_2(4000) \approx\)</span> 12. This is in contrast to if we only had <span class="math inline">\(2000\)</span> entries where the worst case time complexity would be <span class="math inline">\(\log_2(2000)\approx\)</span> 11. If we were to again double the size of of our array to <span class="math inline">\(8000\)</span> entries, the worst case time complexity would be <span class="math inline">\(\log_2(8000)\approx\)</span> 13 steps to find an item in the array.</p>
 </section>
 <section id="f.-what-do-you-think-the-average-case-time-complexity-is-for-binary-search-explain-your-reasoning." class="level4">
 <h4 class="anchored" data-anchor-id="f.-what-do-you-think-the-average-case-time-complexity-is-for-binary-search-explain-your-reasoning.">f.&nbsp;What do you think the average case time complexity is for binary search? Explain your reasoning.</h4>
+<p>I would hypothesize that the average time complexity for binary search is <span class="math inline">\(\log_2(n)\)</span>, where <span class="math inline">\(n\)</span> is the number of items (indices) of an array. We have previously shown in part d.&nbsp;that the worst case time complexity for binary search is <span class="math inline">\(O(\log_2(n))\)</span>.</p>
+<p>It is important to note that, <span class="math inline">\(\log_2(2000)\approx\)</span> 11.</p>
+<p>To show that the average time complexity for this function is <span class="math inline">\(\log_2(n)\)</span>, I will simply run it for each index of <code>numbers.txt</code> and record the number of operations it takes to find the value, then investigate the distribution of the number of operations.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>operations_numbers <span class="op">=</span> [] <span class="co">#storage vector for the number of operations each function call takes.</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># each iteration searches for the value of the i-th index of numbers</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1999</span>):</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>   _,_, ops <span class="op">=</span> binary_search(numbers[i], numbers)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>   operations_numbers.append(ops) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(operations_numbers) <span class="co">#debugging</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we go to R to visualize the results.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Here I am visualizing the results of the simulation on the number of operations it takes</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># I am using R because I am more familiar with it and because ggplot2 is the best data </span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># visualizaiton tool out there in my opinion.</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>results_sim <span class="ot">&lt;-</span> py<span class="sc">$</span>operations_numbers</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>results_sim.df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(results_sim)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_sim.df, <span class="fu">aes</span>(<span class="at">x=</span> results_sim))<span class="sc">+</span><span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Assignment-1---Eric-Folsom_files/figure-html/visualization-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We find that the average number of operations our binary search algorithm took to be 9.9814907 operations. We can compare this to our hypothesized value of <span class="math inline">\(11\)</span>. We note that the average number of operations from our simulation is less than our hypothesized value of <span class="math inline">\(11\)</span>.</p>
+<p>In our simulation, we only searched for items that we knew for a fact were contained in the array, but what if we instead consider all real numbers in the range of values contained within our array. There will be an infinite number of values that will not be explicitly defined within our array, but is still contained within the array. For example consider the a value that is the average of two indices of <code>numbers.txt</code>, say the average of <code>numbers[10]</code> and <code>numbers[11]</code>. This value will be somewhere between <code>numbers[10]</code> and <code>numbers[11]</code>, but will still be within the range of the possible values in our array.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(numbers[<span class="dv">10</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1042433</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(numbers[<span class="dv">11</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1118371</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>numbers_10_11_avg <span class="op">=</span> (numbers[<span class="dv">10</span>]<span class="op">+</span>numbers[<span class="dv">11</span>])<span class="op">//</span><span class="dv">2</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(numbers_10_11_avg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1080402</code></pre>
+</div>
+</div>
+<p>If we are to search for this average value using our binary search function on <code>numbers.txt</code> we will get the following:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>binary_search(numbers_10_11_avg,numbers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Item Not Found
+This took  11  operations.</code></pre>
+</div>
+</div>
+<p>We have also seen in part c.&nbsp;that when we search for an item that is not found in <code>numbers.txt</code> it will take <span class="math inline">\(11\)</span> operations to conclude that the item is not in <code>numbers.txt</code>. Because of this we can say that if we think of the possible search terms, using <code>numbers.txt</code> as our example, as being any possible number in the range of values contained within <code>numbers.txt</code> instead of being only the searchable numbers in <code>numbers.txt</code>, the average number of searches will trend towards 11, which is approximately <span class="math inline">\(\log_2(1999)\)</span>.</p>
 </section>
 </section>
 <section id="problem-4" class="level3">
@@ -314,42 +394,54 @@ This took  11  operations.</code></pre>
 <section id="a." class="level4">
 <h4 class="anchored" data-anchor-id="a.">a.</h4>
 <div class="cell">
-<pre class="none cell-code"><code>function sum(arr){
-  counter = 0
+<pre class="none cell-code"><code>function sum(arr){ ##Function that sums the values of an array
+  counter = 0 #counter for keeping track of sum of array
 
-  for (i = 0; i &lt; arr.length; i++) {
-       counter += arr[i]
+  for (i = 0; i &lt; arr.length; i++) { # n iterations, one for each entry of the array
+       counter += arr[i] # 1 operation each time
   }
 
      return counter
 }</code></pre>
 </div>
+<p>Because we are iterating through each index of the given array and performing one operation each time, we can say that the time complexity for this funciton can be given by <span class="math inline">\(O(n)\)</span>, where <span class="math inline">\(n\)</span> is the size of the array.</p>
 </section>
 <section id="b." class="level4">
 <h4 class="anchored" data-anchor-id="b.">b.</h4>
 <div class="cell">
-<pre class="none cell-code"><code>function getXOR(arr1, arr2){
+<pre class="none cell-code"><code>function getXOR(arr1, arr2){ # Exclusive Or, in A or B, but not both.
+                             # inputs are two arrays, returns values in only one
+  arr3 = []                  # of the arrays but not in both
 
-  arr3 = []
-
-  for (i = 0; i &lt; arr1.length; i++){
-      let unique = True
-      for (j = 0; j &lt; arr2.length; j++ }{
-        if(arr1[i] == arr2[j]) {unique = False;}
+  for (i = 0; i &lt; arr1.length; i++){ # n1 iterations, length of arr1
+      let unique = True # 1 operation
+      for (j = 0; j &lt; arr2.length; j++ ){ # n2 iterations, length of arr2
+        if(arr1[i] == arr2[j]) {unique = False;} # 1 operation
       }
-      if (unique) {arr3.append(arr1[i]);}
+      if (unique) {arr3.append(arr1[i]);} # 1 operation
     }
-  }  
-  for (i = 0; i &lt; arr2.length; i++){
+
+  # the above for loop takes n1*n2 iterations to check each index for uniqueness
+
+  for (i = 0; i &lt; arr2.length; i++){ # n2 iterations, length of arr2
     let unique = True
-    for (j = 0; j &lt; arr1.length; j++ }{
+    for (j = 0; j &lt; arr1.length; j++ ){ # n1 iterations, length of arr1
       if(arr2[i] == arr1[j]) {unique = False;}
     }
     if (unique) {arr3.append(arr2[i]);}
   }
   return arr[3]
-}</code></pre>
+}
+
+  # the above for loop takes n1*n2 iteartions to complete
+  # each loop takes place independently of the other</code></pre>
 </div>
+<p>Let <span class="math inline">\(n\)</span> be the length of <code>arr1</code>.</p>
+<p>Let <span class="math inline">\(m\)</span> be the length of <code>arr2</code>.</p>
+<p>In the first outer for loop, it will take <span class="math inline">\(n\)</span> operations to visit each index of <code>arr1</code>. Within the nested for loop, it will take another <span class="math inline">\(m\)</span> operations for each <span class="math inline">\(n\)</span> to visit and compare with each index of <code>arr2</code>. Thus it will take <span class="math inline">\(n\cdot m\)</span> operations to complete. Thus we can say that for the first for loop, the time complexity function is <span class="math inline">\(O(n\cdot m)\)</span>.</p>
+<p>In the second outer for loop, it will take <span class="math inline">\(m\)</span> operations to visit each index of <code>arr2</code>. Within the nested for loop, it will take another <span class="math inline">\(n\)</span> operations for each <span class="math inline">\(m\)</span> to visit and compare with each index of <code>arr1</code>. Thus it will take <span class="math inline">\(m\cdot n\)</span> operations to complete. Thus we can say that for the second for loop, the time complexity function is <span class="math inline">\(O(m\cdot n)\)</span>.</p>
+<p>Note that the time complexity functions for each for loop is the same, <span class="math inline">\(O(n\cdot m)\)</span>. We have two for loops however in this function, thus we can say that the time complexity of the function is <span class="math inline">\(O(2\cdot(n\cot m))\)</span>. Because Big Oh notation drops constants we can simplify this down to <span class="math inline">\(O(n\cdot m)\)</span>. Thus the time complexity for this function is <span class="math inline">\(O(n\cdot m)\)</span>, where <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> are the lengths of <code>arr1</code> and <code>arr2</code> respectively.</p>
+<p>In the case where <code>arr1</code> and <code>arr2</code> are the same size, <span class="math inline">\(n=m\)</span>, the time complexity of this function will be <span class="math inline">\(O(n^2)\)</span>.</p>
 </section>
 </section>
 

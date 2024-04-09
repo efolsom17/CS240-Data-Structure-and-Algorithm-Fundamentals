@@ -10,7 +10,7 @@ def binary_search(item, data, oper = False, diag = False):
 
    # item: item in the data that we are interested in finding
    # data: list or array of data with items we are interested in finding, assumes
-   #       integer data
+   #       ordered integer data
    # oper: Logical T or F. Choose weather to include the number of operations. 
    #        Default: False.
    # diag: T or F. Choose to see the inner workings of the algorithm.
@@ -24,7 +24,7 @@ def binary_search(item, data, oper = False, diag = False):
    operations = 0 #creating a varaible to count the number of operations the 
 
    # Beginning the actual function
-   while x0 <= xn: #while we are searching valid indicies of our array
+   while x0 <= xn: #while we are searching valid indices of our array
       operations = operations + 1 #count one operation
       mid = (xn + x0) // 2 #pick the middle index of the array (floor operation)
       search = data[mid] # Value of the middle index (the one we are searching in)
@@ -44,17 +44,13 @@ def binary_search(item, data, oper = False, diag = False):
          if oper == True: 
             #return the index of the item and the number of
             #  operations it took to find the item
-            return print("Item ",
-             item,
-             ' is located at index',
-              mid,
-               ".\n This took ",
-                operations,
-                ' operations.') 
+            print(f"Item {item} is located at index {mid}.\nThis took {operations} operations.")
+            return item, mid, operations 
          else:
             #return the position of the item
-            return print("Item ", item,' is located at index', mid) 
-
+            print(f"Item {item} is located at index {mid}.") 
+            return item, mid, operations 
+         
       # if our guess is too low
       elif search < item:
           #update the low index position to be the middle guess. 
@@ -100,10 +96,13 @@ numbers = con_numbers
 
 
 #### a.
-binary_search(51216352, numbers, oper=True)
+p1 = binary_search(51216352, numbers, oper=True)
 
 ### b.
-binary_search(198313119, numbers, oper=True)
+p2 = binary_search(198313119, numbers, oper=True)
 
 ### c. 
-binary_search(196614208,numbers, oper=True)
+p3 = binary_search(196614208,numbers, oper=True)
+
+# Did some testing below here, deleted it because it was bulky and unnecessary,
+# work is available on github if you are interested.
