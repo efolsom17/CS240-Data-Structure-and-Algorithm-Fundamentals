@@ -104,5 +104,3 @@ p2 = binary_search(198313119, numbers, oper=True)
 ### c. 
 p3 = binary_search(196614208,numbers, oper=True)
 
-# Did some testing below here, deleted it because it was bulky and unnecessary,
-# work is available on github if you are interested.
