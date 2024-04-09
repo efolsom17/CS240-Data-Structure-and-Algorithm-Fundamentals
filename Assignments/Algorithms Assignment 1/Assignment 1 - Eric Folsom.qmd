@@ -23,6 +23,7 @@ import pandas as pd
 
 library(reticulate)
 library(tidyverse)
+library(ggplot2)
 ```
 
 ### Problem 1
@@ -267,12 +268,12 @@ Now we return back to R to visualize the results.
 # visualizaiton tool out there.
 
 results_sim <- py$operations_numbers
-results_sim.df <- as.data.frame(x=results_sim
+results_sim.df <- as.data.frame(results_sim)
 
-ggplot(results_sim.df, aes(x=x))+geom_density()
-
-
+ggplot(results_sim.df, aes(x= results_sim))+geom_histogram()
 ```
+
+We find that the average number of operations our binary search algorithm took to be `r mean(results_sim)` operations. We can compare this to our hypothesized value of $11$.
 
 
 

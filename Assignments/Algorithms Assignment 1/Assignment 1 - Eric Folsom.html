@@ -353,19 +353,21 @@ is full and output lost</code></pre>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># visualizaiton tool out there.</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>results_sim <span class="ot">&lt;-</span> py<span class="sc">$</span>operations_numbers</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(results_sim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "integer"</code></pre>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>results_sim.df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(results_sim)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_sim.df, <span class="fu">aes</span>(<span class="at">x=</span> results_sim))<span class="sc">+</span><span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>results_sim.df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="at">x=</span>results_sim)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(results_sim.df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "data.frame"</code></pre>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Assignment-1---Eric-Folsom_files/figure-html/visualization-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(results_sim.df)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#results_plot&lt;-ggplot(results_sim, aes(x=x))+geom_density</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#results_plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
+<p>We find that the average number of operations our binary search algorithm took to be 9.9796598 operations. We can compare this to our hypothesized value of <span class="math inline">\(11\)</span>.</p>
 </section>
 </section>
 <section id="problem-4" class="level3">
