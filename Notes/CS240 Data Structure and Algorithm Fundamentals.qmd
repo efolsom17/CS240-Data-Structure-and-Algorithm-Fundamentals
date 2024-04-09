@@ -65,6 +65,10 @@ Lab Day, Going to work on homework and figuring out how python works. Hoping to 
 
 ###### Algorithms Assignment 1
 
+* Searching: There are two types of searches
+  * Linear Search: Fast when few items, $O(n)$. Slow when large items. Does not require sorted array.
+  * Binary Search: About the same speed as Linear when there are few items, requires sorted array. Good with lots of items. $O(\log_2(n))$.
+
 Binary Search and Time Complexity
 
 For the first question, we are writing pseudocode to write an alogrithm for performing the binary search across an Array.
@@ -115,7 +119,73 @@ ggplot(df, aes(x=x, y= value, color= variable))+geom_line()
 ```
 
 
+### April 8, 2024
 
+* To Do:
+  - Algorithms Homework 1
+  - Standups
+    - Take a piece of your code, present it to the class. Feel free to respond to people's code.
+    - Wednesday, Code reviews
+
+##### Notes Chapter 2: Selection Sort
+
+Selection Sort:
+
+1. Start with teh entire list as the unsorted sublist.
+2. Find the smallest element in the unsorted sublist.
+3. Swap the smallest elemet with the first element of the unsorted sublist, thus adding it to the sorted siublist.
+4. Now consider the remaining unsorted sublist ( Excluding the first element, which is now part of the sorted sublist), nd repeated steps 2 and 2 until the entire list is sorted. 
+* Has a time complexity of $O(n^2)$.
+
+
+###### Sorting
+
+Types of sarch, Linear search and Binary Search. Binary search is faster than linear search given than an array is sorted. So to be able to do binary search we need to sort the array first. Linear search is good if there are not too many items, but if theres a lot of items it will take a long time. 
+
+* When do you sort the array?
+
+  - I would say right at the beginning before you search, sometimes you cannot sort data at a time when it is not being utilized. 
+  - The more time you let run between sorting data, the longer it will take to sort because of the shear size of the data
+  - Sometimes we want to sort the data multiple times throughout the day to lessen the time it takes.
+  - Depending on the type of the data. 
+
+* For the algorithms assignement:
+  * Selection Sort
+  * Insertion Sort
+    * Looking for Pseudo Code and $O$ notation.
+  
+##### Data Structures:
+
+###### Linked Lists
+    Linked Lists vs. Array:
+  - Linked lists
+      - Can add and remove elements as we go. Size is adjustable as we go.
+    * Single Linked lists
+      * Data
+        * Node
+          * Data
+            * Node
+              * Data
+                * Null
+      - For example Microsoft word. each word is its own linked list. can easily insert, add, delete words. We keep adding/deleting/editing nodes.
+      - Single linked lists can only go in one direction.
+    * Double Linked Lists
+      * Similar to a single linked list, but data has nodes on both sides so that it you can go multiple directions.
+      * Downside: More maintainence. A little slower than a single linked list, but still very fast.
+      * Can be good for sending a packet tracer back and forth. 
+    * Circular Linked List
+      * Similar to double linked lists where the Previous node for the first node goes to the next of the last node and vice versa.
+      * How the fuck am I gonna get this program, running :((((((((
+      * Implementing a circular linked list for extra credit on the linked lists data structures assignment.
+    
+
+###### Arrays
+
+  Arrays have a set size, we define the size, more efficient, faster. For reading an array $O(1)$. Searching in an array linearly, $O(\frac{n}{2})=O(n)$
+
+  Downside/disadvantages of an Array:
+    - Array has a fixed size, cannot add elements to the array.
+    - Size not adjustable
 
 ```{r}
 
