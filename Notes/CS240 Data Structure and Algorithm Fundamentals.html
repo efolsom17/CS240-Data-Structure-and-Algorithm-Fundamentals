@@ -139,6 +139,13 @@ window.Quarto = {
 </ul>
 <section id="algorithms-assignment-1" class="level6">
 <h6 class="anchored" data-anchor-id="algorithms-assignment-1">Algorithms Assignment 1</h6>
+<ul>
+<li>Searching: There are two types of searches
+<ul>
+<li>Linear Search: Fast when few items, <span class="math inline">\(O(n)\)</span>. Slow when large items. Does not require sorted array.</li>
+<li>Binary Search: About the same speed as Linear when there are few items, requires sorted array. Good with lots of items. <span class="math inline">\(O(\log_2(n))\)</span>.</li>
+</ul></li>
+</ul>
 <p>Binary Search and Time Complexity</p>
 <p>For the first question, we are writing pseudocode to write an alogrithm for performing the binary search across an Array.</p>
 <ul>
@@ -217,6 +224,104 @@ window.Quarto = {
 </div>
 </div>
 </div>
+</section>
+</section>
+<section id="april-8-2024" class="level3">
+<h3 class="anchored" data-anchor-id="april-8-2024">April 8, 2024</h3>
+<ul>
+<li>To Do:
+<ul>
+<li>Algorithms Homework 1</li>
+<li>Standups
+<ul>
+<li>Take a piece of your code, present it to the class. Feel free to respond to people’s code.</li>
+<li>Wednesday, Code reviews</li>
+</ul></li>
+</ul></li>
+</ul>
+<section id="notes-chapter-2-selection-sort" class="level5">
+<h5 class="anchored" data-anchor-id="notes-chapter-2-selection-sort">Notes Chapter 2: Selection Sort</h5>
+<p>Selection Sort:</p>
+<ol type="1">
+<li>Start with teh entire list as the unsorted sublist.</li>
+<li>Find the smallest element in the unsorted sublist.</li>
+<li>Swap the smallest elemet with the first element of the unsorted sublist, thus adding it to the sorted siublist.</li>
+<li>Now consider the remaining unsorted sublist ( Excluding the first element, which is now part of the sorted sublist), nd repeated steps 2 and 2 until the entire list is sorted.</li>
+</ol>
+<ul>
+<li>Has a time complexity of <span class="math inline">\(O(n^2)\)</span>.</li>
+</ul>
+<section id="sorting" class="level6">
+<h6 class="anchored" data-anchor-id="sorting">Sorting</h6>
+<p>Types of sarch, Linear search and Binary Search. Binary search is faster than linear search given than an array is sorted. So to be able to do binary search we need to sort the array first. Linear search is good if there are not too many items, but if theres a lot of items it will take a long time.</p>
+<ul>
+<li><p>When do you sort the array?</p>
+<ul>
+<li>I would say right at the beginning before you search, sometimes you cannot sort data at a time when it is not being utilized.</li>
+<li>The more time you let run between sorting data, the longer it will take to sort because of the shear size of the data</li>
+<li>Sometimes we want to sort the data multiple times throughout the day to lessen the time it takes.</li>
+<li>Depending on the type of the data.</li>
+</ul></li>
+<li><p>For the algorithms assignement:</p>
+<ul>
+<li>Selection Sort</li>
+<li>Insertion Sort
+<ul>
+<li>Looking for Pseudo Code and <span class="math inline">\(O\)</span> notation.</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="data-structures" class="level5">
+<h5 class="anchored" data-anchor-id="data-structures">Data Structures:</h5>
+<section id="linked-lists" class="level6">
+<h6 class="anchored" data-anchor-id="linked-lists">Linked Lists</h6>
+<pre><code>Linked Lists vs. Array:</code></pre>
+<ul>
+<li>Linked lists
+<ul>
+<li>Can add and remove elements as we go. Size is adjustable as we go.</li>
+<li>Single Linked lists
+<ul>
+<li>Data
+<ul>
+<li>Node
+<ul>
+<li>Data
+<ul>
+<li>Node
+<ul>
+<li>Data
+<ul>
+<li>Null</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>For example Microsoft word. each word is its own linked list. can easily insert, add, delete words. We keep adding/deleting/editing nodes.</li>
+<li>Single linked lists can only go in one direction.</li>
+</ul></li>
+<li>Double Linked Lists
+<ul>
+<li>Similar to a single linked list, but data has nodes on both sides so that it you can go multiple directions.</li>
+<li>Downside: More maintainence. A little slower than a single linked list, but still very fast.</li>
+<li>Can be good for sending a packet tracer back and forth.</li>
+</ul></li>
+<li>Circular Linked List
+<ul>
+<li>Similar to double linked lists where the Previous node for the first node goes to the next of the last node and vice versa.</li>
+<li>How the fuck am I gonna get this progra, running :((((((((</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="arrays" class="level6">
+<h6 class="anchored" data-anchor-id="arrays">Arrays</h6>
+<p>Arrays have a set size, we define the size, more efficient, faster. For reading an array <span class="math inline">\(O(1)\)</span>. Searching in an array linearly, <span class="math inline">\(O(\frac{n}{2})=O(n)\)</span></p>
+<p>Downside/disadvantages of an Array: - Array has a fixed size, cannot add elements to the array. - Size not adjustable</p>
+</section>
 </section>
 </section>
 </section>
