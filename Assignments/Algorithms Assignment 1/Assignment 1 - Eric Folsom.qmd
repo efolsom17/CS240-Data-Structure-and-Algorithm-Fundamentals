@@ -28,15 +28,15 @@ library(ggplot2)
 
 ### Problem 1
 
-For this problem we are writing psuedocode for an itterative binary search algorithm that works over an array.
+For this problem we are writing psuedocode for an iterative binary search algorithm that works over an array.
 
 To design an alogorithm to perform this task, we would implement something similar to the following:
 
-* Assume we have an ordered array $X=\{x_0,x_1,\ldots,x_n\}$, where $x_i \leq x_{i+1}$, where $i=1,2,3,\ldots,n$. 
+* Assume we have an ordered array $X=\{x_0,x_1,\ldots,x_n\}$, where $x_i \leq x_{i+1}$, where $i=0,1,2,\ldots,n$. 
 
 * We will define the value or object that we are looking for $y$. Also assume that $y\in X$
    
-1. Find the largest index in the array, $n$.
+1. Find the outer bounds of the array.
    - Define the largest index ($x_n$).
    - Define the beginning (first) index to be the smallest ($x_0$).
 2. Find the middle index $\frac{n}{2}$ (round to the nearest integer if $n$ is odd).
@@ -51,7 +51,7 @@ To design an alogorithm to perform this task, we would implement something simil
     b. Pick a new $x_{\frac{n}{2}}$ using the same process as step 2.
     c. Go to step 3.
 
-For each step in the algorithm, we are dividing the array in half, searching the middle index of the array, and then redefining the area in the array that we have to search. We do this until we have either found the index of the item, or we have exhausted all the possible indices of the array to search, in which case we can conclude that the item does is not an element of the array.
+For each step in the algorithm, we are dividing the array in half, searching the middle index of the array, and then redefining the area in the array that we have to search. We do this until we have either found the index of the item, or we have exhausted all the possible indices of the array to search, in which case we can conclude that the item is not an element of the array.
 
 ### Problem 2
 
@@ -75,7 +75,7 @@ def binary_search(item, data, oper = False, diag = False):
 
    x0 = 0 #defining the index of first element of the array
    xn = len(data)-1 #defining the index of the last element of the array
-   operations = 0 #creating a varaible to count the number of operations the 
+   operations = 0 #creating a varaible to count the number of operations. 
 
    # Beginning the actual function
    while x0 <= xn: #while we are searching valid indices of our array
@@ -164,7 +164,7 @@ We can find the position of 51216352 using the following code:
 ```{python, 3a}
 #| echo: true
 
-binary_search(51216352, numbers, oper=True)
+p1=binary_search(51216352, numbers, oper=True)
 ```
 
 #### b. What is the position of 198313119 in the array? How many operations did it take to find?
@@ -174,7 +174,7 @@ We can find the position of 198313119 using the following code:
 ```{python, 3b}
 #| echo: true
 
-binary_search(198313119, numbers, oper=True)
+p2=binary_search(198313119, numbers, oper=True)
 ```
 
 
@@ -185,7 +185,7 @@ We can find the position of 196614208 using the following code:
 ```{python, 3c}
 #| echo: true
 
-binary_search(196614208,numbers, oper=True)
+p3=binary_search(196614208,numbers, oper=True)
 
 ```
 
@@ -198,20 +198,30 @@ To find the worst case time complexity for our binary search function we should 
 
 We can show this via the following where we will solve this equation for $x$, the number of iterations, for a given $n$:
 
-\begin{center}
-$\frac{n}{2^x}=1$
+$$
+\frac{n}{2^x}=1
+$$
 
-$n\cdot (2^{-x})=1$
+$$
+n\cdot (2^{-x})=1
+$$
 
-$\log_2(n\cdot (2^{-x}))=\log_2(1)$
+$$
+\log_2(n\cdot (2^{-x}))=\log_2(1)
+$$
 
-$\log_2(n)+\log_2(2^{-x})=\log_2(1)$
+$$
+\log_2(n)+\log_2(2^{-x})=\log_2(1)
+$$
 
-$\log_2(n)-x=0$
+$$
+\log_2(n)-x=0
+$$
 
-$\log_2(n)=x$
+$$
+\log_2(n)=x
+$$
 
-\end{center}
 
 above we have shown that it will take at most $\log_2(n)$ steps to reduce the size of our search area to $1$ index, given an array of size $n$. Thus we can say that the worst case time complexity of our binary search algorithm is $O(\log_2(n))$.
 
@@ -225,7 +235,7 @@ log_2_4000<-round(log2(4000))
 log_2_8000<-round(log2(8000))
 ```
 
-The worst case time complexity function for this algorithm is $O(\log_2(n))$. Thus we can say that the worst case time complexity if we have $4000$ entries is found by $\log_2(4000) \approx$ `{r} log_2_4000`. This is in contrast to if we only had $2000$ entries where the worst case time complexity would be $\log_2(2000)\approx$ `r log_2_2000`. If we were to again double the size of of our array to $8000$ entries, the worst case time complexity would be $\log_2(8000)\approx$ `r log_2_8000`steps to find an item in the array.
+The worst case time complexity function for this algorithm is $O(\log_2(n))$. Thus we can say that the worst case time complexity if we have $4000$ entries is found by $\log_2(4000) \approx$ `{r} log_2_4000`. This is in contrast to if we only had $2000$ entries where the worst case time complexity would be $\log_2(2000)\approx$ `r log_2_2000`. If we were to again double the size of of our array to $8000$ entries, the worst case time complexity would be $\log_2(8000)\approx$ `r log_2_8000` steps to find an item in the array.
 
 #### f. What do you think the average case time complexity is for binary search? Explain your reasoning.
 
@@ -241,10 +251,8 @@ To show that the average time complexity for this function is $\log_2(n)$, I wil
 
 operations_numbers = [] #storage vector for the number of operations each function call takes.
 
-# each iteration searches for the value of the i-th index 
-# of ind_data which is a list of indices of numbers
-# I think the time complexity of this is O(m*log_2(n)), where m is the number of simulations, and n is the
-# size of the array you are performing binary search on. 
+# each iteration searches for the value of the i-th index of numbers
+
 for i in range(1999):
    _,_, ops = binary_search(numbers[i], numbers)
    operations_numbers.append(ops) 
@@ -284,7 +292,7 @@ If we are to search for this average value using our binary search function on `
 binary_search(numbers_10_11_avg,numbers)
 ```
 
-We have also seen in part c. that when we search for an item that is not found in `numbers.txt` it will take $11$ operations to conclude that the item is not in `numbers.txt`. Because of this we can say that if we think of the possible search terms, using `numbers.txt` as our example, as being any possible number in the range of values contained within `numbers.txt` instead of being searchable numbers in `numbers.txt`, the average number of searches will trend towards 11, which is approximately $\log_2(1999)$. 
+We have also seen in part c. that when we search for an item that is not found in `numbers.txt` it will take $11$ operations to conclude that the item is not in `numbers.txt`. Because of this we can say that if we think of the possible search terms, using `numbers.txt` as our example, as being any possible number in the range of values contained within `numbers.txt` instead of being only the searchable numbers in `numbers.txt`, the average number of searches will trend towards 11, which is approximately $\log_2(1999)$. 
 
 ### Problem 4
 
@@ -334,7 +342,7 @@ function getXOR(arr1, arr2){ # Exclusive Or, in A or B, but not both.
 }
 
   # the above for loop takes n1*n2 iteartions to complete
-  # each loop take place independently of each other
+  # each loop takes place independently of the other
 ```
 
 Let $n$ be the length of `arr1`.
@@ -345,4 +353,6 @@ In the first outer for loop, it will take $n$ operations to visit each index of 
 
 In the second outer for loop, it will take $m$ operations to visit each index of `arr2`. Within the nested for loop, it will take another $n$ operations for each $m$ to visit and compare with each index of `arr1`. Thus it will take $m\cdot n$ operations to complete. Thus we can say that for the second for loop, the time complexity function is $O(m\cdot n)$.
 
-Note that the time complexity functions for each for loop is the same, $O(n\cdot m)$. We have two for loops however in this function, thus we can say that the time complexity of the function is $O(2\cdot(n\cot m))$. Because Big Oh notation drops constants we can simplify this down to $O(n\cdot m)$. Thus the time complexity for this function is $O(n\cdot m)$. 
+Note that the time complexity functions for each for loop is the same, $O(n\cdot m)$. We have two for loops however in this function, thus we can say that the time complexity of the function is $O(2\cdot(n\cot m))$. Because Big Oh notation drops constants we can simplify this down to $O(n\cdot m)$. Thus the time complexity for this function is $O(n\cdot m)$, where $n$ and $m$ are the lengths of `arr1` and `arr2` respectively.
+
+In the case where `arr1` and `arr2` are the same size, $n=m$, the time complexity of this function will be $O(n^2)$.

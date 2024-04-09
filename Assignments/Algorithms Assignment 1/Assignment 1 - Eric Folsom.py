@@ -96,17 +96,13 @@ numbers = con_numbers
 
 
 #### a.
-binary_search(51216352, numbers, oper=True)
+p1 = binary_search(51216352, numbers, oper=True)
 
 ### b.
-binary_search(198313119, numbers, oper=True)
+p2 = binary_search(198313119, numbers, oper=True)
 
 ### c. 
-binary_search(196614208,numbers, oper=True)
+p3 = binary_search(196614208,numbers, oper=True)
 
-
-
-#### Venture onward if you dare, long processing times and many many many lines awaite ye!!!!
-
-## Seriously I warned you, make sure to middle click when you scroll if not clicking the sidebar
-
+# Did some testing below here, deleted it because it was bulky and unnecessary,
+# work is available on github if you are interested.
