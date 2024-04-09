@@ -24,7 +24,7 @@ def binary_search(item, data, oper = False, diag = False):
    operations = 0 #creating a varaible to count the number of operations the 
 
    # Beginning the actual function
-   while x0 <= xn: #while we are searching valid indicies of our array
+   while x0 <= xn: #while we are searching valid indices of our array
       operations = operations + 1 #count one operation
       mid = (xn + x0) // 2 #pick the middle index of the array (floor operation)
       search = data[mid] # Value of the middle index (the one we are searching in)

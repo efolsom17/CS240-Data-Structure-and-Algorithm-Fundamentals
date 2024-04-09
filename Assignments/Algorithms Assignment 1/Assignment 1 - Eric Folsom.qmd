@@ -51,7 +51,7 @@ To design an alogorithm to perform this task, we would implement something simil
     b. Pick a new $x_{\frac{n}{2}}$ using the same process as step 2.
     c. Go to step 3.
 
-For each step in the algorithm, we are dividing the array in half, searching the middle index of the array, and then redefining the area in the array that we have to search. We do this until we have either found the index of the item, or we have exhausted all the possible indicies of the array to search, in which case we can conclude that the item does is not an element of the array.
+For each step in the algorithm, we are dividing the array in half, searching the middle index of the array, and then redefining the area in the array that we have to search. We do this until we have either found the index of the item, or we have exhausted all the possible indices of the array to search, in which case we can conclude that the item does is not an element of the array.
 
 ### Problem 2
 
@@ -78,7 +78,7 @@ def binary_search(item, data, oper = False, diag = False):
    operations = 0 #creating a varaible to count the number of operations the 
 
    # Beginning the actual function
-   while x0 <= xn: #while we are searching valid indicies of our array
+   while x0 <= xn: #while we are searching valid indices of our array
       operations = operations + 1 #count one operation
       mid = (xn + x0) // 2 #pick the middle index of the array (floor operation)
       search = data[mid] # Value of the middle index (the one we are searching in)
@@ -192,10 +192,28 @@ binary_search(196614208,numbers, oper=True)
 #### d. What is the worst case time complexity? Evaluate line by line, create a time complexity function and then define its Big O value.
 
 
-Assume we have an ordered array $X=\{x_0,x_1,\ldots,x_n\}$, where $x_i \leq x_{i+1}$, where $i=1,2,3,\ldots,n$. To figure out what the worst case time complextiy for this algorithm is, lets take the case of the item we are searching for being $x_n$, the last item of our array. If we were searching one item at a time, our time complexity function would be $O(n)$. 
+Assume we have an ordered array $X=\{x_0,x_1,\ldots,x_n\}$, where $x_i \leq x_{i+1}$, where $i=1,2,3,\ldots,n$. Lets consider the case of the item we are searching for being $x_n$, the last item of our array. If we were searching one item at a time, as with linear search, our time complexity function would be $O(n)$. 
 
-The first time we divide the 
+To find the worst case time complexity for our binary search function we should consider the case where we are searching for the item in index `[0]` of our array, or the first item in the array (the same idea holds if we were searching for the item in index `[n-1]`, the last item in our array). Because we are dividing the search area in half for each iteration, we are solving the problem of $\frac{n}{2^x}=1$. Where $n$ is the number of items in our array, and $x$ is the number of divisions required to have 1 element.
 
+We can show this via the following where we will solve this equation for $x$, the number of iterations, for a given $n$:
+
+\begin{center}
+$\frac{n}{2^x}=1$
+
+$n\cdot (2^{-x})=1$
+
+$\log_2(n\cdot (2^{-x}))=\log_2(1)$
+
+$\log_2(n)+\log_2(2^{-x})=\log_2(1)$
+
+$\log_2(n)-x=0$
+
+$\log_2(n)=x$
+
+\end{center}
+
+above we have shown that it will take at most $\log_2(n)$ steps to reduce the size of our search area to $1$ index, given an array of size $n$. Thus we can say that the worst case time complexity of our binary search algorithm is $O(\log_2(n))$.
 
 #### e.  What would the worst case time complexity be if we have 4000 entries instead of 2000?
 
@@ -204,46 +222,24 @@ The first time we divide the
 
 log_2_2000<-round(log2(2000))
 log_2_4000<-round(log2(4000))
-
+log_2_8000<-round(log2(8000))
 ```
 
-The time complexity function for this algorithm is $O(\log_2(n))$. Thus we can say that the worst case time complexity if we have 4000 entries is found by $\log_2(4000) \approx$ `{r} log_2_4000`. This is in contrast to if we only had 2000 entries where the worst case time complexity would be $\log_2(2000)\approx$ `r log_2_2000`.
+The worst case time complexity function for this algorithm is $O(\log_2(n))$. Thus we can say that the worst case time complexity if we have $4000$ entries is found by $\log_2(4000) \approx$ `{r} log_2_4000`. This is in contrast to if we only had $2000$ entries where the worst case time complexity would be $\log_2(2000)\approx$ `r log_2_2000`. If we were to again double the size of of our array to $8000$ entries, the worst case time complexity would be $\log_2(8000)\approx$ `r log_2_8000`steps to find an item in the array.
 
 #### f. What do you think the average case time complexity is for binary search? Explain your reasoning.
 
-I think that the average case time complexity for binary search is $\log_2(n)$. I will demonstrate this with a simulation. For this I will use `numbers.txt`, which has $1999$ elements, and perform a random sample of the indicies of `numbers.txt`, where $n=100000$ random indicies of `numbers.txt`. 
+I would hypothesize that the average time complexity for binary search is $\log_2(n)$, where $n$ is the number of items (indices) of an array.
 
-We hypothesize that the average time complexity for binary search is $\log_2(n)$, where $n$ is the number of items (indicies) of an array.
+It is important to note that, $\log_2(2000)\approx$ `r log_2_2000`.
 
-It is important to note that, $\log_2(2000)\approx$ `r log_2_2000`. 
-
-To begin I will, using R, create a vector of random possible indicies of `numbers.txt` which has $1999\approx 2000$ indicies.
-
-```{r , simulation to show average time complexity r part one}
-#| echo: true
-
-#### Some R code to establish the average time complexity of 
-#### the binary search function. I am using R to sample random
-#### indicies of numbers.txt, which I will then use in python to save the numbers of operations
-#### it takes to find that specific value in numbers.txt, then I will create a distribution of
-#### the number of operations in R and find the average number of operations. Then I will compare my 
-#### emperical average from my simulation to my hypothesized value of $log_2(1999)\approx 11$.  
-
-
-n<-100000                           #number of random indicies we want to samples
-ind_numbers<-as.integer(round(runif(n,0,1998)))#drawing random indicies from a discrete uniform(0,1998) dist.
-                                    #rounding ensures integer values
-View(ind_numbers)
-write.table(ind_numbers, "clipboard", sep=",") 
-```
-
-Now that we have our vector of random integers we can move on to python.
+To show that the average time complexity for this function is $\log_2(n)$, I will simply run it for each index of `numbers.txt` and record the number of operations it takes to find the value, then investigate the distribution of the number of operations.
 
 ```{python, simulation to show average time complexity python part one}
 #| echo: true
 #| output: false
 
-ind_data = r.ind_numbers #accessing the vector just created in R
+ind_data = list(range(1999)) # indices of the data that we want, data=numbers.txt
 
 operations_numbers = [] #storage vector for the number of operations each function call takes.
 
@@ -251,8 +247,8 @@ operations_numbers = [] #storage vector for the number of operations each functi
 # of ind_data which is a list of indices of numbers
 # I think the time complexity of this is O(m*log_2(n)), where m is the number of simulations, and n is the
 # size of the array you are performing binary search on. 
-for i in range(0 ,len(ind_data)-1):
-   _,_, ops = binary_search(numbers[ind_data[i]], numbers)
+for i in range(1999):
+   _,_, ops = binary_search(numbers[i], numbers)
    operations_numbers.append(ops) 
 
 print(operations_numbers)
@@ -284,39 +280,47 @@ Evaluate the time complexity of the following code snippets. Evaluate line by li
 #### a. 
 
 ```{none}
-function sum(arr){
-  counter = 0
+function sum(arr){ ##Function that sums the values of an array
+  counter = 0 #counter for keeping track of sum of array
 
-  for (i = 0; i < arr.length; i++) {
-       counter += arr[i]
+  for (i = 0; i < arr.length; i++) { # n iterations, one for each entry of the array
+       counter += arr[i] # 1 operation each time
   }
 
      return counter
 }
 ```
 
+Because we are iterating through each index of the given array and performing one operation each time, we can say that the time complexity for this funciton can be given by $O(n)$, where $n$ is the size of the array.
+
 #### b. 
 
 ```{none}
-function getXOR(arr1, arr2){
+function getXOR(arr1, arr2){ # Exclusive Or, in A or B, but not both.
+                             # inputs are two arrays, returns values in only one
+  arr3 = []                  # of the arrays but not in both
 
-  arr3 = []
-
-  for (i = 0; i < arr1.length; i++){
+  for (i = 0; i < arr1.length; i++){ # n1 iterations, length of arr1
       let unique = True
-      for (j = 0; j < arr2.length; j++ }{
+      for (j = 0; j < arr2.length; j++ ){ # n2 iterations, length of arr2
         if(arr1[i] == arr2[j]) {unique = False;}
       }
       if (unique) {arr3.append(arr1[i]);}
     }
-  }  
-  for (i = 0; i < arr2.length; i++){
+
+  # the above for loop takes n1*n2 iterations to complete
+
+  for (i = 0; i < arr2.length; i++){ # n2 iterations, length of arr2
     let unique = True
-    for (j = 0; j < arr1.length; j++ }{
+    for (j = 0; j < arr1.length; j++ ){ # n1 iterations, length of arr1
       if(arr2[i] == arr1[j]) {unique = False;}
     }
     if (unique) {arr3.append(arr2[i]);}
   }
   return arr[3]
 }
+
+  # the above for loop takes n1*n2 iteartions to complete
+  # each loop take place independently of each other
+  # 
 ```

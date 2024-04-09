@@ -299,63 +299,44 @@ This took  11  operations.</code></pre>
 </section>
 <section id="d.-what-is-the-worst-case-time-complexity-evaluate-line-by-line-create-a-time-complexity-function-and-then-define-its-big-o-value." class="level4">
 <h4 class="anchored" data-anchor-id="d.-what-is-the-worst-case-time-complexity-evaluate-line-by-line-create-a-time-complexity-function-and-then-define-its-big-o-value.">d.&nbsp;What is the worst case time complexity? Evaluate line by line, create a time complexity function and then define its Big O value.</h4>
-<p>Assume we have an ordered array <span class="math inline">\(X=\{x_0,x_1,\ldots,x_n\}\)</span>, where <span class="math inline">\(x_i \leq x_{i+1}\)</span>, where <span class="math inline">\(i=1,2,3,\ldots,n\)</span>. To figure out what the worst case time complextiy for this algorithm is, lets take the case of the item we are searching for being <span class="math inline">\(x_n\)</span>, the last item of our array. If we were searching one item at a time, our time complexity function would be <span class="math inline">\(O(n)\)</span>.</p>
-<p>The first time we divide the</p>
+<p>Assume we have an ordered array <span class="math inline">\(X=\{x_0,x_1,\ldots,x_n\}\)</span>, where <span class="math inline">\(x_i \leq x_{i+1}\)</span>, where <span class="math inline">\(i=1,2,3,\ldots,n\)</span>. Lets consider the case of the item we are searching for being <span class="math inline">\(x_n\)</span>, the last item of our array. If we were searching one item at a time, as with linear search, our time complexity function would be <span class="math inline">\(O(n)\)</span>.</p>
+<p>To find the worst case time complexity for our binary search function we should consider the case where we are searching for the item in index <code>[0]</code> of our array, or the first item in the array (the same idea holds if we were searching for the item in index <code>[n-1]</code>, the last item in our array). Because we are dividing the search area in half for each iteration, we are solving the problem of <span class="math inline">\(\frac{n}{2^x}=1\)</span>. Where <span class="math inline">\(n\)</span> is the number of items in our array, and <span class="math inline">\(x\)</span> is the number of divisions required to have 1 element.</p>
+<p>We can show this via the following where we will solve this equation for <span class="math inline">\(x\)</span>, the number of iterations, for a given <span class="math inline">\(n\)</span>:</p>
+<p>above we have shown that it will take at most <span class="math inline">\(\log_2(n)\)</span> steps to reduce the size of our search area to <span class="math inline">\(1\)</span> index, given an array of size <span class="math inline">\(n\)</span>. Thus we can say that the worst case time complexity of our binary search algorithm is <span class="math inline">\(O(\log_2(n))\)</span>.</p>
 </section>
 <section id="e.-what-would-the-worst-case-time-complexity-be-if-we-have-4000-entries-instead-of-2000" class="level4">
 <h4 class="anchored" data-anchor-id="e.-what-would-the-worst-case-time-complexity-be-if-we-have-4000-entries-instead-of-2000">e. What would the worst case time complexity be if we have 4000 entries instead of 2000?</h4>
-<p>The time complexity function for this algorithm is <span class="math inline">\(O(\log_2(n))\)</span>. Thus we can say that the worst case time complexity if we have 4000 entries is found by <span class="math inline">\(\log_2(4000) \approx\)</span> 12. This is in contrast to if we only had 2000 entries where the worst case time complexity would be <span class="math inline">\(\log_2(2000)\approx\)</span> 11.</p>
+<p>The worst case time complexity function for this algorithm is <span class="math inline">\(O(\log_2(n))\)</span>. Thus we can say that the worst case time complexity if we have <span class="math inline">\(4000\)</span> entries is found by <span class="math inline">\(\log_2(4000) \approx\)</span> 12. This is in contrast to if we only had <span class="math inline">\(2000\)</span> entries where the worst case time complexity would be <span class="math inline">\(\log_2(2000)\approx\)</span> 11. If we were to again double the size of of our array to <span class="math inline">\(8000\)</span> entries, the worst case time complexity would be <span class="math inline">\(\log_2(8000)\approx\)</span> 13steps to find an item in the array.</p>
 </section>
 <section id="f.-what-do-you-think-the-average-case-time-complexity-is-for-binary-search-explain-your-reasoning." class="level4">
 <h4 class="anchored" data-anchor-id="f.-what-do-you-think-the-average-case-time-complexity-is-for-binary-search-explain-your-reasoning.">f.&nbsp;What do you think the average case time complexity is for binary search? Explain your reasoning.</h4>
-<p>I think that the average case time complexity for binary search is <span class="math inline">\(\log_2(n)\)</span>. I will demonstrate this with a simulation. For this I will use <code>numbers.txt</code>, which has <span class="math inline">\(1999\)</span> elements, and perform a random sample of the indicies of <code>numbers.txt</code>, where <span class="math inline">\(n=100000\)</span> random indicies of <code>numbers.txt</code>.</p>
-<p>We hypothesize that the average time complexity for binary search is <span class="math inline">\(\log_2(n)\)</span>, where <span class="math inline">\(n\)</span> is the number of items (indicies) of an array.</p>
+<p>I would hypothesize that the average time complexity for binary search is <span class="math inline">\(\log_2(n)\)</span>, where <span class="math inline">\(n\)</span> is the number of items (indicies) of an array.</p>
 <p>It is important to note that, <span class="math inline">\(\log_2(2000)\approx\)</span> 11.</p>
-<p>To begin I will, using R, create a vector of random possible indicies of <code>numbers.txt</code> which has <span class="math inline">\(1999\approx 2000\)</span> indicies.</p>
+<p>To show that the average time complexity for this function is <span class="math inline">\(\log_2(n)\)</span>, I will simply run it for each index of <code>numbers.txt</code> and record the number of operations it takes to find the value, then investigate the distribution of the number of operations.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### Some R code to establish the average time complexity of </span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="do">#### the binary search function. I am using R to sample random</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="do">#### indicies of numbers.txt, which I will then use in python to save the numbers of operations</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="do">#### it takes to find that specific value in numbers.txt, then I will create a distribution of</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="do">#### the number of operations in R and find the average number of operations. Then I will compare my </span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="do">#### emperical average from my simulation to my hypothesized value of $log_2(1999)\approx 11$.  </span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="dv">100000</span>                           <span class="co">#number of random indicies we want to samples</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>ind_numbers<span class="ot">&lt;-</span><span class="fu">as.integer</span>(<span class="fu">round</span>(<span class="fu">runif</span>(n,<span class="dv">0</span>,<span class="dv">1998</span>)))<span class="co">#drawing random indicies from a discrete uniform(0,1998) dist.</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                                    <span class="co">#rounding ensures integer values</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(ind_numbers)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(ind_numbers, <span class="st">"clipboard"</span>, <span class="at">sep=</span><span class="st">","</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in write.table(ind_numbers, "clipboard", sep = ","): clipboard buffer
-is full and output lost</code></pre>
-</div>
-</div>
-<p>Now that we have our vector of random integers we can move on to python.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ind_data <span class="op">=</span> r.ind_numbers <span class="co">#accessing the vector just created in R</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>operations_numbers <span class="op">=</span> [] <span class="co">#storage vector for the number of operations each function call takes.</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># each iteration searches for the value of the i-th index </span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># of ind_data which is a list of indices of numbers</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># I think the time complexity of this is O(m*log_2(n)), where m is the number of simulations, and n is the</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># size of the array you are performing binary search on. </span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span> ,<span class="bu">len</span>(ind_data)<span class="op">-</span><span class="dv">1</span>):</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>   _,_, ops <span class="op">=</span> binary_search(numbers[ind_data[i]], numbers)</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>   operations_numbers.append(ops) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(operations_numbers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ind_data <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1999</span>)) <span class="co"># indicies of the data that we want, data=numbers.txt</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>operations_numbers <span class="op">=</span> [] <span class="co">#storage vector for the number of operations each function call takes.</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># each iteration searches for the value of the i-th index </span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># of ind_data which is a list of indices of numbers</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># I think the time complexity of this is O(m*log_2(n)), where m is the number of simulations, and n is the</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># size of the array you are performing binary search on. </span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1999</span>):</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>   _,_, ops <span class="op">=</span> binary_search(numbers[i], numbers)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>   operations_numbers.append(ops) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(operations_numbers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we return back to R to visualize the results.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Here I am visualizing the results of the simulation on the number of operations it takes</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># I am using R because I am more familiar with it and because ggplot2 is the best data </span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># visualizaiton tool out there.</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>results_sim <span class="ot">&lt;-</span> py<span class="sc">$</span>operations_numbers</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>results_sim.df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(results_sim)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_sim.df, <span class="fu">aes</span>(<span class="at">x=</span> results_sim))<span class="sc">+</span><span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Here I am visualizing the results of the simulation on the number of operations it takes</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># I am using R because I am more familiar with it and because ggplot2 is the best data </span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># visualizaiton tool out there.</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>results_sim <span class="ot">&lt;-</span> py<span class="sc">$</span>operations_numbers</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>results_sim.df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(results_sim)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_sim.df, <span class="fu">aes</span>(<span class="at">x=</span> results_sim))<span class="sc">+</span><span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
@@ -367,7 +348,7 @@ is full and output lost</code></pre>
 </div>
 </div>
 </div>
-<p>We find that the average number of operations our binary search algorithm took to be 9.9796598 operations. We can compare this to our hypothesized value of <span class="math inline">\(11\)</span>.</p>
+<p>We find that the average number of operations our binary search algorithm took to be 9.9814907 operations. We can compare this to our hypothesized value of <span class="math inline">\(11\)</span>.</p>
 </section>
 </section>
 <section id="problem-4" class="level3">
@@ -376,41 +357,48 @@ is full and output lost</code></pre>
 <section id="a." class="level4">
 <h4 class="anchored" data-anchor-id="a.">a.</h4>
 <div class="cell">
-<pre class="none cell-code"><code>function sum(arr){
-  counter = 0
+<pre class="none cell-code"><code>function sum(arr){ ##Function that sums the values of an array
+  counter = 0 #counter for keeping track of sum of array
 
-  for (i = 0; i &lt; arr.length; i++) {
-       counter += arr[i]
+  for (i = 0; i &lt; arr.length; i++) { # n iterations, one for each entry of the array
+       counter += arr[i] # 1 operation each time
   }
 
      return counter
 }</code></pre>
 </div>
+<p>Because we are iterating through each index of the given array and performing one operation each time, we can say that the time complexity for this funciton can be given by <span class="math inline">\(O(n)\)</span>, where <span class="math inline">\(n\)</span> is the size of the array.</p>
 </section>
 <section id="b." class="level4">
 <h4 class="anchored" data-anchor-id="b.">b.</h4>
 <div class="cell">
-<pre class="none cell-code"><code>function getXOR(arr1, arr2){
+<pre class="none cell-code"><code>function getXOR(arr1, arr2){ # Exclusive Or, in A or B, but not both.
+                             # inputs are two arrays, returns values in only one
+  arr3 = []                  # of the arrays but not in both
 
-  arr3 = []
-
-  for (i = 0; i &lt; arr1.length; i++){
+  for (i = 0; i &lt; arr1.length; i++){ # n1 iterations, length of arr1
       let unique = True
-      for (j = 0; j &lt; arr2.length; j++ }{
+      for (j = 0; j &lt; arr2.length; j++ ){ # n2 iterations, length of arr2
         if(arr1[i] == arr2[j]) {unique = False;}
       }
       if (unique) {arr3.append(arr1[i]);}
     }
-  }  
-  for (i = 0; i &lt; arr2.length; i++){
+
+  # the above for loop takes n1*n2 iterations to complete
+
+  for (i = 0; i &lt; arr2.length; i++){ # n2 iterations, length of arr2
     let unique = True
-    for (j = 0; j &lt; arr1.length; j++ }{
+    for (j = 0; j &lt; arr1.length; j++ ){ # n1 iterations, length of arr1
       if(arr2[i] == arr1[j]) {unique = False;}
     }
     if (unique) {arr3.append(arr2[i]);}
   }
   return arr[3]
-}</code></pre>
+}
+
+  # the above for loop takes n1*n2 iteartions to complete
+  # each loop take place independently of each other
+  # </code></pre>
 </div>
 </section>
 </section>
