@@ -229,7 +229,7 @@ The worst case time complexity function for this algorithm is $O(\log_2(n))$. Th
 
 #### f. What do you think the average case time complexity is for binary search? Explain your reasoning.
 
-I would hypothesize that the average time complexity for binary search is $\log_2(n)$, where $n$ is the number of items (indices) of an array.
+I would hypothesize that the average time complexity for binary search is $\log_2(n)$, where $n$ is the number of items (indices) of an array. We have previously shown in part d. that the worst case time complexity for binary search is $O(\log_2(n))$.
 
 It is important to note that, $\log_2(2000)\approx$ `r log_2_2000`.
 
@@ -238,8 +238,6 @@ To show that the average time complexity for this function is $\log_2(n)$, I wil
 ```{python, simulation to show average time complexity python part one}
 #| echo: true
 #| output: false
-
-ind_data = list(range(1999)) # indices of the data that we want, data=numbers.txt
 
 operations_numbers = [] #storage vector for the number of operations each function call takes.
 
@@ -251,17 +249,17 @@ for i in range(1999):
    _,_, ops = binary_search(numbers[i], numbers)
    operations_numbers.append(ops) 
 
-print(operations_numbers)
+print(operations_numbers) #debugging
 ```
 
-Now we return back to R to visualize the results.
+Now we go to R to visualize the results.
 
 ```{r, visualization}
 #| echo: true
 
 # Here I am visualizing the results of the simulation on the number of operations it takes
 # I am using R because I am more familiar with it and because ggplot2 is the best data 
-# visualizaiton tool out there.
+# visualizaiton tool out there in my opinion.
 
 results_sim <- py$operations_numbers
 results_sim.df <- as.data.frame(results_sim)
@@ -269,9 +267,24 @@ results_sim.df <- as.data.frame(results_sim)
 ggplot(results_sim.df, aes(x= results_sim))+geom_histogram()
 ```
 
-We find that the average number of operations our binary search algorithm took to be `r mean(results_sim)` operations. We can compare this to our hypothesized value of $11$.
+We find that the average number of operations our binary search algorithm took to be `r mean(results_sim)` operations. We can compare this to our hypothesized value of $11$. We note that the average number of operations from our simulation is less than our hypothesized value of $11$.
 
+In our simulation, we only searched for items that we knew for a fact were contained in the array, but what if we instead consider all real numbers in the range of values contained within our array. There will be an infinite number of values that will not be explicitly defined within our array, but is still contained within the array. For example consider the a value that is the average of two indices of `numbers.txt`, say the average of `numbers[10]` and `numbers[11]`. This value will be somewhere between `numbers[10]` and `numbers[11]`, but will still be within the range of the possible values in our array.
 
+```{python}
+print(numbers[10])
+print(numbers[11])
+numbers_10_11_avg = (numbers[10]+numbers[11])//2 
+print(numbers_10_11_avg)
+```
+
+If we are to search for this average value using our binary search function on `numbers.txt` we will get the following:
+
+```{python}
+binary_search(numbers_10_11_avg,numbers)
+```
+
+We have also seen in part c. that when we search for an item that is not found in `numbers.txt` it will take $11$ operations to conclude that the item is not in `numbers.txt`. Because of this we can say that if we think of the possible search terms, using `numbers.txt` as our example, as being any possible number in the range of values contained within `numbers.txt` instead of being searchable numbers in `numbers.txt`, the average number of searches will trend towards 11, which is approximately $\log_2(1999)$. 
 
 ### Problem 4
 
@@ -303,9 +316,9 @@ function getXOR(arr1, arr2){ # Exclusive Or, in A or B, but not both.
   for (i = 0; i < arr1.length; i++){ # n1 iterations, length of arr1
       let unique = True
       for (j = 0; j < arr2.length; j++ ){ # n2 iterations, length of arr2
-        if(arr1[i] == arr2[j]) {unique = False;}
+        if(arr1[i] == arr2[j]) {unique = False;} # 1 operation
       }
-      if (unique) {arr3.append(arr1[i]);}
+      if (unique) {arr3.append(arr1[i]);} # 1 operation
     }
 
   # the above for loop takes n1*n2 iterations to complete
