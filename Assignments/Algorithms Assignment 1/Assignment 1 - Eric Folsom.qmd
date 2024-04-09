@@ -20,6 +20,7 @@ import pandas as pd
 
 #Setup Chunk for R and Reticulate so that I can use ggplot if I ever have to graph stuff.
 #This will most likely be useful for a later assignment.
+
 library(reticulate)
 library(tidyverse)
 ```
@@ -229,7 +230,7 @@ To begin I will, using R, create a vector of random possible indicies of `number
 
 
 n<-100000                           #number of random indicies we want to samples
-ind_numbers<-round(runif(n,0,1998)) #drawing random indicies from a discrete uniform(0,1998) dist.
+ind_numbers<-as.integer(round(runif(n,0,1998)))#drawing random indicies from a discrete uniform(0,1998) dist.
                                     #rounding ensures integer values
 View(ind_numbers)
 write.table(ind_numbers, "clipboard", sep=",") 
@@ -239,19 +240,41 @@ Now that we have our vector of random integers we can move on to python.
 
 ```{python, simulation to show average time complexity python part one}
 #| echo: true
-#| eval: false
+#| output: false
 
 ind_data = r.ind_numbers #accessing the vector just created in R
 
-operations_numbera = [] #storage vector for the number of operations each function call takes.
+operations_numbers = [] #storage vector for the number of operations each function call takes.
 
+# each iteration searches for the value of the i-th index 
+# of ind_data which is a list of indices of numbers
+# I think the time complexity of this is O(m*log_2(n)), where m is the number of simulations, and n is the
+# size of the array you are performing binary search on. 
 for i in range(0 ,len(ind_data)-1):
    _,_, ops = binary_search(numbers[ind_data[i]], numbers)
    operations_numbers.append(ops) 
 
+print(operations_numbers)
 ```
 
 Now we return back to R to visualize the results.
+
+```{r, visualization}
+#| echo: true
+
+# Here I am visualizing the results of the simulation on the number of operations it takes
+# I am using R because I am more familiar with it and because ggplot2 is the best data 
+# visualizaiton tool out there.
+
+results_sim <- py$operations_numbers
+results_sim.df <- as.data.frame(x=results_sim
+
+ggplot(results_sim.df, aes(x=x))+geom_density()
+
+
+```
+
+
 
 ### Problem 4
 
