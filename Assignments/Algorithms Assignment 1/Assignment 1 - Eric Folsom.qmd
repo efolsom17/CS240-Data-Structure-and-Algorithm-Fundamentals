@@ -314,14 +314,14 @@ function getXOR(arr1, arr2){ # Exclusive Or, in A or B, but not both.
   arr3 = []                  # of the arrays but not in both
 
   for (i = 0; i < arr1.length; i++){ # n1 iterations, length of arr1
-      let unique = True
+      let unique = True # 1 operation
       for (j = 0; j < arr2.length; j++ ){ # n2 iterations, length of arr2
         if(arr1[i] == arr2[j]) {unique = False;} # 1 operation
       }
       if (unique) {arr3.append(arr1[i]);} # 1 operation
     }
 
-  # the above for loop takes n1*n2 iterations to complete
+  # the above for loop takes n1*n2 iterations to check each index for uniqueness
 
   for (i = 0; i < arr2.length; i++){ # n2 iterations, length of arr2
     let unique = True
@@ -335,5 +335,14 @@ function getXOR(arr1, arr2){ # Exclusive Or, in A or B, but not both.
 
   # the above for loop takes n1*n2 iteartions to complete
   # each loop take place independently of each other
-  # 
 ```
+
+Let $n$ be the length of `arr1`.
+
+Let $m$ be the length of `arr2`.
+
+In the first outer for loop, it will take $n$ operations to visit each index of `arr1`. Within the nested for loop, it will take another $m$ operations for each $n$ to visit and compare with each index of `arr2`. Thus it will take $n\cdot m$ operations to complete. Thus we can say that for the first for loop, the time complexity function is $O(n\cdot m)$.
+
+In the second outer for loop, it will take $m$ operations to visit each index of `arr2`. Within the nested for loop, it will take another $n$ operations for each $m$ to visit and compare with each index of `arr1`. Thus it will take $m\cdot n$ operations to complete. Thus we can say that for the second for loop, the time complexity function is $O(m\cdot n)$.
+
+Note that the time complexity functions for each for loop is the same, $O(n\cdot m)$. We have two for loops however in this function, thus we can say that the time complexity of the function is $O(2\cdot(n\cot m))$. Because Big Oh notation drops constants we can simplify this down to $O(n\cdot m)$. Thus the time complexity for this function is $O(n\cdot m)$. 
