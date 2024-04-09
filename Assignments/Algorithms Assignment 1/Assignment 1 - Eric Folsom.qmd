@@ -242,14 +242,16 @@ Now that we have our vector of random integers we can move on to python.
 #| eval: false
 
 ind_data = r.ind_numbers #accessing the vector just created in R
-type(ind_data[10]).__name__
 
-operations_numbera = []
+operations_numbera = [] #storage vector for the number of operations each function call takes.
 
-for value in ind_data:
- print(getattr(binary_search(item = value, data = numbers), 'operations')) 
+for i in range(0 ,len(ind_data)-1):
+   _,_, ops = binary_search(numbers[ind_data[i]], numbers)
+   operations_numbers.append(ops) 
 
 ```
+
+Now we return back to R to visualize the results.
 
 ### Problem 4
 
