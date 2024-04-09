@@ -166,7 +166,7 @@ window.Quarto = {
 <li>Go to step 3.</li>
 </ol></li>
 </ol>
-<p>For each step in the algorithm, we are dividing the array in half, searching the middle index of the array, and then redefining the area in the array that we have to search. We do this until we have either found the index of the item, or we have exhausted all the possible indicies of the array to search, in which case we can conclude that the item does is not an element of the array.</p>
+<p>For each step in the algorithm, we are dividing the array in half, searching the middle index of the array, and then redefining the area in the array that we have to search. We do this until we have either found the index of the item, or we have exhausted all the possible indices of the array to search, in which case we can conclude that the item does is not an element of the array.</p>
 </section>
 <section id="problem-2" class="level3">
 <h3 class="anchored" data-anchor-id="problem-2">Problem 2</h3>
@@ -190,7 +190,7 @@ window.Quarto = {
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>   operations <span class="op">=</span> <span class="dv">0</span> <span class="co">#creating a varaible to count the number of operations the </span></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Beginning the actual function</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span> x0 <span class="op">&lt;=</span> xn: <span class="co">#while we are searching valid indicies of our array</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span> x0 <span class="op">&lt;=</span> xn: <span class="co">#while we are searching valid indices of our array</span></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>      operations <span class="op">=</span> operations <span class="op">+</span> <span class="dv">1</span> <span class="co">#count one operation</span></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>      mid <span class="op">=</span> (xn <span class="op">+</span> x0) <span class="op">//</span> <span class="dv">2</span> <span class="co">#pick the middle index of the array (floor operation)</span></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>      search <span class="op">=</span> data[mid] <span class="co"># Value of the middle index (the one we are searching in)</span></span>
@@ -310,28 +310,26 @@ This took  11  operations.</code></pre>
 </section>
 <section id="f.-what-do-you-think-the-average-case-time-complexity-is-for-binary-search-explain-your-reasoning." class="level4">
 <h4 class="anchored" data-anchor-id="f.-what-do-you-think-the-average-case-time-complexity-is-for-binary-search-explain-your-reasoning.">f.&nbsp;What do you think the average case time complexity is for binary search? Explain your reasoning.</h4>
-<p>I would hypothesize that the average time complexity for binary search is <span class="math inline">\(\log_2(n)\)</span>, where <span class="math inline">\(n\)</span> is the number of items (indicies) of an array.</p>
+<p>I would hypothesize that the average time complexity for binary search is <span class="math inline">\(\log_2(n)\)</span>, where <span class="math inline">\(n\)</span> is the number of items (indices) of an array. We have previously shown in part d.&nbsp;that the worst case time complexity for binary search is <span class="math inline">\(O(\log_2(n))\)</span>.</p>
 <p>It is important to note that, <span class="math inline">\(\log_2(2000)\approx\)</span> 11.</p>
 <p>To show that the average time complexity for this function is <span class="math inline">\(\log_2(n)\)</span>, I will simply run it for each index of <code>numbers.txt</code> and record the number of operations it takes to find the value, then investigate the distribution of the number of operations.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ind_data <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1999</span>)) <span class="co"># indicies of the data that we want, data=numbers.txt</span></span>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>operations_numbers <span class="op">=</span> [] <span class="co">#storage vector for the number of operations each function call takes.</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>operations_numbers <span class="op">=</span> [] <span class="co">#storage vector for the number of operations each function call takes.</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># each iteration searches for the value of the i-th index </span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># of ind_data which is a list of indices of numbers</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># I think the time complexity of this is O(m*log_2(n)), where m is the number of simulations, and n is the</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># size of the array you are performing binary search on. </span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1999</span>):</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>   _,_, ops <span class="op">=</span> binary_search(numbers[i], numbers)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>   operations_numbers.append(ops) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(operations_numbers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># each iteration searches for the value of the i-th index </span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># of ind_data which is a list of indices of numbers</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># I think the time complexity of this is O(m*log_2(n)), where m is the number of simulations, and n is the</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># size of the array you are performing binary search on. </span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1999</span>):</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>   _,_, ops <span class="op">=</span> binary_search(numbers[i], numbers)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>   operations_numbers.append(ops) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(operations_numbers) <span class="co">#debugging</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now we return back to R to visualize the results.</p>
+<p>Now we go to R to visualize the results.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Here I am visualizing the results of the simulation on the number of operations it takes</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># I am using R because I am more familiar with it and because ggplot2 is the best data </span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># visualizaiton tool out there.</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># visualizaiton tool out there in my opinion.</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>results_sim <span class="ot">&lt;-</span> py<span class="sc">$</span>operations_numbers</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>results_sim.df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(results_sim)</span>
@@ -348,7 +346,32 @@ This took  11  operations.</code></pre>
 </div>
 </div>
 </div>
-<p>We find that the average number of operations our binary search algorithm took to be 9.9814907 operations. We can compare this to our hypothesized value of <span class="math inline">\(11\)</span>.</p>
+<p>We find that the average number of operations our binary search algorithm took to be 9.9814907 operations. We can compare this to our hypothesized value of <span class="math inline">\(11\)</span>. We note that the average number of operations from our simulation is less than our hypothesized value of <span class="math inline">\(11\)</span>.</p>
+<p>In our simulation, we only searched for items that we knew for a fact were contained in the array, but what if we instead consider all real numbers in the range of values contained within our array. There will be an infinite number of values that will not be explicitly defined within our array, but is still contained within the array. For example consider the a value that is the average of two indices of <code>numbers.txt</code>, say the average of <code>numbers[10]</code> and <code>numbers[11]</code>. This value will be somewhere between <code>numbers[10]</code> and <code>numbers[11]</code>, but will still be within the range of the possible values in our array.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(numbers[<span class="dv">10</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1042433</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(numbers[<span class="dv">11</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1118371</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>numbers_10_11_avg <span class="op">=</span> (numbers[<span class="dv">10</span>]<span class="op">+</span>numbers[<span class="dv">11</span>])<span class="op">//</span><span class="dv">2</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(numbers_10_11_avg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1080402</code></pre>
+</div>
+</div>
+<p>If we are to search for this average value using our binary search function on <code>numbers.txt</code> we will get the following:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>binary_search(numbers_10_11_avg,numbers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Item Not Found
+This took  11  operations.</code></pre>
+</div>
+</div>
+<p>We have also seen in part c.&nbsp;that when we search for an item that is not found in <code>numbers.txt</code> it will take <span class="math inline">\(11\)</span> operations to conclude that the item is not in <code>numbers.txt</code>. Because of this we can say that if we think of the possible search terms, using <code>numbers.txt</code> as our example, as being any possible number in the range of values contained within <code>numbers.txt</code> instead of being searchable numbers in <code>numbers.txt</code>, the average number of searches will trend towards 11, which is approximately <span class="math inline">\(\log_2(1999)\)</span>.</p>
 </section>
 </section>
 <section id="problem-4" class="level3">
@@ -377,14 +400,14 @@ This took  11  operations.</code></pre>
   arr3 = []                  # of the arrays but not in both
 
   for (i = 0; i &lt; arr1.length; i++){ # n1 iterations, length of arr1
-      let unique = True
+      let unique = True # 1 operation
       for (j = 0; j &lt; arr2.length; j++ ){ # n2 iterations, length of arr2
-        if(arr1[i] == arr2[j]) {unique = False;}
+        if(arr1[i] == arr2[j]) {unique = False;} # 1 operation
       }
-      if (unique) {arr3.append(arr1[i]);}
+      if (unique) {arr3.append(arr1[i]);} # 1 operation
     }
 
-  # the above for loop takes n1*n2 iterations to complete
+  # the above for loop takes n1*n2 iterations to check each index for uniqueness
 
   for (i = 0; i &lt; arr2.length; i++){ # n2 iterations, length of arr2
     let unique = True
@@ -397,9 +420,13 @@ This took  11  operations.</code></pre>
 }
 
   # the above for loop takes n1*n2 iteartions to complete
-  # each loop take place independently of each other
-  # </code></pre>
+  # each loop take place independently of each other</code></pre>
 </div>
+<p>Let <span class="math inline">\(n\)</span> be the length of <code>arr1</code>.</p>
+<p>Let <span class="math inline">\(m\)</span> be the length of <code>arr2</code>.</p>
+<p>In the first outer for loop, it will take <span class="math inline">\(n\)</span> operations to visit each index of <code>arr1</code>. Within the nested for loop, it will take another <span class="math inline">\(m\)</span> operations for each <span class="math inline">\(n\)</span> to visit and compare with each index of <code>arr2</code>. Thus it will take <span class="math inline">\(n\cdot m\)</span> operations to complete. Thus we can say that for the first for loop, the time complexity function is <span class="math inline">\(O(n\cdot m)\)</span>.</p>
+<p>In the second outer for loop, it will take <span class="math inline">\(m\)</span> operations to visit each index of <code>arr2</code>. Within the nested for loop, it will take another <span class="math inline">\(n\)</span> operations for each <span class="math inline">\(m\)</span> to visit and compare with each index of <code>arr1</code>. Thus it will take <span class="math inline">\(m\cdot n\)</span> operations to complete. Thus we can say that for the second for loop, the time complexity function is <span class="math inline">\(O(m\cdot n)\)</span>.</p>
+<p>Note that the time complexity functions for each for loop is the same, <span class="math inline">\(O(n\cdot m)\)</span>. We have two for loops however in this function, thus we can say that the time complexity of the function is <span class="math inline">\(O(2\cdot(n\cot m))\)</span>. Because Big Oh notation drops constants we can simplify this down to <span class="math inline">\(O(n\cdot m)\)</span>. Thus the time complexity for this function is <span class="math inline">\(O(n\cdot m)\)</span>.</p>
 </section>
 </section>
 
