@@ -187,6 +187,20 @@ Types of sarch, Linear search and Binary Search. Binary search is faster than li
     - Array has a fixed size, cannot add elements to the array.
     - Size not adjustable
 
-```{r}
+### April 9, 2024
 
-```
+###### TO DO
+
+* Readings 
+* Data structures Assignment 1
+* Algorithms Assignment 2
+* Upload binary search function for standups.
+
+##### Strategies for tackling homework problems
+
+ - For Code
+   - Old Code that has been written
+   - ChatGPT for brainstorming
+ - Time Complexity
+   - bigocheatsheet.com
+   - 

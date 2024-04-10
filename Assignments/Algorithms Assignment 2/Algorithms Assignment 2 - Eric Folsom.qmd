@@ -1,0 +1,28 @@
+---
+title: "Algorithms Assignment 2"
+author: "Eric Folsom"
+format: html
+---
+
+```{python, setup_py}
+#| echo: false
+#| output: false
+
+# Setup Chunk for python, loading the required libraries
+import numpy as np
+import pandas as pd
+```
+
+
+```{r, setup_r}
+#| echo: false
+#| output: false
+
+#Setup Chunk for R and Reticulate so that I can use ggplot if I ever have to graph stuff.
+#This will most likely be useful for a later assignment.
+
+library(reticulate)
+library(tidyverse)
+library(ggplot2)
+```
+
