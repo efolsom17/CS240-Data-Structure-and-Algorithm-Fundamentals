@@ -1,10 +1,6 @@
-######Eric Folsom - Algorithms Assignment 1 - CS240 Spring 2024 #######################################
-#################### Setup Chunk loading the required libraries     ###################################
-import numpy as np
-import pandas as pd
-
-#######################
-## Problem 2 #####
+#### Binary Search function created during Algorithms Homework 1 - Eric Folsom ####
+#### Designed to work over an array or list of integers. Will throw errors if  ####
+#### strings and integers mix.                                                 #### 
 
 def binary_search(item, data, oper = False, diag = False):
 
@@ -72,29 +68,3 @@ def binary_search(item, data, oper = False, diag = False):
 
    # if we can't find the item in the array.
    return print("Item Not Found\nThis took ", operations, ' operations.') 
-
-
-########################################################################################################
-########################################################################################################
-
-### Problem 3 Code #####
-
-# Importing the numbers.txt data
-
-with open("./Data/numbers.txt", "r") as nums: #opens the file
-    numbers = [line.strip() for line in nums] #extract contents line by line
-numbers = [int(item) for item in numbers] #convert 'str' to 'int'
-# I had a lot of help here from ChatGPT for the correct code 
-# to load the data, as well as some help from stack exchange 
-# for understanding how the relative path stuff worked with 
-# python and vscode.
-
-#### a.
-p1 = binary_search(51216352, numbers, oper=True)
-
-### b.
-p2 = binary_search(198313119, numbers, oper=True)
-
-### c. 
-p3 = binary_search(196614208,numbers, oper=True)
-

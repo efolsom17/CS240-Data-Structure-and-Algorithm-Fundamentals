@@ -81,10 +81,10 @@ def binary_search(item, data, oper = False, diag = False):
 
 ## Importing the numbers data using the Pandas library
 
-numbers = pd.read_csv("C:\\Users\\ericf\\OneDrive\\Desktop\\WCC\\CS240 Data Structure and Algorithm Fundamentals\\Assignments\\Algorithms Assignment 1\\Data\\numbers.txt",
+numbers = pd.read_csv("./Data/numbers.txt",
 header=None,
 sep='\t'
-) #importing the numbers data as a data frame
+)#importing the numbers data as a data frame
 
 ## Converting Numbers to an array using Numpy##
 numbers = numbers.to_numpy()
