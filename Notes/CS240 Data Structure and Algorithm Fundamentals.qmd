@@ -214,3 +214,9 @@ Types of sarch, Linear search and Binary Search. Binary search is faster than li
   
   What are resources for? They are for helping your learning, Start saving websites and videos that are the most helpful for you.
 
+### April 10, 2024
+
+* Quick Python Note, integers are of class `'int'` while real numbers are of class `'float'`.
+
+#### Standups
+
