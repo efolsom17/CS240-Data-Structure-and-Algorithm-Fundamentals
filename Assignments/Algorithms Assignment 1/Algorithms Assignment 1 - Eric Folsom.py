@@ -79,21 +79,15 @@ def binary_search(item, data, oper = False, diag = False):
 
 ### Problem 3 Code #####
 
-## Importing the numbers data using the Pandas library
+# Importing the numbers.txt data
 
-numbers = pd.read_csv("C:\\Users\\ericf\\OneDrive\\Desktop\\WCC\\CS240 Data Structure and Algorithm Fundamentals\\Assignments\\Algorithms Assignment 1\\Data\\numbers.txt",
-header=None,
-sep='\t'
-) #importing the numbers data as a data frame
-
-## Converting Numbers to an array using Numpy##
-numbers = numbers.to_numpy()
-#now back to base python for ease of use with the algorithm I just wrote:
-numbers = numbers.tolist()
-#fixing some jankiness with importing the data so that all the elements of the list are integers instead of being lists of length 1, thanks ChatGPT.
-con_numbers = [num[0] for num in numbers]
-numbers = con_numbers
-
+with open("./Data/numbers.txt", "r") as nums: #opens the file
+    numbers = [line.strip() for line in nums] #extract contents line by line
+numbers = [int(item) for item in numbers] #convert 'str' to 'int'
+# I had a lot of help here from ChatGPT for the correct code 
+# to load the data, as well as some help from stack exchange 
+# for understanding how the relative path stuff worked with 
+# python and vscode.
 
 #### a.
 p1 = binary_search(51216352, numbers, oper=True)
