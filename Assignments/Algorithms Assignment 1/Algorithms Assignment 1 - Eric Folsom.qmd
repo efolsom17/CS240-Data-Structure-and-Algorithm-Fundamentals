@@ -139,22 +139,15 @@ To begin we must load the `numbers.txt` file.
 #| echo: true
 #| output: false
 
-## Importing the numbers data using the Pandas library as a dataframe
+# Importing the numbers.txt data
 
-numbers = pd.read_csv("./Data/numbers.txt",
-header=None,
-sep='\t'
-)
-
-## Converting Numbers to an array using Numpy ##
-numbers = numbers.to_numpy()
-# now back to base python for ease of use with the algorithm I just wrote:
-numbers = numbers.tolist()
-# fixing some jankiness with importing the data 
-# so that all the elements of the list are integers
-# instead of being lists of length 1, thanks ChatGPT.
-con_numbers = [num[0] for num in numbers]
-numbers = con_numbers
+with open("./Data/numbers.txt", "r") as nums: #opens the file
+    numbers = [line.strip() for line in nums] #extract contents line by line
+numbers = [int(item) for item in numbers] #convert 'str' to 'int'
+# I had a lot of help here from ChatGPT for the correct code 
+# to load the data, as well as some help from stackexchange 
+# for understanding how the relative path stuff worked with 
+# python and vscode.
 ```
 
 #### a. What is the position of 51216352 in the array? How many operations did it take to find?
@@ -235,7 +228,7 @@ log_2_4000<-round(log2(4000))
 log_2_8000<-round(log2(8000))
 ```
 
-The worst case time complexity function for this algorithm is $O(\log_2(n))$. Thus we can say that the worst case time complexity if we have $4000$ entries is found by $\log_2(4000) \approx$ `{r} log_2_4000`. This is in contrast to if we only had $2000$ entries where the worst case time complexity would be $\log_2(2000)\approx$ `r log_2_2000`. If we were to again double the size of of our array to $8000$ entries, the worst case time complexity would be $\log_2(8000)\approx$ `r log_2_8000` steps to find an item in the array.
+The worst case time complexity function for this algorithm is $O(\log_2(n))$. Thus we can say that the worst case time complexity if we have $4000$ entries is found by $\log_2(4000) \approx$ `r log_2_4000`. This is in contrast to if we only had $2000$ entries where the worst case time complexity would be $\log_2(2000)\approx$ `r log_2_2000`. If we were to again double the size of of our array to $8000$ entries, the worst case time complexity would be $\log_2(8000)\approx$ `r log_2_8000` steps to find an item in the array.
 
 #### f. What do you think the average case time complexity is for binary search? Explain your reasoning.
 

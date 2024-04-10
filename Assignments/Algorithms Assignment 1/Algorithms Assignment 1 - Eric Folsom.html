@@ -216,22 +216,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>For this problem we are given an attached file <code>numbers.txt</code> and we must use the algorithm that we wrote in problem 2 to answer the following question:</p>
 <p>To begin we must load the <code>numbers.txt</code> file.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Importing the numbers data using the Pandas library as a dataframe</span></span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing the numbers.txt data</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> pd.read_csv(<span class="st">"./Data/numbers.txt"</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>header<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>sep<span class="op">=</span><span class="st">'</span><span class="ch">\t</span><span class="st">'</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">## Converting Numbers to an array using Numpy ##</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> numbers.to_numpy()</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># now back to base python for ease of use with the algorithm I just wrote:</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> numbers.tolist()</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># fixing some jankiness with importing the data </span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># so that all the elements of the list are integers</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># instead of being lists of length 1, thanks ChatGPT.</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>con_numbers <span class="op">=</span> [num[<span class="dv">0</span>] <span class="cf">for</span> num <span class="kw">in</span> numbers]</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> con_numbers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"./Data/numbers.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> nums: <span class="co">#opens the file</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    numbers <span class="op">=</span> [line.strip() <span class="cf">for</span> line <span class="kw">in</span> nums] <span class="co">#extract contents line by line</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> [<span class="bu">int</span>(item) <span class="cf">for</span> item <span class="kw">in</span> numbers] <span class="co">#convert 'str' to 'int'</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># I had a lot of help here from ChatGPT for the correct code </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># to load the data, as well as some help from stackexchange </span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># for understanding how the relative path stuff worked with </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># python and vscode.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="a.-what-is-the-position-of-51216352-in-the-array-how-many-operations-did-it-take-to-find" class="level4">
 <h4 class="anchored" data-anchor-id="a.-what-is-the-position-of-51216352-in-the-array-how-many-operations-did-it-take-to-find">a. What is the position of 51216352 in the array? How many operations did it take to find?</h4>
