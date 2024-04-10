@@ -201,8 +201,16 @@ Types of sarch, Linear search and Binary Search. Binary search is faster than li
  - For Code
    - Old Code that has been written
    - ChatGPT for brainstorming
+   -  w3 schools - for learning stuff
  - Time Complexity
    - bigocheatsheet.com
    - Space vs. Time Complexity
      - Time - How long will it take
      - Space - how much storage does it use
+   - Reddit learnprogramming Data Structures and Algorithms cheat sheets
+   - Princeton university algorithms and data structures cheatsheets - Good Resource
+   - Interviewcake.com data structures reference
+     - https://www.interviewcake.com/data-structures-reference
+  
+  What are resources for? They are for helping your learning, Start saving websites and videos that are the most helpful for you.
+
