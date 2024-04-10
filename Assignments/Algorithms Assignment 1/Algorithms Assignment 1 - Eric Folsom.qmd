@@ -141,7 +141,7 @@ To begin we must load the `numbers.txt` file.
 
 ## Importing the numbers data using the Pandas library as a dataframe
 
-numbers = pd.read_csv("C:\\Users\\ericf\\OneDrive\\Desktop\\WCC\\CS240 Data Structure and Algorithm Fundamentals\\Assignments\\Algorithms Assignment 1\\Data\\numbers.txt",
+numbers = pd.read_csv("./Data/numbers.txt",
 header=None,
 sep='\t'
 )
