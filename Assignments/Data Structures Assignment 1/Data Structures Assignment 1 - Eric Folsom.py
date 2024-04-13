@@ -61,15 +61,15 @@ class SingleLinkedList: # This should hopefully convert a typical list to a link
     def __init__(self, data):
         self.head = None
         if isinstance(data, list): # from chatGpT, ensures that you are transforming an array/list.
-            self.head = Node(data[0])
-            print(self.head.data)
-            current = self.head
-            print(current.data)
+            self.head = Node(data[0]) # 
+            # print(self.head.data)
+            current = self.head 
+            # print(current.data)
             for item in data[1:]:
                 current.next = Node(item)
-                print(current.next.data)
+                # print(current.next.data)
                 current = current.next
-                print(current.data, current.next)
+                # print(current.data, current.next)
         else:
             raise TypeError("Expected a list")
         
