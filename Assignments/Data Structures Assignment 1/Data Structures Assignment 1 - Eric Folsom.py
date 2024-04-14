@@ -9,11 +9,14 @@ with open("./Data/numbers-2.txt", "r") as nums: #opens the file
 ## Smaller list of numbers to test with before I implement the full numbers-2.txt data.
 numbers_test = list(range(0,100)) # need to make sure to define as a list, python doesnt do this automatically like R does.
 
-## So I can randomly sample indices of the data
+## So I can randomly sample indices of the data, importing them so that they have the same function names as in R.
 from random import randint  as rdunif # random integer from a discrete uniform distribution
 from random import uniform as runif # random number from a uniform distribution
 from random import gauss as rnorm # random number from a normal (gaussian) distribution
+from random import seed as set_seed
 
+#setting a random seed for reproducability.
+set_seed(12345)
 
 
 # Implementing a singly linked list in python.
@@ -129,14 +132,14 @@ class SingleLinkedList:
 
     def insert(self, beg = False, rand = False, end = False, data = any, node = int):
         if beg == True:
-            # Define the data of the new node
-            # Point the next part of the new node to the head node
-            # assign the new node as the head
-            new_node = Node(data)
-            new_node.next = self.head
-            self.head = new_node          
+            new_node = Node(data)     # Assign the data (value) of the new node
+            new_node.next = self.head # Point the next part of the new node to the head node
+            self.head = new_node # assign the new node as the head of the linked list   
         elif rand == True:
-            pass
+            rand_index = rdunif(0, self.list_length-1) # select a random index
+            # Start at the head of the list
+            # Traverse the list until we have reached the randomly sampled index.
+            
         elif end == True:   
             pass
     
