@@ -69,8 +69,9 @@ class SingleLinkedList:
     ## Initializing the linked list class.
     # This should hopefully convert a typical list to a linked list when running SingleLinkedList() on a list
     # such as x = [1,2,3,4], doing SingleLinkedList(x) would convert the list to a single linked list.
+    
     def __init__(self, data):
-        self.head = None
+        self.head = None # Set the head to be None
         self.list_length = int(len(data)) # will be needed later for randomization stuff. stores the length of the input list
         if isinstance(data, list): # from chatGpT, ensures that you are transforming an array/list.
             self.head = Node(data[0]) # Assign the head of the linked list to be index 0 of the input array or list
@@ -126,9 +127,14 @@ class SingleLinkedList:
             return print(f"The data contained in Node {node} is {node_data}.")
                 
 
-    def insert(self, beg = False, rand = False, end = False):
+    def insert(self, beg = False, rand = False, end = False, data = any, node = int):
         if beg == True:
-            pass
+            # Define the data of the new node
+            # Point the next part of the new node to the head node
+            # assign the new node as the head
+            new_node = Node(data)
+            new_node.next = self.head
+            self.head = new_node          
         elif rand == True:
             pass
         elif end == True:   
@@ -175,38 +181,7 @@ class SingleLinkedList:
             current = current.next # go to the next node
         return "Linked list contains: " + " -> ".join(nodes) #print the linked list, with nodes connected with an arrow.
 
-        
-# Read ## 
 
-## beginning  ## 
-
-## random position ##
-
-## end ##
-
-# Insert ## 
-
-## beginning ## 
-
-## random position ##
-
-## end ##
-
-# Delete ##
-
-## beginning ## 
-
-## random position ##
-
-## end ##
-
-# Linear Search ##
-
-# Sort ##
-
-## Selection Sort ##
-
-## Insertion Sort ##
 
 #### Implementing a doubly-linked list in Python
 
