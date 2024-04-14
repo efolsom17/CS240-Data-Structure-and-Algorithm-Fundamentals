@@ -82,7 +82,7 @@ class SingleLinkedList: # This should hopefully convert a typical list to a link
         else:
             raise TypeError("Expected a list")
         
-    def read(self, beg = False, rand = False, end = False):
+    def read(self, beg = False, rand = False, end = False, node= int):
         if beg == True:
             print(self.head.data) # print the data in the head node
         elif rand == True:
@@ -107,6 +107,17 @@ class SingleLinkedList: # This should hopefully convert a typical list to a link
                 node_data = int(current.data) # store the data of the current node we are at.
                 current = current.next# go to the next node
             return print(node_data)
+        elif node >= self.list_length:
+            return print(f"Index Out of Bounds")
+        else:
+            current = self.head
+            index_counter = 0
+            while index_counter <= node:
+                node_data = int(current.data)
+                current = current.next
+                index_counter += 1
+            return print(f"We are reading the data at Node: {node} which contains {node_data}")
+                
 
     def insert(self, beg = False, rand = False, end = False):
         if beg == True:
