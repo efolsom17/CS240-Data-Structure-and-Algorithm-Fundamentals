@@ -66,7 +66,7 @@ class SingleLinkedList: # This should hopefully convert a typical list to a link
     # such as x = [1,2,3,4], doing SingleLinkedList(x) would convert the list to a single linked list.
     def __init__(self, data):
         self.head = None
-        self.list_length = int(len(data)) # will be needed later for randomization stuff.
+        self.list_length = int(len(data)) # will be needed later for randomization stuff. stores the length of the input list
         if isinstance(data, list): # from chatGpT, ensures that you are transforming an array/list.
             self.head = Node(data[0]) # Assign the head of the linked list to be index 0 of the input array or list
             #print(self.head.data)
@@ -84,18 +84,37 @@ class SingleLinkedList: # This should hopefully convert a typical list to a link
         
     def read(self, beg = False, rand = False, end = False):
         if beg == True:
-            print(self.head.data)
+            print(self.head.data) # print the data in the head node
         elif rand == True:
-            pass
+            rand_index = rdunif(0, self.list_length-1) # select a random index
+            #print(rand_index)
+            current = self.head # assign the head to be the current node we are at
+            #print(current.data)
+            index_counter = 0 # To keep track of the index we are at
+            while index_counter <= rand_index: # while we have not reached the index we are looking for
+                #print(f"Current Node Data: {current.data}")
+                #print(f"Current Node: {index_counter}")
+                #print(f"The next node contains: {current.next.data}")
+                node_data = int(current.data) # store the data of the current node we are at
+                current = current.next # go to the next node
+                index_counter = index_counter + 1# increment the counter to be the index we are searching for
+                #print(f"The next node is: {index_counter}")
+            return print(f"We are reading the data at index: {rand_index} which contains {node_data}")
+                
         elif end == True:   
             current = self.head # assign the head to be the current node we are at
             while current: # while current \neq None
-                node_data = int(current.data)
+                node_data = int(current.data) # store the data of the current node we are at.
                 current = current.next# go to the next node
             return print(node_data)
 
     def insert(self, beg = False, rand = False, end = False):
-        pass
+        if beg == True:
+            pass
+        elif rand == True:
+            pass
+        elif end == True:   
+            pass
     
     def delete(self, beg = False, rand = False, end = False, node = None):
         if beg == True:
