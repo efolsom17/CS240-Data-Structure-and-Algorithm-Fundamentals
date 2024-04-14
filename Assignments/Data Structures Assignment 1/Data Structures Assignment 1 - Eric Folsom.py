@@ -9,6 +9,12 @@ with open("./Data/numbers-2.txt", "r") as nums: #opens the file
 ## Smaller list of numbers to test with before I implement the full numbers-2.txt data.
 numbers_test = list(range(0,100)) # need to make sure to define as a list, python doesnt do this automatically like R does.
 
+## So I can randomly sample indices of the data
+from random import randint  as rdunif # random integer from a discrete uniform distribution
+from random import uniform as runif # random number from a uniform distribution
+from random import gauss as rnorm # random number from a normal (gaussian) distribution
+
+
 
 # Implementing a singly linked list in python.
 
@@ -60,6 +66,7 @@ class SingleLinkedList: # This should hopefully convert a typical list to a link
     # such as x = [1,2,3,4], doing SingleLinkedList(x) would convert the list to a single linked list.
     def __init__(self, data):
         self.head = None
+        self.list_length = int(len(data)) # will be needed later for randomization stuff.
         if isinstance(data, list): # from chatGpT, ensures that you are transforming an array/list.
             self.head = Node(data[0]) # Assign the head of the linked list to be index 0 of the input array or list
             #print(self.head.data)
@@ -76,14 +83,27 @@ class SingleLinkedList: # This should hopefully convert a typical list to a link
             raise TypeError("Expected a list")
         
     def read(self, beg = False, rand = False, end = False):
-       pass     
-        
+        if beg == True:
+            print(self.head.data)
+        elif rand == True:
+            pass
+        elif end == True:   
+            current = self.head # assign the head to be the current node we are at
+            while current: # while current \neq None
+                node_data = int(current.data)
+                current = current.next# go to the next node
+            return print(node_data)
 
     def insert(self, beg = False, rand = False, end = False):
         pass
     
     def delete(self, beg = False, rand = False, end = False, node = None):
-        pass
+        if beg == True:
+            pass
+        elif rand == True:
+            pass
+        elif end == True:   
+            pass
     
     def search(self, value):
         pass
