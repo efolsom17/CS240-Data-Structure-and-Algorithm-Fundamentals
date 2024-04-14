@@ -97,7 +97,7 @@ class SingleLinkedList: # This should hopefully convert a typical list to a link
                 #print(f"The next node contains: {current.next.data}")
                 node_data = int(current.data) # store the data of the current node we are at
                 current = current.next # go to the next node
-                index_counter = index_counter + 1# increment the counter to be the index we are searching for
+                index_counter += 1 # increment the counter to be the index we are searching for
                 #print(f"The next node is: {index_counter}")
             return print(f"We are reading the data at index: {rand_index} which contains {node_data}")
                 
@@ -125,7 +125,16 @@ class SingleLinkedList: # This should hopefully convert a typical list to a link
             pass
     
     def search(self, value):
-        pass
+        current = self.head # assign the head to be the current node we are on
+        index_count = 0
+        while current: # while current \neq None
+            if current.data == value: # if we find the item we are searching for
+                return print(f"{value} is located at index {index_count}") # print the value and the index of it
+            else:
+                index_count += 1 # increment the index we are at
+                current = current.next # go to the next node
+                
+        return print(f"Item Not found. This took {index_count} searches.") # if the item isn't found tell us how many searches it took.
     
     def sort(self):
         pass
