@@ -136,10 +136,17 @@ class SingleLinkedList:
             new_node.next = self.head # Point the next part of the new node to the head node
             self.head = new_node # assign the new node as the head of the linked list   
         elif rand == True:
+            new_node = Node(data)     # Assign the data (value) of the new node
             rand_index = rdunif(0, self.list_length-1) # select a random index
-            # Start at the head of the list
-            # Traverse the list until we have reached the randomly sampled index.
-            
+            print(rand_index)
+            current = self.head # Start at the head of the list
+            index_counter = 0 # storing the current index
+            while index_counter < rand_index-1: # Traverse the list until we have reached the randomly sampled index.
+                current = current.next # go to the next node
+                index_counter += 1 #update what node we are in
+            new_node.next = current.next
+            current.next = new_node
+            return print(f"We have inserted the value {data} at index {index_counter}")
         elif end == True:   
             pass
     
