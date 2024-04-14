@@ -62,7 +62,12 @@ def build_node_single(data = list):
 def build_node_double(data = list):
     pass
 
-class SingleLinkedList: # This should hopefully convert a typical list to a linked list when running SingleLinkedList() on a list
+
+
+class SingleLinkedList: 
+    
+    ## Initializing the linked list class.
+    # This should hopefully convert a typical list to a linked list when running SingleLinkedList() on a list
     # such as x = [1,2,3,4], doing SingleLinkedList(x) would convert the list to a single linked list.
     def __init__(self, data):
         self.head = None
@@ -82,6 +87,8 @@ class SingleLinkedList: # This should hopefully convert a typical list to a link
         else:
             raise TypeError("Expected a list")
         
+        
+       ### Read #### 
     def read(self, beg = False, rand = False, end = False, node= int):
         if beg == True:
             print(self.head.data) # print the data in the head node
@@ -99,7 +106,7 @@ class SingleLinkedList: # This should hopefully convert a typical list to a link
                 current = current.next # go to the next node
                 index_counter += 1 # increment the counter to be the index we are searching for
                 #print(f"The next node is: {index_counter}")
-            return print(f"We are reading the data at index: {rand_index} which contains {node_data}")
+            return print(f"We are reading the data at index: {rand_index} which contains {node_data}.")
                 
         elif end == True:   
             current = self.head # assign the head to be the current node we are at
@@ -116,7 +123,7 @@ class SingleLinkedList: # This should hopefully convert a typical list to a link
                 node_data = int(current.data)
                 current = current.next
                 index_counter += 1
-            return print(f"We are reading the data at Node: {node} which contains {node_data}")
+            return print(f"The data contained in Node {node} is {node_data}.")
                 
 
     def insert(self, beg = False, rand = False, end = False):
