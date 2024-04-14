@@ -61,17 +61,54 @@ class SingleLinkedList: # This should hopefully convert a typical list to a link
     def __init__(self, data):
         self.head = None
         if isinstance(data, list): # from chatGpT, ensures that you are transforming an array/list.
-            self.head = Node(data[0]) # 
-            # print(self.head.data)
-            current = self.head 
-            # print(current.data)
-            for item in data[1:]:
-                current.next = Node(item)
-                # print(current.next.data)
-                current = current.next
-                # print(current.data, current.next)
+            self.head = Node(data[0]) # Assign the head of the linked list to be index 0 of the input array or list
+            #print(self.head.data)
+            current = self.head # Assign head to be the current node containing the data of index 0 of the input
+            #print(current.data)
+            # the below for loop assigns each remaining index as a node in the linked list 
+            # and then points that node to the next node until we run out of indices to assign.
+            for item in data[1:]: # for every other index of the input array or list
+                current.next = Node(item) # Assign the next node to contain the data of the current index in the for loop
+                #print(current.next.data)
+                current = current.next # Set the next node to be the current node (go to the next node)
+                #print(current.data)
         else:
             raise TypeError("Expected a list")
+        
+    def read(self, beg = False, rand = False, end = False):
+       pass     
+        
+
+    def insert(self, beg = False, rand = False, end = False):
+        pass
+    
+    def delete(self, beg = False, rand = False, end = False, node = None):
+        pass
+    
+    def search(self, value):
+        pass
+    
+    def sort(self):
+        pass
+        
+    # Allow us to print/visualize the list if it is called like linkedlist(obj) 
+    def __repr__(self):
+        nodes = [] # list of nodes
+        current = self.head # Assign the current node to be the head
+        while current: # while current \neq None, will equal None if at the end of the Linked List 
+            nodes.append(repr(current.data)) # add the current data of the linked list to the list of nodes
+            current = current.next # go to the next node
+        return " -> ".join(nodes) # returns the linked list printed with the values being joined with an arrow
+    
+    # Allow us to print/visualize the list if it is called using print()
+    def __str__(self):
+        nodes = [] # list of nodes
+        current = self.head # set the head of the node to be the current node
+        while current: # while current \neq None
+            nodes.append(str(current.data)) # add the data of the node as a string
+            current = current.next # go to the next node
+        return "Linked list contains: " + " -> ".join(nodes) #print the linked list, with nodes connected with an arrow.
+
         
 # Read ## 
 
