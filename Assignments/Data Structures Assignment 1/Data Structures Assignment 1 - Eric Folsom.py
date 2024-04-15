@@ -137,9 +137,9 @@ class SingleLinkedList:
             current.next = new_node # once current.next == None, point the last node to the new node we created earlier.   
     
     def delete(self, beg = False, rand = False, end = False, node = None):
-        current = self.head
-        if beg == True:
-            return self.head.next
+        temp = self.head # store the head of the linked list to be a temporary variable
+        if beg == True: # if we are deleting from the beginning of the list (head)
+             self.head = temp.next # re-assign the head to be the next node
         elif rand == True:
             pass
         elif end == True:   
@@ -147,17 +147,17 @@ class SingleLinkedList:
     
     def search(self, value):
         current = self.head # assign the head to be the current node we are on
-        index_count = 0
+        node_count = 0
         while current: # while current \neq None
             if current.data == value: # if we find the item we are searching for
-                return print(f"{value} is located at index {index_count}") # print the value and the index of it
+                return print(f"{value} is located at node {node_count}") # print the value and the index of it
             else:
-                index_count += 1 # increment the index we are at
+                node_count += 1 # increment the index we are at
                 current = current.next # go to the next node
                 
         return print(f"Item Not found. This took {index_count} searches.") # if the item isn't found tell us how many searches it took.
     
-    def sort(self):
+    def sort(self): # going to be selection sort
         pass
         
     # Allow us to print/visualize the list if it is called like linkedlist(obj) 
@@ -220,7 +220,5 @@ class SingleLinkedList:
 # Linear Search ##
 
 # Sort ##
-
-## Selection Sort ##
 
 ## Insertion Sort
