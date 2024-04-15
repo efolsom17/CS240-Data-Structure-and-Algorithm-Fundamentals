@@ -155,7 +155,7 @@ class SingleLinkedList:
                 node_count += 1 # increment the index we are at
                 current = current.next # go to the next node
                 
-        return print(f"Item Not found. This took {index_count} searches.") # if the item isn't found tell us how many searches it took.
+        return print(f"Item Not found. This took {node_count} searches.") # if the item isn't found tell us how many searches it took.
     
     def sort(self): # going to be selection sort
         pass
