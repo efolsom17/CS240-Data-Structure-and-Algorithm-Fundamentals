@@ -33,8 +33,7 @@ set_seed(12345)
  So to do this, I need to make a single linked list class that when invoked, similar to how int() or how float() works but on a list, will
  turn every item in a list into a node and then connect the nodes. and then be able to implemment the other requirements
  
- The example from the readings on canvas created a linked list when you ran the python script. I  
- 
+ The example from the readings on canvas created a linked list when you ran the python script. I   
 '''
 
 class Node: # Houses data and the pointer for the next position
@@ -47,23 +46,6 @@ class Node: # Houses data and the pointer for the next position
         
 # Okay we have a node now we can make the linked list
 # I think
-
-# function to build nodes from a list of integers.
-
-'''
-FOR SINGLE LINKED LIST
-
-1. assign node 1 to index 0
-    nvm doing this as a class method is better than this.
-
-'''
-
-def build_node_single(data = list):
-    pass
-
-
-def build_node_double(data = list):
-    pass
 
 
 
@@ -121,38 +103,43 @@ class SingleLinkedList:
         elif node >= self.list_length:
             return print(f"Index Out of Bounds")
         else:
-            current = self.head
-            index_counter = 0
-            while index_counter <= node:
-                node_data = int(current.data)
+            current = self.head # start at the beginning of the list
+            index_counter = 0 # self explanitory
+            while index_counter <= node: # while we have not reached the node that we want to be in stop once we reach it
+                node_data = int(current.data) # store the data of the node (might be able to move this outside of the while loop, after testing I cannot)
                 current = current.next
-                index_counter += 1
+                index_counter += 1           
             return print(f"The data contained in Node {node} is {node_data}.")
                 
 
     def insert(self, beg = False, rand = False, end = False, data = any, node = int):
         if beg == True:
-            new_node = Node(data)     # Assign the data (value) of the new node
+            new_node = Node(data)     # Assign the data (value) of the new node, where new_node.next = None
             new_node.next = self.head # Point the next part of the new node to the head node
             self.head = new_node # assign the new node as the head of the linked list   
         elif rand == True:
-            new_node = Node(data)     # Assign the data (value) of the new node
+            new_node = Node(data)     # Assign the data (value) of the new node, where new_node.next = None
             rand_index = rdunif(0, self.list_length-1) # select a random index
-            print(rand_index)
+            #print(rand_index)
             current = self.head # Start at the head of the list
             index_counter = 0 # storing the current index
-            while index_counter < rand_index-1: # Traverse the list until we have reached the randomly sampled index.
-                current = current.next # go to the next node
-                index_counter += 1 #update what node we are in
-            new_node.next = current.next
-            current.next = new_node
-            return print(f"We have inserted the value {data} at index {index_counter}")
-        elif end == True:   
-            pass
+            while index_counter < rand_index-1: # Traverse the list until we have reached one less than the randomly sampled index.
+                current = current.next # go to the next node (the index we sampled)
+                index_counter += 1 #update what node we are in (for printing the index we inserted the value into)
+            new_node.next = current.next # once we have reached the node before we want to insert a new node at, then replace the next pointer 
+            current.next = new_node # and point the current node to the new node we inserted.
+            return print(f"We have inserted the value {data} at node {index_counter}")
+        elif end == True:
+            new_node = Node(data)   # assign the data (value) of the new node, where new_node.next = None
+            current = self.head    # Start at the beginning of the list
+            while (current.next): # while current.next \neq None
+                current = current.next # go to the next node (traverse the list)
+            current.next = new_node # once current.next == None, point the last node to the new node we created earlier.   
     
     def delete(self, beg = False, rand = False, end = False, node = None):
+        current = self.head
         if beg == True:
-            pass
+            return self.head.next
         elif rand == True:
             pass
         elif end == True:   
