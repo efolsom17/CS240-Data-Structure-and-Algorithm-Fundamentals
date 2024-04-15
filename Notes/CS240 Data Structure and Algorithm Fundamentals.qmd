@@ -219,4 +219,15 @@ Types of sarch, Linear search and Binary Search. Binary search is faster than li
 * Quick Python Note, integers are of class `'int'` while real numbers are of class `'float'`.
 
 #### Standups
+ 
+ Presented my code, somewhat interesting, im still a little lost on what we are supposed to be doing during class time.
 
+### April 15, 2024
+
+#### Iteration versus recursion
+
+* Iteration, we are **iterating** through a loop. 
+
+* with recursion, we keep calling a recursive function. elegent and more compact compared to iteration, but it is more memory intensive than iteration. Also slow, in business we don't like slow, we like fast and efficient.
+  * Not used too much, mostly industry uses iteration.
+  * Exception, want to do something like a mapping routine. robot finding a route through a maze. Used in google maps. 
