@@ -26,3 +26,29 @@ library(tidyverse)
 library(ggplot2)
 ```
 
+## Problem 1: Write in pseudo code a selection sort algorithm the works over an array. Comment to explain the algorithm.
+
+We start with an array of values $X = \{x_0,x_1, x_2, \ldots, x_n\}$. We assume that the elements of $X$, $x_i$, where $i=0,1,2,\ldots,n$, are not in any particular order. 
+
+We repeat the following process $n-1$ times where $n$ is the length of the array. This is because once there is only one element left, we can assume that it is the largest element of the array.
+
+1. Assign the first unsorted element as the minimum value of the array.
+2. For every other unsorted element in the array:
+   1. Compare the value of the element with the value we assigned as the minimum
+        * If the value of the element is less than the minimum value we assigned:
+          * Set this value as the new minimum value
+3. Swap the positions of the minimum value with the first unsorted element. 
+
+By following this algorithm, we will eventually end up with a sorted array (ascending). We can re-assign the minimum value as the maximum value if we wanted to sort the array in decending order.
+
+## Problem 2: Write in the programming language of your choice a selection sort algorithm that works over an array. Comment to explain the algorithm.
+
+## Problem 3: Write in pseudo code an insertion sort algorithm the works over an array. Comment to explain the algorithm.
+
+
+
+## Problem 4: Write in the programming language of your choice an insertion sort algorithm that works over an array. Comment to explain the algorithm.
+
+## Problem 5: How do the best, average and worst case time complexities compare between these two algorithms? Why is the best case different between insertion and selection?
+
+## Problem 6: Use the attached file `numbers-1.txt` and sort the values using your two sort algorithms. What value is in position 7586?
