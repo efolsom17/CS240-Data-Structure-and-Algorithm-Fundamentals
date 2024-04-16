@@ -248,44 +248,41 @@ class DoublyLinkedList:
         else:
            raise TypeError("Expected a list") # ensure that the inputted data is a list 
         
+    # Read ## 
+    def read(self, beg = False, rand = False, end = False, node= int):
+        pass
 
-# Head  ##
+    # Insert ## 
+    def insert(self, beg = False, rand = False, end = False, data = any):
+        pass
 
 
-# Node ##
+    # Delete ##
 
-## Data  ##
+    def delete(self, beg = False, rand = False, end = False):
+        pass
 
-## Next  ##
+    # Linear Search ##
+    def search(self, value):
+        pass
 
-## previous ##
+    # Sort, insertion sort ##
+    def sort(self, asc = True, desc = False):
+        pass
+    
+    # Printing methods, ChatGPT was my friend for this one.
+    def __repr__(self):
+        nodes = []
+        current = self.head
+        while current:
+            nodes.append(repr(current.data))
+            current = current.next
+        return " <-> ".join(nodes)
 
-# Read ## 
-
-## beginning  ## 
-
-## random position ##
-
-## end ##
-
-# Insert ## 
-
-## beginning ## 
-
-## random position ##
-
-## end ##
-
-# Delete ##
-
-## beginning ## 
-
-## random position ##
-
-## end ##
-
-# Linear Search ##
-
-# Sort ##
-
-## Insertion Sort
+    def __str__(self):
+        nodes = []
+        current = self.head
+        while current:
+            nodes.append(str(current.data))
+            current = current.next
+        return " <-> ".join(nodes)   
