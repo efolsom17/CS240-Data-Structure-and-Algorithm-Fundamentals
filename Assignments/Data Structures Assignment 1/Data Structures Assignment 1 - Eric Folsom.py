@@ -13,11 +13,15 @@ numbers_test = list(range(0,100)) # need to make sure to define as a list, pytho
 from random import randint  as rdunif # random integer from a discrete uniform distribution
 from random import uniform as runif # random number from a uniform distribution
 from random import gauss as rnorm # random number from a normal (gaussian) distribution
-from random import seed as set_seed
+from random import seed as set_seed # setting a random seed
+from random import sample as sample # for randomizing numbers_test
 
 #setting a random seed for reproducability.
 set_seed(12345)
 
+# random order, for testing sorting
+
+numbers_test2 = list(sample(range(100), 100))
 
 # Implementing a singly linked list in python.
 
@@ -175,8 +179,31 @@ class SingleLinkedList:
                 
         return print(f"Item Not found. This took {node_count} searches.") # if the item isn't found tell us how many searches it took.
     
-    def sort(self): # going to be selection sort
-        pass
+    def sort(self, asc = True, desc = False): # going to be selection sort
+        if desc == True: # if we want to sort the list in descending order
+            current = self.head # start at the beginning of the list
+            while current: # while current \neq none, outer loop, current is the unsorted part of the list
+                max_node = current # asssume that the first unsorted element is the maximum value in the list $x_i$
+                search = current.next # the value we are comparing x_i to x_j
+                while search: # while search \neq None
+                    if search.data > max_node.data:
+                        max_node = search
+                    search = search.next
+                # swap the data of the current node with the data of max_node
+                current.data, max_node.data = max_node.data, current.data
+                current = current.next # go to the next node and compare
+        else: # if we want to sort the list in ascending order (default when you call .sort())
+            current = self.head # start at the beginning of the list
+            while current: # while current \neq none, outer loop, current is the unsorted part of the list
+                min_node = current # asssume that the first unsorted element is the minimum value in the list $x_i$
+                search = current.next # the value we are comparing x_i to x_j
+                while search: # while search \neq None
+                    if search.data < min_node.data:
+                        min_node = search
+                    search = search.next
+                # swap the data of the current node with the data of min_node
+                current.data, min_node.data = min_node.data, current.data
+                current = current.next # go to the next node and compare
         
     # Allow us to print/visualize the list if it is called like linkedlist(obj) 
     def __repr__(self):
