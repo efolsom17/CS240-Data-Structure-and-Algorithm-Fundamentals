@@ -88,10 +88,57 @@ We start with an array of values $X = \{x_0,x_1, x_2, \ldots, x_n\}$. We assume 
       1. For each of the indices from the last sorted index down to $0$ ($x_j$ through $x_0$):
         * If the $x_j$ is greater than $x_i$:
           * Move $x_j$ to the right by one, $x_j = x_{j+1}$.
-        * Insert $x_i$ into the array at the index $j$
+      * Insert $x_i$ into the array at the index $j$
+
+
+If we are to check if $x_j$ is less than $x_i$ then we can instead sort the list in descending order rather than ascending.
 
 ## Problem 4: Write in the programming language of your choice an insertion sort algorithm that works over an array. Comment to explain the algorithm.
 
+We can implement the Insertion Sort algorithm via the following Python Code:
+
+```{python, insertion sort}
+def InsertionSort(array, asc = True, desc = False):
+    # array: array of values to be sorted, assumes each element is an int
+    # asc: sort in ascending order, Default: True
+    # desc: sort in descending order, Default: False
+    
+    array = array[:] # so that we don't manipulate the original array, will just print the sorted array
+    
+    if desc == True: # decsending
+        for i in range(1,len(array)): # starting at index 1 because we assume index 0 is already sorted
+            
+            x_i = array[i] # The value we are comparing against
+            j = i-1 # the highest index in the array that is sorted, starts at 0
+            
+            # Search sorted indices until we reach the correct position of x_i
+            while j >= 0 and array[j] < x_i: 
+                array[j + 1] = array[j]  # Shift elements to the right
+                j -= 1 # Go to the next sorted element
+            array[j+1] = x_i # insert the stored value $x_i$
+    
+    else: # ascending
+        for i in range(1,len(array)): # starting at index 1 because we assume index 0 is already sorted
+            
+            x_i = array[i] # The value we are comparing against
+            j = i-1 # the highest index in the array that is sorted, starts at 0
+            
+            # Search sorted indices until we reach the correct position of x_i
+            while j >= 0 and array[j] > x_i: 
+                array[j + 1] = array[j]  # Shift elements to the right
+                j -= 1 # Go the the next sorted element
+            array[j+1] = x_i # insert the stored value $x_i$
+            
+    return array # return the sorted array.
+```
+
 ## Problem 5: How do the best, average and worst case time complexities compare between these two algorithms? Why is the best case different between insertion and selection?
+
+|| Selection Sort | Insertion Sort|
+|:-:|:--------------:|:-------------:|
+|Best Case||$O(n)$|
+|Average Case||$O(n^2)$|
+|Worst Case||$O(n^2)$|
+
 
 ## Problem 6: Use the attached file `numbers-1.txt` and sort the values using your two sort algorithms. What value is in position 7586?
