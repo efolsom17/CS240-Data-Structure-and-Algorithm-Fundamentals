@@ -134,11 +134,73 @@ def InsertionSort(array, asc = True, desc = False):
 
 ## Problem 5: How do the best, average and worst case time complexities compare between these two algorithms? Why is the best case different between insertion and selection?
 
+The following table represents the time complexities of both Selection and Insertion Sort.
+
 || Selection Sort | Insertion Sort|
 |:-:|:--------------:|:-------------:|
-|Best Case||$O(n)$|
-|Average Case||$O(n^2)$|
-|Worst Case||$O(n^2)$|
+|Best Case|$O(n^2)$|$O(n)$|
+|Average Case|$O(n^2)$|$O(n^2)$|
+|Worst Case|$O(n^2)$|$O(n^2)$|
 
+With selection sort, we have to sort an array of $n$ values, 
+
+| Loop | Indices to Compare|
+|:--:|:--:|
+|1|$n-1$|
+|2|$n-2$|
+|3|$n-3$|
+|4|$n-4$|
+|$\vdots$|$\vdots$|
+|$n$|1|
+
+This can be written out mathematically as $(n-1)+(n-2)+(n-3)+\ldots+1$, which can be simplified to $\frac{n(n-1)}{2}$, which in big Oh notation is equivalent to $O(n^2)$. No matter what order the array is when it is inputed, even if it is sorted already,  Selection sort will always need to compare values in this manner. Both of the loops will have to be executed.
+
+Compared to selection Sort, the best case time complexity for insertion sort is $O(n)$. This would be the scenario were the array was already sorted in the order that we wished. In that case the inner while loop would not run and we would only visit the $n$ indices of the array. 
 
 ## Problem 6: Use the attached file `numbers-1.txt` and sort the values using your two sort algorithms. What value is in position 7586?
+
+To begin we must first load in the `numbers-1.txt` data.
+
+```{python, data loading:}
+with open("./Data/numbers-1.txt", "r") as nums: #opens the file
+    numbers1 = [int(line.strip()) for line in nums]
+```
+
+We perform our sorting algorithms via the following code:
+
+```{python, sorting asc}
+numbers1_select = SelectionSort(numbers1)
+numbers1_insert = InsertionSort(numbers1)
+```
+
+The value at position 7586 is as follows:
+
+```{python, sorting2 asc}
+#| echo: false
+
+print(f"When the array is not sorted the value at position 7586\nis {numbers1[7586]}.\nUsing selection sort: {numbers1_select[7586]}\nUsing Insertion Sort: {numbers1_insert[7586]}")
+```
+
+
+If we were to sort in descending order we would get the following:
+
+```{python, sorting desc}
+#| echo: false
+
+numbers1_select_desc = SelectionSort(numbers1, desc =True)
+numbers1_insert_desc = InsertionSort(numbers1, desc = True)
+
+print(f"When the array is not sorted the value at position 7586\nis {numbers1[7586]}.\nUsing selection sort: {numbers1_select_desc[7586]}\nUsing Insertion Sort: {numbers1_insert_desc[7586]}")
+```
+
+## Resources Used
+
+Some of the resources I used to complete this assignment:
+
+* w3schools DSA Python:
+  * https://www.w3schools.com/dsa/dsa_algo_selectionsort.php
+  * https://www.w3schools.com/dsa/dsa_algo_insertionsort.php
+* Programiz
+  * https://www.programiz.com/dsa/selection-sort
+  * https://www.programiz.com/dsa/insertion-sort
+* ChatGPT for various debugging and questions on how some pieces of code I have seen function.
