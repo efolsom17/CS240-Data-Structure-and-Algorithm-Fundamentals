@@ -41,6 +41,8 @@ class Node: # Houses data and the pointer for the next position
         self.data = item # data contained in the node for this case gonna be an int to be simple
         self.next = None # Go to the next node, making None as the default value for next.
         self.prev = None # Go to the previous node, making None as the default value for prev. 
+    def __str__(self):
+        return self.data
         
 ## Hoping I don't have to create a new node if 
         
@@ -57,7 +59,6 @@ class SingleLinkedList:
     
     def __init__(self, data):
         self.head = None # Set the head to be None
-        self.list_length = int(len(data)) # will be needed later for randomization stuff. stores the length of the input list
         if isinstance(data, list): # from chatGpT, ensures that you are transforming an array/list.
             self.head = Node(data[0]) # Assign the head of the linked list to be index 0 of the input array or list
             #print(self.head.data)
@@ -70,6 +71,7 @@ class SingleLinkedList:
                 #print(current.next.data)
                 current = current.next # Set the next node to be the current node (go to the next node)
                 #print(current.data)
+            self.list_length = int(len(data)) # will be needed later for randomization stuff. stores the length of the input list
         else:
             raise TypeError("Expected a list")
         
@@ -112,13 +114,12 @@ class SingleLinkedList:
             return print(f"The data contained in Node {node} is {node_data}.")
                 
 
-    def insert(self, beg = False, rand = False, end = False, data = any, node = int):
+    def insert(self, beg = False, rand = False, end = False, data = any):
+        new_node = Node(data)     # Assign the data (value) of the new node, where new_node.next = None
         if beg == True:
-            new_node = Node(data)     # Assign the data (value) of the new node, where new_node.next = None
             new_node.next = self.head # Point the next part of the new node to the head node
             self.head = new_node # assign the new node as the head of the linked list   
         elif rand == True:
-            new_node = Node(data)     # Assign the data (value) of the new node, where new_node.next = None
             rand_index = rdunif(0, self.list_length-1) # select a random index
             #print(rand_index)
             current = self.head # Start at the head of the list
@@ -130,21 +131,40 @@ class SingleLinkedList:
             current.next = new_node # and point the current node to the new node we inserted.
             return print(f"We have inserted the value {data} at node {index_counter}")
         elif end == True:
-            new_node = Node(data)   # assign the data (value) of the new node, where new_node.next = None
             current = self.head    # Start at the beginning of the list
             while (current.next): # while current.next \neq None
                 current = current.next # go to the next node (traverse the list)
-            current.next = new_node # once current.next == None, point the last node to the new node we created earlier.   
+            current.next = new_node # once current.next == None, point the last node to the new node we created earlier. 
+        self.list_length += 1 # update the length of the linked list (add one node to the length)  
     
-    def delete(self, beg = False, rand = False, end = False, node = None):
-        temp = self.head # store the head of the linked list to be a temporary variable
+    def delete(self, beg = False, rand = False, end = False):
         if beg == True: # if we are deleting from the beginning of the list (head)
-             self.head = temp.next # re-assign the head to be the next node
-        elif rand == True:
-            pass
-        elif end == True:   
-            pass
-    
+             self.head = self.head.next # re-assign the head to be the next node
+             self.list_length -= 1 # update the legnth of the list (one smaller).
+        elif rand == True: # if we are deleting a random node
+            rand_index = rdunif(0, self.list_length-2)# select A random index, excluding the last node
+            current = self.head # start at the beginning of the list
+            for _ in range(rand_index): # traverse through the list rand_index times, ChatGPT reccomended this as being more elegant than my while loop used in insertion. _ is a placeholder dummy variable that will node be used, basically says do whats inside the for loop rand_index number of times.
+                current = current.next # go to the next node. we do this rand_index times
+                node_data = current.next.data # storing this so we can tell the user what node and data we actually deleted.
+            current.next = current.next.next if current.next else None  # Skip the node at the random index. Point the node from the node before the random index to the node after the random index.
+            self.list_length -= 1 # update the legnth of the list (one smaller).
+            print(f"We have deleted node {rand_index+1} which contained the value {node_data}")
+        elif end == True: # if we are deleting from the end of the linked list (last node)  
+            
+            if self.head is None: # Check if the linked list is empty
+                return "List is empty"  # If there's no node to delete
+
+            if self.head.next is None: # check if the linked list has only one node (the head)
+                self.head = None  # If there's only one node, remove it
+                self.list_length -= 1 # update the length of the linked list.
+                return
+            
+            current = self.head # start at the beginning of the list
+            while current.next.next: #while current.next.next \neq None
+                current = current.next # go to the next node, will eventually reach the second to last node in the linked list
+            current.next = None # delete the pointer to the last node in the linked list
+            self.list_length -= 1 # update the legnth of the list (one smaller).
     def search(self, value):
         current = self.head # assign the head to be the current node we are on
         node_count = 0
