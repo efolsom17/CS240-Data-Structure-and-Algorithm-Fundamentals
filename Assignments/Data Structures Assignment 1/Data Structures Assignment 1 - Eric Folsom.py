@@ -41,8 +41,6 @@ class Node: # Houses data and the pointer for the next position
         self.data = item # data contained in the node for this case gonna be an int to be simple
         self.next = None # Go to the next node, making None as the default value for next.
         self.prev = None # Go to the previous node, making None as the default value for prev. 
-    def __str__(self):
-        return self.data
         
 ## Hoping I don't have to create a new node if 
         
@@ -196,7 +194,7 @@ class SingleLinkedList:
         while current: # while current \neq None
             nodes.append(str(current.data)) # add the data of the node as a string
             current = current.next # go to the next node
-        return "Linked list contains: " + " -> ".join(nodes) #print the linked list, with nodes connected with an arrow.
+        return " -> ".join(nodes) #print the linked list, with nodes connected with an arrow.
 
 
 
