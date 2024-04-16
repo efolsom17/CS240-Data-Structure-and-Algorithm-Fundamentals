@@ -81,33 +81,26 @@ class SinglyLinkedList:
        ### Read #### 
     def read(self, beg = False, rand = False, end = False, node= int):
         from random import randint as rdunif # random integer from a discrete uniform distribution
-        if beg == True:
+        if beg == True: # Beginning
             print(self.head.data) # print the data in the head node
-        elif rand == True:
+        elif rand == True: #random node
             rand_index = rdunif(0, self.list_length-1) # select a random index
-            #print(rand_index)
             current = self.head # assign the head to be the current node we are at
-            #print(current.data)
             index_counter = 0 # To keep track of the index we are at
             while index_counter <= rand_index: # while we have not reached the index we are looking for
-                #print(f"Current Node Data: {current.data}")
-                #print(f"Current Node: {index_counter}")
-                #print(f"The next node contains: {current.next.data}")
                 node_data = int(current.data) # store the data of the current node we are at
                 current = current.next # go to the next node
                 index_counter += 1 # increment the counter to be the index we are searching for
-                #print(f"The next node is: {index_counter}")
-            return print(f"We are reading the data at index: {rand_index} which contains {node_data}.")
-                
-        elif end == True:   
+            return print(f"We are reading the data at index: {rand_index} which contains {node_data}.")      
+        elif end == True: # end of the linked list  
             current = self.head # assign the head to be the current node we are at
             while current: # while current \neq None
                 node_data = int(current.data) # store the data of the current node we are at.
                 current = current.next# go to the next node
             return print(node_data)
-        elif node >= self.list_length:
+        elif node >= self.list_length: # if specified node is not within the bounds
             return print(f"Index Out of Bounds")
-        else:
+        else: # if we specify the node to read
             current = self.head # start at the beginning of the list
             index_counter = 0 # self explanitory
             while index_counter <= node: # while we have not reached the node that we want to be in stop once we reach it
@@ -116,7 +109,7 @@ class SinglyLinkedList:
                 index_counter += 1           
             return print(f"The data contained in Node {node} is {node_data}.")
                 
-
+    # insert #
     def insert(self, beg = False, rand = False, end = False, data = any):
         from random import randint as rdunif # random integer from a discrete uniform distribution
         new_node = Node(data)     # Assign the data (value) of the new node, where new_node.next = None
@@ -125,7 +118,6 @@ class SinglyLinkedList:
             self.head = new_node # assign the new node as the head of the linked list   
         elif rand == True:
             rand_index = rdunif(0, self.list_length-1) # select a random index
-            #print(rand_index)
             current = self.head # Start at the head of the list
             index_counter = 0 # storing the current index
             while index_counter < rand_index-1: # Traverse the list until we have reached one less than the randomly sampled index.
@@ -250,16 +242,37 @@ class DoublyLinkedList:
         
     # Read ## 
     def read(self, beg = False, rand = False, end = False, node= int):
-        pass
-
-    # Insert ## 
+        from random import randint as rdunif # random integer from a discrete uniform distribution
+        if beg == True:
+            return print(self.head.data) #read the head
+        elif end == True:
+            return print(self.tail.data) #read the tail
+        elif rand == True:
+            rand_index = rdunif(0,self.list_length-1) # select a random node
+            current = self.head # start at the beginning of the list
+            for _ in range(rand_index): # repeat this until we reach the random node
+                current = current.next # go to the next node
+            return print(f"We are reading the data at node {rand_index}, which contains: {current.data}")
+        elif node >= self.list_length: # if specified node is not within the bounds
+            return print(f"Index Out of Bounds")
+        else:
+            current = self.head # start at the beginning of the list
+            index_counter = 0 # self explanitory
+            while index_counter <= node: # while we have not reached the node that we want to be in stop once we reach it
+                node_data = int(current.data) # store the data of the node (might be able to move this outside of the while loop, after testing I cannot)
+                current = current.next
+                index_counter += 1           
+            return print(f"The data contained in Node {node} is {node_data}.") 
+    
+    # insert #
     def insert(self, beg = False, rand = False, end = False, data = any):
-        pass
+        from random import randint as rdunif # random integer from a discrete uniform distribution
 
 
     # Delete ##
 
     def delete(self, beg = False, rand = False, end = False):
+        from random import randint as rdunif # random integer from a discrete uniform distribution
         pass
 
     # Linear Search ##
@@ -270,7 +283,8 @@ class DoublyLinkedList:
     def sort(self, asc = True, desc = False):
         pass
     
-    # Printing methods, ChatGPT was my friend for this one.
+    # Printing methods, ChatGPT was my friend for this one. identical to singly linked list, except for <-> instead of -> 
+    # to represent that each node is linked to the next node and the previous node instead of just the next node.
     def __repr__(self):
         nodes = []
         current = self.head
