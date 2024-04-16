@@ -50,7 +50,7 @@ def SelectionSort(array, asc = True, desc = False):
     # array: array of values to be sorted, assumes each element is an int
     # asc: sort in ascending order, Default: True
     # desc: sort in descending order, Default: True
-    
+
     array = array[:] # so that we don't manipulate the original array.
     
     if desc == True: #descending order
@@ -80,7 +80,15 @@ def SelectionSort(array, asc = True, desc = False):
 
 ## Problem 3: Write in pseudo code an insertion sort algorithm the works over an array. Comment to explain the algorithm.
 
+We start with an array of values $X = \{x_0,x_1, x_2, \ldots, x_n\}$. We assume that the elements of $X$, $x_i$, where $i=0,1,2,\ldots,n$, are not in any particular order.
 
+1. Assume that the fist element, $x_0$ is sorted into it's proper position.
+2. For each unsorted element in $X$:
+   1. Store the value of $x_i$.
+      1. For each of the indices from the last sorted index down to $0$ ($x_j$ through $x_0$):
+        * If the $x_j$ is greater than $x_i$:
+          * Move $x_j$ to the right by one, $x_j = x_{j+1}$.
+        * Insert $x_i$ into the array at the index $j$
 
 ## Problem 4: Write in the programming language of your choice an insertion sort algorithm that works over an array. Comment to explain the algorithm.
 
