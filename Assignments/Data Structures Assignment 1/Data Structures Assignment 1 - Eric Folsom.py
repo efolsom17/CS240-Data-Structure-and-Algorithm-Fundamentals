@@ -10,10 +10,10 @@ with open("./Data/numbers-2.txt", "r") as nums: #opens the file
 numbers_test = list(range(0,100)) # need to make sure to define as a list, python doesnt do this automatically like R does.
 
 ## So I can randomly sample indices of the data, importing them so that they have the same function names as in R.
-from random import randint  as rdunif # random integer from a discrete uniform distribution
+from random import randint as rdunif # random integer from a discrete uniform distribution
 from random import uniform as runif # random number from a uniform distribution
 from random import gauss as rnorm # random number from a normal (gaussian) distribution
-from random import seed as set_seed # setting a random seed
+from random import seed as set_seed # setting a random seed, in R this is set.seed(), had to use _ here in python
 from random import sample as sample # for randomizing numbers_test
 
 #setting a random seed for reproducability.
@@ -37,7 +37,7 @@ numbers_test2 = list(sample(range(100), 100))
  So to do this, I need to make a single linked list class that when invoked, similar to how int() or how float() works but on a list, will
  turn every item in a list into a node and then connect the nodes. and then be able to implemment the other requirements
  
- The example from the readings on canvas created a linked list when you ran the python script. I   
+ The example from the readings on canvas created a linked list when you ran the python script. I want to create the linked list when you call singleLinkedList(obj)  
 '''
 
 class Node: # Houses data and the pointer for the next position
@@ -53,7 +53,7 @@ class Node: # Houses data and the pointer for the next position
 
 
 
-class SingleLinkedList: 
+class SinglyLinkedList: 
     
     ## Initializing the linked list class.
     # This should hopefully convert a typical list to a linked list when running SingleLinkedList() on a list
@@ -75,11 +75,12 @@ class SingleLinkedList:
                 #print(current.data)
             self.list_length = int(len(data)) # will be needed later for randomization stuff. stores the length of the input list
         else:
-            raise TypeError("Expected a list")
+            raise TypeError("Expected a list") # ensure that the data is a list
         
         
        ### Read #### 
     def read(self, beg = False, rand = False, end = False, node= int):
+        from random import randint as rdunif # random integer from a discrete uniform distribution
         if beg == True:
             print(self.head.data) # print the data in the head node
         elif rand == True:
@@ -117,6 +118,7 @@ class SingleLinkedList:
                 
 
     def insert(self, beg = False, rand = False, end = False, data = any):
+        from random import randint as rdunif # random integer from a discrete uniform distribution
         new_node = Node(data)     # Assign the data (value) of the new node, where new_node.next = None
         if beg == True:
             new_node.next = self.head # Point the next part of the new node to the head node
@@ -140,6 +142,7 @@ class SingleLinkedList:
         self.list_length += 1 # update the length of the linked list (add one node to the length)  
     
     def delete(self, beg = False, rand = False, end = False):
+        from random import randint as rdunif # random integer from a discrete uniform distribution
         if beg == True: # if we are deleting from the beginning of the list (head)
              self.head = self.head.next # re-assign the head to be the next node
              self.list_length -= 1 # update the legnth of the list (one smaller).
@@ -226,6 +229,25 @@ class SingleLinkedList:
 
 
 #### Implementing a doubly-linked list in Python
+
+class DoublyLinkedList:
+    #initializing doubly linked list
+    def __init__(self, data):
+        self.head = None # start of the linked list
+        self.tail = None # end of the linked list, so we can traverse the list starting from the other end of the list.
+        if isinstance(data, list): #ensuring that the input data is a list
+            self.head = Node(data[0]) # assign the first index of the list as the head
+            current = self.head # start at the beginning of the list
+            for item in data[1:]: # for every other index of the input array or list
+                new_node = Node(item) # creates a new node with the data of the input list 
+                new_node.prev = current # point the new node to the previous node
+                current.next = new_node # point the previous node to the new node
+                current = new_node # go to the next node
+            self.tail = current # The current node is at the end of the list so assign it as such.
+            self.list_length = len(data) # will be needed later for some randomization stuff.
+        else:
+           raise TypeError("Expected a list") # ensure that the inputted data is a list 
+        
 
 # Head  ##
 
