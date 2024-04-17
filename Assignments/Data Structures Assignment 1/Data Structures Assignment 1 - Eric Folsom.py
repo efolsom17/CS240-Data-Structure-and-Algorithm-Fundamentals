@@ -110,7 +110,7 @@ class SinglyLinkedList:
             return print(f"The data contained in Node {node} is {node_data}.")
                 
     # insert #
-    def insert(self, beg = False, rand = False, end = False, data = any):
+    def insert(self, data = any, beg = False, rand = False, end = False):
         from random import randint as rdunif # random integer from a discrete uniform distribution
         new_node = Node(data)     # Assign the data (value) of the new node, where new_node.next = None
         if beg == True:
@@ -132,7 +132,7 @@ class SinglyLinkedList:
                 current = current.next # go to the next node (traverse the list)
             current.next = new_node # once current.next == None, point the last node to the new node we created earlier. 
         self.list_length += 1 # update the length of the linked list (add one node to the length)  
-    
+    # Delete
     def delete(self, beg = False, rand = False, end = False):
         from random import randint as rdunif # random integer from a discrete uniform distribution
         if beg == True: # if we are deleting from the beginning of the list (head)
@@ -162,6 +162,7 @@ class SinglyLinkedList:
                 current = current.next # go to the next node, will eventually reach the second to last node in the linked list
             current.next = None # delete the pointer to the last node in the linked list
             self.list_length -= 1 # update the legnth of the list (one smaller).
+    #Search
     def search(self, value):
         current = self.head # assign the head to be the current node we are on
         node_count = 0
@@ -173,7 +174,7 @@ class SinglyLinkedList:
                 current = current.next # go to the next node
                 
         return print(f"Item Not found. This took {node_count} searches.") # if the item isn't found tell us how many searches it took.
-    
+    #selection Sort
     def sort(self, asc = True, desc = False): # going to be selection sort
         if desc == True: # if we want to sort the list in descending order
             current = self.head # start at the beginning of the list
@@ -243,11 +244,11 @@ class DoublyLinkedList:
     # Read ## 
     def read(self, beg = False, rand = False, end = False, node= int):
         from random import randint as rdunif # random integer from a discrete uniform distribution
-        if beg == True:
+        if beg:
             return print(self.head.data) #read the head
-        elif end == True:
+        elif end:
             return print(self.tail.data) #read the tail
-        elif rand == True:
+        elif rand:
             rand_index = rdunif(0,self.list_length-1) # select a random node
             current = self.head # start at the beginning of the list
             for _ in range(rand_index): # repeat this until we reach the random node
@@ -265,8 +266,43 @@ class DoublyLinkedList:
             return print(f"The data contained in Node {node} is {node_data}.") 
     
     # insert #
-    def insert(self, beg = False, rand = False, end = False, data = any):
-        from random import randint as rdunif # random integer from a discrete uniform distribution
+    def insert(self, data=any, beg=False, rand=False, end=False):
+        from random import randint as rdunif  # random integer from a discrete uniform distribution
+        new_node = Node(data)  # create a new node with the data, prev = None and next = None
+        if beg:  # if beg == True, we are inserting at the beginning
+            new_node.next = self.head  # point the new node to the head
+            if self.head:  # if the linked list already has a head assigned (if the list isn't empty it will)
+                self.head.prev = new_node  # point the head node to the previous node (the new one we are inserting)
+            self.head = new_node  # assign our new node as the head.
+            if self.tail is None:  # if it's the first node being added
+                self.tail = new_node  # also set it as tail
+        elif end:  # if end == true, we are inserting at the end
+            new_node.prev = self.tail  # point the new node prev to the tail of the list
+            if self.tail:  # does a tail already exist (if the list is not empty then yes)
+                self.tail.next = new_node  # point the tail to the new node, assign next to be new node
+            self.tail = new_node  # set the new node as the tail
+            if self.head is None:  # if the list is empty
+                self.head = new_node  # set the new node as the head (technically at the end of the list)
+        elif rand:  # if rand == true, inserting at a random node
+            if self.list_length == 0:  # if the list is empty 
+                self.head = new_node
+                self.tail = new_node
+            else:
+                rand_index = rdunif(0, self.list_length-1)  # select a random index
+                current = self.head  # start at the beginning of the linked list
+                index_counter = 0 #so we know which index we inserted the data into
+                for _ in range(rand_index):  # run whats below rand_index number of times
+                    current = current.next  # go to the next node till we're at the rand_index number
+                    index_counter += 1# update the index counter
+                new_node.next = current  # point the new node to the current node
+                new_node.prev = current.prev  # point the new node prev to the node that the current node prev is pointing to
+                if current.prev:  # link previous node to new node
+                    current.prev.next = new_node 
+                current.prev = new_node  # assign the current node prev to the new node we just inserted
+                if rand_index == 0:  # special case if the new node becomes the head
+                    self.head = new_node # assign the new node as the head
+                return print(f"We have inserted the value {data} at node {index_counter}")
+        self.list_length += 1
 
 
     # Delete ##
@@ -279,12 +315,12 @@ class DoublyLinkedList:
     def search(self, value):
         pass
 
-    # Sort, insertion sort ##
+    # Insertion sort ##
     def sort(self, asc = True, desc = False):
         pass
     
     # Printing methods, ChatGPT was my friend for this one. identical to singly linked list, except for <-> instead of -> 
-    # to represent that each node is linked to the next node and the previous node instead of just the next node.
+    # to represent that each node is linked to the next node and the previous node instead of just the next node. 
     def __repr__(self):
         nodes = []
         current = self.head
