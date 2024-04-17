@@ -337,7 +337,15 @@ class DoublyLinkedList:
 
     # Linear Search ##
     def search(self, value):
-        pass
+        current = self.head #start at the beginning of the list
+        node_counter = 0 # Counter to keep track of the node that we are at, starting at the head (node 0)
+        while current: #traverse the list, while current != None
+            if value == current.data: #check if the data in the node is the value we are looking for
+                    return print(f"{value} was found at Node {node_counter}") #if we find it print its location
+            else: # if we didn't find it
+                current = current.next #go to the next node
+                node_counter += 1 #update the index
+        return print(f"Item Not found. This took {node_counter} searches.") # cannot find the item, inform the user
 
     # Insertion sort ##
     def sort(self, asc = True, desc = False):
