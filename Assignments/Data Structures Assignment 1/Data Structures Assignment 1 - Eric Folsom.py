@@ -302,14 +302,38 @@ class DoublyLinkedList:
                 if rand_index == 0:  # special case if the new node becomes the head
                     self.head = new_node # assign the new node as the head
                 return print(f"We have inserted the value {data} at node {index_counter}") # tell us where the new value is inserted.
-        self.list_length += 1
+        self.list_length += 1 # update the length of the linked list
 
 
     # Delete ##
 
     def delete(self, beg = False, rand = False, end = False):
         from random import randint as rdunif # random integer from a discrete uniform distribution
-        pass
+        if beg: #if we are deleting the head of the linked list, if beg == true
+            if self.head: # if there exists a head node (it will if the list is not empty)
+                self.head = self.head.next # assign the second node to be the head node
+                if self.head: # if the head wasn't the only element in the linked list
+                    self.head.prev = None # delete the prev pointer from the node we just assigned as the head
+                self.list_length -= 1 # update the length of the linked list 
+        elif end: # if we are deleting the end of the linked list (tail)
+            if self.tail: # does a tail exist on this linekd list (it will if it is not empty)
+                self.tail = self.tail.prev # set the tail as the node the tail was previously linked to
+                if self.tail: # if the tail wasn't the only elemment in the linked list
+                    self.tail.next = None #unlink the previous node from the old tail
+                self.list_length -= 1 # update the length of the list
+        elif rand:
+            rand_index = rdunif(0, self.list_length-1)  # select a random index
+            current = self.head  # start at the beginning of the linked list
+            index_counter = 0 #so we know which index we deleted the data from
+            for _ in range(rand_index): #do whats below rand_index # of times
+                current = current.next # traverse the linked list (go to the next Node) to the index we are deleting from
+                node_data = current.data # storing the data in the node so that we can tell the user what data we deleted
+            if current.prev: # if we are not deleting the head, if current.prev \neq None
+                current.prev.next = current.next #point the previous node to the next node
+            if current.next: # if we are not deleting the tail, if current.next \neq None
+                current.next.prev = current.prev # link the next node to the previous node
+            self.list_length-=1 #update the length of the list
+            print(f"We have deleted node {rand_index+1} which contained the value {node_data}") # tell the user where and what data was deleted.
 
     # Linear Search ##
     def search(self, value):
