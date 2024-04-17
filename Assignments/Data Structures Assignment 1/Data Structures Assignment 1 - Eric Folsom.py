@@ -10,9 +10,6 @@ with open("./Data/numbers-2.txt", "r") as nums: #opens the file
 numbers_test = list(range(0,100)) # need to make sure to define as a list, python doesnt do this automatically like R does.
 
 ## So I can randomly sample indices of the data, importing them so that they have the same function names as in R.
-from random import randint as rdunif # random integer from a discrete uniform distribution
-from random import uniform as runif # random number from a uniform distribution
-from random import gauss as rnorm # random number from a normal (gaussian) distribution
 from random import seed as set_seed # setting a random seed, in R this is set.seed(), had to use _ here in python
 from random import sample as sample # for randomizing numbers_test
 
@@ -23,7 +20,7 @@ set_seed(12345)
 
 numbers_test2 = list(sample(range(100), 100))
 
-# Implementing a singly linked list in python.
+# Implementing a Single linked list in python.
 
 
 # Head  ##
@@ -53,7 +50,7 @@ class Node: # Houses data and the pointer for the next position
 
 
 
-class SinglyLinkedList: 
+class SingleLinkedList: 
     
     ## Initializing the linked list class.
     # This should hopefully convert a typical list to a linked list when running SingleLinkedList() on a list
@@ -221,10 +218,10 @@ class SinglyLinkedList:
 
 
 
-#### Implementing a doubly-linked list in Python
+#### Implementing a double-linked list in Python
 
-class DoublyLinkedList:
-    #initializing doubly linked list
+class DoubleLinkedList:
+    #initializing double linked list
     def __init__(self, data):
         self.head = None # start of the linked list
         self.tail = None # end of the linked list, so we can traverse the list starting from the other end of the list.
@@ -371,13 +368,13 @@ class DoublyLinkedList:
                 while x_i_node.prev and x_i_node.prev.data < x_i_data: # traverse the sorted nodes backwards until we reach the correct position of node x_i
                     x_i_node.prev.data, x_i_node.data = x_i_node.data, x_i_node.prev.data # swap the data of the nodes
                     x_i_node = x_i_node.prev # go the the next node, backwards 
-            else: #sort in ascening order
+            else: #sort in ascening order, default
                 while x_i_node.prev and x_i_node.prev.data > x_i_data: # traverse the sorted nodes backwards until we reach the correct position of node x_i
                     x_i_node.prev.data, x_i_node.data = x_i_node.data, x_i_node.prev.data # swap the data of the nodes
                     x_i_node = x_i_node.prev # go the the next node, backwards 
             current = current.next # go to the next node and compare it with the rest of the sorted nodes
     
-    # Printing methods, ChatGPT was my friend for this one. identical to singly linked list, except for <-> instead of -> 
+    # Printing methods, ChatGPT was my friend for this one. identical to Single linked list, except for <-> instead of -> 
     # to represent that each node is linked to the next node and the previous node instead of just the next node. 
     def __repr__(self):
         nodes = []
@@ -394,3 +391,89 @@ class DoublyLinkedList:
             nodes.append(str(current.data))
             current = current.next
         return " <-> ".join(nodes)   
+    
+    
+    
+    
+'''
+Showing off the impelementation using the provided numbers-2.txt file
+'''
+    
+# initializing numbers-2.txt data as two different kinds of linked lists
+numbers2_SLL = SingleLinkedList(numbers2)
+numbers2_DLL = DoubleLinkedList(numbers2)
+
+print(f"Original array: {numbers2}")    
+print(f"As a Single Linked List: {numbers2_SLL}")
+print(f"As a Double Linked List: {numbers2_DLL}")
+    
+# Demonstrating the functions:
+    
+## Read
+        
+print("Single Linked List:")
+print("Reading the head:")
+numbers2_SLL.read(beg = True)
+print("Reading the end:")
+numbers2_SLL.read(end = True)
+print("Reading a random node:")
+numbers2_SLL.read(rand = True)
+    
+print("Double Linked List:")
+print("Reading the head:")
+numbers2_DLL.read(beg = True)
+print("Reading the end:")
+numbers2_DLL.read(end = True)
+print("Reading a random node:")
+numbers2_DLL.read(rand = True)  
+    
+## Insert
+
+print("Single Linked List:")
+print("Inserting 'HEAD' at the head:")
+numbers2_SLL.insert("HEAD", beg = True)
+print("Inserting 'END' at the tail:")
+numbers2_SLL.insert("END", end = True)
+print("Inserting 'RANDOM' at a random Node:")
+numbers2_SLL.insert("RANDOM", rand = True)
+print("The new Single Linked List")
+print(numbers2_SLL)
+
+print("Double Linked List:")
+print("Inserting 'HEAD' at the head:")
+numbers2_DLL.insert("HEAD", beg = True)
+print("Inserting 'END' at the tail:")
+numbers2_DLL.insert("END", end = True)
+print("Inserting 'RANDOM' at a random Node:")
+numbers2_DLL.insert("RANDOM", rand = True)
+print("The new Double Linked List")
+print(numbers2_DLL)
+
+numbers2_SLL = SingleLinkedList(numbers2)
+numbers2_DLL = DoubleLinkedList(numbers2)
+
+## Search
+
+#picking a random value from numbers-2.txt to search for
+search_value = int(sample(numbers2,1)[0])
+
+print("Single Linked List:")
+numbers2_SLL.search(search_value)
+
+print("Double Linked List:")
+numbers2_DLL.search(search_value)
+
+## Returning to the original linked lists because sort will break if the data in a node is not an int, I want to resolve this issue in the future
+
+numbers2_SLL = SingleLinkedList(numbers2)
+numbers2_DLL = DoubleLinkedList(numbers2)
+
+## Sort
+
+print("Single Linked List:")
+numbers2_SLL.sort()
+print(f"Sorted list: {numbers2_SLL}")
+
+print("Double Linked List:")
+numbers2_DLL.sort()
+print(f"Sorted list: {numbers2_DLL}")
