@@ -3,9 +3,9 @@
 
 # for testing purposes, randomizing my testing sample
 from random import sample as sample
-from random import seed as setSeed
+from random import seed as set_Seed
 
-setSeed(12345) # reproducible randomization
+set_Seed(12345) # reproducible randomization
 
 # Testing Array
 
