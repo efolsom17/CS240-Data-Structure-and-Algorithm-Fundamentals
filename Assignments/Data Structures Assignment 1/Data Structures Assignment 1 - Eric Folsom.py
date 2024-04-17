@@ -43,8 +43,6 @@ class Node: # Houses data and the pointer for the next position
         self.next = None # Go to the next node, making None as the default value for next.
         self.prev = None # Go to the previous node, making None as the default value for prev. 
         
-## Hoping I don't have to create a new node if 
-        
 # Okay we have a node now we can make the linked list
 # I think
 
@@ -394,7 +392,7 @@ class DoubleLinkedList:
     
     
     
-    
+##################################################################################################################################################################    
 '''
 Showing off the impelementation using the provided numbers-2.txt file
 '''
