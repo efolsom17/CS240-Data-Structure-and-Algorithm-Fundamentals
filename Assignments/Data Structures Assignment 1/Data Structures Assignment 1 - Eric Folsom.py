@@ -301,7 +301,7 @@ class DoublyLinkedList:
                 current.prev = new_node  # assign the current node prev to the new node we just inserted
                 if rand_index == 0:  # special case if the new node becomes the head
                     self.head = new_node # assign the new node as the head
-                return print(f"We have inserted the value {data} at node {index_counter}")
+                return print(f"We have inserted the value {data} at node {index_counter}") # tell us where the new value is inserted.
         self.list_length += 1
 
 
