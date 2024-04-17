@@ -349,7 +349,33 @@ class DoublyLinkedList:
 
     # Insertion sort ##
     def sort(self, asc = True, desc = False):
-        pass
+        
+        #checking if the linked list is empty or contains one element, itd be already sorted then
+        if self.head is None or self.head.next is None: 
+            return print("Linked Lists containing 0 or 1 nodes are assumed to be sorted")
+        
+         # Type check: Ensure all elements are integers, I ASKED CHATGPT TO GIVE ME THIS part. Comments are my own
+        current = self.head # start at the head
+        while current: # traverse the list
+            if not isinstance(current.data, int): # if the data in the node is not an integer
+                raise TypeError("All nodes must contain integers to perform sorting") # throw an error and tell the user that all nodes must contain int data
+            current = current.next # if the data in the node is an int go the the next
+            
+        
+        # assume that the head is already sorted into its correct position
+        current = self.head.next # start at the second node
+        while current: # traverse the list, while current \neq None
+            x_i_node = current # The node we are comparing against
+            x_i_data = current.data # the data in the node we are comparing against
+            if desc: #sort in descending order, if desc == True
+                while x_i_node.prev and x_i_node.prev.data < x_i_data: # traverse the sorted nodes backwards until we reach the correct position of node x_i
+                    x_i_node.prev.data, x_i_node.data = x_i_node.data, x_i_node.prev.data # swap the data of the nodes
+                    x_i_node = x_i_node.prev # go the the next node, backwards 
+            else: #sort in ascening order
+                while x_i_node.prev and x_i_node.prev.data > x_i_data: # traverse the sorted nodes backwards until we reach the correct position of node x_i
+                    x_i_node.prev.data, x_i_node.data = x_i_node.data, x_i_node.prev.data # swap the data of the nodes
+                    x_i_node = x_i_node.prev # go the the next node, backwards 
+            current = current.next # go to the next node and compare it with the rest of the sorted nodes
     
     # Printing methods, ChatGPT was my friend for this one. identical to singly linked list, except for <-> instead of -> 
     # to represent that each node is linked to the next node and the previous node instead of just the next node. 
