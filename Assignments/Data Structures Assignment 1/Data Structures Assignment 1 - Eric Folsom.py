@@ -22,9 +22,6 @@ numbers_test2 = list(sample(range(100), 100))
 
 # Implementing a Single linked list in python.
 
-
-# Head  ##
-#  contains the data of the first node
 '''
 
  Okay I think the node is the important part of this. once I have the node I can just start to code.
