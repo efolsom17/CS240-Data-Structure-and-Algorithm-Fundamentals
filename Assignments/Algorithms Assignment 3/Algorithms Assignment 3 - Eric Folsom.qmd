@@ -37,11 +37,11 @@ We start with an array, $X = \{x_0, x_1, x_2, \ldots, x_n\}$. Where $x_i, i = 0,
 
 Suppose we are searching for the element in $X$, $x_j$. We would impelement something similar to the following:
 
-1. Start at $x_0$. Keep track of what index we are searching in.
-    * Compare the value of $x_0$ with the value $x_j$.
-      * If $x_j$ = x_0:
-        * Return the index that $x_j$ is in
-      * Else:
+1. For $x_i \in X$
+       * Compare the value of $x_i$ with the value $x_j$.
+         * If $x_j$ = x_0:
+          * Return the index that $x_j$ is in
+         * Else:
         * 
 
 
@@ -56,6 +56,15 @@ The linear search algorithm in R is as follows:
 First we will do it iteratively:
 
 ```{r, linear search iterative}
+LinSearchIt <- function(data, value){
+
+    n<- lenght(data)
+    for(i in n) {
+        if(value == data[i]){
+            return(printf(value + " is located at index "+ i))
+        }
+    }
+}
 
 ```
 
