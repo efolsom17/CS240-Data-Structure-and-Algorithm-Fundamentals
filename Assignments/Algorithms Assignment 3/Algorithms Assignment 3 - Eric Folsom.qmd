@@ -27,13 +27,28 @@ library(ggplot2)
 ```
 
 
-## Problem 1
+## Problem 1: Write a linear search algorithm both recursively and iteratively in pseudo code. Comment to explain.
 
-## Problem 2
+## Problem 2: Write the same linear search algorithms in the programming language of your choice. Comment to explain.
 
-## Problem 3
+## Problem 3: Rewrite the binary search algorithm from week 1 in a recursive form in pseudo code and in the programming language of your choice. Comment to explain.
 
-## Problem 4
+## Problem 4: Find a for loop you wrote in previous course work and rewrite it as a recursive function (it can not be a simple linear search problem). Please show the original code in your submission.
 
-## Problem 5
+Dig through some R files on your computer at home. Then make sure it works within this script, then change it to be recursive, make it simple as some of the R stuff will run for a long ass time.
+
+```{r, original iterative function}
+x<-rnorm(1000)
+df<- data.frame(x)
+ggplot(df, aes(x=x))+geom_density()
+
+
+```
+
+
+```{r, recursive version}
+
+```
+
+## Problem 5: 
 
