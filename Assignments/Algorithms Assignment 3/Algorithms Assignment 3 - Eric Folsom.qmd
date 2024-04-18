@@ -29,13 +29,62 @@ library(ggplot2)
 
 ## Problem 1: Write a linear search algorithm both recursively and iteratively in pseudo code. Comment to explain.
 
+#### Iteratively:
+
+For an iterative linear search, the pseudocode is as follows:
+
+We start with an array, $X = \{x_0, x_1, x_2, \ldots, x_n\}$. Where $x_i, i = 0,1,2,\ldots,n$ are the elements of the array.
+
+Suppose we are searching for the element in $X$, $x_j$. We would impelement something similar to the following:
+
+1. Start at $x_0$. Keep track of what index we are searching in.
+    * Compare the value of $x_0$ with the value $x_j$.
+      * If $x_j$ = x_0:
+        * Return the index that $x_j$ is in
+      * Else:
+        * 
+
+
+#### Recursively:
+
 ## Problem 2: Write the same linear search algorithms in the programming language of your choice. Comment to explain.
+
+I will be implementing these linear serach algorithms in both R and python. 
+
+The linear search algorithm in R is as follows:
+
+First we will do it iteratively:
+
+```{r, linear search iterative}
+
+```
+
+Next we will do it recursively:
+
+```{r, linear serach recursive}
+
+```
+
+Next we will implement these algorithms in python.
+
+We begin with the iterative implementation:
+
+```{python, linear search iterative}
+
+
+```
+
+Next we do it recursively:
+
+```{python, linear serach recursive}
+
+```
 
 ## Problem 3: Rewrite the binary search algorithm from week 1 in a recursive form in pseudo code and in the programming language of your choice. Comment to explain.
 
 ## Problem 4: Find a for loop you wrote in previous course work and rewrite it as a recursive function (it can not be a simple linear search problem). Please show the original code in your submission.
 
-Dig through some R files on your computer at home. Then make sure it works within this script, then change it to be recursive, make it simple as some of the R stuff will run for a long ass time.
+Dig through some R files on your computer at home. Then make sure it works within this script, then change it to be recursive, make it simple as some of the R stuff will run for a long ass time. Maybe do the kmeans choice algorithm for your 447 project?
 
 ```{r, original iterative function}
 x<-rnorm(1000)
