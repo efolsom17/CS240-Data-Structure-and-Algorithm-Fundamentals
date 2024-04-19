@@ -42,7 +42,8 @@ Suppose we are searching for the element in $X$, $x_j$. We would impelement some
          * If $x_j$ = x_0:
           * Return the index that $x_j$ is in
          * Else:
-        * 
+           * Go to the next index
+
 
 
 #### Recursively:
@@ -56,22 +57,34 @@ The linear search algorithm in R is as follows:
 First we will do it iteratively:
 
 ```{r, linear search iterative}
-LinSearchIt <- function(data, value){
-
-    n<- lenght(data)
-    for(i in n) {
-        if(value == data[i]){
-            return(printf(value + " is located at index "+ i))
-        }
-    }
+LinSearchIt <- function(data, value){ # data is assumed to be a vector
+  
+  n<- length(data)
+  for(i in 1:n) { # loops through the indices of our vector until we find the value we are looking for 
+    if(value == data[i]){ # if the value we are looking for is the value in the index we are searching
+      return(paste0( value, " is located at index ", i)) # return the value and its index
+    } # go to the next index.
+  }
 }
-
 ```
 
 Next we will do it recursively:
 
 ```{r, linear serach recursive}
-
+LinSearchRec <- function(data, value){ #Data is assumed to be a vector
+  
+  checkequal <- function(index){ # function to check if values in an array are equal to some value
+    if(index > length(data)) # if we are outside of the valid indices of our vector. 
+      break() # stop
+    if(data[index] == value){ # if we find the value we are looking for
+      return(paste0( value, " is located at index ", index)) # tell us where it is
+    }
+    else{ # if we didn't find it
+      checkequal(index+1) # check the next index
+    }
+  }
+  checkequal(1) # starts us searching the vector, starts at index 1 because this is R.
+}
 ```
 
 Next we will implement these algorithms in python.
@@ -79,7 +92,12 @@ Next we will implement these algorithms in python.
 We begin with the iterative implementation:
 
 ```{python, linear search iterative}
-
+def LinSearchIt(data, value): # iterative linear serach, takes in data as a list of integers
+    index = 0# to tell us if we are out of the array
+    for i in range(len(data)-1): # for every index in the array
+        if value == data[i]: # compare the value of x_i with x_j
+            return print(f"{value} is located at index {i}") # tell us if we find the value or not,
+        # go to the next index and compare
 
 ```
 
