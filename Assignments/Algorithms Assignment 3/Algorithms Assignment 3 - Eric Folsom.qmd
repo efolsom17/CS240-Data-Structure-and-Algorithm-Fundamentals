@@ -93,13 +93,17 @@ We begin with the iterative implementation:
 
 ```{python, linear search iterative}
 def LinSearchIt(data, value): # iterative linear serach, takes in data as a list of integers
-    index = 0# to tell us if we are out of the array
+    searches = 0# to tell us if we are out of the array
     for i in range(len(data)-1): # for every index in the array
         if value == data[i]: # compare the value of x_i with x_j
-            return print(f"{value} is located at index {i}") # tell us if we find the value or not,
+            searches += 1
+            return print(f"{value} is located at index {i} \nThis took {searches} searches.") # tell us if we find the value or not,
         # go to the next index and compare
-
-```
+        else:
+           searches+= 1
+    if searches >= len(data):
+        return print(f"Item Not Found \nThis took {searches} searches.")
+ ```
 
 Next we do it recursively:
 
