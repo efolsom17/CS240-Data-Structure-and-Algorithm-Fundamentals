@@ -108,7 +108,17 @@ def LinSearchIt(data, value): # iterative linear serach, takes in data as a list
 Next we do it recursively:
 
 ```{python, linear serach recursive}
+def LinSearchRec(data, value):
 
+  def searchindex(index):
+    if index == len(data):
+      return print("Item not found")
+    if data[index] == value:
+      return print(f"{value} is located at index {index}")
+    else:
+      searchindex(index+1)
+
+  searchindex(0) # search starting the list starting at index 0
 ```
 
 ## Problem 3: Rewrite the binary search algorithm from week 1 in a recursive form in pseudo code and in the programming language of your choice. Comment to explain.
