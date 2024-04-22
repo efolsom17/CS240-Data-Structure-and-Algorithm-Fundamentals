@@ -12,7 +12,9 @@ class SingleLinkedList:
     
     def __init__(self, data):
         self.head = None # Set the head to be None
-        if isinstance(data, list): # from chatGpT, ensures that you are transforming an array/list.
+        if len(data) == 0:
+            self.list_length = 0
+        elif isinstance(data, list): # from chatGpT, ensures that you are transforming an array/list.
             self.head = Node(data[0]) # Assign the head of the linked list to be index 0 of the input array or list
             #print(self.head.data)
             current = self.head # Assign head to be the current node containing the data of index 0 of the input
@@ -179,7 +181,9 @@ class DoubleLinkedList:
     def __init__(self, data):
         self.head = None # start of the linked list
         self.tail = None # end of the linked list, so we can traverse the list starting from the other end of the list.
-        if isinstance(data, list): #ensuring that the input data is a list
+        if len(data) == 0:
+            self.list_length = 0
+        elif isinstance(data, list): #ensuring that the input data is a list
             self.head = Node(data[0]) # assign the first index of the list as the head
             current = self.head # start at the beginning of the list
             for item in data[1:]: # for every other index of the input array or list
