@@ -1,0 +1,9 @@
+Metadata-Version: 2.1
+Name: cs240functions
+Version: 0.1
+Summary: CS240 Functions - for personal use
+Author: Eric Folsom
+Author-email: eric.folsom17@gmail.com
+License: MIT
+
+Package containing all functions and classes created during CS240 Spring 2023
