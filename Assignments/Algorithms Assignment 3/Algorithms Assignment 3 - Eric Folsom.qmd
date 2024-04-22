@@ -140,5 +140,5 @@ ggplot(df, aes(x=x))+geom_density()
 
 ```
 
-## Problem 5: 
+## Problem 5: Use the following attached documents to test your search algorithms. `'numbers-3.txt'` Use one of your sorting algorithms to sort the list first before implementing binary search. What position is 8128705 in?   What position is 5842193?
 
