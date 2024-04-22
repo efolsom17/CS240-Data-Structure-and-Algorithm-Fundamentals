@@ -1,4 +1,4 @@
-from cs240functions.src.LinkedList import DoubleLinkedList
+import cs240functions
 from random import sample as sample
 
 test = sample(list(range(100)),100)
