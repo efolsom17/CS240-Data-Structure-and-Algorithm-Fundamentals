@@ -84,6 +84,14 @@ class Stack:
         Peek
 '''
 
+class Queue:
+    
+    #initializing class
+    def __init__(self) -> None:
+        temp = []
+        self.queue = DoubleLinkedList(temp)
+        self.size = self.queue.list_length
+
 
 
 #testing stuff
