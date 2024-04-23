@@ -78,19 +78,56 @@ class Stack:
     
     Need to include the following functions:
         Enqueue
+        - adds an item to the back of the queue
         Dequeue
+        - reads and removes an item from the front of the queue
         IsEmpty
+        - checks if the queue is empty
         IsFull
+        - checks if the queue is full
         Peek
+        - read the front of the queue
 '''
 
 class Queue:
     
     #initializing class
-    def __init__(self) -> None:
-        temp = []
+    def __init__(self, size = int) -> None:
+        temp = [] # my double linked list implementation only takes lists as inputs, empty list
         self.queue = DoubleLinkedList(temp)
         self.size = self.queue.list_length
+        self.size_limit = size
+    
+    # Enqueue
+    def enqueue(self, item):
+        if self.IsFull():
+            return print("The Queue is full.")
+        self.size += 1
+        return self.queue.insert(item, end = True) # inserts an item at the end of the double linked list that is our queue
+        
+    
+    # Dequeue
+    def dequeue(self):
+        if self.IsEmpty():
+            return print("The Queue is empty")
+        self.size -= 1
+        value = self.queue.head.data
+        self.queue.delete(beg = True)
+        return value
+    
+    # IsEmpty
+    def IsEmpty(self):
+        return self.size == 0
+
+    # IsFull
+    def IsFull(self):
+        return self.size_limit == self.size
+    
+    # Peek
+    def peek(self):
+        if self.IsEmpty():
+            return print("The Queue is Empty")
+        return self.queue.head.data
 
 
 
