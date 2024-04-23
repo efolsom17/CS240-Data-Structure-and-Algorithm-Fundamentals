@@ -92,7 +92,7 @@ class Stack:
 class Queue:
     
     #initializing class
-    def __init__(self, size = int) -> None:
+    def __init__(self, size = int):
         temp = [] # my double linked list implementation only takes lists as inputs, empty list
         self.queue = DoubleLinkedList(temp)
         self.size = self.queue.list_length
