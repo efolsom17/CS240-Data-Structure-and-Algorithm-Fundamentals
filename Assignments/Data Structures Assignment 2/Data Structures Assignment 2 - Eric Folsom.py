@@ -128,10 +128,3 @@ class Queue:
         if self.IsEmpty():
             return print("The Queue is Empty")
         return self.queue.head.data
-
-
-
-#testing stuff
-test = sample(list(range(100)),100)
-
-test = DoubleLinkedList(test)
