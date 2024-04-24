@@ -275,7 +275,7 @@ from cs240functions import InsertionSort
 numbers3 = InsertionSort(numbers3)
 ```
 
-From here we can serach for the two values:
+From here we can serach for the two values using our recursive Binary Search function:
 
 ```{python, searching}
 BinarySearchRec(numbers3, 8128705)
