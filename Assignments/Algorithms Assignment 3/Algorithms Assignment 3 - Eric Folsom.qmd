@@ -38,15 +38,21 @@ We start with an array, $X = \{x_0, x_1, x_2, \ldots, x_n\}$. Where $x_i, i = 0,
 Suppose we are searching for the element in $X$, $x_j$. We would impelement something similar to the following:
 
 1. For $x_i \in X$
-       * Compare the value of $x_i$ with the value $x_j$.
-         * If $x_j$ = x_0:
-          * Return the index that $x_j$ is in
-         * Else:
-           * Go to the next index
+  * Compare the value of $x_i$ with the value $x_j$.
+    * If $x_j$ = x_0:
+        1. Return the index that $x_j$ is in
+    * Else:
+           1. Go to the next index
 
 
 
 #### Recursively:
+
+1. Define a function to check if the value of an index:
+   1. if Value of the index equals the value we want
+      1. return that value
+   2. recursively call the check equal function to check the next index
+2. Start searching the list or array at the first index, in python this will be index $0$ and in R this will be index $1$
 
 ## Problem 2: Write the same linear search algorithms in the programming language of your choice. Comment to explain.
 
@@ -56,10 +62,12 @@ The linear search algorithm in R is as follows:
 
 First we will do it iteratively:
 
-```{r, linear search iterative}
+```{r, linear search iterative r}
+#| eval: false
+
 LinSearchIt <- function(data, value){ # data is assumed to be a vector
   
-  n<- length(data)
+  n <- length(data)
   for(i in 1:n) { # loops through the indices of our vector until we find the value we are looking for 
     if(value == data[i]){ # if the value we are looking for is the value in the index we are searching
       return(paste0( value, " is located at index ", i)) # return the value and its index
@@ -70,7 +78,9 @@ LinSearchIt <- function(data, value){ # data is assumed to be a vector
 
 Next we will do it recursively:
 
-```{r, linear serach recursive}
+```{r, linear serach recursive r}
+#| eval: false
+
 LinSearchRec <- function(data, value){ #Data is assumed to be a vector
   
   checkequal <- function(index){ # function to check if values in an array are equal to some value
@@ -103,7 +113,7 @@ def LinSearchIt(data, value): # iterative linear serach, takes in data as a list
            searches+= 1
     if searches >= len(data):
         return print(f"Item Not Found \nThis took {searches} searches.")
- ```
+```
 
 Next we do it recursively:
 
@@ -123,22 +133,155 @@ def LinSearchRec(data, value):
 
 ## Problem 3: Rewrite the binary search algorithm from week 1 in a recursive form in pseudo code and in the programming language of your choice. Comment to explain.
 
-## Problem 4: Find a for loop you wrote in previous course work and rewrite it as a recursive function (it can not be a simple linear search problem). Please show the original code in your submission.
+The pseudocode for our recursive binary search is as follows:
 
-Dig through some R files on your computer at home. Then make sure it works within this script, then change it to be recursive, make it simple as some of the R stuff will run for a long ass time. Maybe do the kmeans choice algorithm for your 447 project?
+```{}
+# Recursive Binary Search
 
-```{r, original iterative function}
-x<-rnorm(1000)
-df<- data.frame(x)
-ggplot(df, aes(x=x))+geom_density()
+Function BinarySearchRec(data, item, low=0, high=(len - 1))
+- If low > high
+    - Stop, the item is not in the array.
+- else
+    - Assign the middle index
+    - Check if middle index == item we look for
+            - Yes? return (Base case)
+      -else if Item < middle index:
+          - Search the lower half. 
+          - Recursive call: BinarySearchRec(data, item, low, high=middle-1)
+      -else If item > middle index:
+          - Search the upper half.
+          - Recursive Call: BinarySearchRec(data, item, low=mid+1, high=(len - 1))
+```
 
+We can now implement this in Python:
+
+```{python, recursive binary search}
+def BinarySearchRec(data, item = int, low = 0, high = None):
+  
+  #set high to be the highest index in the array/list
+  if high is None: # default, will set the last index as the highest index
+    high = len(data)-1
+  if low > high: # if we are outside the bounds of the list 
+    return "Item Not Found"
+  mid = (high+low) //2 # define the middle index
+  if data[mid] == item: # base case, we find the item at the middle index
+    return print(f"{item} is located at index {mid}") #tell us where the item is
+  elif item < data[mid]: # if our item we are searching for is less than the middle item
+    return BinarySearchRec(data, item, low, mid-1) # search the left(bottom) half of the list 
+  else: # if the item we ar seraching for is greater than the middle item
+    return BinarySearchRec(data, item, mid+1, high) #search the right(top) half of the list.
 
 ```
+
+## Problem 4: Find a for loop you wrote in previous course work and rewrite it as a recursive function (it can not be a simple linear search problem). Please show the original code in your submission.
+
+The for loop that I have previously written was from a project that I did in spring 2023. For this project we used a data set of beer reviews to create a recommendation algorithm using K-means clustering and then finding similarity between beers within each cluster. K-means clustering aims to identify similarities between the different data points and clusters them based on their similarity. As part of the K-means clustering, we have to find what value of $K$ to choose. This for loop aims to find the "optimal" value of $K$, which is the first value of $K$ which reduces the within-sum of squares (WSS) by less than $5\%$. The WSS is the sum of the distances between the data points and the corresponding centroid for each cluster (Basically how compact each cluster is). You don't want the WSS to be too small as that could lead to overfitting, so I implemented this for loop to help me choose $K$ versus using a graph to determine what value of $K$ (elbow method).
+
+I will demonstrate this using some sample data. I will be using data on California Housing Prices from [Kaggle](https://www.kaggle.com/datasets/camnugent/california-housing-prices). We will be performing $K$-means clustering on a 4 dimensional data set of the longitudes, lattitudes, median incomes, and median housing price of the houses. Essentially clustering the houses based on location, income and price. 
+
+* *Note:* Sometimes this for loop throws a warning if you adjust the number of columns to perform the clustering on, it is an R thing, not an issue with the code. You have to adjust the number of quick-time events
+
+
+```{r, original iterative function}
+
+numeric_df <- read.csv("./Data/housing.csv")
+numeric_df <- numeric_df[,c(1:2,8:9)]
+numeric_df <- na.omit(numeric_df)
+numeric_df <- scale(numeric_df)
+
+
+set.seed(1234) # setting seed for reproducibility
+wss <- (nrow(numeric_df)-1)*sum(apply(numeric_df,2,var)) # setting the starting WSS, essentially the total variance of the data set before clustering. Calculates the WSS when there is 1 cluster (whole data set is the cluster)
+old_wss <- Inf # set the old WSS to be a very high value to allow us to go through the first iteration without comparison (inf - int)/inf approx 1 
+for (i in 2:100) { # for number of clusters 2 through 100
+  wss[i] <- sum(kmeans(numeric_df, centers=i)$withinss) #store the WSS for each number of clusters
+  percentage_decrease <- ((old_wss - wss[i]) / old_wss) * 100 # calculate the percentage decrease
+  if (i > 1 && !is.nan(percentage_decrease) && percentage_decrease < 5) { # if it is not the first iteration, and the percentage decrease is less than 5%
+    break #exit the loop as we have found the optimal value of $k$
+  }
+  old_wss <- wss[i] # store the WSS from the current loop for comparison in the next iteration
+}
+optimal_k <- which.min(wss) # gets the index of the lowest WSS which will be the "optimal" K to choose
+optimal_k
+```
+
+The output of this tells us that we should choose $K=`r optimal_k`$ for our $K$-means clustering.
+
+Now we do this recursively:
+
+* *Note: It is highly impractical and I am sure it can be easily broken. It works with the data that I provided and has not been tested on any other data. This is a horrible way of performing what I did iteratively using a for loop. ***DO NOT USE***.*
 
 
 ```{r, recursive version}
 
+numeric_df <- read.csv("./Data/housing.csv")
+numeric_df <- numeric_df[,c(1:2,8:9)]
+numeric_df <- na.omit(numeric_df)
+numeric_df <- scale(numeric_df)
+
+set.seed(1234)
+find_optimal_k <- function(numeric_df, max_k = 100,
+                           current_k = 2,
+                           old_wss = Inf,
+                           min_wss = Inf,
+                           min_k = 1) {
+  # Define wss locally to avoid length > 1 error, common error I had at first
+  wss <- numeric(max_k + 1)  # Ensure wss has the correct length initially, and a place to store the wss
+  
+  if (current_k > max_k) { # Base case: Stop recursion if the current_k exceeds the maximum allowable number of clusters
+    return(min_k)  # Returns the k with the minimum WSS so far if the maximum k is reached
+  }
+  
+  # Compute WSS for the current number of centers (k)
+  current_wss <- sum(kmeans(numeric_df, centers = current_k)$withinss) #This is the total WSS amongst all clusters
+  wss[current_k] <- current_wss #store the current WSS
+  
+  # Update minimum WSS and its corresponding k
+  # Need these or else the function doesn't work, returns the wrong value of k.
+  # Using this in place of which.min(wss) like was used in the iterative version
+ if (current_wss < min_wss) { 
+    min_wss = current_wss
+    min_k = current_k #store the value of the min k
+  }
+  
+  # Calculate the percentage decrease from the old WSS if not the first run
+  if (current_k > 2) {
+    percentage_decrease <- ((old_wss - current_wss) / old_wss) * 100 # percentage decrease
+    if (percentage_decrease <= 5) { # if that percentage decrease is 5% or less
+      return(min_k)  # Return the k associated with the smallest WSS computed so far, most likely the one we just tried
+    } # I DON"T TRUST THIS VERSION OF THIS LOOP, ITERATIVE VERSRION IS SO MUCH BETTER
+  }
+  
+  old_wss <- current_wss  # Update old_wss for the next iteration
+  
+  # Recursive call with updated parameters
+  return(find_optimal_k(numeric_df, max_k, current_k + 1, old_wss, min_wss, min_k))
+}
+print(find_optimal_k(numeric_df))
 ```
+
+The recursive function returns the same result as our iterative implementation.
 
 ## Problem 5: Use the following attached documents to test your search algorithms. `'numbers-3.txt'` Use one of your sorting algorithms to sort the list first before implementing binary search. What position is 8128705 in?   What position is 5842193?
 
+We first start by loading in our `'numbers-3.txt'` data:
+
+```{python, loading data}
+with open("./Data/numbers-3.txt", "r") as nums: #opens the file
+    numbers3 = [int(line.strip()) for line in nums]
+```
+
+Now we will import our insertion sort function and sort the `'numbers-3.txt'` data:
+
+```{python, sorting numbers3}
+from cs240functions import InsertionSort
+
+numbers3 = InsertionSort(numbers3)
+```
+
+From here we can search for the two values using our recursive Binary Search function:
+
+```{python, searching}
+BinarySearchRec(numbers3, 8128705)
+BinarySearchRec(numbers3, 5842193)
+```
