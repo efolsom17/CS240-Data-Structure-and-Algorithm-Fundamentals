@@ -133,13 +133,57 @@ def LinSearchRec(data, value):
 
 ## Problem 3: Rewrite the binary search algorithm from week 1 in a recursive form in pseudo code and in the programming language of your choice. Comment to explain.
 
+The pseudocode for our recursive binary search is as follows:
+
+```{text}
+# Recursive Binary Search
+
+Function BinarySearchRec(data, item, low=0, high=(len - 1))
+- If low > high
+    - Stop, the item is not in the array.
+- else
+    - Assign the middle index
+    - Check if middle index == item we look for
+            - Yes? return (Base case)
+      -else if Item < middle index:
+          - Search the lower half. 
+          - Recursive call: BinarySearchRec(data, item, low, high=middle-1)
+      -else If item > middle index:
+          - Search the upper half.
+          - Recursive Call: BinarySearchRec(data, item, low=mid+1, high=(len - 1))
+```
+
+We can now implement this in Python:
+
+```{python, recursive binary search}
+def BinarySearchRec(data, item = int, low = 0, high = None):
+  
+  #set high to be the highest index in the array/list
+  if high is None: # default, will set the last index as the highest index
+    high = len(data)-1
+
+  if low > high: # if we are outside the bounds of the list 
+    return "Item Not Found"
+  
+  mid = (high+low) //2 # define the middle index
+
+  if data[mid] == item: # base case, we find the item at the middle index
+    return print(f"{item} is located at index {mid}") #tell us where the item is
+
+  elif item < data[mid]: # if our item we are searching for is less than the middle item
+    return BinarySearchRec(data, item, low, mid-1) # search the left(bottom) half of the list
+    
+  else: # if the item we ar seraching for is greater than the middle item
+    return BinarySearchRec(data, item, mid+1, high) #search the right(top) half of the list.
+```
+
 ## Problem 4: Find a for loop you wrote in previous course work and rewrite it as a recursive function (it can not be a simple linear search problem). Please show the original code in your submission.
 
-The for loop that I have previously written was from a project that I did in spring 2023. For this project we used a data set of beer reviews to create a reccommendation algorithm using K-means clustering and then finding similarity between beers within each cluster. K-means clustering aims to identify similarities between the different data points and clusters them based on their similarity. As part of the K-means clustering, we have to find what value of $K$ to choose. This for loop aims to find the "optimal" value of $K$, which is the first value of $K$ which reduces the within-sum of squares (WSS) by less than $5\%$. The WSS is the sum of the distances between the data points and the corresponding centroid for each cluster (Basically how compact each cluster is). You don't want the WSS to be too small as that could lead to overfitting, so I implemented this for loop to help me choose $K$ versus using a graph to determine what value of $K$ (elbow method).
+The for loop that I have previously written was from a project that I did in spring 2023. For this project we used a data set of beer reviews to create a recommendation algorithm using K-means clustering and then finding similarity between beers within each cluster. K-means clustering aims to identify similarities between the different data points and clusters them based on their similarity. As part of the K-means clustering, we have to find what value of $K$ to choose. This for loop aims to find the "optimal" value of $K$, which is the first value of $K$ which reduces the within-sum of squares (WSS) by less than $5\%$. The WSS is the sum of the distances between the data points and the corresponding centroid for each cluster (Basically how compact each cluster is). You don't want the WSS to be too small as that could lead to overfitting, so I implemented this for loop to help me choose $K$ versus using a graph to determine what value of $K$ (elbow method).
 
 I will demonstrate this using some sample data. I will be using data on California Housing Prices from [Kaggle](https://www.kaggle.com/datasets/camnugent/california-housing-prices). We will be performing $K$-means clustering on a 4 dimensional data set of the longitudes, lattitudes, median incomes, and median housing price of the houses. Essentially clustering the houses based on location, income and price. 
 
-* *Note:* Sometimes this for loop throws a warning if you adjust the number of columns to perform the clustering on, it is an R thing, not an issue with the code.
+* *Note:* Sometimes this for loop throws a warning if you adjust the number of columns to perform the clustering on, it is an R thing, not an issue with the code. You have to adjust the number of quick-time events
 
 
 ```{r, original iterative function}
