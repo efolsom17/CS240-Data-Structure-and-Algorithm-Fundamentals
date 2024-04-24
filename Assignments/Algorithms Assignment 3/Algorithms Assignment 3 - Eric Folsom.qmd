@@ -135,7 +135,7 @@ def LinSearchRec(data, value):
 
 The pseudocode for our recursive binary search is as follows:
 
-```{text}
+```{}
 # Recursive Binary Search
 
 Function BinarySearchRec(data, item, low=0, high=(len - 1))
@@ -161,20 +161,16 @@ def BinarySearchRec(data, item = int, low = 0, high = None):
   #set high to be the highest index in the array/list
   if high is None: # default, will set the last index as the highest index
     high = len(data)-1
-
   if low > high: # if we are outside the bounds of the list 
     return "Item Not Found"
-  
   mid = (high+low) //2 # define the middle index
-
   if data[mid] == item: # base case, we find the item at the middle index
     return print(f"{item} is located at index {mid}") #tell us where the item is
-
   elif item < data[mid]: # if our item we are searching for is less than the middle item
-    return BinarySearchRec(data, item, low, mid-1) # search the left(bottom) half of the list
-
+    return BinarySearchRec(data, item, low, mid-1) # search the left(bottom) half of the list 
   else: # if the item we ar seraching for is greater than the middle item
     return BinarySearchRec(data, item, mid+1, high) #search the right(top) half of the list.
+
 ```
 
 ## Problem 4: Find a for loop you wrote in previous course work and rewrite it as a recursive function (it can not be a simple linear search problem). Please show the original code in your submission.
@@ -213,6 +209,9 @@ The output of this tells us that we should choose $K=`r optimal_k`$ for our $K$-
 
 Now we do this recursively:
 
+* *Note: It is highly impractical and I am sure it can be easily broken. It works with the data that I provided and has not been tested on any other data. This is a horrible way of performing what I did iteratively using a for loop. ***DO NOT USE***.*
+
+
 ```{r, recursive version}
 
 numeric_df <- read.csv("./Data/housing.csv")
@@ -221,31 +220,36 @@ numeric_df <- na.omit(numeric_df)
 numeric_df <- scale(numeric_df)
 
 set.seed(1234)
-find_optimal_k <- function(numeric_df, max_k = 100, current_k = 2, old_wss = Inf, min_wss = Inf, min_k = 1) {
-  # Define wss locally to avoid length > 1 error in condition checks
-  wss <- numeric(max_k + 1)  # Ensure wss has the correct length initially
+find_optimal_k <- function(numeric_df, max_k = 100,
+                           current_k = 2,
+                           old_wss = Inf,
+                           min_wss = Inf,
+                           min_k = 1) {
+  # Define wss locally to avoid length > 1 error, common error I had at first
+  wss <- numeric(max_k + 1)  # Ensure wss has the correct length initially, and a place to store the wss
   
-  if (current_k > max_k) {
+  if (current_k > max_k) { # Base case: Stop recursion if the current_k exceeds the maximum allowable number of clusters
     return(min_k)  # Returns the k with the minimum WSS so far if the maximum k is reached
   }
   
   # Compute WSS for the current number of centers (k)
-  current_wss <- sum(kmeans(numeric_df, centers = current_k)$withinss)
-  wss[current_k] <- current_wss
+  current_wss <- sum(kmeans(numeric_df, centers = current_k)$withinss) #This is the total WSS amongst all clusters
+  wss[current_k] <- current_wss #store the current WSS
   
   # Update minimum WSS and its corresponding k
-  if (current_wss < min_wss) {
+  # Need these or else the function doesn't work, returns the wrong value of k.
+  # Using this in place of which.min(wss) like was used in the iterative version
+ if (current_wss < min_wss) { 
     min_wss = current_wss
-    min_k = current_k
+    min_k = current_k #store the value of the min k
   }
   
   # Calculate the percentage decrease from the old WSS if not the first run
   if (current_k > 2) {
-    percentage_decrease <- 100 * (old_wss - current_wss) / old_wss
-    
-    if (percentage_decrease <= 5) {
-      return(min_k)  # Return the k associated with the smallest WSS computed so far
-    }
+    percentage_decrease <- ((old_wss - current_wss) / old_wss) * 100 # percentage decrease
+    if (percentage_decrease <= 5) { # if that percentage decrease is 5% or less
+      return(min_k)  # Return the k associated with the smallest WSS computed so far, most likely the one we just tried
+    } # I DON"T TRUST THIS VERSION OF THIS LOOP, ITERATIVE VERSRION IS SO MUCH BETTER
   }
   
   old_wss <- current_wss  # Update old_wss for the next iteration
@@ -275,7 +279,7 @@ from cs240functions import InsertionSort
 numbers3 = InsertionSort(numbers3)
 ```
 
-From here we can serach for the two values using our recursive Binary Search function:
+From here we can search for the two values using our recursive Binary Search function:
 
 ```{python, searching}
 BinarySearchRec(numbers3, 8128705)
