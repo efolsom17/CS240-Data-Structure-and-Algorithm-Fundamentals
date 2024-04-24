@@ -233,34 +233,74 @@ window.Quarto = {
 </section>
 <section id="problem-3-rewrite-the-binary-search-algorithm-from-week-1-in-a-recursive-form-in-pseudo-code-and-in-the-programming-language-of-your-choice.-comment-to-explain." class="level2">
 <h2 class="anchored" data-anchor-id="problem-3-rewrite-the-binary-search-algorithm-from-week-1-in-a-recursive-form-in-pseudo-code-and-in-the-programming-language-of-your-choice.-comment-to-explain.">Problem 3: Rewrite the binary search algorithm from week 1 in a recursive form in pseudo code and in the programming language of your choice. Comment to explain.</h2>
+<p>The pseudocode for our recursive binary search is as follows:</p>
+<div class="cell">
+<pre class="text cell-code"><code># Recursive Binary Search
+
+Function BinarySearchRec(data, item, low=0, high=(len - 1))
+- If low &gt; high
+    - Stop, the item is not in the array.
+- else
+    - Assign the middle index
+    - Check if middle index == item we look for
+            - Yes? return (Base case)
+      -else if Item &lt; middle index:
+          - Search the lower half. 
+          - Recursive call: BinarySearchRec(data, item, low, high=middle-1)
+      -else If item &gt; middle index:
+          - Search the upper half.
+          - Recursive Call: BinarySearchRec(data, item, low=mid+1, high=(len - 1))</code></pre>
+</div>
+<p>We can now implement this in Python:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> BinarySearchRec(data, item <span class="op">=</span> <span class="bu">int</span>, low <span class="op">=</span> <span class="dv">0</span>, high <span class="op">=</span> <span class="va">None</span>):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#set high to be the highest index in the array/list</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> high <span class="kw">is</span> <span class="va">None</span>: <span class="co"># default, will set the last index as the highest index</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    high <span class="op">=</span> <span class="bu">len</span>(data)<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> low <span class="op">&gt;</span> high: <span class="co"># if we are outside the bounds of the list </span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"Item Not Found"</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  mid <span class="op">=</span> (high<span class="op">+</span>low) <span class="op">//</span><span class="dv">2</span> <span class="co"># define the middle index</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> data[mid] <span class="op">==</span> item: <span class="co"># base case, we find the item at the middle index</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>item<span class="sc">}</span><span class="ss"> is located at index </span><span class="sc">{</span>mid<span class="sc">}</span><span class="ss">"</span>) <span class="co">#tell us where the item is</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">elif</span> item <span class="op">&lt;</span> data[mid]: <span class="co"># if our item we are searching for is less than the middle item</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> BinarySearchRec(data, item, low, mid<span class="op">-</span><span class="dv">1</span>) <span class="co"># search the left(bottom) half of the list</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span>: <span class="co"># if the item we ar seraching for is greater than the middle item</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> BinarySearchRec(data, item, mid<span class="op">+</span><span class="dv">1</span>, high) <span class="co">#search the right(top) half of the list.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="problem-4-find-a-for-loop-you-wrote-in-previous-course-work-and-rewrite-it-as-a-recursive-function-it-can-not-be-a-simple-linear-search-problem.-please-show-the-original-code-in-your-submission." class="level2">
 <h2 class="anchored" data-anchor-id="problem-4-find-a-for-loop-you-wrote-in-previous-course-work-and-rewrite-it-as-a-recursive-function-it-can-not-be-a-simple-linear-search-problem.-please-show-the-original-code-in-your-submission.">Problem 4: Find a for loop you wrote in previous course work and rewrite it as a recursive function (it can not be a simple linear search problem). Please show the original code in your submission.</h2>
-<p>The for loop that I have previously written was from a project that I did in spring 2023. For this project we used a data set of beer reviews to create a reccommendation algorithm using K-means clustering and then finding similarity between beers within each cluster. K-means clustering aims to identify similarities between the different data points and clusters them based on their similarity. As part of the K-means clustering, we have to find what value of <span class="math inline">\(K\)</span> to choose. This for loop aims to find the “optimal” value of <span class="math inline">\(K\)</span>, which is the first value of <span class="math inline">\(K\)</span> which reduces the within-sum of squares (WSS) by less than <span class="math inline">\(5\%\)</span>. The WSS is the sum of the distances between the data points and the corresponding centroid for each cluster (Basically how compact each cluster is). You don’t want the WSS to be too small as that could lead to overfitting, so I implemented this for loop to help me choose <span class="math inline">\(K\)</span> versus using a graph to determine what value of <span class="math inline">\(K\)</span> (elbow method).</p>
+<p>The for loop that I have previously written was from a project that I did in spring 2023. For this project we used a data set of beer reviews to create a recommendation algorithm using K-means clustering and then finding similarity between beers within each cluster. K-means clustering aims to identify similarities between the different data points and clusters them based on their similarity. As part of the K-means clustering, we have to find what value of <span class="math inline">\(K\)</span> to choose. This for loop aims to find the “optimal” value of <span class="math inline">\(K\)</span>, which is the first value of <span class="math inline">\(K\)</span> which reduces the within-sum of squares (WSS) by less than <span class="math inline">\(5\%\)</span>. The WSS is the sum of the distances between the data points and the corresponding centroid for each cluster (Basically how compact each cluster is). You don’t want the WSS to be too small as that could lead to overfitting, so I implemented this for loop to help me choose <span class="math inline">\(K\)</span> versus using a graph to determine what value of <span class="math inline">\(K\)</span> (elbow method).</p>
 <p>I will demonstrate this using some sample data. I will be using data on California Housing Prices from <a href="https://www.kaggle.com/datasets/camnugent/california-housing-prices">Kaggle</a>. We will be performing <span class="math inline">\(K\)</span>-means clustering on a 4 dimensional data set of the longitudes, lattitudes, median incomes, and median housing price of the houses. Essentially clustering the houses based on location, income and price.</p>
 <ul>
 <li><em>Note:</em> Sometimes this for loop throws a warning if you adjust the number of columns to perform the clustering on, it is an R thing, not an issue with the code. You have to adjust the number of quick-time events</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>numeric_df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"./Data/housing.csv"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>numeric_df <span class="ot">&lt;-</span> numeric_df[,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">8</span><span class="sc">:</span><span class="dv">9</span>)]</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>numeric_df <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(numeric_df)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>numeric_df <span class="ot">&lt;-</span> <span class="fu">scale</span>(numeric_df)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>) <span class="co"># setting seed for reproducibility</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>wss <span class="ot">&lt;-</span> (<span class="fu">nrow</span>(numeric_df)<span class="sc">-</span><span class="dv">1</span>)<span class="sc">*</span><span class="fu">sum</span>(<span class="fu">apply</span>(numeric_df,<span class="dv">2</span>,var)) <span class="co"># setting the starting WSS, essentially the total variance of the data set before clustering. Calculates the WSS when there is 1 cluster (whole data set is the cluster)</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>old_wss <span class="ot">&lt;-</span> <span class="cn">Inf</span> <span class="co"># set the old WSS to be a very high value to allow us to go through the first iteration without comparison (inf - int)/inf approx 1 </span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">100</span>) { <span class="co"># for number of clusters 2 through 100</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  wss[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">kmeans</span>(numeric_df, <span class="at">centers=</span>i)<span class="sc">$</span>withinss) <span class="co">#store the WSS for each number of clusters</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  percentage_decrease <span class="ot">&lt;-</span> ((old_wss <span class="sc">-</span> wss[i]) <span class="sc">/</span> old_wss) <span class="sc">*</span> <span class="dv">100</span> <span class="co"># calculate the percentage decrease</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;&amp;</span> <span class="sc">!</span><span class="fu">is.nan</span>(percentage_decrease) <span class="sc">&amp;&amp;</span> percentage_decrease <span class="sc">&lt;</span> <span class="dv">5</span>) { <span class="co"># if it is not the first iteration, and the percentage decrease is less than 5%</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">break</span> <span class="co">#exit the loop as we have found the optimal value of $k$</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  old_wss <span class="ot">&lt;-</span> wss[i] <span class="co"># store the WSS from the current loop for comparison in the next iteration</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>optimal_k <span class="ot">&lt;-</span> <span class="fu">which.min</span>(wss) <span class="co"># gets the index of the lowest WSS which will be the "optimal" K to choose</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>optimal_k</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>numeric_df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"./Data/housing.csv"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>numeric_df <span class="ot">&lt;-</span> numeric_df[,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">8</span><span class="sc">:</span><span class="dv">9</span>)]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>numeric_df <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(numeric_df)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>numeric_df <span class="ot">&lt;-</span> <span class="fu">scale</span>(numeric_df)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>) <span class="co"># setting seed for reproducibility</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>wss <span class="ot">&lt;-</span> (<span class="fu">nrow</span>(numeric_df)<span class="sc">-</span><span class="dv">1</span>)<span class="sc">*</span><span class="fu">sum</span>(<span class="fu">apply</span>(numeric_df,<span class="dv">2</span>,var)) <span class="co"># setting the starting WSS, essentially the total variance of the data set before clustering. Calculates the WSS when there is 1 cluster (whole data set is the cluster)</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>old_wss <span class="ot">&lt;-</span> <span class="cn">Inf</span> <span class="co"># set the old WSS to be a very high value to allow us to go through the first iteration without comparison (inf - int)/inf approx 1 </span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">100</span>) { <span class="co"># for number of clusters 2 through 100</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  wss[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">kmeans</span>(numeric_df, <span class="at">centers=</span>i)<span class="sc">$</span>withinss) <span class="co">#store the WSS for each number of clusters</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  percentage_decrease <span class="ot">&lt;-</span> ((old_wss <span class="sc">-</span> wss[i]) <span class="sc">/</span> old_wss) <span class="sc">*</span> <span class="dv">100</span> <span class="co"># calculate the percentage decrease</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;&amp;</span> <span class="sc">!</span><span class="fu">is.nan</span>(percentage_decrease) <span class="sc">&amp;&amp;</span> percentage_decrease <span class="sc">&lt;</span> <span class="dv">5</span>) { <span class="co"># if it is not the first iteration, and the percentage decrease is less than 5%</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">break</span> <span class="co">#exit the loop as we have found the optimal value of $k$</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  old_wss <span class="ot">&lt;-</span> wss[i] <span class="co"># store the WSS from the current loop for comparison in the next iteration</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>optimal_k <span class="ot">&lt;-</span> <span class="fu">which.min</span>(wss) <span class="co"># gets the index of the lowest WSS which will be the "optimal" K to choose</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>optimal_k</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 12</code></pre>
 </div>
@@ -268,45 +308,45 @@ window.Quarto = {
 <p>The output of this tells us that we should choose <span class="math inline">\(K=12\)</span> for our <span class="math inline">\(K\)</span>-means clustering.</p>
 <p>Now we do this recursively:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>numeric_df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"./Data/housing.csv"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>numeric_df <span class="ot">&lt;-</span> numeric_df[,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">8</span><span class="sc">:</span><span class="dv">9</span>)]</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>numeric_df <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(numeric_df)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>numeric_df <span class="ot">&lt;-</span> <span class="fu">scale</span>(numeric_df)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>find_optimal_k <span class="ot">&lt;-</span> <span class="cf">function</span>(numeric_df, <span class="at">max_k =</span> <span class="dv">100</span>, <span class="at">current_k =</span> <span class="dv">2</span>, <span class="at">old_wss =</span> <span class="cn">Inf</span>, <span class="at">min_wss =</span> <span class="cn">Inf</span>, <span class="at">min_k =</span> <span class="dv">1</span>) {</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Define wss locally to avoid length &gt; 1 error in condition checks</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  wss <span class="ot">&lt;-</span> <span class="fu">numeric</span>(max_k <span class="sc">+</span> <span class="dv">1</span>)  <span class="co"># Ensure wss has the correct length initially</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (current_k <span class="sc">&gt;</span> max_k) {</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(min_k)  <span class="co"># Returns the k with the minimum WSS so far if the maximum k is reached</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute WSS for the current number of centers (k)</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  current_wss <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">kmeans</span>(numeric_df, <span class="at">centers =</span> current_k)<span class="sc">$</span>withinss)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  wss[current_k] <span class="ot">&lt;-</span> current_wss</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Update minimum WSS and its corresponding k</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (current_wss <span class="sc">&lt;</span> min_wss) {</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    min_wss <span class="ot">=</span> current_wss</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    min_k <span class="ot">=</span> current_k</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the percentage decrease from the old WSS if not the first run</span></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (current_k <span class="sc">&gt;</span> <span class="dv">2</span>) {</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    percentage_decrease <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="sc">*</span> (old_wss <span class="sc">-</span> current_wss) <span class="sc">/</span> old_wss</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (percentage_decrease <span class="sc">&lt;=</span> <span class="dv">5</span>) {</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(min_k)  <span class="co"># Return the k associated with the smallest WSS computed so far</span></span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>  old_wss <span class="ot">&lt;-</span> current_wss  <span class="co"># Update old_wss for the next iteration</span></span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Recursive call with updated parameters</span></span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">find_optimal_k</span>(numeric_df, max_k, current_k <span class="sc">+</span> <span class="dv">1</span>, old_wss, min_wss, min_k))</span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">find_optimal_k</span>(numeric_df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>numeric_df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"./Data/housing.csv"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>numeric_df <span class="ot">&lt;-</span> numeric_df[,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">8</span><span class="sc">:</span><span class="dv">9</span>)]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>numeric_df <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(numeric_df)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>numeric_df <span class="ot">&lt;-</span> <span class="fu">scale</span>(numeric_df)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>find_optimal_k <span class="ot">&lt;-</span> <span class="cf">function</span>(numeric_df, <span class="at">max_k =</span> <span class="dv">100</span>, <span class="at">current_k =</span> <span class="dv">2</span>, <span class="at">old_wss =</span> <span class="cn">Inf</span>, <span class="at">min_wss =</span> <span class="cn">Inf</span>, <span class="at">min_k =</span> <span class="dv">1</span>) {</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Define wss locally to avoid length &gt; 1 error in condition checks</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  wss <span class="ot">&lt;-</span> <span class="fu">numeric</span>(max_k <span class="sc">+</span> <span class="dv">1</span>)  <span class="co"># Ensure wss has the correct length initially</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (current_k <span class="sc">&gt;</span> max_k) {</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(min_k)  <span class="co"># Returns the k with the minimum WSS so far if the maximum k is reached</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute WSS for the current number of centers (k)</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  current_wss <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">kmeans</span>(numeric_df, <span class="at">centers =</span> current_k)<span class="sc">$</span>withinss)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  wss[current_k] <span class="ot">&lt;-</span> current_wss</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Update minimum WSS and its corresponding k</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (current_wss <span class="sc">&lt;</span> min_wss) {</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    min_wss <span class="ot">=</span> current_wss</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    min_k <span class="ot">=</span> current_k</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the percentage decrease from the old WSS if not the first run</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (current_k <span class="sc">&gt;</span> <span class="dv">2</span>) {</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    percentage_decrease <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="sc">*</span> (old_wss <span class="sc">-</span> current_wss) <span class="sc">/</span> old_wss</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (percentage_decrease <span class="sc">&lt;=</span> <span class="dv">5</span>) {</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(min_k)  <span class="co"># Return the k associated with the smallest WSS computed so far</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>  old_wss <span class="ot">&lt;-</span> current_wss  <span class="co"># Update old_wss for the next iteration</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Recursive call with updated parameters</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">find_optimal_k</span>(numeric_df, max_k, current_k <span class="sc">+</span> <span class="dv">1</span>, old_wss, min_wss, min_k))</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">find_optimal_k</span>(numeric_df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 12</code></pre>
 </div>
@@ -315,6 +355,28 @@ window.Quarto = {
 </section>
 <section id="problem-5-use-the-following-attached-documents-to-test-your-search-algorithms.-numbers-3.txt-use-one-of-your-sorting-algorithms-to-sort-the-list-first-before-implementing-binary-search.-what-position-is-8128705-in-what-position-is-5842193" class="level2">
 <h2 class="anchored" data-anchor-id="problem-5-use-the-following-attached-documents-to-test-your-search-algorithms.-numbers-3.txt-use-one-of-your-sorting-algorithms-to-sort-the-list-first-before-implementing-binary-search.-what-position-is-8128705-in-what-position-is-5842193">Problem 5: Use the following attached documents to test your search algorithms. <code>'numbers-3.txt'</code> Use one of your sorting algorithms to sort the list first before implementing binary search. What position is 8128705 in? What position is 5842193?</h2>
+<p>We first start by loading in our <code>'numbers-3.txt'</code> data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"./Data/numbers-3.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> nums: <span class="co">#opens the file</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    numbers3 <span class="op">=</span> [<span class="bu">int</span>(line.strip()) <span class="cf">for</span> line <span class="kw">in</span> nums]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we will import our insertion sort function and sort the <code>'numbers-3.txt'</code> data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cs240functions <span class="im">import</span> InsertionSort</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>numbers3 <span class="op">=</span> InsertionSort(numbers3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>From here we can serach for the two values:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>BinarySearchRec(numbers3, <span class="dv">8128705</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>8128705 is located at index 8101</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>BinarySearchRec(numbers3, <span class="dv">5842193</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'Item Not Found'</code></pre>
+</div>
+</div>
 </section>
 
 </main>

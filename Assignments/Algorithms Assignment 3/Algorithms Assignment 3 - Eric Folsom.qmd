@@ -172,7 +172,7 @@ def BinarySearchRec(data, item = int, low = 0, high = None):
 
   elif item < data[mid]: # if our item we are searching for is less than the middle item
     return BinarySearchRec(data, item, low, mid-1) # search the left(bottom) half of the list
-    
+
   else: # if the item we ar seraching for is greater than the middle item
     return BinarySearchRec(data, item, mid+1, high) #search the right(top) half of the list.
 ```
@@ -260,3 +260,24 @@ The recursive function returns the same result as our iterative implementation.
 
 ## Problem 5: Use the following attached documents to test your search algorithms. `'numbers-3.txt'` Use one of your sorting algorithms to sort the list first before implementing binary search. What position is 8128705 in?   What position is 5842193?
 
+We first start by loading in our `'numbers-3.txt'` data:
+
+```{python, loading data}
+with open("./Data/numbers-3.txt", "r") as nums: #opens the file
+    numbers3 = [int(line.strip()) for line in nums]
+```
+
+Now we will import our insertion sort function and sort the `'numbers-3.txt'` data:
+
+```{python, sorting numbers3}
+from cs240functions import InsertionSort
+
+numbers3 = InsertionSort(numbers3)
+```
+
+From here we can serach for the two values:
+
+```{python, searching}
+BinarySearchRec(numbers3, 8128705)
+BinarySearchRec(numbers3, 5842193)
+```
