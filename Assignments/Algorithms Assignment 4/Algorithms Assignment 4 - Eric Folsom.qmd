@@ -1,0 +1,39 @@
+---
+title: "Algorithms Assignment 4"
+author: "Eric Folsom"
+format: html
+---
+
+```{python, setup_py}
+#| echo: false
+#| output: false
+
+# Setup Chunk for python, loading the required libraries
+import numpy as np
+import pandas as pd
+```
+
+
+```{r, setup_r}
+#| echo: false
+#| output: false
+
+#Setup Chunk for R and Reticulate so that I can use ggplot if I ever have to graph stuff.
+#This will most likely be useful for a later assignment.
+
+library(reticulate)
+library(tidyverse)
+library(ggplot2)
+```
+
+## Problem 1: Write in pseudo code a merge sort algorithm the works over an array. Comment to explain the algorithm.
+
+## Problem 2: Write in the programming language of your choice a merge sort algorithm that works over an array. Comment to explain the algorithm.
+
+## Problem 3: Write in pseudo code a quick sort algorithm the works over an array. Comment to explain the algorithm.
+
+## Problem 4: Write in the programming language of your choice a quick sort algorithm that works over an array. Comment to explain the algorithm.
+
+## Problem 5: How do the best, average and worst case time complexities compare between these two algorithms?
+
+## Problem 6: Use the uploaded file to verify your sort algorithms are working. `'numbers-4.txt'` What is the position of 90262? What is the position of 11559? 
