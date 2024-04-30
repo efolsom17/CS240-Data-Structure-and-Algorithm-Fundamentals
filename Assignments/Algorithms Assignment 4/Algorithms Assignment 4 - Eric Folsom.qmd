@@ -59,7 +59,7 @@ def mergesort(array):
         return the new merged at sorted array
 ```
 
-With this algorithm, we are splitting the array in half until we are left with a whole bunch of arrays with size $1$. Once we 
+With this algorithm, we are splitting the array in half until we are left with arrays with size $1$. Our base case is that if we have an array of size $1$, we can assume that it is sorted. We recursively split our arrays if they have more than one element. Once we have reached our base case, we take the two halves of the array that we split and merge them together into a sorted array, we then continue this process with all the sub-arrays that we made when we split the algorithm in half to fully merge all the sub-arrays together.
 
 ## Problem 2: Write in the programming language of your choice a merge sort algorithm that works over an array. Comment to explain the algorithm.
 
