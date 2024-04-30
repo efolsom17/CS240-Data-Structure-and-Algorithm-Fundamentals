@@ -4,7 +4,12 @@
 Quick Sort was a lot easier for me to wrap my head around than merge sort. I was able to get
 a good idea on how merge sort was but it would be a lot easier to explain my understanding in a visual form
 versus a written form I am afraid. Thinking about the recursion stack as an absolute value function graph
-really helped me get a grasp on what was happening in the algorithm and helped me with my pseudocode and implementation.
+really helped me get a grasp on what was happening in the algorithm and helped me with my pseudocode and implementation. 
+I used w3schools, programiz, Skiena, geeksforgeeks, various youtube videos, and some ChatGPT as resources
+which helped me implement and understand the merge sort algorithm. 
+The largest challenge I faced with quick sort was actually a python thing which was going through all elements besides one in an array.
+This is easy for me to implement in R, but I had to use some help to accomplish it in python, as I wanted to 
+choose a random pivot for each sub array.
 '''
 
 from cs240functions import binary_search as BinarySearch
