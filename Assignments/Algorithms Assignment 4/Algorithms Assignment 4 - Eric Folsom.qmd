@@ -61,12 +61,33 @@ def mergesort(array):
 
 With this algorithm, we are splitting the array in half until we are left with arrays with size $1$. Our base case is that if we have an array of size $1$, we can assume that it is sorted. We recursively split our arrays if they have more than one element. Once we have reached our base case, we take the two halves of the array that we split and merge them together into a sorted array, we then continue this process with all the sub-arrays that we made when we split the algorithm in half to fully merge all the sub-arrays together.
 
+Some of my thoughts about this algorithm are included in the python file.
+
 ## Problem 2: Write in the programming language of your choice a merge sort algorithm that works over an array. Comment to explain the algorithm.
+
+```{python, mergesort}
+
+
+```
 
 ## Problem 3: Write in pseudo code a quick sort algorithm the works over an array. Comment to explain the algorithm.
 
+```{}
+
+
+```
 ## Problem 4: Write in the programming language of your choice a quick sort algorithm that works over an array. Comment to explain the algorithm.
+
+```{python, quicksort}
+from random import sample as sample
+
+
+```
 
 ## Problem 5: How do the best, average and worst case time complexities compare between these two algorithms?
 
 ## Problem 6: Use the uploaded file to verify your sort algorithms are working. `'numbers-4.txt'` What is the position of 90262? What is the position of 11559? 
+
+```{python, verification}
+from c240functions import binary_search as binarysearch()
+```
