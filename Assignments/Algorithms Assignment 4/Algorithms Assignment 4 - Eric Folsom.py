@@ -89,7 +89,7 @@ def QuickSort(array):
             # Recursively sort the remaining partitions and join everything together.
             return actualquicksort(less) + equal_to + actualquicksort(greater)
     
-    return actualquicksort(arr) # do the quicksort on the copy of the array that we inputed,
+    return actualquicksort(arr) # do the quicksort on the copy of the array that we inputed
     
             
             
