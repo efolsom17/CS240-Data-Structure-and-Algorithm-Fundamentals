@@ -28,6 +28,39 @@ library(ggplot2)
 
 ## Problem 1: Write in pseudo code a merge sort algorithm the works over an array. Comment to explain the algorithm.
 
+Our pseudocode for a merge sort algorithm is as follows:
+
+```{}
+def mergesort(array):
+    make a copy of the array
+    base case: array has one element and is considered sorted
+    Ensure that the array has more than 1 element, if it does it needs to be sorted
+        Split the array in half (get the middle index)
+        left half: All indices left of the middle index
+        right half: all indices right of the middle index
+
+        Recursive Calls:
+        mergesort(left half)
+        mergesort(right half)
+
+        Merge left and right halves together in sorted order:
+        start at the first index of each half, i and j for the left and right halves respectively
+        also start at the first index of the merged array,to keep track of the
+        while we are in  the indices of the two halfs we want to merge
+            if left[i] < right[j]:
+                put the left value into the corresponding index of the merged array
+                go to the next index in the left half
+            else:
+                put the right value into the current index we are trying to put the value into in the merged array
+                go to the next index in the left half
+            go to the next index in the merged array
+        put any remaining values at the end of the merged array
+
+        return the new merged at sorted array
+```
+
+With this algorithm, we are splitting the array in half until we are left with a whole bunch of arrays with size $1$. Once we 
+
 ## Problem 2: Write in the programming language of your choice a merge sort algorithm that works over an array. Comment to explain the algorithm.
 
 ## Problem 3: Write in pseudo code a quick sort algorithm the works over an array. Comment to explain the algorithm.
