@@ -40,12 +40,12 @@ def binary_search(item, data, oper = False, diag = False):
          if oper == True: 
             #return the index of the item and the number of
             #  operations it took to find the item
-            print(f"Item {item} is located at index {mid}.\nThis took {operations} operations.")
-            return item, mid, operations 
+            return print(f"Item {item} is located at index {mid}.\nThis took {operations} operations.")
+            #return item, mid, operations 
          else:
             #return the position of the item
-            print(f"Item {item} is located at index {mid}.") 
-            return item, mid, operations 
+            return print(f"Item {item} is located at index {mid}.") 
+            #return item, mid, operations 
          
       # if our guess is too low
       elif search < item:
