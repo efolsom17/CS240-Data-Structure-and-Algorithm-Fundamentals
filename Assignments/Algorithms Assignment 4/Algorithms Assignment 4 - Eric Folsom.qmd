@@ -89,5 +89,10 @@ from random import sample as sample
 ## Problem 6: Use the uploaded file to verify your sort algorithms are working. `'numbers-4.txt'` What is the position of 90262? What is the position of 11559? 
 
 ```{python, verification}
-from c240functions import binary_search as binarysearch()
+from c240functions import binary_search as binarysearch
+
+## Importing the numbers-4.txt data
+
+with open("./Data/numbers-4.txt", "r") as nums: #opens the file
+    numbers4 = [int(line.strip()) for line in nums]
 ```

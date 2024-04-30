@@ -23,14 +23,42 @@ def MergeSort(array):
     
     #the actual merge sort algorithm
     def actualmergesort(arr):
-        if len(arr) <2: # if the array has 1 or no elements
-            return arr # We have reached the base case
+        if len(arr) <2: # if the array has 1 or no elements (assumed to be sorted)
+            return arr # We have reached the base case, return the single element array to be merged.
         
+        #choose the middle index of the array
+        middle = len(arr)//2 # floor function so we get an integer
+        # Split the array in half recursively on the halves of the array to the left and right of the middle index
+        left = actualmergesort(arr[:middle])# indices of the array to left of the middle
+        right = actualmergesort(arr[middle:])# indices of the array to the right and including the middle
         
+        # Merging the two halves of the arrays
+        # storing indicies, i = left, j = right, k = array to be merged and sorted
+        i = j = k = 0 # start at the beginning
+        while i < len(left) and j < len(right): # while we are still looking at elements from both the right and left half,
+            # compare the elements
+            if left[i] < right[j]:  # if the value of the index we are at in the left half is less than the value of the index we are at in the right half,
+                arr[k] = left[i] # put it into its proper place in the merged array
+                i += 1 # go the the next index of the left half
+            else:  # if the value of the index we are at in the right half is less than or equal to the value of the index we are at in the left half,
+                arr[k] = right[j] # put it into its proper place in the merged array
+                j += 1 # go the the next index of the right half
+            k += 1 # go to the next index that we want to put a value into in the merged array
         
-    
+        # add any of the remaining elements in the left or right half to the merged array if there are any left
+        while i < len(left): # while we are still in the left half, if any elements remain in the left half
+            arr[k] = left[i] # add that value to the merged array
+            i += 1 
+            k += 1
+        while j < len(right): #while we are still in the right half, if any elements remain in the right half
+            arr[k] = right[j] # add the element to the merged array  
+            j += 1
+            k += 1 
+        return arr # return the merged and sorted array
     # run the merge sort algorithm on the copy of the input array
-    return actualmergesort(arr)
+    actualmergesort(arr)
+    # return the sorted copy array, so that the original is intact
+    return arr
         
     
     
@@ -39,4 +67,38 @@ def MergeSort(array):
 ## Quick Sort
 
 def QuickSort(array):
-    pass
+    # Making a copy of the array so that we keep the original intact
+    arr = array[:]
+    # actual quicksort function
+    def actualquicksort(arr):
+        #define base case
+        if len(arr) < 2: # array is size 1 or less (assumed to be sorted)
+            return arr # return sorted array
+        else:
+            pivot_index = int(sample(range(len(arr)),1)) # choose a random index in the array as the pivot index
+            pivot = arr[pivot_index] # Choose our pivot index
+            # split the array into values less than and greater than our pivot
+           # go through the left side of the 
+            less = []
+            greater = []
+            for item in arr[:pivot_index]:
+                 pass
+            for item in arr[pivot_index+1:]:
+                pass
+
+#Verification/testing:
+
+## Importing the numbers-4.txt data
+
+with open("./Data/numbers-4.txt", "r") as nums: #opens the file
+    numbers4 = [int(line.strip()) for line in nums]
+    
+test = sample(range(100),100)
+
+numbers4_sorted_merge = MergeSort(numbers4)
+numbers4_sorted_quick = QuickSort(numbers4)
+
+BinarySearch(90262, numbers4_sorted_merge)
+BinarySearch(90262, numbers4_sorted_quick)
+BinarySearch(11559, numbers4_sorted_merge)
+BinarySearch(11559, numbers4_sorted_quick)
