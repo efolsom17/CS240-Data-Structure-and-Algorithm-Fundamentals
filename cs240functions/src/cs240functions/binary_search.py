@@ -68,3 +68,20 @@ def binary_search(item, data, oper = False, diag = False):
 
    # if we can't find the item in the array.
    return print("Item Not Found\nThis took ", operations, ' operations.') 
+
+
+## Recursive Binary Search
+def BinarySearchRec(data, item = int, low = 0, high = None):
+  
+  #set high to be the highest index in the array/list
+  if high is None: # default, will set the last index as the highest index
+    high = len(data)-1
+  if low > high: # if we are outside the bounds of the list 
+    return "Item Not Found"
+  mid = (high+low) //2 # define the middle index
+  if data[mid] == item: # base case, we find the item at the middle index
+    return print(f"{item} is located at index {mid}") #tell us where the item is
+  elif item < data[mid]: # if our item we are searching for is less than the middle item
+    return BinarySearchRec(data, item, low, mid-1) # search the left(bottom) half of the list 
+  else: # if the item we ar seraching for is greater than the middle item
+    return BinarySearchRec(data, item, mid+1, high) #search the right(top) half of the list.
