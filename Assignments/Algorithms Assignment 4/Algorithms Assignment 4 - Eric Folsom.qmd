@@ -1,0 +1,198 @@
+---
+title: "Algorithms Assignment 4"
+author: "Eric Folsom"
+format: html
+---
+
+```{python, setup_py}
+#| echo: false
+#| output: false
+
+# Setup Chunk for python, loading the required libraries
+import numpy as np
+import pandas as pd
+```
+
+
+```{r, setup_r}
+#| echo: false
+#| output: false
+
+#Setup Chunk for R and Reticulate so that I can use ggplot if I ever have to graph stuff.
+#This will most likely be useful for a later assignment.
+
+library(reticulate)
+library(tidyverse)
+library(ggplot2)
+```
+
+## Problem 1: Write in pseudo code a merge sort algorithm the works over an array. Comment to explain the algorithm.
+
+Our pseudocode for a merge sort algorithm is as follows:
+
+```{}
+def mergesort(array):
+    make a copy of the array, so that the original array stays intact (subfunction needed?)
+    base case: array has one element and is considered sorted
+    Ensure that the array has more than 1 element, if it does it needs to be sorted
+        Split the array in half (get the middle index)
+        left half: All indices left of the middle index
+        right half: all indices right of the middle index
+
+        Recursive Calls:
+        mergesort(left half)
+        mergesort(right half)
+
+        Merge left and right halves together in sorted order:
+        start at the first index of each half, i and j for the left and right halves respectively
+        also start at the first index of the merged array,to keep track of the
+        while we are in  the indices of the two halfs we want to merge
+            if left[i] < right[j]:
+                put the left value into the corresponding index of the merged array
+                go to the next index in the left half
+            else:
+                put the right value into the current index we are trying to put the value into in the merged array
+                go to the next index in the left half
+            go to the next index in the merged array
+        put any remaining values at the end of the merged array
+
+        return the new merged at sorted array
+```
+
+With this algorithm, we are splitting the array in half until we are left with arrays with size $1$. Our base case is that if we have an array of size $1$, we can assume that it is sorted. We recursively split our arrays if they have more than one element. Once we have reached our base case, we take the two halves of the array that we split and merge them together into a sorted array, we then continue this process with all the sub-arrays that we made when we split the algorithm in half to fully merge all the sub-arrays together.
+
+Some of my thoughts about this algorithm are included in the python file.
+
+## Problem 2: Write in the programming language of your choice a merge sort algorithm that works over an array. Comment to explain the algorithm.
+
+We can implement a merge sort algorithm in Python via the following code:
+
+```{python, mergesort}
+def MergeSort(array):
+    arr = array[:] # making a copy of the input array so that it remains intact
+    
+    #the actual merge sort algorithm
+    def actualmergesort(arr):
+        if len(arr) <= 1: # if the array has 1 or no elements (assumed to be sorted)
+            return arr # We have reached the base case, return the single element array to be merged.
+        
+        #choose the middle index of the array
+        middle = len(arr)//2 # floor function so we get an integer
+        # Split the array in half recursively on the halves of the array to the left and right of the middle index
+        left = actualmergesort(arr[:middle])# indices of the array to left of the middle
+        right = actualmergesort(arr[middle:])# indices of the array to the right and including the middle
+        
+        # Merging the two halves of the arrays
+        # storing indicies, i = left, j = right, k = array to be merged and sorted
+        i = j = k = 0 # start at the beginning
+        while i < len(left) and j < len(right): # while we are still looking at elements from both the right and left half,
+            # compare the elements
+            if left[i] < right[j]:  # if the value of the index we are at in the left half is less than the value of the index we are at in the right half,
+                arr[k] = left[i] # put it into its proper place in the merged array
+                i += 1 # go the the next index of the left half
+            else:  # if the value of the index we are at in the right half is less than or equal to the value of the index we are at in the left half,
+                arr[k] = right[j] # put it into its proper place in the merged array
+                j += 1 # go the the next index of the right half
+            k += 1 # go to the next index that we want to put a value into in the merged array
+        
+        # add any of the remaining elements in the left or right half to the merged array if there are any left
+        while i < len(left): # while we are still in the left half, if any elements remain in the left half
+            arr[k] = left[i] # add that value to the merged array
+            i += 1 
+            k += 1
+        while j < len(right): #while we are still in the right half, if any elements remain in the right half
+            arr[k] = right[j] # add the element to the merged array  
+            j += 1
+            k += 1 
+        return arr # return the merged and sorted array
+    # run the merge sort algorithm on the copy of the input array
+    actualmergesort(arr)
+    # return the sorted copy array, so that the original is intact
+    return arr
+```
+
+## Problem 3: Write in pseudo code a quick sort algorithm the works over an array. Comment to explain the algorithm.
+
+Pseudocode for a quicksort algorithm is as follows: 
+
+```{}
+def QuickSort(array):
+    Make a copy of the array so that we keep the original array intact if needed later
+    Do everything else on the copy of the array:
+        Define the base case: Array is size 1 or less, we assume that the array is sorted
+        if len(array) <=1 we are at the base case, so check
+        if not, 
+            Pick a random index as the pivot
+            Store all the values less than the pivot in the array
+            store all the values equal to the pivot in the array
+            store all the values greater than the pivot in the array
+
+            recursively sort and combine the partitions:
+            quicksort(values less than pivot) + (values euqal to pivot) + quicksort(values greater than pivot)
+```
+
+This algorithm will recursively partition the array, while maintaining order relative to the original partition. To me this pseudocode is very self explanitory and the recursive stack makes a lot of sense to me versus merge sort where it took me a while to wrap my head around how the recursive stack was behaving. I think it is because we are just concatenating partitions as we go along rather than subdividing everything then merging back together. The recursive stack for quick sort feels more similar to iteration in my mind.
+
+I had some trouble figuring our how I would handle the random pivot location, but decided to just store the values that were equal to the pivot, I believe that this makes my sorting algorithm less stable as a result. I chose to use a random pivot as that should in theory help us avoid a worst case time complexity scenario as much as possible.
+
+## Problem 4: Write in the programming language of your choice a quick sort algorithm that works over an array. Comment to explain the algorithm.
+
+We can implement a quick sort algorithm in Python via the following code:
+
+```{python, quicksort}
+from random import sample as sample
+
+def QuickSort(array):
+    # Making a copy of the array so that we keep the original intact
+    arr = array[:]
+    # actual quicksort function
+    def actualquicksort(arr):
+        #define base case
+        if len(arr) <= 1: # array is size 1 or less (assumed to be sorted)
+            return arr # return sorted array
+        else: # if the array cannot be assumed sorted (more than 1 or 0 elements)
+            pivot_index = int(sample(range(len(arr)),1)[0]) # choose a random index in the array as the pivot index
+            pivot = arr[pivot_index] # Choose our pivot index
+            
+            # partition the array into values less than, greater than, and equal our pivot and store them
+            
+            # Less than the pivot
+            less = [ item for item in arr if item < pivot] # store the item if it is less than the pivot
+            # Equal to the pivot (kinda need this since im choosing a random index for my pivot)
+            equal_to = [ item for item in arr if item == pivot] # stores the item if it equals the pivot
+            # Greater than the pivot
+            greater = [item for item in arr if item > pivot] # stores the item if it is greater than the pivot
+            # Recursively sort the remaining partitions and join everything together.
+            return actualquicksort(less) + equal_to + actualquicksort(greater)
+    
+    return actualquicksort(arr) # do the quicksort on the copy of the array that we inputed,
+```
+
+## Problem 5: How do the best, average and worst case time complexities compare between these two algorithms?
+
+The time complexities for merge and quick sorts are as follows:
+
+||Merge Sort|Quick Sort|
+|:-:|:------:|:----:|
+|Best|$O(n\log_{2}(n))$|$O(n\log_{2}(n))$|
+|Average|$O(n\log_{2}(n))$|$O(n\log_{2}(n))$|
+|Worst|$O(n\log_{2}(n))$|$O(n^2)$|
+
+## Problem 6: Use the uploaded file to verify your sort algorithms are working. `'numbers-4.txt'` What is the position of 90262? What is the position of 11559? 
+
+```{python, verification}
+from cs240functions import binary_search as BinarySearch
+
+## Importing the numbers-4.txt data
+
+with open("./Data/numbers-4.txt", "r") as nums: #opens the file
+    numbers4 = [int(line.strip()) for line in nums]
+
+numbers4_sorted_merge = MergeSort(numbers4)
+numbers4_sorted_quick = QuickSort(numbers4)
+
+BinarySearch(90262, numbers4_sorted_merge)
+BinarySearch(90262, numbers4_sorted_quick)
+BinarySearch(11559, numbers4_sorted_merge)
+BinarySearch(11559, numbers4_sorted_quick)
+```
