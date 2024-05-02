@@ -23,7 +23,6 @@ def HashFunc(string, base = int, mod = int):
 '''
 
 If we were to pass in the string "Whatcom" with a base of say 32 and a mod of say 27, here is how our function would look:
-hash = 0 <- this is the starting point
 
 The characters in "Whatcom" are "W","h","a","t","c","o","m", with corresponding unicode (maybe ASCII, im just using ord() to get the value) values:
 87, 104, 97, 116, 99, 111, 109
@@ -31,12 +30,12 @@ The characters in "Whatcom" are "W","h","a","t","c","o","m", with corresponding 
 So for each charcter in Whatcom we will compute the following:
 
 hash = ((hash * base) + value) mod n, where base and n are 32 and 27 respectively, thus
-hash = ((hash *32)+value) mod 27
+hash = ((hash *32)+value) mod 27, where hash in the function is the hash value of the previous character.
 
 So to compute the hash value for the string "Whatcom", we would do as follows:
 
-hash = 0
-"W" hash = ((0 * 32) + 87) mod 27 = 6
+hash = 0 <- starting point
+"W" hash = ((0 * 32) + 87) mod 27 = 6 
 "h" hash = ((6 * 32) + 104) mod 27 = 26
 "a" hash = ((26 * 32) + 97) mod 27 = 11
 "t" hash = ((11 * 32) + 116) mod 27 = 9
