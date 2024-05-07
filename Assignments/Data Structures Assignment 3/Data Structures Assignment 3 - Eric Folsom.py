@@ -9,7 +9,7 @@ Going to be very basic, inserting a (key, data) I scrapped a lot of my above ide
 
 
 
-#Hash table (using Horner's Method for Hashing)
+#Hash table (using Horner's Method for Hashing) This one inserts a (key, value) pair into the hash table
 class HashTable:
     
     #Initializing hash table
