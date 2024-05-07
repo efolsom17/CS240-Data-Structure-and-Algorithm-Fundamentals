@@ -7,8 +7,6 @@ and another which implements linear probing. Chaining seems to be the easiest me
 Going to be very basic, inserting a (key, data) I scrapped a lot of my above ideas, because I ran out of time because of the midterm :/.
 '''
 
-# double linked list from cs240functions
-from cs240functions import DoubleLinkedList as DoubleLinkedList
 
 
 #Hash table (using Horner's Method for Hashing)
@@ -193,7 +191,7 @@ test = HashTableString(10)
 for word in words:
     test.insert(word)
 
-test.display
+test.display()
 
 
 
