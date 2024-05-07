@@ -180,6 +180,8 @@ class HashTableString:
     # some ways to display the hash table
     def display(self):
         return self.table
+    def __repr__(self) -> str:
+        return f"HashTableString: Size = {self.size}, table = {self.table}"
  
 
 
@@ -191,6 +193,11 @@ test = HashTableString(10)
 for word in words:
     test.insert(word)
 
+test.display()
+test.remove("Dog")
+test.insert("Cat")
+test.contains("Quick")
+test.contains("Slow")
 test.display()
 
 
