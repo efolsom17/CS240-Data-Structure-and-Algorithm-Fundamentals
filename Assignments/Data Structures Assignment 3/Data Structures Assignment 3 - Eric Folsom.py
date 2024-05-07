@@ -17,7 +17,7 @@ class HashTable:
     #Initializing hash table
     def __init__(self, size):
         self.size = size # set the size to be the user defined size
-        self.table = [] * size #build an empty hash table of the user defined size.
+        self.table = [None] * size #build an empty hash table of the user defined size.
         
     # functions to get a prime number to use with our modulo in the hashing, want to be based on the size 
     # of the hash table, should in theory limit collisions
@@ -40,9 +40,7 @@ class HashTable:
             n -=2 # go to the next odd number, 
         # once isPrime(n) == True
         return n # return the prime number
-        
 
-    
         
     # Function for hashing values, built in algorithms assignment 5. (slightly modified so I can modify the mod size)     
     def HashFunction(self, string): 
@@ -53,6 +51,13 @@ class HashTable:
             hash = ((hash * base) + ord(char)) % mod # compute the hash value for character, stops when we are at the last value
         return hash # return the index for the hash table
 
+    # Function to insert values into the hash table
+    
+    # Function to search for a value in the hash table
+    
+    # Function to delete a value from the hash table
+    
+    # Some way to represent the hash table when we print it or repr it, also might be cool to display it somehow.
 
 
 
