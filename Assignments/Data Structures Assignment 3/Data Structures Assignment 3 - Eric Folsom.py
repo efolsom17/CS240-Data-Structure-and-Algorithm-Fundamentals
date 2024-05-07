@@ -155,12 +155,29 @@ class HashTableString:
         self.table[index].append(key)
     
     # function to check if a key is present in the hash table
+    # (I pretty much stole this from w3schools, I was going to do something very similar to what I did
+    # for the key, value hash table but this was a lot more elegant, so I went with it)
     def contains(self, key):
         # get the hash that the key should be
+        index = self.HashFunction(key) 
         # check if the key is there
-        pass
+        bucket = self.table[index] # bucket is the index we are in
+        return key in bucket # returns true if the key is present in the bucket
     
     # funciton to remove a key from the hash table
+    def remove(self, key):
+        # Go to the index of the key
+        index = self.HashFunction(key)
+        # check if the bucket contains stuff
+        if self.table[index] != None:
+        # check if the item is in the bucket
+            if key in self.table[index]: # if the key is in the bucket
+                self.table[index].remove(key) # remove the key from the bucket
+                # removing the bucket if it is now empty
+                if not self.table[index]: # if the bucket is empty this will return true and evaluate
+                    self.table[index] = None # remove the bucket (set the index equal to None)
+                    return True
+        return False
     
     # some ways to display the hash table
     def display(self):
