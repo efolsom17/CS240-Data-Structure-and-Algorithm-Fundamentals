@@ -134,7 +134,6 @@ class HashTableString:
         
     # Function for hashing values, Using summation method that I saw on w3schools    
     def HashFunction(self, string): 
-        base = 31 #going to use 31 for base as I have seen it other places when I looked up what horner's method is
         mod = self._getPrime(self.size)# I think I want mod to be dependent on the size of the table. Mod using above two helper functions
         sum_char = 0 # starts at 0, sum of the charachters in the string's unicode values
         for char in string: # for each character in the string,
