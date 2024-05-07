@@ -9,3 +9,4 @@ from .LinearSearch import LinSearchIt
 from .LinearSearch import LinSearchRec
 from .MergeSort import MergeSort
 from .QuickSort import QuickSort
+from .HashTable import HashTable
