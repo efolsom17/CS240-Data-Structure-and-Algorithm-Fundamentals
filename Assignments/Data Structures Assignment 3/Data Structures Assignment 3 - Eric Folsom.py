@@ -10,7 +10,7 @@ and another which implements linear probing. Chaining seems to be the easiest me
 from cs240functions import DoubleLinkedList as DoubleLinkedList
 
 
-#Hash table
+#Hash table (using Horner's Method for Hashing)
 class HashTable:
     
     #Initializing hash table
@@ -23,11 +23,20 @@ class HashTable:
     
         
     # Function for hashing values, built in algorithms assignment 5. (slightly modified so I can modify the mod size)     
-    def HashFunc_Horner(string): 
+    def HashFunc(string): 
         base = 31 #going to use 31 for base as I have seen it other places when I looked up what horner's method is
         mod = None# I think I want mod to be dependent on the size of the table.
         hash = 0 # start at 0
         for char in string: # for each character in the string
             hash = ((hash * base) + ord(char)) % mod # compute the hash value for character, stops when we are at the last value
         return hash # return the index for the hash table
-    
+
+
+
+
+
+## Hash table using some other method for hashing
+'''
+class HashTable:
+    pass
+'''
