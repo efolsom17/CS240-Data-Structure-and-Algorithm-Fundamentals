@@ -43,7 +43,7 @@ hash = 0 <- starting point
 "o" hash = ((9 * 32) + 111) mod 27 = 21
 "m" hash = ((21 * 32) + 109) mod 27 = 25
 
-Thus our hash index for the string "whatcom" is 25 with the specified base and modulus
+Thus our hash index for the string "Whatcom" is 25 with the specified base and modulus
 
 If we were to apply this function to the strings "Community" and "College" we would get 13 and 19 respectively.
 '''
