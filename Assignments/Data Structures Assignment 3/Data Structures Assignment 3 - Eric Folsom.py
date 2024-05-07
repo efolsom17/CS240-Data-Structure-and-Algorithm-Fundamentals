@@ -3,8 +3,8 @@
 '''
 Implementing a hash table in python. Think that I need to do two different implementations of a hash table
 which should be on the different ways to handle collisinos. Want to do a version which implements chaining
-and another which implements linear probing. Chaining seems to be the easiest method. Going to use a linked list.
-Going to be very basic and not inserting a key, data pair only inserting a key into the hash table,
+and another which implements linear probing. Chaining seems to be the easiest method. Going to use an array for chaining.
+Going to be very basic, inserting a (key, data) I scrapped a lot of my above ideas, because I ran out of time because of the midterm :/.
 '''
 
 # double linked list from cs240functions
@@ -51,18 +51,48 @@ class HashTable:
             hash = ((hash * base) + ord(char)) % mod # compute the hash value for character, stops when we are at the last value
         return hash # return the index for the hash table
 
-    # Function to insert values into the hash table
+    # Function to insert values into the hash table (key is assumed to be a string)
+    def insert(self, key, value):
+        # Get the index that the value associated with the key should be inserted in
+        index = self.HashFunction(key)
+        # if the index is empty, initialize it as an empty array
+        if self.table[index] == None: #checks if it is emtpy
+            self.table[index] = [] # initializes it as an array
+        # append the key and value to the array at the position, chains the values using arrays if there are collisions
+        self.table[index].append((key, value))
     
-    # Function to search for a value in the hash table
+    # Function to retrieve a value from the hash table given a string,
+    def get(self, key):
+        # find the index of the key
+        index = self.HashFunction(key)
+        if self.table[index] != None: # if the hash corresponding to the key contains data
+            # go to the key, and then return the corresponding value associated to it
+            for k,v in self.table[index]: # for each key,value pair in the index of our hash table
+                if k == key: # if we are at the key,
+                    return v # return the value associated with it
+        # else if the index is empty or there is stuff assigned to the index but they key isn't present
+        return print(f"{key} Not Found") # tell us that the key isn't present
     
-    # Function to delete a value from the hash table
+    # Function to delete a value from the hash table ( replace it with none)
+    def delete(self, key):
+        #find the index of the key we want
+        index = self.HashFunction(key)
+        #go to the index and see if it contains data (possible collisions)
+        if self.table[index] != None:
+            # search the index to see if the key is present
+            i = 0 # index in the bucket (index of the big hash table)
+            for k,v in self.table[index]:
+                if k == key: # if we are at the key
+                    del self.table[index][i] # delete the key
+                i += 1 # tells us that we went to the next index of the bucket
+        if
     
     # Some way to represent the hash table when we print it or repr it, also might be cool to display it somehow.
 
 
 
 
-## Hash table (using some other method for hashing)
+## Hash table (using some other method for hashing) also only hashes a string no value attached to it
 '''
 class HashTable:
     pass
