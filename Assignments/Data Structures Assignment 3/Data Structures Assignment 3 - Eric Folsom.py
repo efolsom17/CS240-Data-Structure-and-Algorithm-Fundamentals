@@ -94,13 +94,29 @@ class HashTable:
     
     # Some way to represent the hash table when we print it or repr it, also might be cool to display it somehow.
     # (ChatGPT was helpful for this)\
+    def display(self):
+        return self.table
+    
     def __repr__(self):
         return f'HashTable(size = {self.size}, table = {self.table})'
 
 
 
-## Hash table (using some other method for hashing) also only hashes a string no value attached to it
-'''
-class HashTable:
+## Hash table (using some other method for hashing) also only hashes a string no value attached to it 
+# ( I am going to need this on the midterm so I might as well do it now)
+
+class HashTableString:
     pass
-'''
+ 
+#testing
+
+   
+words = ["The" ,"Quick" ,"Brown" ,"Fox" ,"Jumped", "Over", "the", "Lazy" ,"Dog"]
+test = HashTableString(10)
+for word in words:
+    test.insert(word)
+
+test.display
+
+
+
