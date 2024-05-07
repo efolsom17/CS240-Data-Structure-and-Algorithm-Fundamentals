@@ -85,10 +85,17 @@ class HashTable:
                 if k == key: # if we are at the key
                     del self.table[index][i] # delete the key
                 i += 1 # tells us that we went to the next index of the bucket
-        if
+        if not self.table[index]: #if the bucket (index of the big hash table) is empty 
+            # self.table[index] is True if it has items in it, and false if is empty, so if it is empty not self.table[index] is True
+            self.table[index] = None # if the bucket is empty mark it as None so that it can be filled later.
+        # else if the index is empty or there is stuff assigned to the index but they key isn't present
+        return print(f"{key} Not Found") # tell us that the key isn't present
+     
     
     # Some way to represent the hash table when we print it or repr it, also might be cool to display it somehow.
-
+    # (ChatGPT was helpful for this)\
+    def __repr__(self):
+        return f'HashTable(size = {self.size}, table = {self.table})'
 
 
 
