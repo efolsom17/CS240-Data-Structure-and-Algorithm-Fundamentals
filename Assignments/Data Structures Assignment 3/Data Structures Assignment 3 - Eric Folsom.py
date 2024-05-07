@@ -23,7 +23,7 @@ class HashTable:
     # of the hash table, should in theory limit collisions
     # I got this code and the idea to implement something like this from programiz 
     
-    def isPrime(n): # Checking if a number is prime (has more than itself and 1 as its divisors and is greater than 1)
+    def _isPrime(sefl,n): # Checking if a number is prime (has more than itself and 1 as its divisors and is greater than 1)
         if n == 1 or n == 0: # if the number is 1 or 0
             return False # not a prime, must be greater than 1
         for i in range(2, n//2): # Checks if the number is divisble by every number up to n/2, any more than that is pointless
@@ -33,10 +33,10 @@ class HashTable:
         return True # then the number is prime
 
     # This function gets the prime number closest to the size of the hash table.
-    def getPrime(n): # Assumed that n is the size of the hash table so we will work downwards
+    def _getPrime(self,n): # Assumed that n is the size of the hash table so we will work downwards
         if n % 2 == 0: # Check if n is even ( even numbers are not prime)
             n = n - 1 # ensure that n is odd
-        while not isPrime(n): # call the isPrime function above to check if the number is prime, while this is not true
+        while not self._isPrime(n): # call the isPrime function above to check if the number is prime, while this is not true
             n -=2 # go to the next odd number, 
         # once isPrime(n) == True
         return n # return the prime number
@@ -45,9 +45,9 @@ class HashTable:
     
         
     # Function for hashing values, built in algorithms assignment 5. (slightly modified so I can modify the mod size)     
-    def HashFunction(string): 
+    def HashFunction(self, string): 
         base = 31 #going to use 31 for base as I have seen it other places when I looked up what horner's method is
-        mod = getPrime(self.size)# I think I want mod to be dependent on the size of the table. Mod using above two helper functions
+        mod = self._getPrime(self.size)# I think I want mod to be dependent on the size of the table. Mod using above two helper functions
         hash = 0 # start at 0
         for char in string: # for each character in the string
             hash = ((hash * base) + ord(char)) % mod # compute the hash value for character, stops when we are at the last value
