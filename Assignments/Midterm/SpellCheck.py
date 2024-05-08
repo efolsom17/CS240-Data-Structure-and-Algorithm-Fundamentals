@@ -58,6 +58,17 @@ def Misspell(string):
 # True indicates that the word is misspelled.
 
 '''
+Function to suggest a word to replace misspelled word with using edit distance
+
+def suggest(string):
+     words = 3 words which have the smallest edit distance to the misspelled string 
+    
+
+
+
+'''
+
+'''
 Okay how do I create a CLI program?????
 
 using the cmd module because it seems like its the friendliest to work with.
@@ -107,5 +118,5 @@ class SpellCheck(cmd.Cmd):
     def do_add(self, string):
         'Add word(s) to the dictionary'
         temp = string.split # so you can add more than one word at a time
-        self.dictionary.insert(string) # hash the string
+        self.dictionary.insert(temp) # hash the string, could be more than one word.
     
