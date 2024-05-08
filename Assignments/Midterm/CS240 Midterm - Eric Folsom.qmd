@@ -39,4 +39,25 @@ The goal of the puzzle is to move the entire stack to another rod, obeying the f
 
 ## Spell Checker
 
+Create a spell checker console program that uses a hash table data structure to store a dictionary of words. Your program should be able to:
+
+1. Load a dictionary of words from a file into the hash table.  You will need to create this yourself.  Aim for 20 to 100 words.  
+
+2. Take a string of text as input and check each word in the text against the words in the dictionary stored in the hash table. Your program should identify any words that are not found in the dictionary and display them as "misspelled".
+
+3. Implement a suggestion feature that suggests possible correct spellings for the misspelled words based on edit distance.
+
+4. Implement a Levenshtein distance algorithm to compute the edit distance between two words.
+
+5. Allow the user to add new words to the dictionary and update the hash table accordingly.
+
+6. Handle collisions in the hash table using separate chaining.
+
+7. Optimize the performance of your program in terms of time and space complexity.
+
+8. Your program should be user-friendly and have a command-line interface.
+
+
 ## Code Library
+
+My code library from this course can be found on my [GitHub](https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/tree/main/cs240functions). It is a functioning python module that can be installed locally if the folder is downloaded (I am pretty sure at least). I am continually updating it to enhance some of the funcitons when I notice a problem I encounter when trying to use these algorithms and data structures in later points in the quarter. Will contain more content by the end of the course. 

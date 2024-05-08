@@ -27,3 +27,6 @@ for i in range(n,0,-1):
     test1.push(i)
     test2.push(None)
     test3.push(None)
+    
+test4 = [test1,test2,test3]
+test4
