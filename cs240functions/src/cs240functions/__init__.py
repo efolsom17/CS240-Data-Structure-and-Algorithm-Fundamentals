@@ -10,3 +10,5 @@ from .LinearSearch import LinSearchRec
 from .MergeSort import MergeSort
 from .QuickSort import QuickSort
 from .HashTable import HashTable
+from .Queue import Queue
+from .Stack import Stack
