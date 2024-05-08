@@ -66,8 +66,8 @@ using the cmd module because it seems like its the friendliest to work with.
 import cmd
 
 class SpellCheck(cmd.Cmd):
-    intro = "~~~~~ Spell Check Program ~~~~~\n Input a string with  '' "
-    prompt = "(spellcheck)"
+    intro = "~~~~~ Spell Check Program ~~~~~\n Check the spelling of a string using 'spellcheck string' \n Add new word(s) to the dictionary with 'add word(s)' "
+    prompt = ""
     def do_exit(self, arg):
         'Exit the shell'
         print("Exiting")
@@ -77,25 +77,35 @@ class SpellCheck(cmd.Cmd):
         super().__init__()  # Initialize the Cmd superclass
         # loading the dictionary, 1000 most common words in the english language and loading it into a hash table.
         n = 1000 # hash table size
-        dictionary = HashTable(n)
+        self.dictionary = HashTable(n)
         with open("./Data/dictionary.txt", "r") as words:
             words = [line.strip() for line in words] 
         for word in words:
-            dictionary.insert(word)
+            self.dictionary.insert(word)
         del words
         
     
-    def _misspelled(self, string):
+    def misspelled(self, string):
         temp = string.split()# split the string into each word, store it as a temp variable
         spellings = []# created an empty array the length of the temp variable ( call it spellings)
         for word in temp:# for each word in the temp variable:
          #   run dictionary.contains(word) and append the spellings array with the truth value
-            spellings.append(not(dictionary.contains(word)))
+            spellings.append(not(self.dictionary.contains(word)))
         # return the spellings array
         return spellings
     
     def do_spellcheck(self, string):
-        
-        return self._misspelled(string) # returning just the string doesn't work, because if anything is true it exits the CLI loop.
-
+        'Check the spelling of a string'
+        if not string: # ensure that a string has been passed through
+            print("You must enter a string")
+            return
+        spellings = self.misspelled(string) # returning just the string doesn't work, because if anything is true it exits the CLI loop.
+        for word, misspelled in zip(string.split(),spellings):
+            if misspelled:
+                print(f"{word} is spelled wrong")
+                
+    def do_add(self, string):
+        'Add word(s) to the dictionary'
+        temp = string.split # so you can add more than one word at a time
+        self.dictionary.insert(string) # hash the string
     
