@@ -30,3 +30,17 @@ for i in range(n,0,-1):
     
 test4 = [test1,test2,test3]
 test4
+
+
+
+''''
+Hanoi's Tower using Recursion
+'''
+#getting this working first then going to try to implement this using a stack
+def tower_of_hanoi(n, starting_rod, ending_rod, middle_rod):
+    if n == 1:
+        print(f"Disk {n}: {starting_rod} -> {ending_rod}")
+    else:
+        tower_of_hanoi(n-1, starting_rod, middle_rod, ending_rod)
+        print(f"Disk {n}: {starting_rod} -> {ending_rod}")
+        tower_of_hanoi(n-1, middle_rod, ending_rod, starting_rod)

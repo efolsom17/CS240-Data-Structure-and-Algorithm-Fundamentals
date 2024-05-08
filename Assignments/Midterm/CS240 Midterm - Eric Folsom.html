@@ -172,7 +172,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Now we can implement this funciton in python:</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tower_of_hanoi(n, starting_rod, ending_rod, middle_rod):</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Disk </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>starting_rod<span class="sc">}</span><span class="ss"> -&gt; </span><span class="sc">{</span>ending_rod<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        tower_of_hanoi(n<span class="op">-</span><span class="dv">1</span>, starting_rod, middle_rod, ending_rod)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Disk </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>starting_rod<span class="sc">}</span><span class="ss"> -&gt; </span><span class="sc">{</span>ending_rod<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        tower_of_hanoi(n<span class="op">-</span><span class="dv">1</span>, middle_rod, ending_rod, starting_rod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="implement-a-solution-for-the-tower-of-hanoi-problem-using-an-iterative-approach." class="level4">

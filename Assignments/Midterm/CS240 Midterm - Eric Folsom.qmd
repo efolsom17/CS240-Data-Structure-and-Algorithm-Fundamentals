@@ -96,8 +96,14 @@ Now we can implement this funciton in python:
 ```{python, hanoi tower python}
 
 def tower_of_hanoi(n, starting_rod, ending_rod, middle_rod):
-    pass
+    if n == 1:
+        print(f"Disk {n}: {starting_rod} -> {ending_rod}")
+    else:
+        tower_of_hanoi(n-1, starting_rod, middle_rod, ending_rod)
+        print(f"Disk {n}: {starting_rod} -> {ending_rod}")
+        tower_of_hanoi(n-1, middle_rod, ending_rod, starting_rod)
 ```
+
 
 
 
