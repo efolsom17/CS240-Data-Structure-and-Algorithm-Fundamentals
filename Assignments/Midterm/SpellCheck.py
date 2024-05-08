@@ -108,7 +108,7 @@ class SpellCheck(cmd.Cmd):
     def do_spellcheck(self, string):
         'Check the spelling of a string'
         if not string: # ensure that a string has been passed through
-            print("You must enter a string")
+            print("You must enter a string") # tell the user to enter a string
             return
         spellings = self.misspelled(string) # returning just the string doesn't work, because if anything is true it exits the CLI loop.
         for word, misspelled in zip(string.split(),spellings):
