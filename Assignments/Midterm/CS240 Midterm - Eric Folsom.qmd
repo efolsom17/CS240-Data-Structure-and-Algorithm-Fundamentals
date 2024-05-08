@@ -19,11 +19,43 @@ import pandas as pd
 The Tower of Hanoi problem involves three rods and a number of disks of different sizes which can slide onto any rod. The puzzle starts with the disks stacked in ascending order of size on one rod, the smallest at the top, making a cone.
 
 The goal of the puzzle is to move the entire stack to another rod, obeying the following rules:
-1. Only one disk can be moved at a time.
-2. Each move consists of taking the upper disk from one of the stacks and placing it on top of another stack or on an empty rod.
+
+1. Only one disk can be moved at a time
+2. Each move consists of taking the upper disk from one of the stacks and placing it on top of another stack or on an empty rod.   
 3. No disk may be placed on top of a smaller disk.
 
 #### 1. Implement a solution for the Tower of Hanoi problem using recursion. Your solution should move the discs from the starting peg to the target peg using the auxiliary peg. 
+
+Below is a diagram which shows a solution for the Tower of Hanoi problem when there are $3$ rods and $3$ discs:
+
+![Tower of Hanoi with 3 discs and 3 rods](./misc/HanoisTower3.png){width=75%}
+
+We first start with all three discs stacked on Rod $A$. Then procede with the following steps to end with all three disc stacked on rod $C$:
+
+1. Move the <span style="color:green;">Green</span> disc from rod $A$ to rod $C$.
+2. Move the <span style="color:red;">Red</span> disc from rod $A$ to rod $B$.
+3. Move the <span style="color:green;">Green</span> disc from rod $C$ to rod $B$.
+4. Move the <span style="color:blue;">Blue</span> disc from rod $A$ to rod $C$.
+5. Move the <span style="color:green;">Green</span> disc from rod $B$ to rod $A$.
+6. Move the <span style="color:red;">Red</span> disc from rod $B$ to rod $C$.
+7. Move the <span style="color:green;">Green</span> disc from rod $A$ to rod $C$.
+
+These steps will move the stack of three discs from rod $A$ to rod $C$ while following the established rules. We can break down the process a little more to understand what is going on and then build a recursive function from it. This solution to the Tower of Hanoi problem took $7 = 2^3 -1$ steps to solve.  
+
+Note that there are $n=3$ discs in this setup. 
+
+Steps $1$ through $3$ involve us moving the <span style="color:green;">Green</span> and <span style="color:red;">Red</span> discs from rod $A$ to rod $B$ using the auxilary rod $C$ to store the <span style="color:green;">Green</span> disc while we move the larger of the two discs to the middle rod. These steps involve moving the <span style="color:green;">Green</span> disc to rod $C$ then moving it from $C$ to rod $B$ once the larger disc is in place.
+
+In step $4$ we are simply moving the <span style="color:blue;">Blue</span> disc from rod $A$ to rod $C$.
+
+Now in steps $5$ through $7$ we are simply doing what we did in steps $1$ through $3$, but instead of using rod $C$ as the auxillary rod, we are using rod $A$ as the auxillary rod to move the <span style="color:green;">Green</span> and <span style="color:red;">Red</span> discs from rod $B$ to rod $C$.
+
+Thinking recursively, step $4$ would represent our base case. We are simply moving a disc from one rod to another rod. 
+
+Next we need to think of the recursive step, which in this case is moving the $2$ remaining discs to another rod, using an auxilary rod. 
+
+This same idea should hold for $n$ rods. We would basically be breaking the problem down into smaller versions of this three disc version of the problem. There will be some other 
+
 
 #### 2. Implement a solution for the Tower of Hanoi problem using an iterative approach.
 

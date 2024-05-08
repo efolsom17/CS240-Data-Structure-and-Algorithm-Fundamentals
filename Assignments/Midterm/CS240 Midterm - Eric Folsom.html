@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.340">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Eric Folsom">
+
+<title>CS240 Midterm</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="CS240 Midterm - Eric Folsom_files/libs/clipboard/clipboard.min.js"></script>
+<script src="CS240 Midterm - Eric Folsom_files/libs/quarto-html/quarto.js"></script>
+<script src="CS240 Midterm - Eric Folsom_files/libs/quarto-html/popper.min.js"></script>
+<script src="CS240 Midterm - Eric Folsom_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="CS240 Midterm - Eric Folsom_files/libs/quarto-html/anchor.min.js"></script>
+<link href="CS240 Midterm - Eric Folsom_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="CS240 Midterm - Eric Folsom_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="CS240 Midterm - Eric Folsom_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="CS240 Midterm - Eric Folsom_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="CS240 Midterm - Eric Folsom_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">CS240 Midterm</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Eric Folsom </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="hanois-tower" class="level2">
+<h2 class="anchored" data-anchor-id="hanois-tower">Hanoi’s Tower</h2>
+<p>The Tower of Hanoi problem involves three rods and a number of disks of different sizes which can slide onto any rod. The puzzle starts with the disks stacked in ascending order of size on one rod, the smallest at the top, making a cone.</p>
+<p>The goal of the puzzle is to move the entire stack to another rod, obeying the following rules:</p>
+<ol type="1">
+<li>Only one disk can be moved at a time</li>
+<li>Each move consists of taking the upper disk from one of the stacks and placing it on top of another stack or on an empty rod.<br>
+</li>
+<li>No disk may be placed on top of a smaller disk.</li>
+</ol>
+<section id="implement-a-solution-for-the-tower-of-hanoi-problem-using-recursion.-your-solution-should-move-the-discs-from-the-starting-peg-to-the-target-peg-using-the-auxiliary-peg." class="level4">
+<h4 class="anchored" data-anchor-id="implement-a-solution-for-the-tower-of-hanoi-problem-using-recursion.-your-solution-should-move-the-discs-from-the-starting-peg-to-the-target-peg-using-the-auxiliary-peg.">1. Implement a solution for the Tower of Hanoi problem using recursion. Your solution should move the discs from the starting peg to the target peg using the auxiliary peg.</h4>
+<p>Below is a diagram which shows a solution for the Tower of Hanoi problem when there are <span class="math inline">\(3\)</span> rods and <span class="math inline">\(3\)</span> discs:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./misc/HanoisTower3.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Tower of Hanoi with 3 discs and 3 rods</figcaption>
+</figure>
+</div>
+<p>We first start with all three discs stacked on Rod <span class="math inline">\(A\)</span>. Then procede with the following steps to end with all three disc stacked on rod <span class="math inline">\(C\)</span>: <span style="color:green;">Green</span> <span style="color:red;">Red</span> <span style="color:blue;">Blue</span></p>
+<ol type="1">
+<li>Move the <span style="color:green;">Green</span> disc from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(C\)</span>.</li>
+<li>Move the <span style="color:red;">Red</span> disc from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(B\)</span>.</li>
+<li>Move the <span style="color:green;">Green</span> disc from rod <span class="math inline">\(C\)</span> to rod <span class="math inline">\(B\)</span>.</li>
+<li>Move the <span style="color:blue;">Blue</span> disc from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(C\)</span>.</li>
+<li>Move the <span style="color:green;">Green</span> disc from rod <span class="math inline">\(B\)</span> to rod <span class="math inline">\(A\)</span>.</li>
+<li>Move the <span style="color:red;">Red</span> disc from rod <span class="math inline">\(B\)</span> to rod <span class="math inline">\(C\)</span>.</li>
+<li>Move the <span style="color:green;">Green</span> disc from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(C\)</span>.</li>
+</ol>
+<p>These steps will move the stack of three discs from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(C\)</span> while following the established rules. We can break down the process a little more to understand what is going on and then build a recursive function from it.</p>
+</section>
+<section id="implement-a-solution-for-the-tower-of-hanoi-problem-using-an-iterative-approach." class="level4">
+<h4 class="anchored" data-anchor-id="implement-a-solution-for-the-tower-of-hanoi-problem-using-an-iterative-approach.">2. Implement a solution for the Tower of Hanoi problem using an iterative approach.</h4>
+</section>
+<section id="compare-the-time-and-space-complexity-of-both-the-recursive-and-iterative-solutions-and-explain-the-differences." class="level4">
+<h4 class="anchored" data-anchor-id="compare-the-time-and-space-complexity-of-both-the-recursive-and-iterative-solutions-and-explain-the-differences.">3. Compare the time and space complexity of both the recursive and iterative solutions and explain the differences.</h4>
+</section>
+<section id="optional-but-extra-credit-create-a-graphical-user-interface-gui-that-demonstrates-the-steps-of-the-tower-of-hanoi-problem-as-the-discs-are-moved-from-the-starting-peg-to-the-target-peg.-the-gui-should-allow-the-user-to-specify-the-number-of-discs-and-the-speed-at-which-the-discs-move." class="level4">
+<h4 class="anchored" data-anchor-id="optional-but-extra-credit-create-a-graphical-user-interface-gui-that-demonstrates-the-steps-of-the-tower-of-hanoi-problem-as-the-discs-are-moved-from-the-starting-peg-to-the-target-peg.-the-gui-should-allow-the-user-to-specify-the-number-of-discs-and-the-speed-at-which-the-discs-move.">4. (Optional, but extra credit) Create a graphical user interface (GUI) that demonstrates the steps of the Tower of Hanoi problem as the discs are moved from the starting peg to the target peg. The GUI should allow the user to specify the number of discs and the speed at which the discs move.</h4>
+</section>
+<section id="create-a-variation-of-the-tower-of-hanoi-problem-where-the-user-can-specify-more-than-three-pegs.-your-solution-should-still-move-all-the-discs-from-the-starting-peg-to-the-target-peg-while-adhering-to-the-rules-of-the-tower-of-hanoi-problem." class="level4">
+<h4 class="anchored" data-anchor-id="create-a-variation-of-the-tower-of-hanoi-problem-where-the-user-can-specify-more-than-three-pegs.-your-solution-should-still-move-all-the-discs-from-the-starting-peg-to-the-target-peg-while-adhering-to-the-rules-of-the-tower-of-hanoi-problem.">5. Create a variation of the Tower of Hanoi problem where the user can specify more than three pegs. Your solution should still move all the discs from the starting peg to the target peg while adhering to the rules of the Tower of Hanoi problem.</h4>
+</section>
+<section id="optional-but-extra-credit-create-a-variation-of-the-tower-of-hanoi-problem-where-the-user-can-specify-the-number-of-discs-and-the-number-of-pegs.-your-solution-should-still-move-all-the-discs-from-the-starting-peg-to-the-target-peg-while-adhering-to-the-rules-of-the-tower-of-hanoi-problem." class="level4">
+<h4 class="anchored" data-anchor-id="optional-but-extra-credit-create-a-variation-of-the-tower-of-hanoi-problem-where-the-user-can-specify-the-number-of-discs-and-the-number-of-pegs.-your-solution-should-still-move-all-the-discs-from-the-starting-peg-to-the-target-peg-while-adhering-to-the-rules-of-the-tower-of-hanoi-problem.">6. (Optional, but extra credit) Create a variation of the Tower of Hanoi problem where the user can specify the number of discs and the number of pegs. Your solution should still move all the discs from the starting peg to the target peg while adhering to the rules of the Tower of Hanoi problem.</h4>
+</section>
+</section>
+<section id="spell-checker" class="level2">
+<h2 class="anchored" data-anchor-id="spell-checker">Spell Checker</h2>
+<p>Create a spell checker console program that uses a hash table data structure to store a dictionary of words. Your program should be able to:</p>
+<ol type="1">
+<li><p>Load a dictionary of words from a file into the hash table. You will need to create this yourself. Aim for 20 to 100 words.</p></li>
+<li><p>Take a string of text as input and check each word in the text against the words in the dictionary stored in the hash table. Your program should identify any words that are not found in the dictionary and display them as “misspelled”.</p></li>
+<li><p>Implement a suggestion feature that suggests possible correct spellings for the misspelled words based on edit distance.</p></li>
+<li><p>Implement a Levenshtein distance algorithm to compute the edit distance between two words.</p></li>
+<li><p>Allow the user to add new words to the dictionary and update the hash table accordingly.</p></li>
+<li><p>Handle collisions in the hash table using separate chaining.</p></li>
+<li><p>Optimize the performance of your program in terms of time and space complexity.</p></li>
+<li><p>Your program should be user-friendly and have a command-line interface.</p></li>
+</ol>
+</section>
+<section id="code-library" class="level2">
+<h2 class="anchored" data-anchor-id="code-library">Code Library</h2>
+<p>My code library from this course can be found on my <a href="https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/tree/main/cs240functions">GitHub</a>. It is a functioning python module that can be installed locally if the folder is downloaded (I am pretty sure at least). I am continually updating it to enhance some of the funcitons when I notice a problem I encounter when trying to use these algorithms and data structures in later points in the quarter. Will contain more content by the end of the course.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
