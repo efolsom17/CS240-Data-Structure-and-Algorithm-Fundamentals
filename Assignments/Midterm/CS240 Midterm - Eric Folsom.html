@@ -88,7 +88,7 @@ ul.task-list li input[type="checkbox"] {
 <figcaption class="figure-caption">Tower of Hanoi with 3 discs and 3 rods</figcaption>
 </figure>
 </div>
-<p>We first start with all three discs stacked on Rod <span class="math inline">\(A\)</span>. Then procede with the following steps to end with all three disc stacked on rod <span class="math inline">\(C\)</span>: <span style="color:green;">Green</span> <span style="color:red;">Red</span> <span style="color:blue;">Blue</span></p>
+<p>We first start with all three discs stacked on Rod <span class="math inline">\(A\)</span>. Then procede with the following steps to end with all three disc stacked on rod <span class="math inline">\(C\)</span>:</p>
 <ol type="1">
 <li>Move the <span style="color:green;">Green</span> disc from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(C\)</span>.</li>
 <li>Move the <span style="color:red;">Red</span> disc from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(B\)</span>.</li>
@@ -98,7 +98,14 @@ ul.task-list li input[type="checkbox"] {
 <li>Move the <span style="color:red;">Red</span> disc from rod <span class="math inline">\(B\)</span> to rod <span class="math inline">\(C\)</span>.</li>
 <li>Move the <span style="color:green;">Green</span> disc from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(C\)</span>.</li>
 </ol>
-<p>These steps will move the stack of three discs from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(C\)</span> while following the established rules. We can break down the process a little more to understand what is going on and then build a recursive function from it.</p>
+<p>These steps will move the stack of three discs from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(C\)</span> while following the established rules. We can break down the process a little more to understand what is going on and then build a recursive function from it. This solution to the Tower of Hanoi problem took <span class="math inline">\(7 = 2^3 -1\)</span> steps to solve.</p>
+<p>Note that there are <span class="math inline">\(n=3\)</span> discs in this setup.</p>
+<p>Steps <span class="math inline">\(1\)</span> through <span class="math inline">\(3\)</span> involve us moving the <span style="color:green;">Green</span> and <span style="color:red;">Red</span> discs from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(B\)</span> using the auxilary rod <span class="math inline">\(C\)</span> to store the <span style="color:green;">Green</span> disc while we move the larger of the two discs to the middle rod. These steps involve moving the <span style="color:green;">Green</span> disc to rod <span class="math inline">\(C\)</span> then moving it from <span class="math inline">\(C\)</span> to rod <span class="math inline">\(B\)</span> once the larger disc is in place.</p>
+<p>In step <span class="math inline">\(4\)</span> we are simply moving the <span style="color:blue;">Blue</span> disc from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(C\)</span>.</p>
+<p>Now in steps <span class="math inline">\(5\)</span> through <span class="math inline">\(7\)</span> we are simply doing what we did in steps <span class="math inline">\(1\)</span> through <span class="math inline">\(3\)</span>, but instead of using rod <span class="math inline">\(C\)</span> as the auxillary rod, we are using rod <span class="math inline">\(A\)</span> as the auxillary rod to move the <span style="color:green;">Green</span> and <span style="color:red;">Red</span> discs from rod <span class="math inline">\(B\)</span> to rod <span class="math inline">\(C\)</span>.</p>
+<p>Thinking recursively, step <span class="math inline">\(4\)</span> would represent our base case. We are simply moving a disc from one rod to another rod.</p>
+<p>Next we need to think of the recursive step, which in this case is moving the <span class="math inline">\(2\)</span> remaining discs to another rod, using an auxilary rod.</p>
+<p>This same idea should hold for <span class="math inline">\(n\)</span> rods. We would basically be breaking the problem down into smaller versions of this three disc version of the problem. There will be some other</p>
 </section>
 <section id="implement-a-solution-for-the-tower-of-hanoi-problem-using-an-iterative-approach." class="level4">
 <h4 class="anchored" data-anchor-id="implement-a-solution-for-the-tower-of-hanoi-problem-using-an-iterative-approach.">2. Implement a solution for the Tower of Hanoi problem using an iterative approach.</h4>
