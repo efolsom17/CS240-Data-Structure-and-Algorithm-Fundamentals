@@ -44,3 +44,6 @@ def tower_of_hanoi(n, starting_rod, middle_rod, ending_rod): # specify the start
         tower_of_hanoi(n-1, starting_rod, ending_rod, middle_rod) # recursive call to move the n-1 disks to the middle rod
         print(f"Disk {n}: {starting_rod} -> {ending_rod}") # move the current disk
         tower_of_hanoi(n-1, middle_rod, starting_rod, ending_rod) # 
+        
+        
+### Gonna modify above to work with my idea of using stacks.
