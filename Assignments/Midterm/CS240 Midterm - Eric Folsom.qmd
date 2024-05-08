@@ -142,6 +142,15 @@ Create a spell checker console program that uses a hash table data structure to 
 1. Load a dictionary of words from a file into the hash table.  You will need to create this yourself.  Aim for 20 to 100 words.  
 
 2. Take a string of text as input and check each word in the text against the words in the dictionary stored in the hash table. Your program should identify any words that are not found in the dictionary and display them as "misspelled".
+   
+```{plain}
+def Misspell(string):
+    # split the string into each word, store it as a temp variable
+    # created an empty array the length of the temp variable ( call it spellings)
+    # for each word in the temp variable:
+    #   run dictionary.get(word) and append the spellings array with the truth value if the word is in the dictionary or not
+    # return the spellings array
+```
 
 3. Implement a suggestion feature that suggests possible correct spellings for the misspelled words based on edit distance.
 
