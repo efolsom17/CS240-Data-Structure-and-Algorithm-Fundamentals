@@ -14,3 +14,16 @@
 # []    []      [2]
 # []    []      [3]
 
+from cs240functions import Stack as stack
+
+# Some stuff I did while testing:
+test1 = stack()
+test2 = stack()
+test3 = stack()
+
+n = 1
+
+for i in range(n,0,-1):
+    test1.push(i)
+    test2.push(None)
+    test3.push(None)
