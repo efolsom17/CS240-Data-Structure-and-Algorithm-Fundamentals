@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -98,14 +132,48 @@ ul.task-list li input[type="checkbox"] {
 <li>Move the <span style="color:red;">Red</span> disc from rod <span class="math inline">\(B\)</span> to rod <span class="math inline">\(C\)</span>.</li>
 <li>Move the <span style="color:green;">Green</span> disc from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(C\)</span>.</li>
 </ol>
-<p>These steps will move the stack of three discs from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(C\)</span> while following the established rules. We can break down the process a little more to understand what is going on and then build a recursive function from it. This solution to the Tower of Hanoi problem took <span class="math inline">\(7 = 2^3 -1\)</span> steps to solve.</p>
+<p>These steps will move the stack of three discs from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(C\)</span> while following the established rules. We can break down the process a little more to understand what is going on and then build a recursive function from it. This solution to the Tower of Hanoi problem took <span class="math inline">\(7 = 2^3 -1\)</span> steps to solve.t</p>
 <p>Note that there are <span class="math inline">\(n=3\)</span> discs in this setup.</p>
 <p>Steps <span class="math inline">\(1\)</span> through <span class="math inline">\(3\)</span> involve us moving the <span style="color:green;">Green</span> and <span style="color:red;">Red</span> discs from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(B\)</span> using the auxilary rod <span class="math inline">\(C\)</span> to store the <span style="color:green;">Green</span> disc while we move the larger of the two discs to the middle rod. These steps involve moving the <span style="color:green;">Green</span> disc to rod <span class="math inline">\(C\)</span> then moving it from <span class="math inline">\(C\)</span> to rod <span class="math inline">\(B\)</span> once the larger disc is in place.</p>
 <p>In step <span class="math inline">\(4\)</span> we are simply moving the <span style="color:blue;">Blue</span> disc from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(C\)</span>.</p>
 <p>Now in steps <span class="math inline">\(5\)</span> through <span class="math inline">\(7\)</span> we are simply doing what we did in steps <span class="math inline">\(1\)</span> through <span class="math inline">\(3\)</span>, but instead of using rod <span class="math inline">\(C\)</span> as the auxillary rod, we are using rod <span class="math inline">\(A\)</span> as the auxillary rod to move the <span style="color:green;">Green</span> and <span style="color:red;">Red</span> discs from rod <span class="math inline">\(B\)</span> to rod <span class="math inline">\(C\)</span>.</p>
 <p>Thinking recursively, step <span class="math inline">\(4\)</span> would represent our base case. We are simply moving a disc from one rod to another rod.</p>
-<p>Next we need to think of the recursive step, which in this case is moving the <span class="math inline">\(2\)</span> remaining discs to another rod, using an auxilary rod.</p>
-<p>This same idea should hold for <span class="math inline">\(n\)</span> rods. We would basically be breaking the problem down into smaller versions of this three disc version of the problem. There will be some other</p>
+<p>Next we need to think of the recursive step, which in this case is moving the <span class="math inline">\(n-1=3-1=2\)</span> remaining discs to another rod, using an auxilary rod.</p>
+<p>This same idea should hold for <span class="math inline">\(n\)</span> rods. We would basically be breaking the problem down into smaller versions of this three disc version of the problem.</p>
+<ul>
+<li><p>If we only had <span class="math inline">\(n=1\)</span> disc (i.e.&nbsp;only the <span style="color:blue;">Blue</span> disc), this would take <span class="math inline">\(1\)</span> step to solve, move the <span style="color:blue;">Blue</span> disc to rod <span class="math inline">\(C\)</span> from rod <span class="math inline">\(A\)</span>.</p></li>
+<li><p>If <span class="math inline">\(n=2\)</span> (i.e.&nbsp;only the <span style="color:red;">Red</span> and <span style="color:blue;">Blue</span> discs), the steps would be as follows</p>
+<ol type="1">
+<li>Move the <span style="color:red;">Red</span> disc from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(B\)</span>.</li>
+<li>Move the <span style="color:blue;">Blue</span> disc from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(C\)</span>.</li>
+<li>Move the <span style="color:red;">Red</span> disc from rod <span class="math inline">\(B\)</span> to rod <span class="math inline">\(C\)</span></li>
+</ol></li>
+</ul>
+<p>Note that the base case (Move the <span style="color:blue;">Blue</span> disc from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(C\)</span>) always shows up in each of these scenarios.</p>
+<p>Now that we have seen a few different scenarios, we can start to formulate an algorithm to solve this problem:</p>
+<ol type="1">
+<li>Move <span class="math inline">\(n-1\)</span> discs from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(B\)</span>. This uses rod <span class="math inline">\(C\)</span> as a “helper” rod.</li>
+<li>Move the remaining disc from rod <span class="math inline">\(A\)</span> to rod <span class="math inline">\(C\)</span>.</li>
+<li>Move the <span class="math inline">\(n-1\)</span> discs from rod <span class="math inline">\(B\)</span> to rod <span class="math inline">\(C\)</span>. This uses rod <span class="math inline">\(A\)</span> as a “helper” rod.</li>
+</ol>
+<p>Now lets try to implment this aproach to solving the problem using pseudocode:</p>
+<pre class="{plain, hanoi tower pseudocode}"><code>def hanoistower(n, starting_rod = A, ending_rod = C, auxillary_rod = B)
+    # base case only 1 disc to move
+    if n == 1:
+        move disc from starting rod to ending rod
+    else:
+        # recursively call the function to move the n-1 discs to the middle( auxilary) rod
+        hanoistower(n-1, starting_rod = A, ending_rod = B, auxilary_rod = C)
+        #some function to show the moving of the discs
+        movedisc(start_rod, end_rod)
+        # recursively call again to move the n-1 discs from the auxillary( middle) rod to the end rod
+        hanoistower(n-1, starting_rod = B, ending_rod = C, auxilary_rod = A)</code></pre>
+<p>Basically each time we recursively call the funciton, we are changing which rods we are moving the discs to so that when we eventually reach the base case, we are able to move the disc to the correct rod.</p>
+<p>Now we can implement this funciton in python:</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tower_of_hanoi(n, starting_rod, ending_rod, middle_rod):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="implement-a-solution-for-the-tower-of-hanoi-problem-using-an-iterative-approach." class="level4">
 <h4 class="anchored" data-anchor-id="implement-a-solution-for-the-tower-of-hanoi-problem-using-an-iterative-approach.">2. Implement a solution for the Tower of Hanoi problem using an iterative approach.</h4>

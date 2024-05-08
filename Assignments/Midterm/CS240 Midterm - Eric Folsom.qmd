@@ -40,7 +40,7 @@ We first start with all three discs stacked on Rod $A$. Then procede with the fo
 6. Move the <span style="color:red;">Red</span> disc from rod $B$ to rod $C$.
 7. Move the <span style="color:green;">Green</span> disc from rod $A$ to rod $C$.
 
-These steps will move the stack of three discs from rod $A$ to rod $C$ while following the established rules. We can break down the process a little more to understand what is going on and then build a recursive function from it. This solution to the Tower of Hanoi problem took $7 = 2^3 -1$ steps to solve.  
+These steps will move the stack of three discs from rod $A$ to rod $C$ while following the established rules. We can break down the process a little more to understand what is going on and then build a recursive function from it. This solution to the Tower of Hanoi problem took $7 = 2^3 -1$ steps to solve.t   
 
 Note that there are $n=3$ discs in this setup. 
 
@@ -50,11 +50,56 @@ In step $4$ we are simply moving the <span style="color:blue;">Blue</span> disc 
 
 Now in steps $5$ through $7$ we are simply doing what we did in steps $1$ through $3$, but instead of using rod $C$ as the auxillary rod, we are using rod $A$ as the auxillary rod to move the <span style="color:green;">Green</span> and <span style="color:red;">Red</span> discs from rod $B$ to rod $C$.
 
+
 Thinking recursively, step $4$ would represent our base case. We are simply moving a disc from one rod to another rod. 
 
-Next we need to think of the recursive step, which in this case is moving the $2$ remaining discs to another rod, using an auxilary rod. 
+Next we need to think of the recursive step, which in this case is moving the $n-1=3-1=2$ remaining discs to another rod, using an auxilary rod. 
 
-This same idea should hold for $n$ rods. We would basically be breaking the problem down into smaller versions of this three disc version of the problem. There will be some other 
+This same idea should hold for $n$ rods. We would basically be breaking the problem down into smaller versions of this three disc version of the problem.
+
+* If we only had $n=1$ disc (i.e. only the <span style="color:blue;">Blue</span> disc), this would take $1$ step to solve, move the <span style="color:blue;">Blue</span> disc to rod $C$ from rod $A$. 
+
+* If $n=2$ (i.e. only the <span style="color:red;">Red</span> and <span style="color:blue;">Blue</span> discs), the steps would be as follows
+    1. Move the <span style="color:red;">Red</span> disc from rod $A$ to rod $B$.
+    2. Move the <span style="color:blue;">Blue</span> disc from rod $A$ to rod $C$.
+    3. Move the <span style="color:red;">Red</span> disc from rod $B$ to rod $C$
+
+Note that the base case (Move the <span style="color:blue;">Blue</span> disc from rod $A$ to rod $C$) always shows up in each of these scenarios. 
+
+Now that we have seen a few different scenarios, we can start to formulate an algorithm to solve this problem:
+
+1. Move $n-1$ discs from rod $A$ to rod $B$. This uses rod $C$ as a "helper" rod.
+2. Move the remaining disc from rod $A$ to rod $C$. 
+3. Move the $n-1$ discs from rod $B$ to rod $C$. This uses rod $A$ as a "helper" rod.
+
+Now lets try to implment this aproach to solving the problem using pseudocode:
+
+
+```{plain, hanoi tower pseudocode}
+def hanoistower(n, starting_rod = A, ending_rod = C, auxillary_rod = B)
+    # base case only 1 disc to move
+    if n == 1:
+        move disc from starting rod to ending rod
+    else:
+        # recursively call the function to move the n-1 discs to the middle( auxilary) rod
+        hanoistower(n-1, starting_rod = A, ending_rod = B, auxilary_rod = C)
+        #some function to show the moving of the discs
+        movedisc(start_rod, end_rod)
+        # recursively call again to move the n-1 discs from the auxillary( middle) rod to the end rod
+        hanoistower(n-1, starting_rod = B, ending_rod = C, auxilary_rod = A)
+````
+
+Basically each time we recursively call the funciton, we are changing which rods we are moving the discs to so that when we eventually reach the base case, we are able to move the disc to the correct rod.
+
+Now we can implement this funciton in python:
+
+```{python, hanoi tower python}
+
+def tower_of_hanoi(n, starting_rod, ending_rod, middle_rod):
+    pass
+```
+
+
 
 
 #### 2. Implement a solution for the Tower of Hanoi problem using an iterative approach.
