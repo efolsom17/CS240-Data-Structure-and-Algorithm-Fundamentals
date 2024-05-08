@@ -48,3 +48,7 @@ def Misspell(string):
     return spellings
 
 # True indicates that the word is misspelled.
+
+'''
+Okay how do I create a CLI program?????
+'''
