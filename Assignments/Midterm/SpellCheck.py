@@ -43,6 +43,8 @@ def Misspell(string):
     spellings = []# created an empty array the length of the temp variable ( call it spellings)
     for word in temp:# for each word in the temp variable:
     #   run dictionary.get(word) and append the spellings array with the truth value
-        spellings.append(dictionary.contains(word))
+        spellings.append(not(dictionary.contains(word)))
     # return the spellings array
     return spellings
+
+# True indicates that the word is misspelled.
