@@ -37,10 +37,10 @@ test4
 Hanoi's Tower using Recursion
 '''
 #getting this working first then going to try to implement this using a stack
-def tower_of_hanoi(n, starting_rod, ending_rod, middle_rod):
-    if n == 1:
-        print(f"Disk {n}: {starting_rod} -> {ending_rod}")
-    else:
-        tower_of_hanoi(n-1, starting_rod, middle_rod, ending_rod)
-        print(f"Disk {n}: {starting_rod} -> {ending_rod}")
-        tower_of_hanoi(n-1, middle_rod, ending_rod, starting_rod)
+def tower_of_hanoi(n, starting_rod, middle_rod, ending_rod): # specify the starting rods you want
+    if n == 1: # Base case
+        print(f"Disk {n}: {starting_rod} -> {ending_rod}") # Move the specified disk 
+    else: # if we are not on the last rod
+        tower_of_hanoi(n-1, starting_rod, ending_rod, middle_rod) # recursive call to move the n-1 disks to the middle rod
+        print(f"Disk {n}: {starting_rod} -> {ending_rod}") # move the current disk
+        tower_of_hanoi(n-1, middle_rod, starting_rod, ending_rod) # 
