@@ -41,7 +41,8 @@ dictionary.display()
 def Misspell(string):
     temp = string.split()# split the string into each word, store it as a temp variable
     spellings = []# created an empty array the length of the temp variable ( call it spellings)
-    # for each word in the temp variable:
+    for word in temp:# for each word in the temp variable:
     #   run dictionary.get(word) and append the spellings array with the truth value
+        spellings.append(dictionary.contains(word))
     # return the spellings array
-    pass
+    return spellings

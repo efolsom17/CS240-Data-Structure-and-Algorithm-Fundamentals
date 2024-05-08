@@ -58,8 +58,13 @@ class HashTable:
         # get the hash that the key should be
         index = self.HashFunction(key) 
         # check if the key is there
-        bucket = self.table[index] # bucket is the index we are in
-        return key in bucket # returns true if the key is present in the bucket
+        if self.table[index] != None: # if the hash corresponding to the key contains data
+            # go to the key, and then return the corresponding value associated to it
+            for k in self.table[index]: # for each key,value pair in the index of our hash table
+                if k == key: # if we are at the key,
+                    return True # return True
+        # else if the index is empty or there is stuff assigned to the index but they key isn't present
+        return False # return false
     
     # funciton to remove a key from the hash table
     def remove(self, key):
