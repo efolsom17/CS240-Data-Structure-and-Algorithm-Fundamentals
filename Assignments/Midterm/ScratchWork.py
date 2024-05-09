@@ -276,6 +276,48 @@ class SpellCheck(cmd.Cmd):
             words = [line.strip() for line in words] 
         for word in words:
             self.dictionary.insert(word)
+    
+    
+    def suggest(self, string):
+        edit_distance = [] # store the edit distance
+        for index in dictionary.table: # for each index in the hash table
+            if index.head: #check if empty 
+                current = index.head # start at the head of the linked list for that index
+                while current: # traverse the list
+                    editdist = levenshteinDist(string, current.data) # calculate the edit distance using levenshtein distance
+                    edit_distance.append((editdist, current.data))
+                    current = current.next
+    
+        min5 = nsmallest(5, edit_distance, key = lambda x: x[0]) #get the 5 words with the smallest edit distance, stored as a tuple (edit distance, key)
+    
+         # get just the keys from the min5 list and "suggest" them, kinda cheating with this, going to make changes.
+        suggestions =  [key for _, key in min5]
+        return suggestions
+
+
+    def levenshteinDist(self, strA, strB):
+        i = len(strA) # length of string A
+        j = len(strB) # length of string B
+    
+        ## Check if either of the strings are empty ( base case )
+
+        if  i == 0: # string A is empty
+            return j # length of string B for number of delete edits needed
+        if j == 0: # string B is empty
+            return i
+    
+    ## Recursive case 1, both characters match, compare the rest of both strings
+    
+        if strA[i-1] == strB[j-1]: # if the last characters of strings A and B are the same
+            return levenshteinDist(strA[:-1],strB[:-1]) # recursively call the function on the remaining characters in both strings.
+    
+    # Recursive case 2, characters don't match, calculate the amount of edits needed to make the strings match:
+        return 1 + min( # adds 1 each time any of these are invoked, cost of doing the edit operation
+                levenshteinDist(strA, strB[:-1]), # insert character into string A from string B
+                levenshteinDist(strA[:-1], strB), # delete the last character from string A
+                levenshteinDist(strA[:-1], strB[:-1]) # substitute the last character in string A for the last character in string B.
+                )
+        
         
     
     def misspelled(self, string):
