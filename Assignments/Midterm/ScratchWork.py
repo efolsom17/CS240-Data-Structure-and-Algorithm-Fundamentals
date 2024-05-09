@@ -178,7 +178,9 @@ levensteindist(strA, strB):
     if strA[i-1]==strB[j-1]:
         levensteinhist(strA[i-1],strB[j-1])
     
-    # Recursive case 2, characters do not match, now we have to calculate the number of operations.
+    # Recursive case 2, characters do not match, now we have to calculate the number of operations. by either inserting a character, deleting a character, or doing a substitution of a character.
+    # 
+    
     
 
 
@@ -255,4 +257,5 @@ class SpellCheck(cmd.Cmd):
     
     
     
-    # SpellCheck().cmdloop()
+    
+#SpellCheck().cmdloop()
