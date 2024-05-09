@@ -260,7 +260,11 @@ using the cmd module because it seems like its the friendliest to work with.
 
 
 class SpellCheck(cmd.Cmd):
-    intro = "~~~~~ Spell Check Program ~~~~~\n Check the spelling of a string using 'spellcheck string' \n Add new word(s) to the dictionary with 'add word(s)'\n View the dictionary with 'dictionary '"
+    intro = "~~~~~~~~~~~ Spell Check Program ~~~~~~~~~~~\
+        \n Check the spelling of a string using 'check string'\
+        \n Add a new word to the dictionary with 'add word'\
+        \n View the dictionary with 'dictionary'\
+        \n Exit with 'exit"
     prompt = ""
     def do_exit(self, arg):
         'Exit the shell'
@@ -337,10 +341,16 @@ class SpellCheck(cmd.Cmd):
         print(f"Input: {string}")
         spellings = self.misspelled(string) # returning just the string doesn't work, because if anything is true it exits the CLI loop.
         for word, misspelled in zip(string.split(),spellings):
+            mispelled = 0
             if misspelled:
-                print(f"{word} is spelled wrong")
-                # suggest words fuction goes here
-                # print the 5 suggestions
+                misspelled +=1
+                print(f"{word} is spelled wrong") # tell the user the word is misspelled
+                suggestions = self.suggest(word) # get the suggestions for the word
+                print("Suggested replacements:") # print the suggested replacement words.
+                for item in suggestions:
+                    print(item)
+            return
+            
                 
     def do_add(self, string):
         'Add a word to the dictionary'
