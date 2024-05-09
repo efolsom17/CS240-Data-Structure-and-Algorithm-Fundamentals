@@ -94,6 +94,8 @@ Basically each time we recursively call the funciton, we are changing which rods
 Now we can implement this funciton in python:
 
 ```{python, hanoi tower python}
+#| echo: true
+#| output: true
 
 def tower_of_hanoi(n, starting_rod, middle_rod, ending_rod): # specify the starting rods you want
     if n == 1: # Base case
@@ -118,7 +120,7 @@ tower_of_hanoi(4,"A","C","B")
 tower_of_hanoi(2,"A","C","B")
 ```
 
-This [YouTube video by Reducible](https://www.youtube.com/watch?v=rf6uf3jNjbo&list=PLzj1WDt0HB4qDn6heuU8w6x0Hzd8EVX0q) was incredibly helpful for my understanding of how the algorithm works and how the recursion for this problem functions. From about 16 minutes until 20 minutes there is en elegent animation which describes the recursion taking place in the algorithm.
+This [YouTube video by Reducible](https://www.youtube.com/watch?v=rf6uf3jNjbo&list=PLzj1WDt0HB4qDn6heuU8w6x0Hzd8EVX0q) was incredibly helpful for my understanding of how the algorithm works and how the recursion for this problem functions. From about 16 minutes until 20 minutes there is en elegent animation which describes the recursion taking place in the algorithm. Here is my best attempt at replicating this explanation, which breaks down the recursion that is going on. 
 
 #### 2. Implement a solution for the Tower of Hanoi problem using an iterative approach.
 
