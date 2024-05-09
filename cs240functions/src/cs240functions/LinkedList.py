@@ -86,7 +86,7 @@ class SingleLinkedList:
             current.next = new_node # once current.next == None, point the last node to the new node we created earlier. 
         self.list_length += 1 # update the length of the linked list (add one node to the length)  
     # Delete
-    def delete(self,value, beg = False, rand = False, end = False):
+    def delete(self,value = None, beg = False, rand = False, end = False):
         from random import randint as rdunif # random integer from a discrete uniform distribution
         if bool(value) == True: # if there was an input for value, delete a specific value from the linked list.
             current = self.head
