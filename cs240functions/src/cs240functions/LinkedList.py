@@ -277,9 +277,25 @@ class DoubleLinkedList:
 
     # Delete ##
 
-    def delete(self, beg = False, rand = False, end = False):
+    def delete(self, value = None, beg = False, rand = False, end = False):
         from random import randint as rdunif # random integer from a discrete uniform distribution
-        if beg: #if we are deleting the head of the linked list, if beg == true
+        if bool(value)== True:
+            current = self.head
+            while current:
+                if current.data == value:
+                    if current.prev:  # If it's not the head
+                        current.prev.next = current.next
+                    else:  # If it's the head
+                        self.head = current.next
+                    if current.next:  # If it's not the tail
+                        current.next.prev = current.prev
+                    else:  # If it's the tail
+                        self.tail = current.prev
+                    return True  # Key found and removed
+                current = current.next
+            self.list_length -= 1
+            return False  # Key not found
+        elif beg: #if we are deleting the head of the linked list, if beg == true
             if self.head: # if there exists a head node (it will if the list is not empty)
                 self.head = self.head.next # assign the second node to be the head node
                 if self.head: # if the head wasn't the only element in the linked list
