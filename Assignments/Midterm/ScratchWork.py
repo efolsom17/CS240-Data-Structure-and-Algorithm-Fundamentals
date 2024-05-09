@@ -59,6 +59,17 @@ def tower_of_hanoi(n, starting_rod, middle_rod, ending_rod): # specify the start
         
 ### Gonna modify above to work with my idea of using stacks.
 
+
+'''
+Tower of Hanoi Resources:
+
+https://www.youtube.com/watch?v=PGuRmqpr6Oo
+https://www.youtube.com/watch?v=2SUvWfNJSsM # inspiration for iterative version also helped me wrap my head around the recursion going on as well.
+https://www.youtube.com/watch?v=bdMfjfT0lKk
+'''
+
+
+
 ## Spellchecker ## 
 
 
@@ -87,9 +98,11 @@ Did this, returns an array with the True if a word is misspelled and False if a 
 
 6. Handle collisions in the hash table using separate chaining.
 
-Chains using an array to store collisions.
+Chains using double linked list to store collisions.
 
 7. Optimize the performance of your program in terms of time and space complexity.
+
+going to implement levenshtein distance recursively first then go and make it iteratively by filling out a matrix, might try my hand at dynamic programing.
 
 8. Your program should be user-friendly and have a command-line interface.
 
@@ -156,7 +169,7 @@ Okay I have that garbage done with now to figure out levenshtiens distance algor
 I know that it works by comparing the number of changes that you have to make to make two strings the same. You are allowed to make 3 different operations:
 1. Insert a Character
 2. Delete a Character
-3. Substitute a charachter for another character.
+3. Substitute a charachter for another character. (most powerful, technically two operations, will be the optimal solution since you can just substitute)
 
 Calculates the minimum number of edits it would take to make two strings the same string. 
 
@@ -170,23 +183,76 @@ levensteindist(strA, strB):
     
     # if one of the strings are empty, base case 
     if i == 0
-        return j
+        return j # it will take j deletions to make both the strings empty
     if j == 0
-        return i
+        return i # it will take i deletions to make both the strings empty
         
-    # recursive case 1 characters in both strings match, call the function on the next character on each string
+    # recursive case 1 characters in both strings match, call the function on the rest of each string, no changes so don't count an edit
     if strA[i-1]==strB[j-1]:
         levensteinhist(strA[i-1],strB[j-1])
     
     # Recursive case 2, characters do not match, now we have to calculate the number of operations. by either inserting a character, deleting a character, or doing a substitution of a character.
-    # 
+    # return the minimum operations doing the following: add 1 each time because we are making an edit.
     
+    insert = levenworth(strA, strB[:-1]) # insert the last character form string B into string A so that they have the same character, recursively call the levenshtein algorithm again on string A and the rest of string B add one for the cost of the operation
+    delete = levenshtin(strA[:-1], strB) # delete the last character from string A , recursively call the funciton on the rest of string A and all of string B
+    substitute = leven(strA[:-1], strB[:-1]) # substitute a character in string A for the character in string B, then recursively call the function on the rest of string A and B
     
+    return 1+ min(insert, delete, substitute)
+
+Recursion is going to get really bad when the words are long :/, good thing my dictionary has small words ;)
+
+
+Levenshtein Resources:
+
 
 
 '''
+# time to try to implement the above in code:
 
+def suggest(string):
+    edit_distance = [] # store the edit distance
+    for index in dictionary.table: # for each index in the hash table
+        if index.head: #check if empty 
+            current = index.head # start at the head of the linked list for that index
+            while current: # traverse the list
+                editdist = levenshteinDist(string, current.data) # calculate the edit distance using levenshtein distance
+                edit_distance.append((editdist, current.data))
+                current = current.next
+    
+    min5 = nsmallest(5, edit_distance, key = lambda x: x[0]) #get the 5 words with the smallest edit distance, stored as a tuple (edit distance, key)
+    
+    # get just the keys from the min5 list and "suggest" them
+    suggestions =  [key for _, key in min5]
+    return suggestions
+
+
+def levenshteinDist(strA, strB):
+    i = len(strA) # length of string A
+    j = len(strB) # length of string B
+    
+    ## Check if either of the strings are empty ( base case )
+    
+    if  i == 0: # string A is empty
+        return j # length of string B for number of delete edits needed
+    if j == 0: # string B is empty
+        return i
+    
+    ## Recursive case 1, both characters match, compare the rest of both strings
+    
+    if strA[i-1] == strB[j-1]: # if the last characters of strings A and B are the same
+        return levenshteinDist(strA[:-1],strB[:-1]) # recursively call the function on the remaining characters in both strings.
+    
+    # Recursive case 2, characters don't match, calculate the amount of edits needed to make the strings match:
+    return 1 + min( # adds 1 each time any of these are invoked, cost of doing the edit operation
+            levenshteinDist(strA, strB[:-1]), # insert character into string A from string B
+            levenshteinDist(strA[:-1], strB), # delete the last character from string A
+            levenshteinDist(strA[:-1], strB[:-1]) # substitute the last character in string A for the last character in string B.
+            )
+        
+    
 '''
+
 Okay how do I create a CLI program?????
 
 using the cmd module because it seems like its the friendliest to work with.
