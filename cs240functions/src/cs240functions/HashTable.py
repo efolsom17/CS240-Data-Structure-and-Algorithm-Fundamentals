@@ -50,7 +50,7 @@ class HashTable:
         if self.table[index] == None:
             self.table[index] = []
         # else (or after we initialize the bucket), add the item to the bucket
-        self.table[index].insert(key, end=True)
+        return self.table[index].insert(key, end=True)
     
     # function to check if a key is present in the hash table
     # (I pretty much stole this from w3schools, I was going to do something very similar to what I did

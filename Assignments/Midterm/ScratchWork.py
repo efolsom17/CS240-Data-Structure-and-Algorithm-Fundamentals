@@ -2,6 +2,7 @@
 from cs240functions import Stack as stack
 from cs240functions import HashTable
 from cs240functions import DoubleLinkedList
+from cs240functions import QuickSort
 from heapq import nsmallest
 import cmd
 
@@ -107,6 +108,15 @@ for word in words:
 del words
 
 
+def getdict(hashtable):
+    temp = [] # Initialize an empty list to store the keys
+    for index in hashtable.table: # Traverse each index in the hash table
+        current = index.head # start at the head of the linked list at the index
+        while current: # traverse the list
+            temp.append(current.data) # add the keys to the temp array
+            current = current.next # go to the next node of the linked list in the hash table
+    return temp
+
     
 #  fucntion to take a string of text and check each word in the text against the words in the hash table and identify any "misspellings".
 
@@ -153,6 +163,24 @@ Calculates the minimum number of edits it would take to make two strings the sam
 Basing this algorithm based on the peicewise function that I saw on wikipedia (https://en.wikipedia.org/wiki/Levenshtein_distance). I think from here on out I will try to make my pseudocode in that style as it fits my brain a lot better than if I try to write it like I am writing code for now. 
 
 
+levensteindist(strA, strB):
+# start comparing each string from the end because python
+    i = len(strA) 
+    j = len(strB)
+    
+    # if one of the strings are empty, base case 
+    if i == 0
+        return j
+    if j == 0
+        return i
+        
+    # recursive case 1 characters in both strings match, call the function on the next character on each string
+    if strA[i-1]==strB[j-1]:
+        levensteinhist(strA[i-1],strB[j-1])
+    
+    # Recursive case 2, characters do not match, now we have to calculate the number of operations.
+    
+
 
 '''
 
@@ -164,7 +192,7 @@ using the cmd module because it seems like its the friendliest to work with.
 
 
 class SpellCheck(cmd.Cmd):
-    intro = "~~~~~ Spell Check Program ~~~~~\n Check the spelling of a string using 'spellcheck string' \n Add new word(s) to the dictionary with 'add word(s)' "
+    intro = "~~~~~ Spell Check Program ~~~~~\n Check the spelling of a string using 'spellcheck string' \n Add new word(s) to the dictionary with 'add word(s)'\n View the dictionary with 'dictionary '"
     prompt = ""
     def do_exit(self, arg):
         'Exit the shell'
@@ -180,7 +208,6 @@ class SpellCheck(cmd.Cmd):
             words = [line.strip() for line in words] 
         for word in words:
             self.dictionary.insert(word)
-        del words
         
     
     def misspelled(self, string):
@@ -192,18 +219,40 @@ class SpellCheck(cmd.Cmd):
         # return the spellings array
         return spellings
     
-    def do_spellcheck(self, string):
+    def do_check(self, string):
         'Check the spelling of a string'
         if not string: # ensure that a string has been passed through
             print("You must enter a string") # tell the user to enter a string
             return
+        print(f"Input: {string}")
         spellings = self.misspelled(string) # returning just the string doesn't work, because if anything is true it exits the CLI loop.
         for word, misspelled in zip(string.split(),spellings):
             if misspelled:
                 print(f"{word} is spelled wrong")
+                # suggest words fuction goes here
+                # print the 5 suggestions
                 
     def do_add(self, string):
-        'Add word(s) to the dictionary'
-        temp = string.split # so you can add more than one word at a time
-        self.dictionary.insert(temp) # hash the string, could be more than one word.
+        'Add a word to the dictionary'
+        self.dictionary.insert(string) # hash the string, could be more than one word.
     
+    #need a function to get all the items in the dictionary store as an arrray so so I can display it
+    def _getdict(self, hashtable):
+        temp = [] # Initialize an empty list to store the keys
+        for index in hashtable.table: # Traverse each index in the hash table
+            current = index.head # start at the head of the linked list at the index
+            while current: # traverse the list
+                temp.append(current.data) # add the keys to the temp array
+                current = current.next # go to the next node of the linked list in the hash table
+        return temp
+            
+    # display the dictionary 
+    def do_dictionary(self, x =None):
+        dictionary_presentation = self._getdict(self.dictionary) # call the getdict function to store the dictionary
+        dictionary_presentation = QuickSort(dictionary_presentation)
+        for item in dictionary_presentation:
+            print(item)
+    
+    
+    
+    # SpellCheck().cmdloop()
