@@ -390,7 +390,7 @@ Ending Rod:
 </ul>
 <p><em>Steps <span class="math inline">\(2\)</span> and <span class="math inline">\(5\)</span></em></p>
 <ul>
-<li>In step <span class="math inline">\(2\)</span>, disk <span class="math inline">\(2\)</span> gets moved from start rod to auxillary rod (to the right).</li>
+<li>In step <span class="math inline">\(2\)</span>, disk <span class="math inline">\(2\)</span> gets moved from start rod to auxillary rod (to the right). Auxillary rod is empty and <span class="math inline">\(2\)</span> is greater than <span class="math inline">\(1\)</span> (disk <span class="math inline">\(1\)</span> is on the ending rod) so we have to move it to the auxillary rod. That is the only valid move</li>
 <li>In step <span class="math inline">\(5\)</span>, disk <span class="math inline">\(1\)</span> gets moved from auxillary rod to start rod (to the left).</li>
 </ul>
 <p><em>Steps <span class="math inline">\(3\)</span> and <span class="math inline">\(6\)</span></em></p>
@@ -418,12 +418,12 @@ Ending Rod:
 <li>We move disk <span class="math inline">\(2\)</span> on step <span class="math inline">\(6\)</span>. We move disk <span class="math inline">\(2\)</span> to the right.</li>
 <li>We move disk <span class="math inline">\(3\)</span> on step <span class="math inline">\(12\)</span>. We move disk <span class="math inline">\(3\)</span> to the left.</li>
 </ul>
-<p>Now a real pattern starts to emerge. The equivalency classes created by the step numbers corresponds to which rods we are moving disks between, while the even/oddness of the disk tells us what direction we are moving the disks between. The directions are switched depending on whether <span class="math inline">\(n\)</span> is even or odd.</p>
+<p>Now a real pattern starts to emerge. The equivalency classes created by the step numbers corresponds to which rods we are moving disks between, while the even/oddness of the disk tells us what direction we are moving the disks between. The directions are switched depending on whether <span class="math inline">\(n\)</span> is even or odd. From the <a href="https://www.youtube.com/watch?v=PGuRmqpr6Oo">Numberphile video</a>, they introduce a remarkable observation. They use different colored prisms as their disks, where the color alternates between disks, this is just like my setup, where I have disks labeled by their radius instead of by color. The observation that they introduce is that in an optimal solution to the problem, we should never have two disks of the same color stacked on top of each other. We can translate this to my setup, this would correspond to the evenness and oddness of a disk. An odd disk should never be stacked on top of another odd disk and the same for an even disk. Our stacks of disks on each rod should follow the pattern odd, even, odd, even, <span class="math inline">\(\ldots\)</span>. We can use this pattern to figure out what valid move we can make between the two rods that we want to move disks between.</p>
 <p>We can use the number of steps required to solve the problem as our iterator.</p>
 <p>Next we should first check if <span class="math inline">\(n\)</span> is even or odd and assign the first steps as such.</p>
 <p><strong>Code Implementation</strong></p>
 <p>Lets try to implement the above in pseudocode:</p>
-<pre class="{plain}"><code>going to need to modify my stackMove function to compare the values of things at the top of stacks
+<pre class="{plain}"><code>going to need to modify my stackMove function to compare the values of things at the top of stacks, this will tell us what move we can make (valid moves), then moves them between rods accordingly. checking the eveness of the disk seems like it would take a lot more work than I can accomplish during this time but might try to pursue this idea further.
 
 function hanoitoweriterative(n,starting rod, auxillary rod, end rod):
     create stacks for each rod
@@ -456,15 +456,188 @@ function hanoitoweriterative(n,starting rod, auxillary rod, end rod):
             else:
             go in the other direction between the same rods as you just did</code></pre>
 <p>Now lets implement this in python:</p>
+<p>I tried to follow my pseudocode as best as possible, but ran into a wall trying to come up with a way of checking the even/oddness of the disk that we are trying to move. I decided to opt for a similar approach to the one found <a href="https://www.geeksforgeeks.org/iterative-tower-of-hanoi/">here</a>, which utilizes a function that determines what valid move you can make between two disks to simplify the function. To do this I modified my <code>moveStack()</code> function that I used in my stack representation of the recursive solution.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to move disks between rods. Determines the valid move between the start and end rod, and then executes that move</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> moveDisk(start, end, s , e): <span class="co"># start and end are both stacks, s and e are labels for the stacks</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get the top value of each stack</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    topstart <span class="op">=</span> start.pop() </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    topend <span class="op">=</span> end.pop()</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compare values to determine valid movements</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if start is empty</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> topstart <span class="op">==</span> <span class="va">None</span>: <span class="co"># if start rod is empty</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        start.push(topend) <span class="co"># move the disk on the end rod to the start rod (only valid move)</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Disk </span><span class="sc">{</span>topend<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss"> -&gt; </span><span class="sc">{</span>s<span class="sc">}</span><span class="ss">"</span>) <span class="co"># display the move</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if end is empty</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> topend <span class="op">==</span> <span class="va">None</span>: <span class="co"># if the end rod is empty</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>        end.push(topstart) <span class="co"># move disk on start rod to end rod (only valid move)</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Disk </span><span class="sc">{</span>topstart<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>s<span class="sc">}</span><span class="ss"> -&gt; </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>) <span class="co"># dispaly the move</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compare the values and move them accordingly, </span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> topstart <span class="op">&gt;</span> topend: <span class="co"># disk on top of starting rod is bigger than disk on ending rod</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># move disk on end rod to start rod ( only valid move between the two rods)</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>        start.push(topstart) <span class="co"># put the top value of start back onto the rod</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>        start.push(topend) <span class="co"># put the top value of end on top of the start rod</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Disk </span><span class="sc">{</span>topend<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss"> -&gt; </span><span class="sc">{</span>s<span class="sc">}</span><span class="ss">"</span>) <span class="co"># display the move</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>: <span class="co">#disk on top of starting rod is smaller than the disk on the ending rod</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>        <span class="co"># move the disk on the start rod to the end rod ( only valid move between the two rods)</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>        end.push(topend) <span class="co"># put the top value of end back onto the end rod</span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>        end.push(topstart) <span class="co"># put the top value of start on top of the end rod</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Disk </span><span class="sc">{</span>topstart<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>s<span class="sc">}</span><span class="ss"> -&gt; </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>) <span class="co"># display the move</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tower_of_hanoi_it(n, starting<span class="op">=</span><span class="bu">str</span>, auxillary<span class="op">=</span><span class="bu">str</span>, ending<span class="op">=</span><span class="bu">str</span>): <span class="co"># n is number of rods, starting, auxillary, and ending strings are the lables for each of the rod.</span></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># initialize stacks</span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>    start <span class="op">=</span> stack(n)</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>    aux <span class="op">=</span> stack(n)</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>    end <span class="op">=</span> stack(n)</span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fill in starting stack (rod)</span></span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n,<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>        start.push(i)</span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>    <span class="co">#labels for printing</span></span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>    s, a, e <span class="op">=</span> starting, auxillary, ending</span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># check if n is even or odd, have to change some things if that is the case</span></span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (n <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>):</span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a>        <span class="co"># swap auxilary and end rods, the first step that will be made ( so we are moving disks between the correct rods)</span></span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a>        temp <span class="op">=</span> e </span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a>        e <span class="op">=</span> a</span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>        a <span class="op">=</span> temp</span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a>    <span class="co">#iterate through the moves required to solve the problem (1 to  2^n - 1)</span></span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,<span class="bu">int</span>(<span class="dv">2</span><span class="op">**</span>n)): <span class="co"># range 1 to 2^n-1, but because of how python's range function works we can just write 2^n</span></span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (i <span class="op">%</span> <span class="dv">3</span> <span class="op">==</span> <span class="dv">1</span>): <span class="co"># valid move between start and end rod (start and auxillary if n is even)</span></span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a>            moveDisk(start, end, s, e) <span class="co"># function to move the rods</span></span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> (i <span class="op">%</span> <span class="dv">3</span> <span class="op">==</span> <span class="dv">2</span>): <span class="co"># valid move between start and auxillary rod (start and end if n is even)</span></span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a>            moveDisk(start, aux, s, a) <span class="co"># function to move the rods</span></span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> (i <span class="op">%</span> <span class="dv">3</span> <span class="op">==</span> <span class="dv">0</span>): <span class="co"># valid move between auxillary and end rod</span></span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a>            moveDisk(aux, end, a, e) <span class="co"># funciton to move the rods</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Demonstrating our functions:</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi_it(<span class="dv">3</span>, <span class="st">"S"</span>, <span class="st">"A"</span>, <span class="st">"E"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Stack is empty
+Disk 1: S -&gt; E
+Stack is empty
+Disk 2: S -&gt; A
+Disk 1: E -&gt; A
+Stack is empty
+Disk 3: S -&gt; E
+Stack is empty
+Disk 1: A -&gt; S
+Disk 2: A -&gt; E
+Disk 1: S -&gt; E</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi_it(<span class="dv">4</span>, <span class="st">"S"</span>, <span class="st">"A"</span>, <span class="st">"E"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Stack is empty
+Disk 1: S -&gt; A
+Stack is empty
+Disk 2: S -&gt; E
+Disk 1: A -&gt; E
+Stack is empty
+Disk 3: S -&gt; A
+Disk 1: E -&gt; S
+Disk 2: E -&gt; A
+Disk 1: S -&gt; A
+Stack is empty
+Disk 4: S -&gt; E
+Disk 1: A -&gt; E
+Stack is empty
+Disk 2: A -&gt; S
+Disk 1: E -&gt; S
+Disk 3: A -&gt; E
+Stack is empty
+Disk 1: S -&gt; A
+Disk 2: S -&gt; E
+Disk 1: A -&gt; E</code></pre>
+</div>
+</div>
 </section>
 <section id="compare-the-time-and-space-complexity-of-both-the-recursive-and-iterative-solutions-and-explain-the-differences." class="level4">
 <h4 class="anchored" data-anchor-id="compare-the-time-and-space-complexity-of-both-the-recursive-and-iterative-solutions-and-explain-the-differences.">3. Compare the time and space complexity of both the recursive and iterative solutions and explain the differences.</h4>
+<p>We can pretty much determine the time complexities of both the recursive and iterative solutions by looking at the optimal number of steps that it takes to solve the problem. We have previously shown that it will take <span class="math inline">\(2^n-1\)</span> steps to optimally solve the Tower of Hanoi Problem.</p>
+<p>Lets look a little deeper at the recursive solution:</p>
+<ul>
+<li><p>If we have <span class="math inline">\(n\)</span> disks, we have to make <span class="math inline">\(2\)</span> recursive calls on the <span class="math inline">\(n-1\)</span> disks and then a single operation to then move the disks between rods (this will take constant time so lets call that <span class="math inline">\(c\)</span>). Lets label the recursive funciton and the recursive calls <span class="math inline">\(h(n)\)</span> We can write this out as a formula, time <span class="math inline">\((h(n)) = 2\cdot time(h(n-1))+c\)</span>. Lets dive a bit deeper into how this breaks down for various <span class="math inline">\(n\)</span>:</p>
+<ul>
+<li><span class="math inline">\(n = 0\)</span>:
+<ul>
+<li>time <span class="math inline">\((h(0)) = 0\)</span></li>
+</ul></li>
+<li><span class="math inline">\(n=1\)</span>:
+<ul>
+<li>time <span class="math inline">\((h(1)) = 2\cdot time(h(0))+c = c\)</span>, since <span class="math inline">\(c\)</span> represents constant time we can say that <span class="math inline">\(c=1\)</span>, thus time <span class="math inline">\((h(1))=1\)</span></li>
+</ul></li>
+<li><span class="math inline">\(n =2\)</span>:
+<ul>
+<li>time <span class="math inline">\((h(2)) = 2\cdot time(h(1))+c = 3c = 3\)</span></li>
+</ul></li>
+<li><span class="math inline">\(n = 3\)</span>:
+<ul>
+<li>time <span class="math inline">\((h(3)) = 2\cdot time(h(2))+c = 7c = 7\)</span></li>
+</ul></li>
+<li><span class="math inline">\(n = 4\)</span>:
+<ul>
+<li>time <span class="math inline">\((h(4)) = 2\cdot time(h(3))+c = 15c = 15\)</span></li>
+</ul></li>
+</ul></li>
+</ul>
+<p>From the above pattern we can simplify, and get: time <span class="math inline">\((h(n)) = 2\cdot time(h(n-1))+c = (2^n-1)c\)</span>, where <span class="math inline">\(c=1\)</span> thus the time complexity for our recursive version is given by <span class="math inline">\(O(2^n-1)\)</span> which, ignoring constants simplifies to <span class="math inline">\(O(2^n)\)</span>.</p>
+<p>For the space complexity of this algorithm, we are constantly swapping items between rods, thus we are not creating any new items to store and we can re-use the same space for each step. The space will be <span class="math inline">\(n\)</span>, which is the number of disks as we only have to store the states of the <span class="math inline">\(n\)</span> disks as we go through the algorithm, thus the space complexity for the recursive version is <span class="math inline">\(O(n)\)</span>.</p>
+<p>Now lets turn to the iterative version.</p>
+<p>In the iterative version we have a few things to keep track of, the number of times that we iterate, and the operations that we execute each time we iterate through the funciton. We can also look at the operations we do before we begin the iteration piece, but in the grand scheme of things, those operations will take <span class="math inline">\(O(1)\)</span> constant time.</p>
+<p>So we have to look at our <code>moveDisk()</code> function. The <code>moveDisk()</code> funciton has 3 main operations which each take <span class="math inline">\(O(1)\)</span> operations. Those are the popping of the two stacks we want to move disks between, and then the actual operation where we move the disks between the stacks. In big-Oh notation, since these tasks are all constant time, our <code>moveDisk()</code> function will take <span class="math inline">\(O(3)\propto O(1)\)</span> constant time to complete.</p>
+<p>Looking at the iteration going on in the function, we iterate through the steps of the algorithm. Since we have calculated that the optimal solution will take <span class="math inline">\(2^n-1\)</span> steps, we iterate <span class="math inline">\(2^n-1\)</span> times. Each time we move thorugh our for loop, we do one operation, which is moving the disks between rods depending on where we are at in the pattern. We know that our <code>moveDisk()</code> function takes <span class="math inline">\(O(1)\)</span> constant time to execute, so do this <span class="math inline">\(2^n-1\)</span> times thus the time complexity can be <span class="math inline">\(O(n)=2^n-1\)</span>, ignoring constants we get a time complexity of <span class="math inline">\(O(n)= 2^n\)</span>. Thus the time complexity for our iterative implementation is <span class="math inline">\(O(2^n)\)</span></p>
+<p>Turning to the space complexity of our iterative implementation, we initialize <span class="math inline">\(3\)</span> stacks of size <span class="math inline">\(n\)</span>. Because we are only moving disks between these <span class="math inline">\(3\)</span> stacks, we can reuse the space that we first initialized. So we can write the space complexity as <span class="math inline">\(O(3n)\propto O(n)\)</span></p>
+<p>We can summarize the above into the following table:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">Recursive</th>
+<th style="text-align: center;">Iterative</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Time Complexity</td>
+<td style="text-align: center;"><span class="math inline">\(O(2^n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(2^n)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Space Complexity</td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\)</span></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="optional-but-extra-credit-create-a-graphical-user-interface-gui-that-demonstrates-the-steps-of-the-tower-of-hanoi-problem-as-the-disks-are-moved-from-the-starting-peg-to-the-target-peg.-the-gui-should-allow-the-user-to-specify-the-number-of-disks-and-the-speed-at-which-the-disks-move." class="level4">
 <h4 class="anchored" data-anchor-id="optional-but-extra-credit-create-a-graphical-user-interface-gui-that-demonstrates-the-steps-of-the-tower-of-hanoi-problem-as-the-disks-are-moved-from-the-starting-peg-to-the-target-peg.-the-gui-should-allow-the-user-to-specify-the-number-of-disks-and-the-speed-at-which-the-disks-move.">4. (Optional, but extra credit) Create a graphical user interface (GUI) that demonstrates the steps of the Tower of Hanoi problem as the disks are moved from the starting peg to the target peg. The GUI should allow the user to specify the number of disks and the speed at which the disks move.</h4>
 </section>
 <section id="create-a-variation-of-the-tower-of-hanoi-problem-where-the-user-can-specify-more-than-three-pegs.-your-solution-should-still-move-all-the-disks-from-the-starting-peg-to-the-target-peg-while-adhering-to-the-rules-of-the-tower-of-hanoi-problem." class="level4">
 <h4 class="anchored" data-anchor-id="create-a-variation-of-the-tower-of-hanoi-problem-where-the-user-can-specify-more-than-three-pegs.-your-solution-should-still-move-all-the-disks-from-the-starting-peg-to-the-target-peg-while-adhering-to-the-rules-of-the-tower-of-hanoi-problem.">5. Create a variation of the Tower of Hanoi problem where the user can specify more than three pegs. Your solution should still move all the disks from the starting peg to the target peg while adhering to the rules of the Tower of Hanoi problem.</h4>
+<p>For this problem I will be making the following assumptions:</p>
+<ol type="1">
+<li>The number of disks is fixed, I will use <span class="math inline">\(3\)</span> disks for my implementation</li>
+<li>The number of pegs(rods) must be greater than or equal to the number of disks. Else we would not be able to solve the puzzle.</li>
+<li>The rules of the original Tower of Hanoi must be followed, one disk at a time, disks can only be placed on empty rods or on a rod with a larger disk.</li>
+</ol>
+<p>If there are only 3 rods, we will follow the same steps that we followed to get a solution using the original variation.</p>
+<p>If there are more than 3 rods, we will find the number of auxillary rods and then use that information to determine how we move disks between rods. The important piece will be</p>
 </section>
 <section id="optional-but-extra-credit-create-a-variation-of-the-tower-of-hanoi-problem-where-the-user-can-specify-the-number-of-disks-and-the-number-of-pegs.-your-solution-should-still-move-all-the-disks-from-the-starting-peg-to-the-target-peg-while-adhering-to-the-rules-of-the-tower-of-hanoi-problem." class="level4">
 <h4 class="anchored" data-anchor-id="optional-but-extra-credit-create-a-variation-of-the-tower-of-hanoi-problem-where-the-user-can-specify-the-number-of-disks-and-the-number-of-pegs.-your-solution-should-still-move-all-the-disks-from-the-starting-peg-to-the-target-peg-while-adhering-to-the-rules-of-the-tower-of-hanoi-problem.">6. (Optional, but extra credit) Create a variation of the Tower of Hanoi problem where the user can specify the number of disks and the number of pegs. Your solution should still move all the disks from the starting peg to the target peg while adhering to the rules of the Tower of Hanoi problem.</h4>
@@ -486,7 +659,7 @@ function hanoitoweriterative(n,starting rod, auxillary rod, end rod):
 #   run dictionary.get(word) and append the spellings array with the truth value if the word is in the dictionary or not
 # return the spellings array</code></pre>
 <p>Here is my actual implementation of this in python:</p>
-<p>::: {.cell execution_count=10} <code>{.python .cell-code}  def misspelled(string):      temp = string.split()# split the string into each word, store it as a temp variable      spellings = []# created an empty array the length of the temp variable ( call it spellings)      for word in temp:# for each word in the temp variable:       #   run dictionary.contains(word) and append the spellings array with the truth value          spellings.append(not(dictionary.contains(word)))      # return the spellings array      return spellings</code> :::</p>
+<p>::: {.cell execution_count=13} <code>{.python .cell-code}  def misspelled(string):      temp = string.split()# split the string into each word, store it as a temp variable      spellings = []# created an empty array the length of the temp variable ( call it spellings)      for word in temp:# for each word in the temp variable:       #   run dictionary.contains(word) and append the spellings array with the truth value          spellings.append(not(dictionary.contains(word)))      # return the spellings array      return spellings</code> :::</p>
 <p>I utilized this list of boolean values to help me with implementing my suggestion feature.</p></li>
 <li><p>Implement a suggestion feature that suggests possible correct spellings for the misspelled words based on edit distance.</p>
 <p>For this I decided to create a list of pairs of the string and its corresponding boolean value returned from invoking the <code>misspelled()</code> function on the string. I then took all the values which according to <code>misspelled()</code> were misspelled and compared the edit distance to each string in the dictionary. I stored the key, edit distance pair in an array and then chose the 5 strings with the smallest edit distances. I computed the edit distance using levenshtein’s distance algorithm. Initially I did it using the naive recursive method, but I adapted it to give it my best shot at dynamic programming as described in the following videos.</p></li>
@@ -494,25 +667,25 @@ function hanoitoweriterative(n,starting rod, auxillary rod, end rod):
 <p>To implement a Levenshtein distance algorithm to calculate the edit distance between two strings I first went to <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Wikipedia</a>. The piecewise representation of this algorithm made a lot of sense to me, so I decided to implement it in python as best I could directly from the piecewise function. After watching a <a href="">couple</a> <a href="">of</a> <a href="">YouTube</a> videos related to spellcheckers, general python, and dynamic programing, I decided to give dynamic programming my best shot. ( actually scratch that I might go with the matrix method as shown on wikipedia.)</p>
 <p>Here is what I was able to implement for the recursive version of the Levenshtein distance algorithm:</p></li>
 </ol>
-<div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> levenshteinDist(strA, strB):</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> <span class="bu">len</span>(strA) <span class="co"># length of string A</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    j <span class="op">=</span> <span class="bu">len</span>(strB) <span class="co"># length of string B</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">## Check if either of the strings are empty ( base case )</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>  i <span class="op">==</span> <span class="dv">0</span>: <span class="co"># string A is empty</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> j <span class="co"># length of string B for number of delete edits needed</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> j <span class="op">==</span> <span class="dv">0</span>: <span class="co"># string B is empty</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> i <span class="co"># length of string A for number of delete edits needed</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">## Recursive case 1, both characters match, compare the rest of both strings</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> strA[i<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> strB[j<span class="op">-</span><span class="dv">1</span>]: <span class="co"># if the last characters of strings A and B are the same</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> levenshteinDist(strA[:<span class="op">-</span><span class="dv">1</span>],strB[:<span class="op">-</span><span class="dv">1</span>]) <span class="co"># recursively call the function on the remaining characters in both strings.</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Recursive case 2, characters don't match, calculate the amount of edits needed to make the strings match:</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">+</span> <span class="bu">min</span>( <span class="co"># adds 1 each time any of these are invoked, cost of doing the edit operation</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        levenshteinDist(strA, strB[:<span class="op">-</span><span class="dv">1</span>]), <span class="co"># insert character into string A from string B</span></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>        levenshteinDist(strA[:<span class="op">-</span><span class="dv">1</span>], strB), <span class="co"># delete the last character from string A</span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>        levenshteinDist(strA[:<span class="op">-</span><span class="dv">1</span>], strB[:<span class="op">-</span><span class="dv">1</span>]) <span class="co"># substitute the last character in string A for the last character in string B.</span></span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> levenshteinDist(strA, strB):</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> <span class="bu">len</span>(strA) <span class="co"># length of string A</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    j <span class="op">=</span> <span class="bu">len</span>(strB) <span class="co"># length of string B</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">## Check if either of the strings are empty ( base case )</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>  i <span class="op">==</span> <span class="dv">0</span>: <span class="co"># string A is empty</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> j <span class="co"># length of string B for number of delete edits needed</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> j <span class="op">==</span> <span class="dv">0</span>: <span class="co"># string B is empty</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> i <span class="co"># length of string A for number of delete edits needed</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">## Recursive case 1, both characters match, compare the rest of both strings</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> strA[i<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> strB[j<span class="op">-</span><span class="dv">1</span>]: <span class="co"># if the last characters of strings A and B are the same</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> levenshteinDist(strA[:<span class="op">-</span><span class="dv">1</span>],strB[:<span class="op">-</span><span class="dv">1</span>]) <span class="co"># recursively call the function on the remaining characters in both strings.</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Recursive case 2, characters don't match, calculate the amount of edits needed to make the strings match:</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">+</span> <span class="bu">min</span>( <span class="co"># adds 1 each time any of these are invoked, cost of doing the edit operation</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>        levenshteinDist(strA, strB[:<span class="op">-</span><span class="dv">1</span>]), <span class="co"># insert character into string A from string B</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>        levenshteinDist(strA[:<span class="op">-</span><span class="dv">1</span>], strB), <span class="co"># delete the last character from string A</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>        levenshteinDist(strA[:<span class="op">-</span><span class="dv">1</span>], strB[:<span class="op">-</span><span class="dv">1</span>]) <span class="co"># substitute the last character in string A for the last character in string B.</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This works, but it is slow when the strings are longer. An approach using the matrix method to calculate the Levenshtein distance seems to be much more computationally efficient.</p>
 <ol start="5" type="1">

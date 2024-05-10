@@ -300,7 +300,7 @@ We can dive deeper as well into the steps by looking at the value of the disks a
 
 *Steps $2$ and $5$*
 
-- In step $2$, disk $2$ gets moved from start rod to auxillary rod (to the right).
+- In step $2$, disk $2$ gets moved from start rod to auxillary rod (to the right). Auxillary rod is empty and $2$ is greater than $1$ (disk $1$ is on the ending rod) so we have to move it to the auxillary rod. That is the only valid move
 - In step $5$, disk $1$ gets moved from auxillary rod to start rod (to the left).
 
 *Steps $3$ and $6$*
@@ -331,7 +331,7 @@ Now lets look at the case when $n=4$:
 - We move disk $2$ on step $6$. We move disk $2$ to the right.
 - We move disk $3$ on step $12$. We move disk $3$ to the left.
 
-Now a real pattern starts to emerge. The equivalency classes created by the step numbers corresponds to which rods we are moving disks between, while the even/oddness of the disk tells us what direction we are moving the disks between. The directions are switched depending on whether $n$ is even or odd.
+Now a real pattern starts to emerge. The equivalency classes created by the step numbers corresponds to which rods we are moving disks between, while the even/oddness of the disk tells us what direction we are moving the disks between. The directions are switched depending on whether $n$ is even or odd. From the [Numberphile video](https://www.youtube.com/watch?v=PGuRmqpr6Oo), they introduce a remarkable observation. They use different colored prisms as their disks, where the color alternates between disks, this is just like my setup, where I have disks labeled by their radius instead of by color. The observation that they introduce is that in an optimal solution to the problem, we should never have two disks of the same color stacked on top of each other. We can translate this to my setup, this would correspond to the evenness and oddness of a disk. An odd disk should never be stacked on top of another odd disk and the same for an even disk. Our stacks of disks on each rod should follow the pattern odd, even, odd, even, $\ldots$. We can use this pattern to figure out what valid move we can make between the two rods that we want to move disks between.
 
 We can use the number of steps required to solve the problem as our iterator.
 
@@ -342,7 +342,7 @@ Next we should first check if $n$ is even or odd and assign the first steps as s
 Lets try to implement the above in pseudocode:
 
 ```{plain}
-going to need to modify my stackMove function to compare the values of things at the top of stacks
+going to need to modify my stackMove function to compare the values of things at the top of stacks, this will tell us what move we can make (valid moves), then moves them between rods accordingly. checking the eveness of the disk seems like it would take a lot more work than I can accomplish during this time but might try to pursue this idea further.
 
 function hanoitoweriterative(n,starting rod, auxillary rod, end rod):
     create stacks for each rod
@@ -379,15 +379,138 @@ function hanoitoweriterative(n,starting rod, auxillary rod, end rod):
 
 Now lets implement this in python:
 
-```{python, hanoi tower iterative}
+I tried to follow my pseudocode as best as possible, but ran into a wall trying to come up with a way of checking the even/oddness of the disk that we are trying to move. I decided to opt for a similar approach to the one found [here](https://www.geeksforgeeks.org/iterative-tower-of-hanoi/), which utilizes a function that determines what valid move you can make between two disks to simplify the function. To do this I modified my `moveStack()` function that I used in my stack representation of the recursive solution.
 
+```{python, hanoi tower iterative}
+# Function to move disks between rods. Determines the valid move between the start and end rod, and then executes that move
+
+def moveDisk(start, end, s , e): # start and end are both stacks, s and e are labels for the stacks
+    # get the top value of each stack
+    topstart = start.pop() 
+    topend = end.pop()
+    
+    # compare values to determine valid movements
+    
+    # if start is empty
+    if topstart == None: # if start rod is empty
+        start.push(topend) # move the disk on the end rod to the start rod (only valid move)
+        print(f"Disk {topend}: {e} -> {s}") # display the move
+    
+    # if end is empty
+    elif topend == None: # if the end rod is empty
+        end.push(topstart) # move disk on start rod to end rod (only valid move)
+        print(f"Disk {topstart}: {s} -> {e}") # dispaly the move
+        
+    # compare the values and move them accordingly, 
+    elif topstart > topend: # disk on top of starting rod is bigger than disk on ending rod
+        # move disk on end rod to start rod ( only valid move between the two rods)
+        start.push(topstart) # put the top value of start back onto the rod
+        start.push(topend) # put the top value of end on top of the start rod
+        print(f"Disk {topend}: {e} -> {s}") # display the move
+    else: #disk on top of starting rod is smaller than the disk on the ending rod
+        # move the disk on the start rod to the end rod ( only valid move between the two rods)
+        end.push(topend) # put the top value of end back onto the end rod
+        end.push(topstart) # put the top value of start on top of the end rod
+        print(f"Disk {topstart}: {s} -> {e}") # display the move
+
+
+
+def tower_of_hanoi_it(n, starting=str, auxillary=str, ending=str): # n is number of rods, starting, auxillary, and ending strings are the lables for each of the rod.
+    # initialize stacks
+    start = stack(n)
+    aux = stack(n)
+    end = stack(n)
+ 
+    
+    # fill in starting stack (rod)
+    for i in range(n,0,-1):
+        start.push(i)
+    
+    #labels for printing
+    s, a, e = starting, auxillary, ending
+    
+    # check if n is even or odd, have to change some things if that is the case
+    if (n % 2 == 0):
+        # swap auxilary and end rods, the first step that will be made ( so we are moving disks between the correct rods)
+        temp = e 
+        e = a
+        a = temp
+    
+    #iterate through the moves required to solve the problem (1 to  2^n - 1)
+    for i in range(1,int(2**n)): # range 1 to 2^n-1, but because of how python's range function works we can just write 2^n
+        if (i % 3 == 1): # valid move between start and end rod (start and auxillary if n is even)
+            moveDisk(start, end, s, e) # function to move the rods
+        elif (i % 3 == 2): # valid move between start and auxillary rod (start and end if n is even)
+            moveDisk(start, aux, s, a) # function to move the rods
+    
+        elif (i % 3 == 0): # valid move between auxillary and end rod
+            moveDisk(aux, end, a, e) # funciton to move the rods
+```
+
+Demonstrating our functions:
+
+```{python}
+tower_of_hanoi_it(3, "S", "A", "E")
+```
+
+```{python}
+tower_of_hanoi_it(4, "S", "A", "E")
 ```
 
 #### 3. Compare the time and space complexity of both the recursive and iterative solutions and explain the differences.
 
+We can pretty much determine the time complexities of both the recursive and iterative solutions by looking at the optimal number of steps that it takes to solve the problem. We have previously shown that it will take $2^n-1$ steps to optimally solve the Tower of Hanoi Problem.
+
+Lets look a little deeper at the recursive solution: 
+
+- If we have $n$ disks, we have to make $2$ recursive calls on the $n-1$ disks and then a single operation to then move the disks between rods (this will take constant time so lets call that $c$). Lets label the recursive funciton and the recursive calls $h(n)$ We can write this out as a formula, time $(h(n)) = 2\cdot time(h(n-1))+c$. Lets dive a bit deeper into how this breaks down for various $n$:
+
+  - $n = 0$:
+    - time $(h(0)) = 0$
+  - $n=1$:
+    - time $(h(1)) = 2\cdot time(h(0))+c = c$, since $c$ represents constant time we can say that $c=1$, thus time $(h(1))=1$
+  - $n =2$:
+    - time $(h(2)) = 2\cdot time(h(1))+c = 3c = 3$
+  - $n = 3$: 
+    - time $(h(3)) = 2\cdot time(h(2))+c = 7c = 7$
+  - $n = 4$:
+    - time $(h(4)) = 2\cdot time(h(3))+c = 15c = 15$
+
+From the above pattern we can simplify, and get: time $(h(n)) = 2\cdot time(h(n-1))+c = (2^n-1)c$, where $c=1$ thus the time complexity for our recursive version is given by $O(2^n-1)$ which, ignoring constants simplifies to $O(2^n)$.
+
+For the space complexity of this algorithm, we are constantly swapping items between rods, thus we are not creating any new items to store and we can re-use the same space for each step. The space will be $n$, which is the number of disks as we only have to store the states of the $n$ disks as we go through the algorithm, thus the space complexity for the recursive version is $O(n)$. 
+
+Now lets turn to the iterative version.
+
+In the iterative version we have a few things to keep track of, the number of times that we iterate, and the operations that we execute each time we iterate through the funciton. We can also look at the operations we do before we begin the iteration piece, but in the grand scheme of things, those operations will take $O(1)$ constant time.
+
+So we have to look at our `moveDisk()` function. The `moveDisk()` funciton has 3 main operations which each take $O(1)$ operations. Those are the popping of the two stacks we want to move disks between, and then the actual operation where we move the disks between the stacks. In big-Oh notation, since these tasks are all constant time, our `moveDisk()` function will take $O(3)\propto O(1)$ constant time to complete.
+
+Looking at the iteration going on in the function, we iterate through the steps of the algorithm. Since we have calculated that the optimal solution will take $2^n-1$ steps, we iterate $2^n-1$ times. Each time we move thorugh our for loop, we do one operation, which is moving the disks between rods depending on where we are at in the pattern. We know that our `moveDisk()` function takes $O(1)$ constant time to execute, so do this $2^n-1$ times thus the time complexity can be $O(n)=2^n-1$, ignoring constants we get a time complexity of $O(n)= 2^n$. Thus the time complexity for our iterative implementation is $O(2^n)$
+
+Turning to the space complexity of our iterative implementation, we initialize $3$ stacks of size $n$. Because we are only moving disks between these $3$ stacks, we can reuse the space that we first initialized. So we can write the space complexity as $O(3n)\propto O(n)$
+
+
+We can summarize the above into the following table:
+
+||Recursive|Iterative|
+|:-:|:-:|:-:|
+|Time Complexity|$O(2^n)$|$O(2^n)$|
+|Space Complexity|$O(n)$|$O(n)$|
+
 #### 4. (Optional, but extra credit) Create a graphical user interface (GUI) that demonstrates the steps of the Tower of Hanoi problem as the disks are moved from the starting peg to the target peg. The GUI should allow the user to specify the number of disks and the speed at which the disks move.
 
 #### 5. Create a variation of the Tower of Hanoi problem where the user can specify more than three pegs. Your solution should still move all the disks from the starting peg to the target peg while adhering to the rules of the Tower of Hanoi problem.
+
+For this problem I will be making the following assumptions:
+
+1. The number of disks is fixed, I will use $3$ disks for my implementation
+2. The number of pegs(rods) must be greater than or equal to the number of disks. Else we would not be able to solve the puzzle.
+3. The rules of the original Tower of Hanoi must be followed, one disk at a time, disks can only be placed on empty rods or on a rod with a larger disk.
+
+If there are only 3 rods, we will follow the same steps that we followed to get a solution using the original variation.
+
+If there are more than 3 rods, we will find the number of auxillary rods and then use that information to determine how we move disks between rods. The important piece will be 
 
 #### 6. (Optional, but extra credit) Create a variation of the Tower of Hanoi problem where the user can specify the number of disks and the number of pegs. Your solution should still move all the disks from the starting peg to the target peg while adhering to the rules of the Tower of Hanoi problem.
 

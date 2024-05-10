@@ -161,42 +161,55 @@ function hanoitoweriterative(n,starting rod, auxillary rod, end rod):
 '''
 
 ## The grand return of moveDisk!!!!1
-## moves a disk between two poles based on the rules of hanoi's tower.
+## moves a disk between two poles based on the rules of hanoi's tower. It will look at the values of the top disks of the rods that
+## we are trying to move disks between and based on the values determine what valid move we can make (direction). 
 
-def moveDisk(start, end, s,e):
-    topstart = start.peek()
-    topend = end.peek()
+def moveDisk(start, end, s , e): # start and end are both stacks, s and e are labels for the stacks
+    # get the top value of each stack
+    topstart = start.pop() 
+    topend = end.pop()
+    
+    # compare values to determine valid movements
     
     # if start is empty
-    if topstart == None:
-        start.push(topend)
-        print(f"Disk {topend}: {end} -> {start}") 
+    if topstart == None: # if start rod is empty
+        start.push(topend) # move the disk on the end rod to the start rod (only valid move)
+        print(f"Disk {topend}: {e} -> {s}") # display the move
     
     # if end is empty
-    elif topend == None:
-        end.push(topstart)
-        print(f"Disk {topstart}: {start} -> {end}")
+    elif topend == None: # if the end rod is empty
+        end.push(topstart) # move disk on start rod to end rod (only valid move)
+        print(f"Disk {topstart}: {s} -> {e}") # dispaly the move
         
     # compare the values and move them accordingly, 
+    elif topstart > topend: # disk on top of starting rod is bigger than disk on ending rod
+        # move disk on end rod to start rod ( only valid move between the two rods)
+        start.push(topstart) # put the top value of start back onto the rod
+        start.push(topend) # put the top value of end on top of the start rod
+        print(f"Disk {topend}: {e} -> {s}") # display the move
+    else: #disk on top of starting rod is smaller than the disk on the ending rod
+        # move the disk on the start rod to the end rod ( only valid move between the two rods)
+        end.push(topend) # put the top value of end back onto the end rod
+        end.push(topstart) # put the top value of start on top of the end rod
+        print(f"Disk {topstart}: {s} -> {e}") # display the move
 
 def tower_of_hanoi_it(n, start, aux, end):
     # initialize stacks
     start = stack(n)
     aux = stack(n)
     end = stack(n)
-    
-    rods = [start, aux, end]
+ 
     
     # fill in starting stack (rod)
     for i in range(n,0,-1):
         start.push(i)
     
     #labels for printing
-    label = ['Start', 'Aux', 'End']
+    s, a, e = 'Start', 'Aux', 'End'
     
     # check if n is even or odd, have to change some things if that is the case
     if (n % 2 == 0):
-        # swap auxilary and end rods, the first step that will be made
+        # swap auxilary and end rods, the first step that will be made ( so we are moving disks between the correct rods)
         temp = e 
         e = a
         a = temp
@@ -205,13 +218,13 @@ def tower_of_hanoi_it(n, start, aux, end):
     
     #iterate through the number of moves
     for i in range(1,int(2**n)): # range 1 to 2^n-1, but because of how python's range function works we can just write 2^n
-        if (i % 3 == 1):
-            pass
-        elif (i % 3 == 2):
-            pass
-        
-        elif (i % 3 == 0):
-            pass
+        if (i % 3 == 1): # valid move between start and end rod (start and auxillary if n is even)
+            moveDisk(start, end, s, e) # function to move the rods
+        elif (i % 3 == 2): # valid move between start and auxillary rod (start and end if n is even)
+            moveDisk(start, aux, s, a) # function to move the rods
+    
+        elif (i % 3 == 0): # valid move between auxillary and end rod
+            moveDisk(aux, end, a, e) # funciton to move the rods
         
         
     
@@ -222,6 +235,7 @@ https://www.youtube.com/watch?v=PGuRmqpr6Oo
 https://www.youtube.com/watch?v=2SUvWfNJSsM # inspiration for iterative version also helped me wrap my head around the recursion going on as well.
 https://www.youtube.com/watch?v=bdMfjfT0lKk
 https://cs.stackexchange.com/questions/96624/how-to-solve-tower-of-hanoi-iteratively
+https://www.geeksforgeeks.org/iterative-tower-of-hanoi/
 '''
 
 
