@@ -1,12 +1,13 @@
 ## Hash table (using Horner's method for hashing) only hashes a string no value attached to it 
 ## Horner's method using base 31 and modulo derived from the size of the hash table.
+from cs240functions import DoubleLinkedList
 
 
 class HashTable:
     #Initializing hash table
     def __init__(self, size):
         self.size = size # set the size to be the user defined size
-        self.table = [None] * size #build an empty hash table of the user defined size.
+        self.table = [DoubleLinkedList([]) for _ in range(size)] #build an empty hash table of the user defined size.
         
     # functions to get a prime number to use with our modulo in the hashing, want to be based on the size 
     # of the hash table, should in theory limit collisions
@@ -49,7 +50,7 @@ class HashTable:
         if self.table[index] == None:
             self.table[index] = []
         # else (or after we initialize the bucket), add the item to the bucket
-        self.table[index].append(key)
+        return self.table[index].insert(key, end=True)
     
     # function to check if a key is present in the hash table
     # (I pretty much stole this from w3schools, I was going to do something very similar to what I did
@@ -58,28 +59,14 @@ class HashTable:
         # get the hash that the key should be
         index = self.HashFunction(key) 
         # check if the key is there
-        if self.table[index] != None: # if the hash corresponding to the key contains data
-            # go to the key, and then return the corresponding value associated to it
-            for k in self.table[index]: # for each key,value pair in the index of our hash table
-                if k == key: # if we are at the key,
-                    return True # return True
-        # else if the index is empty or there is stuff assigned to the index but they key isn't present
-        return False # return false
+        return self.table[index].search(key)[0]
+
     
     # funciton to remove a key from the hash table
     def remove(self, key):
         # Go to the index of the key
         index = self.HashFunction(key)
-        # check if the bucket contains stuff
-        if self.table[index] != None:
-        # check if the item is in the bucket
-            if key in self.table[index]: # if the key is in the bucket
-                self.table[index].remove(key) # remove the key from the bucket
-                # removing the bucket if it is now empty
-                if not self.table[index]: # if the bucket is empty this will return true and evaluate
-                    self.table[index] = None # remove the bucket (set the index equal to None)
-                    return True
-        return False
+        return self.table[index].delete(key)
     
     # some ways to display the hash table
     def display(self):

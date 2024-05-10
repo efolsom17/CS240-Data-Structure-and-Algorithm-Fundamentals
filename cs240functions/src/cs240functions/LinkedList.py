@@ -86,9 +86,24 @@ class SingleLinkedList:
             current.next = new_node # once current.next == None, point the last node to the new node we created earlier. 
         self.list_length += 1 # update the length of the linked list (add one node to the length)  
     # Delete
-    def delete(self, beg = False, rand = False, end = False):
+    def delete(self,value = None, beg = False, rand = False, end = False):
         from random import randint as rdunif # random integer from a discrete uniform distribution
-        if beg == True: # if we are deleting from the beginning of the list (head)
+        if bool(value) == True: # if there was an input for value, delete a specific value from the linked list.
+            current = self.head
+            prev = None
+            while current:
+                if current.data == value:
+                    if prev:
+                        prev.next = current.next
+                    else:
+                        self.head = current.next
+                    return True
+            prev = current
+            current = current.next
+            self.list_length -= 1
+            return False
+        
+        elif beg == True: # if we are deleting from the beginning of the list (head)
              self.head = self.head.next # re-assign the head to be the next node
              self.list_length -= 1 # update the legnth of the list (one smaller).
         elif rand == True: # if we are deleting a random node
@@ -200,15 +215,15 @@ class DoubleLinkedList:
     def read(self, beg = False, rand = False, end = False, node= int):
         from random import randint as rdunif # random integer from a discrete uniform distribution
         if beg:
-            return print(self.head.data) #read the head
+            return self.head.data #read the head
         elif end:
-            return print(self.tail.data) #read the tail
+            return self.tail.data #read the tail
         elif rand:
             rand_index = rdunif(0,self.list_length-1) # select a random node
             current = self.head # start at the beginning of the list
             for _ in range(rand_index): # repeat this until we reach the random node
                 current = current.next # go to the next node
-            return print(f"We are reading the data at node {rand_index}, which contains: {current.data}")
+            return f"We are reading the data at node {rand_index}, which contains: {current.data}"
         elif node >= self.list_length: # if specified node is not within the bounds
             return print(f"Index Out of Bounds")
         else:
@@ -218,7 +233,7 @@ class DoubleLinkedList:
                 node_data = int(current.data) # store the data of the node (might be able to move this outside of the while loop, after testing I cannot)
                 current = current.next
                 index_counter += 1           
-            return print(f"The data contained in Node {node} is {node_data}.") 
+            return f"The data contained in Node {node} is {node_data}." 
     
     # insert #
     def insert(self, data=any, beg=False, rand=False, end=False):
@@ -256,15 +271,31 @@ class DoubleLinkedList:
                 current.prev = new_node  # assign the current node prev to the new node we just inserted
                 if rand_index == 0:  # special case if the new node becomes the head
                     self.head = new_node # assign the new node as the head
-                return print(f"We have inserted the value {data} at node {index_counter}") # tell us where the new value is inserted.
+                return data, index_counter, f"We have inserted the value {data} at node {index_counter}" # tell us where the new value is inserted.
         self.list_length += 1 # update the length of the linked list
 
 
     # Delete ##
 
-    def delete(self, beg = False, rand = False, end = False):
+    def delete(self, value = None, beg = False, rand = False, end = False):
         from random import randint as rdunif # random integer from a discrete uniform distribution
-        if beg: #if we are deleting the head of the linked list, if beg == true
+        if bool(value)== True:
+            current = self.head
+            while current:
+                if current.data == value:
+                    if current.prev:  # If it's not the head
+                        current.prev.next = current.next
+                    else:  # If it's the head
+                        self.head = current.next
+                    if current.next:  # If it's not the tail
+                        current.next.prev = current.prev
+                    else:  # If it's the tail
+                        self.tail = current.prev
+                    return True  # Key found and removed
+                current = current.next
+            self.list_length -= 1
+            return False  # Key not found
+        elif beg: #if we are deleting the head of the linked list, if beg == true
             if self.head: # if there exists a head node (it will if the list is not empty)
                 self.head = self.head.next # assign the second node to be the head node
                 if self.head: # if the head wasn't the only element in the linked list
@@ -296,11 +327,11 @@ class DoubleLinkedList:
         node_counter = 0 # Counter to keep track of the node that we are at, starting at the head (node 0)
         while current: #traverse the list, while current != None
             if value == current.data: #check if the data in the node is the value we are looking for
-                    return print(f"{value} was found at Node {node_counter}") #if we find it print its location
+                    return True, node_counter, f"{value} was found at Node {node_counter}" #if we find it print its location
             else: # if we didn't find it
                 current = current.next #go to the next node
                 node_counter += 1 #update the index
-        return print(f"Item Not found. This took {node_counter} searches.") # cannot find the item, inform the user
+        return False,f"Item Not found. This took {node_counter} searches." # cannot find the item, inform the user
 
     # Insertion sort ##
     def sort(self, asc = True, desc = False):

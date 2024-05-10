@@ -1,0 +1,306 @@
+---
+title: "CS240 Midterm"
+author: "Eric Folsom"
+format: html
+---
+
+```{python, setup_py}
+#| echo: false
+#| output: false
+
+# Setup Chunk for python, loading the required libraries
+import numpy as np
+import pandas as pd
+from cs240functions import Stack as stack
+from cs240functions import HashTable
+from cs240functions import DoubleLinkedList
+from cs240functions import QuickSort
+from heapq import nsmallest
+import cmd
+```
+
+## Hanoi's Tower
+
+
+The Tower of Hanoi problem involves three rods and a number of disks of different sizes which can slide onto any rod. The puzzle starts with the disks stacked in ascending order of size on one rod, the smallest at the top, making a cone.
+
+The goal of the puzzle is to move the entire stack to another rod, obeying the following rules:
+
+1. Only one disk can be moved at a time
+2. Each move consists of taking the upper disk from one of the stacks and placing it on top of another stack or on an empty rod.   
+3. No disk may be placed on top of a smaller disk.
+
+#### The following resources were used to help me come up with a solution to the problems below:
+
+- [YouTube video by Reducible](https://www.youtube.com/watch?v=rf6uf3jNjbo&list=PLzj1WDt0HB4qDn6heuU8w6x0Hzd8EVX0q) was incredibly helpful for my understanding of how the algorithm works and how the recursion for this problem functions. From about 16 minutes until 20 minutes there is en elegent animation which describes the recursion taking place in the algorithm.
+- [YouTube video by Numberphile](https://www.youtube.com/watch?v=PGuRmqpr6Oo) Was helpful for understanding the math behind the algorithm and to help me identify the pattern going on with moving disks which was helpful for my iterative approach. There was a harmonic version of the algorithm which helped ingrain the pattern in my mind.
+- [Youtube video by 3blue1brown](https://www.youtube.com/watch?v=2SUvWfNJSsM) Showed a solution to the problem using binary counting to solve the problem. This was very helpful for my iterative apprach, even though I did not use binary counting in my approach to solving the problem. Was also helpful for my reasoning on the recursive version. Once the recursion was explained in a "from the perspective of the bottom disk" manner everything pretty much clicked for me.
+ 
+
+#### 1. Implement a solution for the Tower of Hanoi problem using recursion. Your solution should move the disks from the starting peg to the target peg using the auxiliary peg. 
+
+Below is a diagram which shows a solution for the Tower of Hanoi problem when there are $3$ rods and $n=3$ disks:
+
+![Tower of Hanoi with 3 disks and 3 rods](./misc/HanoisTower3.png){width=75%}
+
+
+We first start with all three disks stacked on Rod $A$. Then procede with the following steps to end with all three disk stacked on rod $C$:
+
+1. Move the <span style="color:green;">Green</span> disk from rod $A$ to rod $C$.
+2. Move the <span style="color:red;">Red</span> disk from rod $A$ to rod $B$.
+3. Move the <span style="color:green;">Green</span> disk from rod $C$ to rod $B$.
+4. Move the <span style="color:blue;">Blue</span> disk from rod $A$ to rod $C$.
+5. Move the <span style="color:green;">Green</span> disk from rod $B$ to rod $A$.
+6. Move the <span style="color:red;">Red</span> disk from rod $B$ to rod $C$.
+7. Move the <span style="color:green;">Green</span> disk from rod $A$ to rod $C$.
+
+
+These steps will move the stack of three disks from rod $A$ to rod $C$ while following the established rules. We can break down the process a little more to understand what is going on and then build a recursive function from it. This solution to the Tower of Hanoi problem took $7 = 2^3 -1$ steps to solve.    
+
+Steps $1$ through $3$ involve us moving the <span style="color:green;">Green</span> and <span style="color:red;">Red</span> disks from rod $A$ to rod $B$ using the auxilary rod $C$ to store the <span style="color:green;">Green</span> disk while we move the larger of the two disks to the middle rod. These steps involve moving the <span style="color:green;">Green</span> disk to rod $C$ then moving it from $C$ to rod $B$ once the larger disk is in place.
+
+In step $4$ we are simply moving the <span style="color:blue;">Blue</span> disk from rod $A$ to rod $C$.
+
+Now in steps $5$ through $7$ we are simply doing what we did in steps $1$ through $3$, but instead of using rod $C$ as the auxillary rod, we are using rod $A$ as the auxillary rod to move the <span style="color:green;">Green</span> and <span style="color:red;">Red</span> disks from rod $B$ to rod $C$.
+
+Thinking recursively, step $4$ would represent our base case. We are simply moving a disk from one rod to another rod after we have removed all the rods that were on top of it. 
+
+The steps are as follows if we had $n=1$ disk or $n=2$ disks:
+
+* If we only had $n=1$ disk (i.e. only the <span style="color:blue;">Blue</span> disk), this would take $1$ step to solve, move the <span style="color:blue;">Blue</span> disk to rod $C$ from rod $A$. 
+
+* If $n=2$ (i.e. only the <span style="color:red;">Red</span> and <span style="color:blue;">Blue</span> disks), the steps would be as follows
+    1. Move the <span style="color:red;">Red</span> disk from rod $A$ to rod $B$.
+    2. Move the <span style="color:blue;">Blue</span> disk from rod $A$ to rod $C$.
+    3. Move the <span style="color:red;">Red</span> disk from rod $B$ to rod $C$
+
+Note that the base case (Move the <span style="color:blue;">Blue</span> disk from rod $A$ to rod $C$) always shows up in each of these scenarios. 
+
+  **Formulating an Algorithm**
+
+A good way to approach formulating an algorithm for this problem is look at things from the perspective of the disk that is on the bottom of a stack of disks (in the above diagram it is the <span style="color:blue;">Blue</span> disk). In order for that disk to move, we must first move the stack of disks that are on top of it from one rod to another rod.
+
+Lets use the example of a $3$ disk variation of the problem. If we have a $3$ disk stack, to move the bottom disk, we have to move the top $2$ disks off of it. We can only move one disk at a time however, so to remove the stack of $2$ disks from the third disk, we have to move the singular disk first. 
+ 
+Once we have moved the singular disk, we can now go back to the starting stack of disks where we now have a stack of $2$ disks. From here we repeat the process, we have a stack of $2$ disks, to move the bottom disk, we have to move the singular disk above it. 
+ 
+Now there is only one valid rod for the top disk to go to, so we move it to that rod. Returning to the starting rod, there are no valid spots for us to move the disk to, since the remaing disk on the starting rod is assumed to be the biggest rod. 
+ 
+We can now look at the middle rod, from here, the only valid move is to move the disk back to the starting rod, but if we did that, we would have just undone the previous step. So let's instead go to the last rod.
+ 
+Our goal right now is to move the disk on the starting rod to an open rod. The only way to do this is to move the smallest disk, which is currently on the ending rod (if we moved the middle size disk we would have to put it on top of the largest disk). So we now have to move the disk that is on the ending rod onto the middle rod to open up space for our largest disk to be moved onto an open rod.
+ 
+We now find ourselves in a familiar situation, we have a stack of $2$ disks, an open rod, and a rod that we want to move the stack of $2$ disks onto, which in this case is the rod containing the largest disk. From here since we have moved a stack of $2$ disks before, we move it again following the same process, just using different rods that we did before.
+
+We already figured out what our base case is, moving a single disk from one rod to another available rod (a rod that is either empty or only has disks larger than the disk we are trying to move).
+
+Next we need to think of the recursive step, which in this case is moving the $n-1=3-1=2$ remaining disks to another rod, using an auxilary rod. 
+
+This idea holds for $n$ rods. We would basically be breaking the problem down into smaller versions of this three disk version of the problem.
+
+We can simplify all of the above to formulate an algorithm to solve this problem:
+
+1. Move $n-1$ disks from rod $A$ to rod $B$. This uses rod $C$ as a "helper" rod.
+2. Move the remaining disk from rod $A$ to rod $C$. 
+3. Move the $n-1$ disks from rod $B$ to rod $C$. This uses rod $A$ as a "helper" rod.
+
+**Code implementation of the algorithm**
+
+Now lets try to implment this aproach to solving the problem using pseudocode:
+
+
+```{plain, hanoi tower pseudocode}
+def hanoistower(n, starting_rod = A, ending_rod = C, auxillary_rod = B)
+    # base case only 1 disk to move
+    if n == 1:
+        move disk from starting rod to ending rod
+    else:
+        # recursively call the function to move the n-1 disks to the middle( auxilary) rod
+        hanoistower(n-1, starting_rod = A, ending_rod = B, auxilary_rod = C)
+        #some function to show the moving of the disks
+        movedisk(start_rod, end_rod)
+        # recursively call again to move the n-1 disks from the auxillary( middle) rod to the end rod
+        hanoistower(n-1, starting_rod = B, ending_rod = C, auxilary_rod = A)
+````
+
+Basically each time we recursively call the funciton, we are changing which rods we are moving the disks to so that when we eventually reach the base case, we are able to move the disk to the correct rod.
+
+Now we can implement this funciton in python:
+
+```{python, hanoi tower python}
+#| echo: true
+#| output: true
+
+def tower_of_hanoi(n, starting_rod, middle_rod, ending_rod): # specify the starting rods you want
+    if n == 1: # Base case, 1 disk on the rod, you can just move it to any open rod
+        print(f"Disk {n}: {starting_rod} -> {ending_rod}") # show that we moved it
+    else: # recursive cases
+        tower_of_hanoi(n-1, starting_rod, ending_rod, middle_rod) # move the n-1 disks to the middle rod from starting rod
+        print(f"Disk {n}: {starting_rod} -> {ending_rod}") # display the move
+        tower_of_hanoi(n-1, middle_rod, starting_rod, ending_rod) # move the n-1 disks from the middle rod to the ending rod
+```
+
+We can demonstrate this as follows:
+
+```{python}
+tower_of_hanoi(2,"A","B","C")
+```
+
+```{python}
+tower_of_hanoi(3,"A","B","C")
+```
+
+```{python}
+tower_of_hanoi(4,"A","B","C")
+```
+
+I decided to go a bit further with this approach and implement a solution to the problem that uses stacks to store the state of the three rods, and then pops and pushes the disks to shift them between rods.
+
+```{python}
+# function to move the top value of stack 1 to the top of stack 2
+def moveStack(stack1 = stack(), stack2 = stack()):
+    temp = stack1.pop()
+    stack2.push(temp)
+    
+
+
+# tower of of hanoi recursive solution that works on the stacks 
+def tower_of_hanoi_stacks(n, starting_rod, middle_rod, ending_rod): # specify the starting rods you want
+    if n == 1: # Base case
+        moveStack(starting_rod, ending_rod)
+        print(f"AFTER\nStarting Rod:\n{starting_rod}\nAuxilary Rod:\n{middle_rod}\nEnding Rod:\n{ending_rod}\
+        \n Moved disk {n}")
+    else: # if we are not on the last rod
+        tower_of_hanoi_stacks(n-1, starting_rod, ending_rod, middle_rod) # recursive call to move the n-1 disks to the middle rod using the ending rod as the axullary rod
+        moveStack(starting_rod, ending_rod) # move the current disk
+        print(f"AFTER\nStarting Rod:\n{starting_rod}\nAuxilary Rod:\n{middle_rod}\nEnding Rod:\n{ending_rod}\
+        \n Moved disk {n}")
+        tower_of_hanoi_stacks(n-1, middle_rod, starting_rod, ending_rod) # move the remaining n-1 disks to the ending rod using the starting rod as the auxillary rod
+
+
+# going to need to call the above:
+
+def TowerOfHanoi(n):# Tower of Hanoi with stacks and it will initialize the number of disks
+    # n = number of disks
+    
+    ## initialize the starting, auxillary, and ending rods
+    
+    starting_rod = stack()
+    auxillary_rod = stack()
+    ending_rod = stack()
+    
+    # fill the starting rod
+    for i in range(n,0,-1):
+        starting_rod.push(i)
+    
+    # display starting state
+    print("Start:")
+    print(f"Starting Rod:\n{starting_rod}\nAuxillary Rod:\n{auxillary_rod}\nEnding Rod:\n{ending_rod}")
+    
+    # now we can call the tower of hanoi function. It will print its final state
+    
+    tower_of_hanoi_stacks(n, starting_rod, auxillary_rod, ending_rod)
+```
+
+The output of the `TowerofHanoi()` function is as follows, I will be calling it on $n=2$ to save space:
+
+```{python}
+TowerOfHanoi(2)
+```
+
+#### 2. Implement a solution for the Tower of Hanoi problem using an iterative approach.
+
+To implement a solution for the Tower of Hanoir problem using an iterative approach, I will try to build upon my recursive approach.
+
+Lets begin by analysing the pattern of the solutions generated by our recursive function. We know that the number of steps required to solve the problem is given by $2^n-1$. We can use the number of steps required to solve the puzzle as our iterator.
+
+```{python}
+#| eval: false
+
+tower_of_hanoi(3, 'A','B','C')
+'''
+Output:
+Step 1: Disk 1: A -> C
+Step 2: Disk 2: A -> B
+Step 3: Disk 1: C -> B
+Step 4: Disk 3: A -> C
+Step 5: Disk 1: B -> A
+Step 6: Disk 2: B -> C
+Step 7: Disk 1: A -> C
+'''
+```
+
+```{python}
+#| eval: false
+
+tower_of_hanoi(4,"A","B","C")
+'''
+Output:
+Step 1: Disk 1: A -> B
+Step 2: Disk 2: A -> C
+Step 3: Disk 1: B -> C
+Step 4: Disk 3: A -> B
+Step 5: Disk 1: C -> A
+Step 6: Disk 2: C -> B
+Step 7: Disk 1: A -> B
+Step 8: Disk 4: A -> C
+Step 9: Disk 1: B -> C
+Step 10: Disk 2: B -> A
+Step 11: Disk 1: C -> A
+Step 12: Disk 3: B -> C
+Step 13: Disk 1: A -> B
+Step 14: Disk 2: A -> C
+Step 15: Disk 1: B -> C
+'''
+```
+
+Ignoring the actual number of the disk that is being moved, lets see if there is a pattern between what rods we are moving disks to and from. When $n$ is odd, the example where $n=3$, we can break down the movements of the disks as such.
+
+In steps $1$, $4$ and $7$, we are moving a disk from the starting rod to the ending rod.
+
+In steps $2$ and $5$ we are moving a disk between the starting rod and the auxilary rod, swaping which direction we move the disks. In step $2$ we move the disk from the starting rod to the auxilary rod, and in step $5$ we move a disk from the auxillary rod to the starting rod. 
+
+
+#### 3. Compare the time and space complexity of both the recursive and iterative solutions and explain the differences.
+
+#### 4. (Optional, but extra credit) Create a graphical user interface (GUI) that demonstrates the steps of the Tower of Hanoi problem as the disks are moved from the starting peg to the target peg. The GUI should allow the user to specify the number of disks and the speed at which the disks move.
+
+#### 5. Create a variation of the Tower of Hanoi problem where the user can specify more than three pegs. Your solution should still move all the disks from the starting peg to the target peg while adhering to the rules of the Tower of Hanoi problem.
+
+#### 6. (Optional, but extra credit) Create a variation of the Tower of Hanoi problem where the user can specify the number of disks and the number of pegs. Your solution should still move all the disks from the starting peg to the target peg while adhering to the rules of the Tower of Hanoi problem.
+
+
+
+## Spell Checker
+
+Create a spell checker console program that uses a hash table data structure to store a dictionary of words. Your program should be able to:
+
+1. Load a dictionary of words from a file into the hash table.  You will need to create this yourself.  Aim for 20 to 100 words.  
+
+2. Take a string of text as input and check each word in the text against the words in the dictionary stored in the hash table. Your program should identify any words that are not found in the dictionary and display them as "misspelled".
+   
+```{plain}
+def Misspell(string):
+    # split the string into each word, store it as a temp variable
+    # created an empty array the length of the temp variable ( call it spellings)
+    # for each word in the temp variable:
+    #   run dictionary.get(word) and append the spellings array with the truth value if the word is in the dictionary or not
+    # return the spellings array
+```
+
+3. Implement a suggestion feature that suggests possible correct spellings for the misspelled words based on edit distance.
+
+4. Implement a Levenshtein distance algorithm to compute the edit distance between two words.
+
+5. Allow the user to add new words to the dictionary and update the hash table accordingly.
+
+6. Handle collisions in the hash table using separate chaining.
+
+7. Optimize the performance of your program in terms of time and space complexity.
+
+8. Your program should be user-friendly and have a command-line interface.
+
+
+## Code Library
+
+My code library from this course can be found on my [GitHub](https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/tree/main/cs240functions/src/cs240functions). It is a functioning python module that can be installed locally if the folder is downloaded (I am pretty sure at least). The file `'__init.py'` is the module that intializes the library and doesn't contain any funcitons. I am continually updating it to enhance some of the funcitons when I notice a problem I encounter when trying to use these algorithms and data structures in later points in the quarter. Will contain more content by the end of the course. 
