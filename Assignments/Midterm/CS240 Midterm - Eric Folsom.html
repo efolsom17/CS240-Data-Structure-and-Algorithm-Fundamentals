@@ -477,7 +477,7 @@ function hanoitoweriterative(n,starting rod, auxillary rod, end rod):
 <span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>        end.push(topstart) <span class="co"># move disk on start rod to end rod (only valid move)</span></span>
 <span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Disk </span><span class="sc">{</span>topstart<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>s<span class="sc">}</span><span class="ss"> -&gt; </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>) <span class="co"># dispaly the move</span></span>
 <span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compare the values and move them accordingly, </span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compare the values and move them accordingly, figure out which disk is the larger of the two</span></span>
 <span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> topstart <span class="op">&gt;</span> topend: <span class="co"># disk on top of starting rod is bigger than disk on ending rod</span></span>
 <span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># move disk on end rod to start rod ( only valid move between the two rods)</span></span>
 <span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>        start.push(topstart) <span class="co"># put the top value of start back onto the rod</span></span>
@@ -523,6 +523,7 @@ function hanoitoweriterative(n,starting rod, auxillary rod, end rod):
 <span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a>            moveDisk(aux, end, a, e) <span class="co"># funciton to move the rods</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Demonstrating our functions:</p>
+<p>The outputs are a little weird because of how I handled poping an empty stack in my stack implementation.</p>
 <div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi_it(<span class="dv">3</span>, <span class="st">"S"</span>, <span class="st">"A"</span>, <span class="st">"E"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -645,11 +646,23 @@ Disk 1: A -&gt; E</code></pre>
 </section>
 <section id="spell-checker" class="level2">
 <h2 class="anchored" data-anchor-id="spell-checker">Spell Checker</h2>
+<p>My Spell Checker Program can be found <a href="https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/blob/main/Assignments/Midterm/SpellCheck.py">here</a>. It is written in python. I have never written a CLI program before this so it is a little rough around the edges in some places, but I gave it my best attempt.</p>
 <p>Create a spell checker console program that uses a hash table data structure to store a dictionary of words. Your program should be able to:</p>
 <ol type="1">
 <li><p>Load a dictionary of words from a file into the hash table. You will need to create this yourself. Aim for 20 to 100 words.</p>
 <p>For my dictionary I found a <a href="https://gist.github.com/deekayen/4148741">list of the 1000 most commmon</a> words in the english language on GitHub. I copied these to the <a href="https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/blob/main/Assignments/Midterm/Data/dictionary.txt">dictionary.txt</a> file and used that as my dicitonary.</p>
 <p>I then start by loading the dictionary into the hash table. Here is the python code for this:</p></li>
+</ol>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">1000</span> <span class="co"># hash table size</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>dictionary <span class="op">=</span> HashTable(n)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"./Data/dictionary.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> words:</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> [line.strip() <span class="cf">for</span> line <span class="kw">in</span> words] </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> word <span class="kw">in</span> words:</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    dictionary.insert(word)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> words</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
 <li><p>Take a string of text as input and check each word in the text against the words in the dictionary stored in the hash table. Your program should identify any words that are not found in the dictionary and display them as “misspelled”.</p>
 <p>My approach was to take the input string, and then take each word of the string and compare it to my dictionary hash table. I call <code>dictionary.contains()</code> on each word in the string to see if the dictionary contains the word. I then store the boolean value of <code>dictionary.contains()</code> for each word and use that to indicate whether a word is misspelled or not.</p>
 <pre class="{plain}"><code>def Misspell(string):
@@ -658,41 +671,107 @@ Disk 1: A -&gt; E</code></pre>
 # for each word in the temp variable:
 #   run dictionary.get(word) and append the spellings array with the truth value if the word is in the dictionary or not
 # return the spellings array</code></pre>
-<p>Here is my actual implementation of this in python:</p>
-<p>::: {.cell execution_count=13} <code>{.python .cell-code}  def misspelled(string):      temp = string.split()# split the string into each word, store it as a temp variable      spellings = []# created an empty array the length of the temp variable ( call it spellings)      for word in temp:# for each word in the temp variable:       #   run dictionary.contains(word) and append the spellings array with the truth value          spellings.append(not(dictionary.contains(word)))      # return the spellings array      return spellings</code> :::</p>
-<p>I utilized this list of boolean values to help me with implementing my suggestion feature.</p></li>
+<p>Here is my actual implementation of this in python:</p></li>
+</ol>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> misspelled(string):</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    temp <span class="op">=</span> string.split()<span class="co"># split the string into each word, store it as a temp variable</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    spellings <span class="op">=</span> []<span class="co"># created an empty array the length of the temp variable ( call it spellings)</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> word <span class="kw">in</span> temp:<span class="co"># for each word in the temp variable:</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>     <span class="co">#   run dictionary.contains(word) and append the spellings array with the truth value</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        spellings.append(<span class="kw">not</span>(dictionary.contains(word)))</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># return the spellings array</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> spellings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>I utilized this list of boolean values to help me with implementing my suggestion feature.</code></pre>
+<ol start="3" type="1">
 <li><p>Implement a suggestion feature that suggests possible correct spellings for the misspelled words based on edit distance.</p>
 <p>For this I decided to create a list of pairs of the string and its corresponding boolean value returned from invoking the <code>misspelled()</code> function on the string. I then took all the values which according to <code>misspelled()</code> were misspelled and compared the edit distance to each string in the dictionary. I stored the key, edit distance pair in an array and then chose the 5 strings with the smallest edit distances. I computed the edit distance using levenshtein’s distance algorithm. Initially I did it using the naive recursive method, but I adapted it to give it my best shot at dynamic programming as described in the following videos.</p></li>
 <li><p>Implement a Levenshtein distance algorithm to compute the edit distance between two words.</p>
-<p>To implement a Levenshtein distance algorithm to calculate the edit distance between two strings I first went to <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Wikipedia</a>. The piecewise representation of this algorithm made a lot of sense to me, so I decided to implement it in python as best I could directly from the piecewise function. After watching a <a href="">couple</a> <a href="">of</a> <a href="">YouTube</a> videos related to spellcheckers, general python, and dynamic programing, I decided to give dynamic programming my best shot. ( actually scratch that I might go with the matrix method as shown on wikipedia.)</p>
+<p>To implement a Levenshtein distance algorithm to calculate the edit distance between two strings I first went to <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Wikipedia</a>. The piecewise representation of this algorithm made a lot of sense to me, so I decided to implement it in python as best I could directly from the piecewise function.</p>
 <p>Here is what I was able to implement for the recursive version of the Levenshtein distance algorithm:</p></li>
 </ol>
-<div class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> levenshteinDist(strA, strB):</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> <span class="bu">len</span>(strA) <span class="co"># length of string A</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    j <span class="op">=</span> <span class="bu">len</span>(strB) <span class="co"># length of string B</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">## Check if either of the strings are empty ( base case )</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>  i <span class="op">==</span> <span class="dv">0</span>: <span class="co"># string A is empty</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> j <span class="co"># length of string B for number of delete edits needed</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> j <span class="op">==</span> <span class="dv">0</span>: <span class="co"># string B is empty</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> i <span class="co"># length of string A for number of delete edits needed</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">## Recursive case 1, both characters match, compare the rest of both strings</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> strA[i<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> strB[j<span class="op">-</span><span class="dv">1</span>]: <span class="co"># if the last characters of strings A and B are the same</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> levenshteinDist(strA[:<span class="op">-</span><span class="dv">1</span>],strB[:<span class="op">-</span><span class="dv">1</span>]) <span class="co"># recursively call the function on the remaining characters in both strings.</span></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Recursive case 2, characters don't match, calculate the amount of edits needed to make the strings match:</span></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">+</span> <span class="bu">min</span>( <span class="co"># adds 1 each time any of these are invoked, cost of doing the edit operation</span></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>        levenshteinDist(strA, strB[:<span class="op">-</span><span class="dv">1</span>]), <span class="co"># insert character into string A from string B</span></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>        levenshteinDist(strA[:<span class="op">-</span><span class="dv">1</span>], strB), <span class="co"># delete the last character from string A</span></span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>        levenshteinDist(strA[:<span class="op">-</span><span class="dv">1</span>], strB[:<span class="op">-</span><span class="dv">1</span>]) <span class="co"># substitute the last character in string A for the last character in string B.</span></span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> levenshteinDist(strA, strB):</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> <span class="bu">len</span>(strA) <span class="co"># length of string A</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    j <span class="op">=</span> <span class="bu">len</span>(strB) <span class="co"># length of string B</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">## Check if either of the strings are empty ( base case )</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>  i <span class="op">==</span> <span class="dv">0</span>: <span class="co"># string A is empty</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> j <span class="co"># length of string B for number of delete edits needed</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> j <span class="op">==</span> <span class="dv">0</span>: <span class="co"># string B is empty</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> i <span class="co"># length of string A for number of delete edits needed</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">## Recursive case 1, both characters match, compare the rest of both strings</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> strA[i<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> strB[j<span class="op">-</span><span class="dv">1</span>]: <span class="co"># if the last characters of strings A and B are the same</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> levenshteinDist(strA[:<span class="op">-</span><span class="dv">1</span>],strB[:<span class="op">-</span><span class="dv">1</span>]) <span class="co"># recursively call the function on the remaining characters in both strings.</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Recursive case 2, characters don't match, calculate the amount of edits needed to make the strings match:</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">+</span> <span class="bu">min</span>( <span class="co"># adds 1 each time any of these are invoked, cost of doing the edit operation</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>        levenshteinDist(strA, strB[:<span class="op">-</span><span class="dv">1</span>]), <span class="co"># insert character into string A from string B</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>        levenshteinDist(strA[:<span class="op">-</span><span class="dv">1</span>], strB), <span class="co"># delete the last character from string A</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>        levenshteinDist(strA[:<span class="op">-</span><span class="dv">1</span>], strB[:<span class="op">-</span><span class="dv">1</span>]) <span class="co"># substitute the last character in string A for the last character in string B.</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This works, but it is slow when the strings are longer. An approach using the matrix method to calculate the Levenshtein distance seems to be much more computationally efficient.</p>
+<p>A better approach to calculating the Levenshtein edit distance between two strings would be to use the <a href="https://en.wikipedia.org/wiki/Wagner%E2%80%93Fischer_algorithm">Wagner-Fischer Algorithm</a>.</p>
+<p>The Wagner-Fischer Algorithm works as follows, we take the two strings we want to compare and overlay them as row/column labels for a matrix <span class="math inline">\(D = m+1 \times n+1\)</span>, where <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span> are the lengths of the two strings respectively. The dimensions of <span class="math inline">\(D\)</span> are <span class="math inline">\(m+1 \times n+1\)</span> because we want to be able to compare the edit costs between a string and an empty string. We use this matrix to store the edit distances between all prefixes of each string. We compute the edit distance between each string in a similar way as we did recursively. We compare the costs of doing all of the different operations, and then at the index of the matrix we are in, we pick which edit operation will give us the minimum value based on the characters of the two strings that we are at. Doing this will eventually fill out a matrix where the last row, column index will contain the minimum edit distance between the two strings.</p>
+<p>The Code to implement the Wagner-Fischer Algorithm is as follows:</p>
+<p>This was a fairly quick and dirty implementation of this based on some pseudocode that I had seen places as well as from some videos and websites that described how we navigate the distance matrix.</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">### Wagner Fischer Algorithm for levenshtein distance</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> levenshteinDist(str1, str2):</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> <span class="bu">len</span>(str1)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(str2)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># initialize distance matrix</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    distance <span class="op">=</span> [[<span class="dv">0</span> <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(n<span class="op">+</span><span class="dv">1</span>)] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(m<span class="op">+</span><span class="dv">1</span>)]</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># i, row</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># j, column</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># distance[i][j], value at row i, column j</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    distance[<span class="dv">0</span>][<span class="dv">0</span>] <span class="op">=</span> <span class="dv">0</span> <span class="co"># comparing two empty strings, 0 comparisons to start</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fill in the first row (comparing any prefix of str2 to an empty str1)</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,n<span class="op">+</span><span class="dv">1</span>):</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>        distance[<span class="dv">0</span>][j] <span class="op">=</span> j</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fill in the first column (comparing any prefix of str1 to an empty str2)</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,m<span class="op">+</span><span class="dv">1</span>):</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>        distance[i][<span class="dv">0</span>] <span class="op">=</span> i</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compare strings follow the same rules as recursion</span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># comparing at row, column pair distance(i,j)</span></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># for each row</span></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,m<span class="op">+</span><span class="dv">1</span>): <span class="co"># row 0 is the empty string row</span></span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># go to colum j so we can compare prefixes at the row,column pair i,j in the respective strings</span></span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,n<span class="op">+</span><span class="dv">1</span>): <span class="co"># column 0 is the empty string column</span></span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>            <span class="co"># calculate the substitution cost, 1 if the characters match, 0 if we don't have to change anything</span></span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> str1[i<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> str2[j<span class="op">-</span><span class="dv">1</span>]: <span class="co"># characters match</span></span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>                sub <span class="op">=</span> <span class="dv">0</span> <span class="co"># no substitution cost</span></span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>: <span class="co"># characters don't match</span></span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>                sub <span class="op">=</span> <span class="dv">1</span> <span class="co"># substitution cost of 1</span></span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>            <span class="co"># insert edit cost at distance[i][j] based on the costs set during the recursive version</span></span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>            distance[i][j] <span class="op">=</span> <span class="bu">min</span>(</span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>                distance[i][j<span class="op">-</span><span class="dv">1</span>]<span class="op">+</span> <span class="dv">1</span>, <span class="co"># insert a character, add 1 because we are making an edit</span></span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>                distance[i<span class="op">-</span><span class="dv">1</span>][j]<span class="op">+</span> <span class="dv">1</span>, <span class="co"># delete a character, add 1 because we are making an edit</span></span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>                distance[i<span class="op">-</span><span class="dv">1</span>][j<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> sub <span class="co"># substitute or don't change the character</span></span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> distance[m<span class="op">-</span><span class="dv">1</span>][n<span class="op">-</span><span class="dv">1</span>] <span class="co"># return the edit distance</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For the recursive implementation, we are making at least two recursive calls for each character in each string, but can go up to 3 recursive calls for each character in each string if none of the characters in the strings match. Thus we can say that the the worst case time complexity for the recursive approach is <span class="math inline">\(O(3^{m+n})\)</span>, where <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span> are the lengths of strings <span class="math inline">\(1\)</span> and <span class="math inline">\(2\)</span> respectively.</p>
+<p>In the iterative approach, using the Wagner-Fischer algorithm, we have a for loop that iterates through each row, with a sub for loop that iterates through each column of the matrix. The total number of iterations we will have to complete is <span class="math inline">\(m \cdot n\)</span>, each iteration we perform a singular <span class="math inline">\(O(1)\)</span> operation, which is inserting a value into the matrix. Thus the time complexity of the Wagner-Fischer algorithm is <span class="math inline">\(O(m\cdot n)\)</span>, where <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span> are the lengths of strings <span class="math inline">\(1\)</span> and <span class="math inline">\(2\)</span> respectively.</p>
+<p>Additionally, the Wagner-Fischer algorithm is much more space efficient than the recursive approach. Instead of having to store each recursive call, which can add up when we are comparing longer strings, we are simply storing a matrix of dimension <span class="math inline">\(m+1 \times n+1\)</span>, where <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span> are the lengths of strings <span class="math inline">\(1\)</span> and <span class="math inline">\(2\)</span> respectively..</p>
 <ol start="5" type="1">
-<li><p>Allow the user to add new words to the dictionary and update the hash table accordingly.</p></li>
+<li>Allow the user to add new words to the dictionary and update the hash table accordingly.</li>
+</ol>
+<p>The user is able to add new words to the dictionary with <code>add</code> and can view the dictionary with <code>dictionary</code>. The dictionary gets reset whenever you re-run the program.</p>
+<ol start="6" type="1">
 <li><p>Handle collisions in the hash table using separate chaining.</p>
 <p>For this I modified my hash table data structure to handle chaining using a linked list instead of an array.</p></li>
 <li><p>Optimize the performance of your program in terms of time and space complexity.</p></li>
+</ol>
+<p>I did this by implementing the Wagner-Fischer Algorithm to calculate the Levenshtein edit distance after first implementing the recursive algorithm.</p>
+<ol start="8" type="1">
 <li><p>Your program should be user-friendly and have a command-line interface.</p>
 <p>Gave it my best attempt at this, I have never made a CLI program before. Tried to provide the user with as much information as possible.</p>
 <p>Commands are <code>check</code>, <code>add</code>, <code>dictionary</code>, <code>help</code>, and <code>exit</code>.</p>

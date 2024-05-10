@@ -401,7 +401,7 @@ def moveDisk(start, end, s , e): # start and end are both stacks, s and e are la
         end.push(topstart) # move disk on start rod to end rod (only valid move)
         print(f"Disk {topstart}: {s} -> {e}") # dispaly the move
         
-    # compare the values and move them accordingly, 
+    # compare the values and move them accordingly, figure out which disk is the larger of the two
     elif topstart > topend: # disk on top of starting rod is bigger than disk on ending rod
         # move disk on end rod to start rod ( only valid move between the two rods)
         start.push(topstart) # put the top value of start back onto the rod
@@ -448,6 +448,8 @@ def tower_of_hanoi_it(n, starting=str, auxillary=str, ending=str): # n is number
 ```
 
 Demonstrating our functions:
+
+The outputs are a little weird because of how I handled poping an empty stack in my stack implementation.
 
 ```{python}
 tower_of_hanoi_it(3, "S", "A", "E")
@@ -505,7 +507,7 @@ We can summarize the above into the following table:
 For this problem I will be making the following assumptions:
 
 1. The number of disks is fixed, I will use $3$ disks for my implementation
-2. The number of pegs(rods) must be greater than or equal to the number of disks. Else we would not be able to solve the puzzle.
+2. The number of pegs(rods) must be greater than or equal to 3. Else we would not be able to solve the puzzle.
 3. The rules of the original Tower of Hanoi must be followed, one disk at a time, disks can only be placed on empty rods or on a rod with a larger disk.
 
 If there are only 3 rods, we will follow the same steps that we followed to get a solution using the original variation.
@@ -518,6 +520,8 @@ If there are more than 3 rods, we will find the number of auxillary rods and the
 
 ## Spell Checker
 
+My Spell Checker Program can be found [here](https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/blob/main/Assignments/Midterm/SpellCheck.py). It is written in python. I have never written a CLI program before this so it is a little rough around the edges in some places, but I gave it my best attempt.
+
 Create a spell checker console program that uses a hash table data structure to store a dictionary of words. Your program should be able to:
 
 1. Load a dictionary of words from a file into the hash table.  You will need to create this yourself.  Aim for 20 to 100 words.  
@@ -525,6 +529,18 @@ Create a spell checker console program that uses a hash table data structure to 
     For my dictionary I found a [list of the 1000 most commmon](https://gist.github.com/deekayen/4148741) words in the english language on GitHub. I copied these to the [dictionary.txt](https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/blob/main/Assignments/Midterm/Data/dictionary.txt) file and used that as my dicitonary. 
 
     I then start by loading the dictionary into the hash table. Here is the python code for this:
+
+```{python}
+#| eval: false
+
+n = 1000 # hash table size
+dictionary = HashTable(n)
+with open("./Data/dictionary.txt", "r") as words:
+    words = [line.strip() for line in words] 
+for word in words:
+    dictionary.insert(word)
+del words
+```
 
 
 
@@ -543,16 +559,16 @@ Create a spell checker console program that uses a hash table data structure to 
 
     Here is my actual implementation of this in python:
 
-    ```{python}
-    def misspelled(string):
-        temp = string.split()# split the string into each word, store it as a temp variable
-        spellings = []# created an empty array the length of the temp variable ( call it spellings)
-        for word in temp:# for each word in the temp variable:
-         #   run dictionary.contains(word) and append the spellings array with the truth value
-            spellings.append(not(dictionary.contains(word)))
-        # return the spellings array
-        return spellings
-    ```
+```{python}
+def misspelled(string):
+    temp = string.split()# split the string into each word, store it as a temp variable
+    spellings = []# created an empty array the length of the temp variable ( call it spellings)
+    for word in temp:# for each word in the temp variable:
+     #   run dictionary.contains(word) and append the spellings array with the truth value
+        spellings.append(not(dictionary.contains(word)))
+    # return the spellings array
+    return spellings
+```
 
     I utilized this list of boolean values to help me with implementing my suggestion feature.
 
@@ -563,7 +579,7 @@ Create a spell checker console program that uses a hash table data structure to 
 
 4. Implement a Levenshtein distance algorithm to compute the edit distance between two words.
    
-   To implement a Levenshtein distance algorithm to calculate the edit distance between two strings I first went to [Wikipedia](https://en.wikipedia.org/wiki/Levenshtein_distance). The piecewise representation of this algorithm made a lot of sense to me, so I decided to implement it in python as best I could directly from the piecewise function. After watching a [couple]() [of]() [YouTube]() videos related to spellcheckers, general python, and dynamic programing, I decided to give dynamic programming my best shot. ( actually scratch that I might go with the matrix method as shown on wikipedia.)
+   To implement a Levenshtein distance algorithm to calculate the edit distance between two strings I first went to [Wikipedia](https://en.wikipedia.org/wiki/Levenshtein_distance). The piecewise representation of this algorithm made a lot of sense to me, so I decided to implement it in python as best I could directly from the piecewise function.
 
     Here is what I was able to implement for the recursive version of the Levenshtein distance algorithm:
 
@@ -594,14 +610,75 @@ def levenshteinDist(strA, strB):
    
 This works, but it is slow when the strings are longer. An approach using the matrix method to calculate the Levenshtein distance seems to be much more computationally efficient.
 
+A better approach to calculating the Levenshtein edit distance between two strings would be to use the [Wagner-Fischer Algorithm](https://en.wikipedia.org/wiki/Wagner%E2%80%93Fischer_algorithm).
+
+The Wagner-Fischer Algorithm works as follows, we take the two strings we want to compare and overlay them as row/column labels for a matrix $D = m+1 \times n+1$, where $m$ and $n$ are the lengths of the two strings respectively. The dimensions of $D$ are $m+1 \times n+1$ because we want to be able to compare the edit costs between a string and an empty string. We use this matrix to store the edit distances between all prefixes of each string. We compute the edit distance between each string in a similar way as we did recursively. We compare the costs of doing all of the different operations, and then at the index of the matrix we are in, we pick which edit operation will give us the minimum value based on the characters of the two strings that we are at. Doing this will eventually fill out a matrix where the last row, column index will contain the minimum edit distance between the two strings.
+
+The Code to implement the Wagner-Fischer Algorithm is as follows:
+
+This was a fairly quick and dirty implementation of this based on some pseudocode that I had seen places as well as from some videos and websites that described how we navigate the distance matrix. 
+
+```{python}
+### Wagner Fischer Algorithm for levenshtein distance
+def levenshteinDist(str1, str2):
+    m = len(str1)
+    n = len(str2)
+    # initialize distance matrix
+    distance = [[0 for j in range(n+1)] for i in range(m+1)]
+    # i, row
+    # j, column
+    # distance[i][j], value at row i, column j
+    
+    distance[0][0] = 0 # comparing two empty strings, 0 comparisons to start
+    
+    # fill in the first row (comparing any prefix of str2 to an empty str1)
+    for j in range(1,n+1):
+        distance[0][j] = j
+
+    # fill in the first column (comparing any prefix of str1 to an empty str2)
+    for i in range(1,m+1):
+        distance[i][0] = i
+    
+    # compare strings follow the same rules as recursion
+    # comparing at row, column pair distance(i,j)
+    
+    # for each row
+    for i in range(1,m+1): # row 0 is the empty string row
+        # go to colum j so we can compare prefixes at the row,column pair i,j in the respective strings
+        for j in range(1,n+1): # column 0 is the empty string column
+            
+            # calculate the substitution cost, 1 if the characters match, 0 if we don't have to change anything
+            if str1[i-1] == str2[j-1]: # characters match
+                sub = 0 # no substitution cost
+            else: # characters don't match
+                sub = 1 # substitution cost of 1
+            # insert edit cost at distance[i][j] based on the costs set during the recursive version
+            distance[i][j] = min(
+                distance[i][j-1]+ 1, # insert a character, add 1 because we are making an edit
+                distance[i-1][j]+ 1, # delete a character, add 1 because we are making an edit
+                distance[i-1][j-1] + sub # substitute or don't change the character
+            )
+    return distance[m-1][n-1] # return the edit distance
+
+```
+
+For the recursive implementation, we are making at least two recursive calls for each character in each string, but can go up to 3 recursive calls for each character in each string if none of the characters in the strings match. Thus we can say that the the worst case time complexity for the recursive approach is $O(3^{m+n})$, where $m$ and $n$ are the lengths of strings $1$ and $2$ respectively. 
+
+In the iterative approach, using the Wagner-Fischer algorithm, we have a for loop that iterates through each row, with a sub for loop that iterates through each column of the matrix. The total number of iterations we will have to complete is $m \cdot n$, each iteration we perform a singular $O(1)$ operation, which is inserting a value into the matrix. Thus the time complexity of the Wagner-Fischer algorithm is $O(m\cdot n)$, where $m$ and $n$ are the lengths of strings $1$ and $2$ respectively.
+
+Additionally, the Wagner-Fischer algorithm is much more space efficient than the recursive approach. Instead of having to store each recursive call, which can add up when we are comparing longer strings, we are simply storing a matrix of dimension $m+1 \times n+1$, where $m$ and $n$ are the lengths of strings $1$ and $2$ respectively..  
 
 5. Allow the user to add new words to the dictionary and update the hash table accordingly.
+
+The user is able to add new words to the dictionary with `add` and can view the dictionary with `dictionary`. The dictionary gets reset whenever you re-run the program.
 
 6. Handle collisions in the hash table using separate chaining.
 
     For this I modified my hash table data structure to handle chaining using a linked list instead of an array.
 
 7. Optimize the performance of your program in terms of time and space complexity.
+
+I did this by implementing the Wagner-Fischer Algorithm to calculate the Levenshtein edit distance after first implementing the recursive algorithm.
 
 8. Your program should be user-friendly and have a command-line interface.
    

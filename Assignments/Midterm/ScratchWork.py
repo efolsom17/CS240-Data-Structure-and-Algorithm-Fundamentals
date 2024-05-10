@@ -4,7 +4,6 @@ from cs240functions import HashTable
 from cs240functions import DoubleLinkedList
 from cs240functions import QuickSort
 from heapq import nsmallest
-import numpy as np # I hate that I have to import this, WHY CAN'T MATRICIES BE BUILT IN LIKE R
 import cmd
 
 
@@ -426,22 +425,50 @@ def levenshteinDist(strA, strB):
             )
 
 
-### WAgner Fischer Algorithm for levenshtein distance
-### I have to use numpy for this :((, wish python has built in matricies like R does. Way easier to work with, maybe could use pandas data frames, but never worked with those before don't want to break anything
+### Wagner Fischer Algorithm for levenshtein distance
 def levDist(str1, str2):
     m = len(str1)
     n = len(str2)
-    distance = [[None for j in range(n+1)] for i in range(m+1)]
+    # initialize distance matrix
+    distance = [[0 for j in range(n+1)] for i in range(m+1)]
+    # i, row
+    # j, column
+    # distance[i][j], value at row i, column j
     
-    distance[0][0] = 0 # comparing two empty strings
+    distance[0][0] = 0 # comparing two empty strings, 0 comparisons to start
     
-    # fill in the first row
+    # fill in the first row (comparing any prefix of str2 to an empty str1)
     for j in range(1,n+1):
         distance[0][j] = j
 
-    # fill in the first column
+    # fill in the first column (comparing any prefix of str1 to an empty str2)
     for i in range(1,m+1):
         distance[i][0] = i
+    
+    # compare strings follow the same rules as recursion
+    # comparing at row, column pair distance(i,j)
+    
+    # for each row
+    for i in range(1,m+1): # row 0 is the empty string row
+        # go to colum j so we can compare prefixes at the row,column pair i,j in the respective strings
+        for j in range(1,n+1): # column 0 is the empty string column
+            
+            # calculate the substitution cost, 1 if the characters match, 0 if we don't have to change anything
+            if str1[i-1] == str2[j-1]: # characters match
+                sub = 0 # no substitution cost
+            else: # characters don't match
+                sub = 1 # substitution cost of 1
+            # insert edit cost at distance[i][j] based on the costs set during the recursive version
+            # calculates minimum edit distance for the pair i,j
+            distance[i][j] = min(
+                distance[i][j-1]+ 1, # insert a character, add 1 because we are making an edit
+                distance[i-1][j]+ 1, # delete a character, add 1 because we are making an edit
+                distance[i-1][j-1] + sub # substitute or don't change the character
+            )
+    return distance[m][n]
+
+# This works now, kind of returns a slightly different matrix than what I had imagined it would be, but this is basically my quick and dirty implementation of it based on what I read about the algorithm
+    
     
 def misspelled(string):
         temp = string.split()# split the string into each word, store it as a temp variable
@@ -520,28 +547,46 @@ class SpellCheck(cmd.Cmd):
         return suggestions
 
 
-    def levenshteinDist(self, strA, strB):
-        i = len(strA) # length of string A
-        j = len(strB) # length of string B
-    
-        ## Check if either of the strings are empty ( base case )
+    def levenshteinDist(self, str1, str2):
+        m = len(str1)
+        n = len(str2)
+        # initialize distance matrix
+        distance = [[0 for j in range(n+1)] for i in range(m+1)]
+        # i, row
+        # j, column
+        # distance[i][j], value at row i, column j
+        
+        distance[0][0] = 0 # comparing two empty strings, 0 comparisons to start
+        
+        # fill in the first row (comparing any prefix of str2 to an empty str1)
+        for j in range(1,n+1):
+            distance[0][j] = j
 
-        if  i == 0: # string A is empty
-            return j # length of string B for number of delete edits needed
-        if j == 0: # string B is empty
-            return i
-    
-    ## Recursive case 1, both characters match, compare the rest of both strings
-    
-        if strA[i-1] == strB[j-1]: # if the last characters of strings A and B are the same
-            return levenshteinDist(strA[:-1],strB[:-1]) # recursively call the function on the remaining characters in both strings.
-    
-    # Recursive case 2, characters don't match, calculate the amount of edits needed to make the strings match:
-        return 1 + min( # adds 1 each time any of these are invoked, cost of doing the edit operation
-                levenshteinDist(strA, strB[:-1]), # insert character into string A from string B
-                levenshteinDist(strA[:-1], strB), # delete the last character from string A
-                levenshteinDist(strA[:-1], strB[:-1]) # substitute the last character in string A for the last character in string B.
+        # fill in the first column (comparing any prefix of str1 to an empty str2)
+        for i in range(1,m+1):
+            distance[i][0] = i
+        
+        # compare strings follow the same rules as recursion
+        # comparing at row, column pair distance(i,j)
+        
+        # for each row
+        for i in range(1,m+1): # row 0 is the empty string row
+            # go to colum j so we can compare prefixes at the row,column pair i,j in the respective strings
+            for j in range(1,n+1): # column 0 is the empty string column
+                
+                # calculate the substitution cost, 1 if the characters match, 0 if we don't have to change anything
+                if str1[i-1] == str2[j-1]: # characters match
+                    sub = 0 # no substitution cost
+                else: # characters don't match
+                    sub = 1 # substitution cost of 1
+                # insert edit cost at distance[i][j] based on the costs set during the recursive version
+                # calculates minimum edit distance for the pair i,j
+                distance[i][j] = min(
+                    distance[i][j-1]+ 1, # insert a character, add 1 because we are making an edit
+                    distance[i-1][j]+ 1, # delete a character, add 1 because we are making an edit
+                    distance[i-1][j-1] + sub # substitute or don't change the character
                 )
+        return distance[m][n]
         
         
     
