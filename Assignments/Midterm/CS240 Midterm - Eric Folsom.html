@@ -103,7 +103,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>These are my written solutions to the problems on the midterm. There will be a link to the attached python script for each problem (on Github). I will be presenting some code and outputs, but for the spell checker I will provide a link to the python script and my thoughts and approaches to including each requirement of the spell checker. You can view the work that I did via following <a href="https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/pull/33">Pull request</a> which shows all the commits that I have made on this assignment. Additionally I have included a <a href="https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/blob/Midterm/Assignments/Midterm/ScratchWork.py">scratchwork</a>##UPDATE LINK AFTER COMMITTING TO MAIN## python script which contains my thoughts and kind of shows my working process.</p>
+<p>These are my written solutions to the problems on the midterm. There will be a link to the attached python script for each problem (on Github). I will be presenting some code and outputs, but for the spell checker I will provide a link to the python script and my thoughts and approaches to including each requirement of the spell checker. You can view the work that I did via following <a href="https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/pull/33">Pull</a> <a href="">requests</a> which shows all the commits that I have made on this assignment. Additionally I have included a <a href="https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/blob/main/Assignments/Midterm/ScratchWork.py">scratchwork</a> python script which contains my thoughts and kind of shows my working process.</p>
 <section id="hanois-tower" class="level2">
 <h2 class="anchored" data-anchor-id="hanois-tower">Hanoi’s Tower</h2>
 <p>The Tower of Hanoi problem involves three rods and a number of disks of different sizes which can slide onto any rod. The puzzle starts with the disks stacked in ascending order of size on one rod, the smallest at the top, making a cone.</p>
@@ -120,6 +120,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="https://www.youtube.com/watch?v=rf6uf3jNjbo&amp;list=PLzj1WDt0HB4qDn6heuU8w6x0Hzd8EVX0q">YouTube video by Reducible</a> was incredibly helpful for my understanding of how the algorithm works and how the recursion for this problem functions. From about 16 minutes until 20 minutes there is en elegent animation which describes the recursion taking place in the algorithm.</li>
 <li><a href="https://www.youtube.com/watch?v=PGuRmqpr6Oo">YouTube video by Numberphile</a> Was helpful for understanding the math behind the algorithm and to help me identify the pattern going on with moving disks which was helpful for my iterative approach. There was a harmonic version of the algorithm which helped ingrain the pattern in my mind.</li>
 <li><a href="https://www.youtube.com/watch?v=2SUvWfNJSsM">Youtube video by 3blue1brown</a> Showed a solution to the problem using binary counting to solve the problem. This was very helpful for my iterative apprach, even though I did not use binary counting in my approach to solving the problem. Was also helpful for my reasoning on the recursive version. Once the recursion was explained in a “from the perspective of the bottom disk” manner everything pretty much clicked for me.</li>
+<li><a href="https://en.wikipedia.org/wiki/Tower_of_Hanoi">Wikipedia</a> is always a helpful resource when it comes to learning about what the Tower of Hanoi problem is.</li>
 </ul>
 </section>
 <section id="implement-a-solution-for-the-tower-of-hanoi-problem-using-recursion.-your-solution-should-move-the-disks-from-the-starting-peg-to-the-target-peg-using-the-auxiliary-peg." class="level4">
@@ -239,7 +240,7 @@ Disk 2: A -&gt; C
 Disk 1: B -&gt; C</code></pre>
 </div>
 </div>
-<p>I decided to go a bit further with this approach and implement a solution to the problem that uses stacks to store the state of the three rods, and then pops and pushes the disks to shift them between rods.</p>
+<p>I tried to go a bit further with this approach and implement a solution to the problem that uses stacks to store the state of the three rods, and then pops and pushes the disks to shift them between rods. This works somewhat as in it ends in the correct state, but there are some instances where the intermediate steps are either displayed wrong or in a manner that is hard to understand. That is why I have included both of the implementations of this.</p>
 <div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function to move the top value of stack 1 to the top of stack 2</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> moveStack(stack1 <span class="op">=</span> stack(), stack2 <span class="op">=</span> stack()):</span>
@@ -325,45 +326,97 @@ Ending Rod:
 </section>
 <section id="implement-a-solution-for-the-tower-of-hanoi-problem-using-an-iterative-approach." class="level4">
 <h4 class="anchored" data-anchor-id="implement-a-solution-for-the-tower-of-hanoi-problem-using-an-iterative-approach.">2. Implement a solution for the Tower of Hanoi problem using an iterative approach.</h4>
-<p>To implement a solution for the Tower of Hanoir problem using an iterative approach, I will try to build upon my recursive approach.</p>
+<p>To implement a solution for the Tower of Hanoir problem using an iterative approach, I will try to build upon my recursive approach. I plan to implement this solution using stacks to represent rods. I will represent disk sizes using an integer to represent the disk’s radius. The smallest disk will always be labeled <span class="math inline">\(1\)</span> and the largest disk will always be labeled <span class="math inline">\(n\)</span>.</p>
 <p>Lets begin by analysing the pattern of the solutions generated by our recursive function. We know that the number of steps required to solve the problem is given by <span class="math inline">\(2^n-1\)</span>. We can use the number of steps required to solve the puzzle as our iterator.</p>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi(<span class="dv">3</span>, <span class="st">'A'</span>,<span class="st">'B'</span>,<span class="st">'C'</span>)</span>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi(<span class="dv">3</span>, <span class="st">'S'</span>,<span class="st">'A'</span>,<span class="st">'E'</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">Output:</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">Step 1: Disk 1: A -&gt; C</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">Step 2: Disk 2: A -&gt; B</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">Step 3: Disk 1: C -&gt; B</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">Step 4: Disk 3: A -&gt; C</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">Step 5: Disk 1: B -&gt; A</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">Step 6: Disk 2: B -&gt; C</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">Step 7: Disk 1: A -&gt; C</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">Step 1: Disk 1: S -&gt; E</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">Step 2: Disk 2: S -&gt; A</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">Step 3: Disk 1: E -&gt; A</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">Step 4: Disk 3: S -&gt; E</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">Step 5: Disk 1: A -&gt; S</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">Step 6: Disk 2: A -&gt; E</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">Step 7: Disk 1: S -&gt; E</span></span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi(<span class="dv">4</span>,<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>)</span>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi(<span class="dv">4</span>,<span class="st">"S"</span>,<span class="st">"A"</span>,<span class="st">"E"</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">Output:</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">Step 1: Disk 1: A -&gt; B</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">Step 2: Disk 2: A -&gt; C</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">Step 3: Disk 1: B -&gt; C</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">Step 4: Disk 3: A -&gt; B</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">Step 5: Disk 1: C -&gt; A</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">Step 6: Disk 2: C -&gt; B</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">Step 7: Disk 1: A -&gt; B</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">Step 8: Disk 4: A -&gt; C</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">Step 9: Disk 1: B -&gt; C</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">Step 10: Disk 2: B -&gt; A</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">Step 11: Disk 1: C -&gt; A</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">Step 12: Disk 3: B -&gt; C</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">Step 13: Disk 1: A -&gt; B</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">Step 14: Disk 2: A -&gt; C</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co">Step 15: Disk 1: B -&gt; C</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">Step 1: Disk 1: S -&gt; A</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">Step 2: Disk 2: S -&gt; E</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">Step 3: Disk 1: A -&gt; E</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">Step 4: Disk 3: S -&gt; A</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">Step 5: Disk 1: E -&gt; S</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">Step 6: Disk 2: E -&gt; A</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">Step 7: Disk 1: S -&gt; A</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">Step 8: Disk 4: S -&gt; E</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">Step 9: Disk 1: A -&gt; E</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">Step 10: Disk 2: A -&gt; S</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">Step 11: Disk 1: E -&gt; S</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">Step 12: Disk 3: A -&gt; E</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">Step 13: Disk 1: S -&gt; A</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">Step 14: Disk 2: S -&gt; E</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co">Step 15: Disk 1: A -&gt; E</span></span>
 <span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Ignoring the actual number of the disk that is being moved, lets see if there is a pattern between what rods we are moving disks to and from. When <span class="math inline">\(n\)</span> is odd, the example where <span class="math inline">\(n=3\)</span>, we can break down the movements of the disks as such.</p>
 <p>In steps <span class="math inline">\(1\)</span>, <span class="math inline">\(4\)</span> and <span class="math inline">\(7\)</span>, we are moving a disk from the starting rod to the ending rod.</p>
 <p>In steps <span class="math inline">\(2\)</span> and <span class="math inline">\(5\)</span> we are moving a disk between the starting rod and the auxilary rod, swaping which direction we move the disks. In step <span class="math inline">\(2\)</span> we move the disk from the starting rod to the auxilary rod, and in step <span class="math inline">\(5\)</span> we move a disk from the auxillary rod to the starting rod.</p>
+<p>In steps <span class="math inline">\(3\)</span> and <span class="math inline">\(6\)</span> we are moving a disk between the auxillary rod and the ending rod. In step <span class="math inline">\(3\)</span> we are moving a disk from the top of the ending rod to the top of the auxilary rod. In step <span class="math inline">\(5\)</span> we are doing the opposite moving a disk from the top of the auxillary rod to the top of ending rod.</p>
+<p>Lets analyze the case where <span class="math inline">\(n=4\)</span>. In this case <span class="math inline">\(n\)</span> is even.</p>
+<p>In Steps <span class="math inline">\(1\)</span>, <span class="math inline">\(4\)</span>, <span class="math inline">\(7\)</span>, <span class="math inline">\(10\)</span>, and <span class="math inline">\(13\)</span> we are moving disks between the beginning rod and the auxillary rod. In all of these steps besides step <span class="math inline">\(10\)</span> we are moving the disks from the beginning rod to the auxillary rod, in step <span class="math inline">\(10\)</span> we do the opposite.</p>
+<p>In steps <span class="math inline">\(2\)</span>, <span class="math inline">\(5\)</span>, <span class="math inline">\(8\)</span>, <span class="math inline">\(11\)</span>, and <span class="math inline">\(14\)</span> we are moving disks between the beginning rod and the ending rod in alternating fashion starting with moving disks from the beginning rod to the ending rod.</p>
+<p>In steps <span class="math inline">\(3\)</span>, <span class="math inline">\(6\)</span>, <span class="math inline">\(9\)</span>, <span class="math inline">\(12\)</span>, and <span class="math inline">\(15\)</span> we are moving disks between the auxillary rod and the ending rod. For all of the steps except for step <span class="math inline">\(6\)</span> we are moving a disk from the auxillary rod to the ending rod, in step <span class="math inline">\(6\)</span> we do the opposite.</p>
+<p>Lets return to the example of <span class="math inline">\(n=3\)</span>. We can notice some equivalency classes beginning to form, notably of form <span class="math inline">\(a \mod 3\)</span>:</p>
+<p><span class="math inline">\(\{1,4,7\} \mod 3 = [1]\)</span></p>
+<p><span class="math inline">\(\{2,5\} \mod 3 = [2]\)</span></p>
+<p><span class="math inline">\(\{3,6\} \mod 3 = [0]\)</span></p>
+<p>When <span class="math inline">\(n=4\)</span>, we can expand upon these equivalency classes as such:</p>
+<p><span class="math inline">\(\{1,4,7,10,13\} \mod 3 = [1]\)</span></p>
+<p><span class="math inline">\(\{2,5,8,11,14\} \mod 3 = [2]\)</span></p>
+<p><span class="math inline">\(\{3,6,9,12,15\} \mod 3 = [0]\)</span></p>
+<p>This provides us with a clear pattern for what we must do to implement a solution to the Tower of Hanoi problem iteratively. The big difference in the pattern is where we start to move the first disk which is dependent on if <span class="math inline">\(n\)</span> is odd or even. If <span class="math inline">\(n\)</span> is odd, we move the first disk to the ending rod, if <span class="math inline">\(n\)</span> is even, we move the first disk to the auxillary rod.</p>
+<p>We can dive deeper as well into the steps by looking at the value of the disks as we move them. Lets start with the case where <span class="math inline">\(n = 3\)</span>.</p>
+<p><em>Steps <span class="math inline">\(1\)</span>, <span class="math inline">\(4\)</span> and <span class="math inline">\(7\)</span></em></p>
+<ul>
+<li>The value of the disk does not matter, always moving in the same direction.</li>
+</ul>
+<p><em>Steps <span class="math inline">\(2\)</span> and <span class="math inline">\(5\)</span></em></p>
+<ul>
+<li>In step <span class="math inline">\(2\)</span>, disk <span class="math inline">\(2\)</span> gets moved from start rod to auxillary rod (to the right).</li>
+<li>In step <span class="math inline">\(5\)</span>, disk <span class="math inline">\(1\)</span> gets moved from auxillary rod to start rod (to the left).</li>
+</ul>
+<p><em>Steps <span class="math inline">\(3\)</span> and <span class="math inline">\(6\)</span></em></p>
+<ul>
+<li>In step <span class="math inline">\(3\)</span>, disk <span class="math inline">\(1\)</span> gets moved from end rod to auxillary rod (to the left).</li>
+<li>In step <span class="math inline">\(6\)</span>, disk <span class="math inline">\(2\)</span> gets moved from the auxillary rod to the end rod (to the right).</li>
+</ul>
+<p>Notice that in the above, when <span class="math inline">\(\text{step#} \mod 3 \neq 1\)</span>, if we are moving the smallest disk, we move it to the left. If we are moving a larger disk, we move it to the right.</p>
+<p>Now lets look at the case when <span class="math inline">\(n=4\)</span>:</p>
+<p><em>Steps <span class="math inline">\(1\)</span>, <span class="math inline">\(4\)</span>, <span class="math inline">\(7\)</span>, <span class="math inline">\(10\)</span>, and <span class="math inline">\(13\)</span></em></p>
+<ul>
+<li>We move disk <span class="math inline">\(1\)</span> on steps <span class="math inline">\(1,7\)</span> and <span class="math inline">\(13\)</span>. Each time we move disk <span class="math inline">\(1\)</span> to the right.</li>
+<li>We move disk <span class="math inline">\(2\)</span> to the left on step <span class="math inline">\(10\)</span>.</li>
+<li>we move disk <span class="math inline">\(3\)</span> to the right on step <span class="math inline">\(4\)</span>.</li>
+</ul>
+<p><em>Steps <span class="math inline">\(2\)</span>, <span class="math inline">\(5\)</span>, <span class="math inline">\(8\)</span>, <span class="math inline">\(11\)</span>, and <span class="math inline">\(14\)</span></em></p>
+<ul>
+<li>We move disk <span class="math inline">\(1\)</span> on steps <span class="math inline">\(5\)</span> and <span class="math inline">\(11\)</span>. Both times we move disk <span class="math inline">\(1\)</span> to the left.</li>
+<li>We move disk <span class="math inline">\(2\)</span> on steps <span class="math inline">\(2\)</span> and <span class="math inline">\(14\)</span>. Both times we move disk <span class="math inline">\(2\)</span> to the right.</li>
+<li>We move disk <span class="math inline">\(4\)</span> to the right on step <span class="math inline">\(8\)</span>.</li>
+</ul>
+<p><em>Steps <span class="math inline">\(3\)</span>, <span class="math inline">\(6\)</span>, <span class="math inline">\(9\)</span>, <span class="math inline">\(12\)</span>, and <span class="math inline">\(15\)</span></em></p>
+<ul>
+<li>We move disk <span class="math inline">\(1\)</span> on steps <span class="math inline">\(3\)</span>, <span class="math inline">\(9\)</span>, and <span class="math inline">\(15\)</span>. Each time we move disk <span class="math inline">\(1\)</span> to the left.</li>
+<li>We move disk <span class="math inline">\(2\)</span> on step <span class="math inline">\(6\)</span>. We move disk <span class="math inline">\(2\)</span> to the right.</li>
+<li>We move disk <span class="math inline">\(3\)</span> on step <span class="math inline">\(12\)</span>. We move disk <span class="math inline">\(3\)</span> to the left.</li>
+</ul>
+<p>Now a real pattern starts to emerge. The equivalency classes created by the step numbers corresponds to which rods we are moving disks between, while the even/oddness of the disk tells us what direction we are moving the disks between.</p>
+<p>We can use the number of steps required to solve the problem as our iterator.</p>
+<p>Next we should first check if <span class="math inline">\(n\)</span> is even or odd and assign the first steps as such.</p>
 </section>
 <section id="compare-the-time-and-space-complexity-of-both-the-recursive-and-iterative-solutions-and-explain-the-differences." class="level4">
 <h4 class="anchored" data-anchor-id="compare-the-time-and-space-complexity-of-both-the-recursive-and-iterative-solutions-and-explain-the-differences.">3. Compare the time and space complexity of both the recursive and iterative solutions and explain the differences.</h4>

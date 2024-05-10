@@ -311,7 +311,36 @@ def levenshteinDist(strA, strB):
             levenshteinDist(strA[:-1], strB[:-1]) # substitute the last character in string A for the last character in string B.
             )
         
+
+def misspelled(string):
+        temp = string.split()# split the string into each word, store it as a temp variable
+        spellings = []# created an empty array the length of the temp variable ( call it spellings)
+        for word in temp:# for each word in the temp variable:
+         #   run dictionary.contains(word) and append the spellings array with the truth value
+            spellings.append(not(dictionary.contains(word)))
+        # return the spellings array
+        return spellings
     
+def do_check(string):
+    'Check the spelling of a string'
+    if not string: # ensure that a string has been passed through
+        print("You must enter a string") # tell the user to enter a string
+        return
+    print(f"Input: {string}")
+    spellings = misspelled(string) # returning just the string doesn't work, because if anything is true it exits the CLI loop.
+    string_words = string.split()
+    string_misspell = []
+    for i in range(0,len(spellings)-1):
+        string_misspell.append((string_words[i],spellings[i]))
+    for word, misspell in string_misspell:
+        if misspell:
+            print(f"{word} is spelled wrong") # tell the user the word is misspelled
+            suggestions = suggest(word) # get the suggestions for the word
+            print("Suggested replacements:") # print the suggested replacement words.
+            for item in suggestions:
+                print(item)
+    return
+  
 '''
 
 Okay how do I create a CLI program?????
@@ -325,7 +354,7 @@ class SpellCheck(cmd.Cmd):
         \n Check the spelling of a string using 'check string'\
         \n Add a new word to the dictionary with 'add word'\
         \n View the dictionary with 'dictionary'\
-        \n Exit with 'exit"
+        \n Exit with 'exit'"
     prompt = ""
     def do_exit(self, arg):
         'Exit the shell'
@@ -401,16 +430,18 @@ class SpellCheck(cmd.Cmd):
             return
         print(f"Input: {string}")
         spellings = self.misspelled(string) # returning just the string doesn't work, because if anything is true it exits the CLI loop.
-        for word, misspelled in zip(string.split(),spellings):
-            mispelled = 0
+        string_words = string.split()
+        string_misspell = []
+        for i in range(0,len(spellings)-1):
+            string_misspell.append((string_words[i],spellings[i]))
+        for word, misspelled in string_misspell:
             if misspelled:
-                misspelled +=1
                 print(f"{word} is spelled wrong") # tell the user the word is misspelled
                 suggestions = self.suggest(word) # get the suggestions for the word
                 print("Suggested replacements:") # print the suggested replacement words.
                 for item in suggestions:
                     print(item)
-            return
+        return
             
                 
     def do_add(self, string):
