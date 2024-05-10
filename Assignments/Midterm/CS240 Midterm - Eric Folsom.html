@@ -363,13 +363,17 @@ Ending Rod:
 <span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Ignoring the actual number of the disk that is being moved, lets see if there is a pattern between what rods we are moving disks to and from. When <span class="math inline">\(n\)</span> is odd, the example where <span class="math inline">\(n=3\)</span>, we can break down the movements of the disks as such.</p>
-<p>In steps <span class="math inline">\(1\)</span>, <span class="math inline">\(4\)</span> and <span class="math inline">\(7\)</span>, we are moving a disk from the starting rod to the ending rod.</p>
-<p>In steps <span class="math inline">\(2\)</span> and <span class="math inline">\(5\)</span> we are moving a disk between the starting rod and the auxilary rod, swaping which direction we move the disks. In step <span class="math inline">\(2\)</span> we move the disk from the starting rod to the auxilary rod, and in step <span class="math inline">\(5\)</span> we move a disk from the auxillary rod to the starting rod.</p>
-<p>In steps <span class="math inline">\(3\)</span> and <span class="math inline">\(6\)</span> we are moving a disk between the auxillary rod and the ending rod. In step <span class="math inline">\(3\)</span> we are moving a disk from the top of the ending rod to the top of the auxilary rod. In step <span class="math inline">\(5\)</span> we are doing the opposite moving a disk from the top of the auxillary rod to the top of ending rod.</p>
+<ul>
+<li><p>In steps <span class="math inline">\(1\)</span>, <span class="math inline">\(4\)</span> and <span class="math inline">\(7\)</span>, we are moving a disk from the starting rod to the ending rod.</p></li>
+<li><p>In steps <span class="math inline">\(2\)</span> and <span class="math inline">\(5\)</span> we are moving a disk between the starting rod and the auxilary rod, swaping which direction we move the disks. In step <span class="math inline">\(2\)</span> we move the disk from the starting rod to the auxilary rod, and in step <span class="math inline">\(5\)</span> we move a disk from the auxillary rod to the starting rod.</p></li>
+<li><p>In steps <span class="math inline">\(3\)</span> and <span class="math inline">\(6\)</span> we are moving a disk between the auxillary rod and the ending rod. In step <span class="math inline">\(3\)</span> we are moving a disk from the top of the ending rod to the top of the auxilary rod. In step <span class="math inline">\(5\)</span> we are doing the opposite moving a disk from the top of the auxillary rod to the top of ending rod.</p></li>
+</ul>
 <p>Lets analyze the case where <span class="math inline">\(n=4\)</span>. In this case <span class="math inline">\(n\)</span> is even.</p>
-<p>In Steps <span class="math inline">\(1\)</span>, <span class="math inline">\(4\)</span>, <span class="math inline">\(7\)</span>, <span class="math inline">\(10\)</span>, and <span class="math inline">\(13\)</span> we are moving disks between the beginning rod and the auxillary rod. In all of these steps besides step <span class="math inline">\(10\)</span> we are moving the disks from the beginning rod to the auxillary rod, in step <span class="math inline">\(10\)</span> we do the opposite.</p>
-<p>In steps <span class="math inline">\(2\)</span>, <span class="math inline">\(5\)</span>, <span class="math inline">\(8\)</span>, <span class="math inline">\(11\)</span>, and <span class="math inline">\(14\)</span> we are moving disks between the beginning rod and the ending rod in alternating fashion starting with moving disks from the beginning rod to the ending rod.</p>
-<p>In steps <span class="math inline">\(3\)</span>, <span class="math inline">\(6\)</span>, <span class="math inline">\(9\)</span>, <span class="math inline">\(12\)</span>, and <span class="math inline">\(15\)</span> we are moving disks between the auxillary rod and the ending rod. For all of the steps except for step <span class="math inline">\(6\)</span> we are moving a disk from the auxillary rod to the ending rod, in step <span class="math inline">\(6\)</span> we do the opposite.</p>
+<ul>
+<li><p>In Steps <span class="math inline">\(1\)</span>, <span class="math inline">\(4\)</span>, <span class="math inline">\(7\)</span>, <span class="math inline">\(10\)</span>, and <span class="math inline">\(13\)</span> we are moving disks between the beginning rod and the auxillary rod. In all of these steps besides step <span class="math inline">\(10\)</span> we are moving the disks from the beginning rod to the auxillary rod, in step <span class="math inline">\(10\)</span> we do the opposite.</p></li>
+<li><p>In steps <span class="math inline">\(2\)</span>, <span class="math inline">\(5\)</span>, <span class="math inline">\(8\)</span>, <span class="math inline">\(11\)</span>, and <span class="math inline">\(14\)</span> we are moving disks between the beginning rod and the ending rod in alternating fashion starting with moving disks from the beginning rod to the ending rod.</p></li>
+<li><p>In steps <span class="math inline">\(3\)</span>, <span class="math inline">\(6\)</span>, <span class="math inline">\(9\)</span>, <span class="math inline">\(12\)</span>, and <span class="math inline">\(15\)</span> we are moving disks between the auxillary rod and the ending rod. For all of the steps except for step <span class="math inline">\(6\)</span> we are moving a disk from the auxillary rod to the ending rod, in step <span class="math inline">\(6\)</span> we do the opposite.</p></li>
+</ul>
 <p>Lets return to the example of <span class="math inline">\(n=3\)</span>. We can notice some equivalency classes beginning to form, notably of form <span class="math inline">\(a \mod 3\)</span>:</p>
 <p><span class="math inline">\(\{1,4,7\} \mod 3 = [1]\)</span></p>
 <p><span class="math inline">\(\{2,5\} \mod 3 = [2]\)</span></p>
@@ -394,7 +398,7 @@ Ending Rod:
 <li>In step <span class="math inline">\(3\)</span>, disk <span class="math inline">\(1\)</span> gets moved from end rod to auxillary rod (to the left).</li>
 <li>In step <span class="math inline">\(6\)</span>, disk <span class="math inline">\(2\)</span> gets moved from the auxillary rod to the end rod (to the right).</li>
 </ul>
-<p>Notice that in the above, when <span class="math inline">\(\text{step#} \mod 3 \neq 1\)</span>, if we are moving the smallest disk, we move it to the left. If we are moving a larger disk, we move it to the right.</p>
+<p>Notice that in the above, when step#<span class="math inline">\(\mod 3 \neq 1\)</span>, if we are moving an odd disk, we move it to the left. If we are moving an even disk, we move it to the right.</p>
 <p>Now lets look at the case when <span class="math inline">\(n=4\)</span>:</p>
 <p><em>Steps <span class="math inline">\(1\)</span>, <span class="math inline">\(4\)</span>, <span class="math inline">\(7\)</span>, <span class="math inline">\(10\)</span>, and <span class="math inline">\(13\)</span></em></p>
 <ul>
@@ -414,9 +418,44 @@ Ending Rod:
 <li>We move disk <span class="math inline">\(2\)</span> on step <span class="math inline">\(6\)</span>. We move disk <span class="math inline">\(2\)</span> to the right.</li>
 <li>We move disk <span class="math inline">\(3\)</span> on step <span class="math inline">\(12\)</span>. We move disk <span class="math inline">\(3\)</span> to the left.</li>
 </ul>
-<p>Now a real pattern starts to emerge. The equivalency classes created by the step numbers corresponds to which rods we are moving disks between, while the even/oddness of the disk tells us what direction we are moving the disks between.</p>
+<p>Now a real pattern starts to emerge. The equivalency classes created by the step numbers corresponds to which rods we are moving disks between, while the even/oddness of the disk tells us what direction we are moving the disks between. The directions are switched depending on whether <span class="math inline">\(n\)</span> is even or odd.</p>
 <p>We can use the number of steps required to solve the problem as our iterator.</p>
 <p>Next we should first check if <span class="math inline">\(n\)</span> is even or odd and assign the first steps as such.</p>
+<p><strong>Code Implementation</strong></p>
+<p>Lets try to implement the above in pseudocode:</p>
+<pre class="{plain}"><code>going to need to modify my stackMove function to compare the values of things at the top of stacks
+
+function hanoitoweriterative(n,starting rod, auxillary rod, end rod):
+    create stacks for each rod
+    fill in the first rod with values 1 through n, with n on the bottom
+    add some labels for the rods s,a,e = (Start, Auxilary, End)
+
+    if number of disks are even:
+        swap the end pole and the auxilary pole
+
+    for i in range (1, 2**n -1): # itll take 2^n -1 steps to solve the problem, iterate over this range.
+        EQUIVALENCY CLASSES WE DEFINED
+        if (i % 3 == 1): 
+            check even/odd of disk
+            if value of disk % 2 ! = 0 
+            move between start and end rod, going left (auxillary if n is even,  direction opposite)
+            else:
+            go in the other direction between the same rods as you just did
+
+        elif (i % 3 == 2):
+            check even/odd of disk
+            if value of disk % 2 ! = 0 
+            move between start and auxillary rod, going left (end if n is even, direction direction opposite)
+            else:
+            go in the other direction between the same rods as you just did
+
+        elif (i % 3 == 0):
+            check even/odd of disk
+            if value of disk % 2 ! = 0 
+            move between auxillary and end rod, going left (if n is even, direction direction opposite)
+            else:
+            go in the other direction between the same rods as you just did</code></pre>
+<p>Now lets implement this in python:</p>
 </section>
 <section id="compare-the-time-and-space-complexity-of-both-the-recursive-and-iterative-solutions-and-explain-the-differences." class="level4">
 <h4 class="anchored" data-anchor-id="compare-the-time-and-space-complexity-of-both-the-recursive-and-iterative-solutions-and-explain-the-differences.">3. Compare the time and space complexity of both the recursive and iterative solutions and explain the differences.</h4>

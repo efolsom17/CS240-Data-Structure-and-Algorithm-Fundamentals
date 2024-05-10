@@ -260,19 +260,19 @@ Step 15: Disk 1: A -> E
 
 Ignoring the actual number of the disk that is being moved, lets see if there is a pattern between what rods we are moving disks to and from. When $n$ is odd, the example where $n=3$, we can break down the movements of the disks as such.
 
-In steps $1$, $4$ and $7$, we are moving a disk from the starting rod to the ending rod.
+- In steps $1$, $4$ and $7$, we are moving a disk from the starting rod to the ending rod.
 
-In steps $2$ and $5$ we are moving a disk between the starting rod and the auxilary rod, swaping which direction we move the disks. In step $2$ we move the disk from the starting rod to the auxilary rod, and in step $5$ we move a disk from the auxillary rod to the starting rod. 
+- In steps $2$ and $5$ we are moving a disk between the starting rod and the auxilary rod, swaping which direction we move the disks. In step $2$ we move the disk from the starting rod to the auxilary rod, and in step $5$ we move a disk from the auxillary rod to the starting rod. 
 
-In steps $3$ and $6$ we are moving a disk between the auxillary rod and the ending rod. In step $3$ we are moving a disk from the top of the ending rod to the top of the auxilary rod. In step $5$ we are doing the opposite moving a disk from the top of the auxillary rod to the top of ending rod.
+- In steps $3$ and $6$ we are moving a disk between the auxillary rod and the ending rod. In step $3$ we are moving a disk from the top of the ending rod to the top of the auxilary rod. In step $5$ we are doing the opposite moving a disk from the top of the auxillary rod to the top of ending rod.
 
 Lets analyze the case where $n=4$. In this case $n$ is even. 
 
-In Steps $1$, $4$, $7$, $10$, and $13$ we are moving disks between the beginning rod and the auxillary rod. In all of these steps besides step $10$ we are moving the disks from the beginning rod to the auxillary rod, in step $10$ we do the opposite.
+- In Steps $1$, $4$, $7$, $10$, and $13$ we are moving disks between the beginning rod and the auxillary rod. In all of these steps besides step $10$ we are moving the disks from the beginning rod to the auxillary rod, in step $10$ we do the opposite.
 
-In steps $2$, $5$, $8$, $11$, and $14$ we are moving disks between the beginning rod and the ending rod in alternating fashion starting with moving disks from the beginning rod to the ending rod.
+- In steps $2$, $5$, $8$, $11$, and $14$ we are moving disks between the beginning rod and the ending rod in alternating fashion starting with moving disks from the beginning rod to the ending rod.
 
-In steps $3$, $6$, $9$, $12$, and $15$ we are moving disks between the auxillary rod and the ending rod. For all of the steps except for step $6$ we are moving a disk from the auxillary rod to the ending rod, in step $6$ we do the opposite. 
+- In steps $3$, $6$, $9$, $12$, and $15$ we are moving disks between the auxillary rod and the ending rod. For all of the steps except for step $6$ we are moving a disk from the auxillary rod to the ending rod, in step $6$ we do the opposite. 
 
 Lets return to the example of $n=3$. We can notice some equivalency classes beginning to form, notably of form $a \mod 3$:
 
@@ -308,7 +308,7 @@ We can dive deeper as well into the steps by looking at the value of the disks a
 - In step $3$, disk $1$ gets moved from end rod to auxillary rod (to the left).
 - In step $6$, disk $2$ gets moved from the auxillary rod to the end rod (to the right).
 
-Notice that in the above, when $\text{step#} \mod 3 \neq 1$, if we are moving the smallest disk, we move it to the left. If we are moving a larger disk, we move it to the right. 
+Notice that in the above, when step#$\mod 3 \neq 1$, if we are moving an odd disk, we move it to the left. If we are moving an even disk, we move it to the right. 
 
 Now lets look at the case when $n=4$:
 
@@ -331,12 +331,57 @@ Now lets look at the case when $n=4$:
 - We move disk $2$ on step $6$. We move disk $2$ to the right.
 - We move disk $3$ on step $12$. We move disk $3$ to the left.
 
-Now a real pattern starts to emerge. The equivalency classes created by the step numbers corresponds to which rods we are moving disks between, while the even/oddness of the disk tells us what direction we are moving the disks between. 
+Now a real pattern starts to emerge. The equivalency classes created by the step numbers corresponds to which rods we are moving disks between, while the even/oddness of the disk tells us what direction we are moving the disks between. The directions are switched depending on whether $n$ is even or odd.
 
 We can use the number of steps required to solve the problem as our iterator.
 
 Next we should first check if $n$ is even or odd and assign the first steps as such.
 
+**Code Implementation**
+
+Lets try to implement the above in pseudocode:
+
+```{plain}
+going to need to modify my stackMove function to compare the values of things at the top of stacks
+
+function hanoitoweriterative(n,starting rod, auxillary rod, end rod):
+    create stacks for each rod
+    fill in the first rod with values 1 through n, with n on the bottom
+    add some labels for the rods s,a,e = (Start, Auxilary, End)
+
+    if number of disks are even:
+        swap the end pole and the auxilary pole
+
+    for i in range (1, 2**n -1): # itll take 2^n -1 steps to solve the problem, iterate over this range.
+        EQUIVALENCY CLASSES WE DEFINED
+        if (i % 3 == 1): 
+            check even/odd of disk
+            if value of disk % 2 ! = 0 
+            move between start and end rod, going left (auxillary if n is even,  direction opposite)
+            else:
+            go in the other direction between the same rods as you just did
+
+        elif (i % 3 == 2):
+            check even/odd of disk
+            if value of disk % 2 ! = 0 
+            move between start and auxillary rod, going left (end if n is even, direction direction opposite)
+            else:
+            go in the other direction between the same rods as you just did
+
+        elif (i % 3 == 0):
+            check even/odd of disk
+            if value of disk % 2 ! = 0 
+            move between auxillary and end rod, going left (if n is even, direction direction opposite)
+            else:
+            go in the other direction between the same rods as you just did
+```
+
+
+Now lets implement this in python:
+
+```{python, hanoi tower iterative}
+
+```
 
 #### 3. Compare the time and space complexity of both the recursive and iterative solutions and explain the differences.
 
