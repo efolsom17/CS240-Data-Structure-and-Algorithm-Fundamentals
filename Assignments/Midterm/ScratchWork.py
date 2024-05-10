@@ -68,21 +68,18 @@ def moveStack(stack1 = stack(), stack2 = stack()):
     
 
 ## Okay after consulting chatgpt about this I need to have a function that creates the stacks then a modified version that works with the function I just wrote:
-# will also have to modify the moveStack function to be moveDisk and print what disk is being moved if I want to show the steps.
-def moveDisk(stack1 = stack(), stack2 = stack()):
-    #print(f"BEFORE:\nStarting Rod:\n{stack1}\nEnding Rod:\n{stack2}")
-    temp = stack1.pop()
-    stack2.push(temp)
-    print(f"AFTER\nStarting Rod:\n{stack1}\nEnding Rod:\n{stack2}\
-        \n Moved disk {temp}")
 
 # tower of of hanoi recursive solution that works on the stacks 
 def tower_of_hanoi_stacks(n, starting_rod, middle_rod, ending_rod): # specify the starting rods you want
     if n == 1: # Base case
-        moveDisk(starting_rod, ending_rod)
+        moveStack(starting_rod, ending_rod)
+        print(f"Starting Rod:\n{starting_rod}\nAuxilary Rod:\n{middle_rod}\nEnding Rod:\n{ending_rod}\
+        \n Moved disk {n}")
     else: # if we are not on the last rod
         tower_of_hanoi_stacks(n-1, starting_rod, ending_rod, middle_rod) # recursive call to move the n-1 disks to the middle rod using the ending rod as the axullary rod
-        moveDisk(starting_rod, ending_rod) # move the current disk
+        moveStack(starting_rod, ending_rod) # move the current disk
+        print(f"Starting Rod:\n{starting_rod}\nAuxilary Rod:\n{middle_rod}\nEnding Rod:\n{ending_rod}\
+        \n Moved disk {n}")
         tower_of_hanoi_stacks(n-1, middle_rod, starting_rod, ending_rod) # move the remaining n-1 disks to the ending rod using the starting rod as the auxillary rod
 
 

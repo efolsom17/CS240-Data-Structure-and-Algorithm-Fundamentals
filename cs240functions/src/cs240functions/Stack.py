@@ -36,5 +36,6 @@ class Stack:
         return self.stack[-1] # read the last index in the stack array.
     
     def __repr__(self):
+        return self.stack
         # Create a visual representation of the stack
-        return '\n'.join(['| {} |'.format(item) for item in reversed(self.stack)]) + '\n-------'
+        #return '\n'.join(['| {} |'.format(item) for item in reversed(self.stack)]) + '\n-------'

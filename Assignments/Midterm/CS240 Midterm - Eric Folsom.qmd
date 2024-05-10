@@ -78,11 +78,21 @@ Note that the base case (Move the <span style="color:blue;">Blue</span> disk fro
 
   **Formulating an Algorithm**
 
-A good way to approch formulating an algorithm for this problem is look at things from the perspective of the disk that is on the bottom of a stack of disks (in the above diagram it is the <span style="color:blue;">Blue</span> disk). In order for that disk to move, we must first move all the disks that are on top of it from one disk to another disk.
+A good way to approach formulating an algorithm for this problem is look at things from the perspective of the disk that is on the bottom of a stack of disks (in the above diagram it is the <span style="color:blue;">Blue</span> disk). In order for that disk to move, we must first move the stack of disks that are on top of it from one rod to another rod.
 
- Lets use the example of a $3$ disk variation of the problem. If we have a $3$ disk stack, to move the bottom disk, we have to move the top $2$ disks off of it. We can only move one disk at a time however, so to then move the stack of $2$ disks on top of the third disk, we have to move the singular disk first. Once we have moved the singular disk, we can now go back to the starting stack of disks where we have a stack of $2$ disks. From here we repeat the process, we have a stack of $2$ disks, to move the bottom disk, we have to move the singular disk above it. Now there is only one valid spot rod for the top disk to go to, so we move it to that rod. Returning to the starting rod, there are no valid spots for us to move the disk to, since the remaing disk on the starting rod is assumed to be the biggest rod. We can look at the middle rod now, from here, the only valid move is to move the disk back to the starting rod, but if wo did that, we would have just undone the previous step. So let's instead go to the last rod. Our goal right now is to move the disk on the starting rod to an open rod. The only way to do this is to move the smallest disk, which is currently on the ending rod. So we now have to move the disk that is on the ending rod onto the middle rod to open up space for our largest disk to be moved onto an open rod. Now we are in a similar situation that we have been before, we have a stack of $2$ disks, an open rod, and a rod that we want to move the stack of $2$ disks onto, which in this case is the rod containing the largest disk. From here since we have moved a stack of $2$ disks before, we move it again following the same process.
+Lets use the example of a $3$ disk variation of the problem. If we have a $3$ disk stack, to move the bottom disk, we have to move the top $2$ disks off of it. We can only move one disk at a time however, so to remove the stack of $2$ disks from the third disk, we have to move the singular disk first. 
+ 
+Once we have moved the singular disk, we can now go back to the starting stack of disks where we now have a stack of $2$ disks. From here we repeat the process, we have a stack of $2$ disks, to move the bottom disk, we have to move the singular disk above it. 
+ 
+Now there is only one valid rod for the top disk to go to, so we move it to that rod. Returning to the starting rod, there are no valid spots for us to move the disk to, since the remaing disk on the starting rod is assumed to be the biggest rod. 
+ 
+We can now look at the middle rod, from here, the only valid move is to move the disk back to the starting rod, but if we did that, we would have just undone the previous step. So let's instead go to the last rod.
+ 
+Our goal right now is to move the disk on the starting rod to an open rod. The only way to do this is to move the smallest disk, which is currently on the ending rod (if we moved the middle size disk we would have to put it on top of the largest disk). So we now have to move the disk that is on the ending rod onto the middle rod to open up space for our largest disk to be moved onto an open rod.
+ 
+We now find ourselves in a familiar situation, we have a stack of $2$ disks, an open rod, and a rod that we want to move the stack of $2$ disks onto, which in this case is the rod containing the largest disk. From here since we have moved a stack of $2$ disks before, we move it again following the same process, just using different rods that we did before.
 
-We already figured out what our base case is, moving a single disk from one rod to another available rod ( a rod that is either empty or only has disks larger than the disk we are trying to move).
+We already figured out what our base case is, moving a single disk from one rod to another available rod (a rod that is either empty or only has disks larger than the disk we are trying to move).
 
 Next we need to think of the recursive step, which in this case is moving the $n-1=3-1=2$ remaining disks to another rod, using an auxilary rod. 
 
@@ -152,21 +162,19 @@ def moveStack(stack1 = stack(), stack2 = stack()):
     temp = stack1.pop()
     stack2.push(temp)
 
-# modified the moveStack function to be moveDisk and print what disk is being moved to show the steps.
-def moveDisk(stack1 = stack(), stack2 = stack()):
-    temp = stack1.pop()
-    stack2.push(temp)
-    print(f"Starting Rod:\n{stack1}\nEnding Rod:\n{stack2}\
-        \n Moved disk {temp}")
-
 # tower of of hanoi recursive solution that works on the stacks 
 def tower_of_hanoi_stacks(n, starting_rod, middle_rod, ending_rod): # specify the starting rods you want
-    if n == 1: # Base case, 1 disk on the rod, you can just move it to any open rod
-        moveDisk(starting_rod, ending_rod)
-    else: # if we are not on the last disk on the rod
+    if n == 1: # Base case
+        moveStack(starting_rod, ending_rod)
+        print(f"Starting Rod:\n{starting_rod}\nAuxilary Rod:\n{middle_rod}\nEnding Rod:\n{ending_rod}\
+        \n Moved disk {n}")
+    else: # if we are not on the last rod
         tower_of_hanoi_stacks(n-1, starting_rod, ending_rod, middle_rod) # recursive call to move the n-1 disks to the middle rod using the ending rod as the axullary rod
-        moveDisk(starting_rod, ending_rod) # move the current disk
+        moveStack(starting_rod, ending_rod) # move the current disk
+        print(f"Starting Rod:\n{starting_rod}\nAuxilary Rod:\n{middle_rod}\nEnding Rod:\n{ending_rod}\
+        \n Moved disk {n}")
         tower_of_hanoi_stacks(n-1, middle_rod, starting_rod, ending_rod) # move the remaining n-1 disks to the ending rod using the starting rod as the auxillary rod
+
 
 
 # going to need to call the above:
