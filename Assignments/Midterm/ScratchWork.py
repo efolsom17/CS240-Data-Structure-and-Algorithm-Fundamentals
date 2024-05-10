@@ -181,9 +181,9 @@ def moveDisk(start, end, s,e):
 
 def tower_of_hanoi_it(n, start, aux, end):
     # initialize stacks
-    start = stack()
-    aux = stack()
-    end = stack()
+    start = stack(n)
+    aux = stack(n)
+    end = stack(n)
     
     rods = [start, aux, end]
     
