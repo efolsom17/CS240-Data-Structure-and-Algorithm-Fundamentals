@@ -88,7 +88,7 @@ def tower_of_hanoi_stacks(n, starting_rod, middle_rod, ending_rod): # specify th
 
 # going to need to call the above:
 
-def towergame(n):# calling this towergame for now it is the hanoi stuff with stacks and it will initialize the number of disks
+def TowerOfHanoi(n):# Tower of Hanoi with stacks and it will initialize the number of disks
     # n = number of disks
     
     ## initialize the starting, auxillary, and ending rods
