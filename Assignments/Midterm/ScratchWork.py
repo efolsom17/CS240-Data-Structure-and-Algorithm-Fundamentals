@@ -118,8 +118,103 @@ def TowerOfHanoi(n):# Tower of Hanoi with stacks and it will initialize the numb
 7 mod 3 = 1
 '''
 
+# Tower of hanoi iterative
 
+'''
+P-code:
 
+going to need to modify my stackMove function to compare the values of things at the top of stacks ( i can bring back moveDisk)
+
+function hanoitoweriterative(n,starting rod, auxillary rod, end rod):
+    create stacks for each rod
+    fill in the first rod with values 1 through n, with n on the bottom
+    add some labels for the rods s,a,e = (Start, Auxilary, End)
+
+    if number of disks are even:
+        swap the end pole and the auxilary pole
+
+    for i in range (1, 2**n -1): # itll take 2^n -1 steps to solve the problem, iterate over this range.
+        EQUIVALENCY CLASSES WE DEFINED
+        if (i % 3 == 1): 
+            check even/odd of disk
+            if value of disk % 2 ! = 0 
+            move between start and end rod, going left (auxillary if n is even,  direction opposite)
+            else:
+            go in the other direction between the same rods as you just did
+            
+            actually it would be better to compare the size (value ) of the discs that are on the rods that we are trying to move disks
+            to and from. This will determine what move we can make. 
+
+        elif (i % 3 == 2):
+            check even/odd of disk
+            if value of disk % 2 ! = 0 
+            move between start and auxillary rod, going left (end if n is even, direction opposite)
+            else:
+            go in the other direction between the same rods as you just did
+
+        elif (i % 3 == 0):
+            check even/odd of disk
+            if value of disk % 2 ! = 0 
+            move between auxillary and end rod, going left (if n is even,  direction opposite)
+            else:
+            go in the other direction between the same rods as you just did
+'''
+
+## The grand return of moveDisk!!!!1
+## moves a disk between two poles based on the rules of hanoi's tower.
+
+def moveDisk(start, end, s,e):
+    topstart = start.peek()
+    topend = end.peek()
+    
+    # if start is empty
+    if topstart == None:
+        start.push(topend)
+        print(f"Disk {topend}: {end} -> {start}") 
+    
+    # if end is empty
+    elif topend == None:
+        end.push(topstart)
+        print(f"Disk {topstart}: {start} -> {end}")
+        
+    # compare the values and move them accordingly, 
+
+def tower_of_hanoi_it(n, start, aux, end):
+    # initialize stacks
+    start = stack()
+    aux = stack()
+    end = stack()
+    
+    rods = [start, aux, end]
+    
+    # fill in starting stack (rod)
+    for i in range(n,0,-1):
+        start.push(i)
+    
+    #labels for printing
+    label = ['Start', 'Aux', 'End']
+    
+    # check if n is even or odd, have to change some things if that is the case
+    if (n % 2 == 0):
+        # swap auxilary and end rods, the first step that will be made
+        temp = e 
+        e = a
+        a = temp
+    
+    
+    
+    #iterate through the number of moves
+    for i in range(1,int(2**n)): # range 1 to 2^n-1, but because of how python's range function works we can just write 2^n
+        if (i % 3 == 1):
+            pass
+        elif (i % 3 == 2):
+            pass
+        
+        elif (i % 3 == 0):
+            pass
+        
+        
+    
 '''
 Tower of Hanoi Resources:
 
