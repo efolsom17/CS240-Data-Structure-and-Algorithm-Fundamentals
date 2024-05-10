@@ -512,15 +512,79 @@ For this problem I will be making the following assumptions:
 
 If there are only 3 rods, we will follow the same steps that we followed to get a solution using the original variation.
 
-If there are more than 3 rods, we will find the number of auxillary rods and then use that information to determine how we move disks between rods. The important piece will be 
+If there are more than 3 rods, we will find the number of auxillary rods and then use that information to determine how we move disks between rods. 
+
+If we have $n$ disks and $r$ rods, to move to the end rod from the start rod we will still have to move the $n-1$ rods from the starting disk to the auxillary disks. Then move the remaining disk to the ending rod. The simplest solution I can think of to this problem would be to take my recursive approach and rename the auxilary rod input to be auxillary rods an and then each time we move a disk to the auxillary rods we don't specify which auxillary rod we are moving it to, just state that we are moving it to some auxillary rod. This solution however, feels like cheating.
+
+Okay, lets start by looking at the case when $r=4$. Since we assume a fixed $n$, there are $3$ disks to move to the ending rod. We label the disks in descending order, $1,2,$ and $3$. The order of operations will be as follows:
+
+1. Move disk $1$ to an open auxillary rod. ( 3 open rods total, 2 auxillary open)
+2. Move disk $2$ to an open auxillary rod. ( 2 open rods total, 1 auxillary open)
+3. Move disk $3$ to the end rod. 
+4. Move disk $2$ to the end rod. 
+5. Move disk $1$ to the end rod.
+
+Now lets look at the case where $r = 5$. The order of operations is as follows:
+
+1. Move disk $1$ to an open auxillary rod. (4 open rods total, 3 auxillary open)
+2. Move disk $2$ to an open auxillary rod. (3 open rods total, 2 auxillary open)
+3. Move disk $3$ to the end rod.
+4. Move disk $2$ to the end rod.
+5. Move disk $1$ to the end rod.
+
+With the above assumptions, this will hold for all $r >3$
+
+Here is how I would implement this in python. I am going to utilize my pre-existing `tower_of_hanoi()` function when the number of rods is $3$, I will throw an error if the number of rods is less than $3$, and if the number of rods is greater than $3$ I will print the steps above and indicate how many available auxillary disks there are.
+
+```{python}
+# Tower of Hanoi more than 3 pegs, but only 3 disks
+
+def THanoiG3R(n): # number of rods, done with three disks.
+    
+    if n <3:
+        return f"Puzzle must have at least 3 pegs"
+    if n == 3:
+        return tower_of_hanoi(3, "Start", "Auxillary", "End")
+    if n > 3:
+        nopen = n -1 
+        auxopen = nopen-1
+        print(f"Disk 1: Start -> Auxillary ({auxopen} available)")
+        auxopen -= 1
+        print(f"Disk 2: Start -> Auxillary ({auxopen} available)")
+        print(f"Disk 3: Start -> End")
+        print(f"Disk 2: Auxillary -> End")
+        print(f"Disk 1: Auxillary -> End")
+```
+
+Here is a demonstration of the function
+
+```{python}
+THanoiG3R(2)
+```
+```{python}
+THanoiG3R(3)
+```
+```{python}
+THanoiG3R(4)
+```
+```{python}
+THanoiG3R(5)
+```
+
+
 
 #### 6. (Optional, but extra credit) Create a variation of the Tower of Hanoi problem where the user can specify the number of disks and the number of pegs. Your solution should still move all the disks from the starting peg to the target peg while adhering to the rules of the Tower of Hanoi problem.
 
-
+A recursive solution to this is to modify and implement the [Frame-Stewart algorithm](https://en.wikipedia.org/wiki/Tower_of_Hanoi#Frame%E2%80%93Stewart_algorithm). The representation of it on Wikipedia solves for the minimum number of steps, but apparently it has not been proven. I will not be implementing it for this midterm because I have ran out of time and my brain is starting to melt. 
 
 ## Spell Checker
 
 My Spell Checker Program can be found [here](https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/blob/main/Assignments/Midterm/SpellCheck.py). It is written in python. I have never written a CLI program before this so it is a little rough around the edges in some places, but I gave it my best attempt.
+
+#### Resources Used
+
+
+#### Code Implementaion and responses/thoughts on the objectives of the program.
 
 Create a spell checker console program that uses a hash table data structure to store a dictionary of words. Your program should be able to:
 
@@ -570,16 +634,16 @@ def misspelled(string):
     return spellings
 ```
 
-    I utilized this list of boolean values to help me with implementing my suggestion feature.
+I utilized this list of boolean values to help me with implementing my suggestion feature.
 
 
 3. Implement a suggestion feature that suggests possible correct spellings for the misspelled words based on edit distance.
    
-   For this I decided to create a list of pairs of the string and its corresponding boolean value returned from invoking the `misspelled()` function on the string. I then took all the values which according to `misspelled()` were misspelled and compared the edit distance to each string in the dictionary. I stored the key, edit distance pair in an array and then chose the 5 strings with the smallest edit distances. I computed the edit distance using levenshtein's distance algorithm. Initially I did it using the naive recursive method, but I adapted it to give it my best shot at dynamic programming as described in the following videos. 
+   For this I decided to create a list of pairs of the string and its corresponding boolean value returned from invoking the `misspelled()` function on the string. I then took all the values which according to `misspelled()` were misspelled and compared the edit distance to each string in the dictionary. I stored the key, edit distance pair in an array and then chose the 5 strings with the smallest edit distances. I computed the edit distance using a Levenshtein distance algorithm. Initially I did it using the naive recursive method, but I adapted it to use the Wagner-Fischer algorithm to calculate the edit distance. 
 
 4. Implement a Levenshtein distance algorithm to compute the edit distance between two words.
    
-   To implement a Levenshtein distance algorithm to calculate the edit distance between two strings I first went to [Wikipedia](https://en.wikipedia.org/wiki/Levenshtein_distance). The piecewise representation of this algorithm made a lot of sense to me, so I decided to implement it in python as best I could directly from the piecewise function.
+   To implement a Levenshtein distance algorithm to calculate the edit distance between two strings I first went to [Wikipedia](https://en.wikipedia.org/wiki/Levenshtein_distance) to learn what the Levenshtein distance was (also edit distances in general). The piecewise representation of this algorithm made a lot of sense to me, so I decided to implement it in python as best I could directly from the piecewise function.
 
     Here is what I was able to implement for the recursive version of the Levenshtein distance algorithm:
 
