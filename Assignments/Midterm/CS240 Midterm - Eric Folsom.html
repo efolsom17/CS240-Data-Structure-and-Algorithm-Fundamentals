@@ -181,19 +181,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>We can demonstrate this as follows:</p>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi(<span class="dv">3</span>,<span class="st">"A"</span>,<span class="st">"C"</span>,<span class="st">"B"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi(<span class="dv">2</span>,<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Disk 1: A -&gt; B
 Disk 2: A -&gt; C
-Disk 1: B -&gt; C
-Disk 3: A -&gt; B
-Disk 1: C -&gt; A
-Disk 2: C -&gt; B
-Disk 1: A -&gt; B</code></pre>
+Disk 1: B -&gt; C</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi(<span class="dv">4</span>,<span class="st">"A"</span>,<span class="st">"C"</span>,<span class="st">"B"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi(<span class="dv">3</span>,<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Disk 1: A -&gt; C
 Disk 2: A -&gt; B
@@ -201,30 +197,69 @@ Disk 1: C -&gt; B
 Disk 3: A -&gt; C
 Disk 1: B -&gt; A
 Disk 2: B -&gt; C
-Disk 1: A -&gt; C
-Disk 4: A -&gt; B
-Disk 1: C -&gt; B
-Disk 2: C -&gt; A
-Disk 1: B -&gt; A
-Disk 3: C -&gt; B
-Disk 1: A -&gt; C
-Disk 2: A -&gt; B
-Disk 1: C -&gt; B</code></pre>
+Disk 1: A -&gt; C</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi(<span class="dv">2</span>,<span class="st">"A"</span>,<span class="st">"C"</span>,<span class="st">"B"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi(<span class="dv">4</span>,<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Disk 1: A -&gt; C
-Disk 2: A -&gt; B
-Disk 1: C -&gt; B</code></pre>
+<pre><code>Disk 1: A -&gt; B
+Disk 2: A -&gt; C
+Disk 1: B -&gt; C
+Disk 3: A -&gt; B
+Disk 1: C -&gt; A
+Disk 2: C -&gt; B
+Disk 1: A -&gt; B
+Disk 4: A -&gt; C
+Disk 1: B -&gt; C
+Disk 2: B -&gt; A
+Disk 1: C -&gt; A
+Disk 3: B -&gt; C
+Disk 1: A -&gt; B
+Disk 2: A -&gt; C
+Disk 1: B -&gt; C</code></pre>
 </div>
 </div>
-<p>This <a href="https://www.youtube.com/watch?v=rf6uf3jNjbo&amp;list=PLzj1WDt0HB4qDn6heuU8w6x0Hzd8EVX0q">YouTube video by Reducible</a> was incredibly helpful for my understanding of how the algorithm works and how the recursion for this problem functions. From about 16 minutes until 20 minutes there is en elegent animation which describes the recursion taking place in the algorithm.</p>
+<p>This <a href="https://www.youtube.com/watch?v=rf6uf3jNjbo&amp;list=PLzj1WDt0HB4qDn6heuU8w6x0Hzd8EVX0q">YouTube video by Reducible</a> was incredibly helpful for my understanding of how the algorithm works and how the recursion for this problem functions. From about 16 minutes until 20 minutes there is en elegent animation which describes the recursion taking place in the algorithm. Here is my best attempt at replicating this explanation, which breaks down the recursion that is going on.</p>
 </section>
 <section id="implement-a-solution-for-the-tower-of-hanoi-problem-using-an-iterative-approach." class="level4">
 <h4 class="anchored" data-anchor-id="implement-a-solution-for-the-tower-of-hanoi-problem-using-an-iterative-approach.">2. Implement a solution for the Tower of Hanoi problem using an iterative approach.</h4>
 <p>To implement a solution for the Tower of Hanoir problem using an iterative approach, I will try to build upon my recursive approach.</p>
+<p>Lets begin by analysing the pattern of the solutions generated by our recursive function. We know that the number of steps required to solve the problem is given by <span class="math inline">\(2^n-1\)</span>.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi(<span class="dv">3</span>, <span class="st">'A'</span>,<span class="st">'B'</span>,<span class="st">'C'</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">Output:</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">Step 1: Disk 1: A -&gt; C</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">Step 2: Disk 2: A -&gt; B</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">Step 3: Disk 1: C -&gt; B</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">Step 4: Disk 3: A -&gt; C</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">Step 5: Disk 1: B -&gt; A</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">Step 6: Disk 2: B -&gt; C</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">Step 7: Disk 1: A -&gt; C</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi(<span class="dv">4</span>,<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">Output:</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">Step 1: Disk 1: A -&gt; B</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">Step 2: Disk 2: A -&gt; C</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">Step 3: Disk 1: B -&gt; C</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">Step 4: Disk 3: A -&gt; B</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">Step 5: Disk 1: C -&gt; A</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">Step 6: Disk 2: C -&gt; B</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">Step 7: Disk 1: A -&gt; B</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">Step 8: Disk 4: A -&gt; C</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">Step 9: Disk 1: B -&gt; C</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">Step 10: Disk 2: B -&gt; A</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">Step 11: Disk 1: C -&gt; A</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">Step 12: Disk 3: B -&gt; C</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">Step 13: Disk 1: A -&gt; B</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">Step 14: Disk 2: A -&gt; C</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">Step 15: Disk 1: B -&gt; C</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="compare-the-time-and-space-complexity-of-both-the-recursive-and-iterative-solutions-and-explain-the-differences." class="level4">
 <h4 class="anchored" data-anchor-id="compare-the-time-and-space-complexity-of-both-the-recursive-and-iterative-solutions-and-explain-the-differences.">3. Compare the time and space complexity of both the recursive and iterative solutions and explain the differences.</h4>
