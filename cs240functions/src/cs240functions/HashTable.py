@@ -60,6 +60,7 @@ class HashTable:
         index = self.HashFunction(key) 
         # check if the key is there
         return self.table[index].search(key)[0]
+
     
     # funciton to remove a key from the hash table
     def remove(self, key):
