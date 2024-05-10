@@ -4,6 +4,7 @@ from cs240functions import HashTable
 from cs240functions import DoubleLinkedList
 from cs240functions import QuickSort
 from heapq import nsmallest
+import numpy as np # I hate that I have to import this, WHY CAN'T MATRICIES BE BUILT IN LIKE R
 import cmd
 
 
@@ -374,7 +375,11 @@ Recursion is going to get really bad when the words are long :/, good thing my d
 
 
 Levenshtein Resources:
-
+https://medium.com/@ethannam/understanding-the-levenshtein-distance-equation-for-beginners-c4285a5604f0 # super helpful to get me thinking about matrices again.
+https://en.wikipedia.org/wiki/Wagner%E2%80%93Fischer_algorithm 
+https://en.wikipedia.org/wiki/Levenshtein_distance
+https://www.youtube.com/watch?v=XYi2-LPrwm4 this video went over my head when I watched it, but I just decided to watch/read as much as possible and kind of brute force the understanding
+https://www.youtube.com/watch?v=d-Eq6x1yssU&t=694s Really good explanation of the wagner fischer algorithm to compute the levenshtein edit distance
 
 
 '''
@@ -419,8 +424,25 @@ def levenshteinDist(strA, strB):
             levenshteinDist(strA[:-1], strB), # delete the last character from string A
             levenshteinDist(strA[:-1], strB[:-1]) # substitute the last character in string A for the last character in string B.
             )
-        
 
+
+### WAgner Fischer Algorithm for levenshtein distance
+### I have to use numpy for this :((, wish python has built in matricies like R does. Way easier to work with, maybe could use pandas data frames, but never worked with those before don't want to break anything
+def levDist(str1, str2):
+    m = len(str1)
+    n = len(str2)
+    distance = [[None for j in range(n+1)] for i in range(m+1)]
+    
+    distance[0][0] = 0 # comparing two empty strings
+    
+    # fill in the first row
+    for j in range(1,n+1):
+        distance[0][j] = j
+
+    # fill in the first column
+    for i in range(1,m+1):
+        distance[i][0] = i
+    
 def misspelled(string):
         temp = string.split()# split the string into each word, store it as a temp variable
         spellings = []# created an empty array the length of the temp variable ( call it spellings)
