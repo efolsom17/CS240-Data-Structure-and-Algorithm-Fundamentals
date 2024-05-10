@@ -226,7 +226,25 @@ def tower_of_hanoi_it(n, start, aux, end):
         elif (i % 3 == 0): # valid move between auxillary and end rod
             moveDisk(aux, end, a, e) # funciton to move the rods
         
-        
+
+# Tower of Hanoi more than 3 pegs, but only 3 disks
+
+def THanoiG3R(n): # number of rods, done with three disks.
+    
+    if n <3:
+        return f"Puzzle must have at least 3 pegs"
+    if n == 3:
+        return tower_of_hanoi(3, "Start", "Auxillary", "End")
+    if n > 3:
+        nopen = n -1 
+        auxopen = nopen-1
+        print(f"Disk 1: Start -> Auxillary ({auxopen} available)")
+        auxopen -= 1
+        print(f"Disk 2: Start -> Auxillary ({auxopen} available)")
+        print(f"Disk 3: Start -> End")
+        print(f"Disk 2: Auxillary -> End")
+        print(f"Disk 1: Auxillary -> End")
+
     
 '''
 Tower of Hanoi Resources:
@@ -236,6 +254,7 @@ https://www.youtube.com/watch?v=2SUvWfNJSsM # inspiration for iterative version 
 https://www.youtube.com/watch?v=bdMfjfT0lKk
 https://cs.stackexchange.com/questions/96624/how-to-solve-tower-of-hanoi-iteratively
 https://www.geeksforgeeks.org/iterative-tower-of-hanoi/
+https://en.wikipedia.org/wiki/Tower_of_Hanoi#Frame%E2%80%93Stewart_algorithm
 '''
 
 

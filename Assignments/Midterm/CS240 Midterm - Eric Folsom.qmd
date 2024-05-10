@@ -514,7 +514,7 @@ If there are only 3 rods, we will follow the same steps that we followed to get 
 
 If there are more than 3 rods, we will find the number of auxillary rods and then use that information to determine how we move disks between rods. 
 
-If we have $n$ disks and $r$ rods, to move to the end rod from the start rod we will still have to move the $n-1$ rods from the starting disk to the auxillary disks. Then move the remaining disk to the ending rod. The simplest solution I can think of to this problem would be to take my recursive approach and rename the auxilary rod input to be auxillary rods an and then each time we move a disk to the auxillary rods we don't specify which auxillary rod we are moving it to, just state that we are moving it to some auxillary rod. This solution however, feels like cheating.
+If we have $n$ disks and $r$ rods, to move to the end rod from the start rod we will still have to move the $n-1$ rods from the starting disk to the auxillary disks. Then move the remaining disk to the ending rod. The simplest solution I can think of to this problem would be to take my recursive approach and rename the auxilary rod input to be auxillary rods an and then each time we move a disk to the auxillary rods we don't specify which auxillary rod we are moving it to, just state that we are moving it to some auxillary rod.
 
 Okay, lets start by looking at the case when $r=4$. Since we assume a fixed $n$, there are $3$ disks to move to the ending rod. We label the disks in descending order, $1,2,$ and $3$. The order of operations will be as follows:
 

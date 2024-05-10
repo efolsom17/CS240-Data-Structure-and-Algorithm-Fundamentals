@@ -639,7 +639,7 @@ Disk 1: A -&gt; E</code></pre>
 </ol>
 <p>If there are only 3 rods, we will follow the same steps that we followed to get a solution using the original variation.</p>
 <p>If there are more than 3 rods, we will find the number of auxillary rods and then use that information to determine how we move disks between rods.</p>
-<p>If we have <span class="math inline">\(n\)</span> disks and <span class="math inline">\(r\)</span> rods, to move to the end rod from the start rod we will still have to move the <span class="math inline">\(n-1\)</span> rods from the starting disk to the auxillary disks. Then move the remaining disk to the ending rod. The simplest solution I can think of to this problem would be to take my recursive approach and rename the auxilary rod input to be auxillary rods an and then each time we move a disk to the auxillary rods we don’t specify which auxillary rod we are moving it to, just state that we are moving it to some auxillary rod. This solution however, feels like cheating.</p>
+<p>If we have <span class="math inline">\(n\)</span> disks and <span class="math inline">\(r\)</span> rods, to move to the end rod from the start rod we will still have to move the <span class="math inline">\(n-1\)</span> rods from the starting disk to the auxillary disks. Then move the remaining disk to the ending rod. The simplest solution I can think of to this problem would be to take my recursive approach and rename the auxilary rod input to be auxillary rods an and then each time we move a disk to the auxillary rods we don’t specify which auxillary rod we are moving it to, just state that we are moving it to some auxillary rod.</p>
 <p>Okay, lets start by looking at the case when <span class="math inline">\(r=4\)</span>. Since we assume a fixed <span class="math inline">\(n\)</span>, there are <span class="math inline">\(3\)</span> disks to move to the ending rod. We label the disks in descending order, <span class="math inline">\(1,2,\)</span> and <span class="math inline">\(3\)</span>. The order of operations will be as follows:</p>
 <ol type="1">
 <li>Move disk <span class="math inline">\(1\)</span> to an open auxillary rod. ( 3 open rods total, 2 auxillary open)</li>
@@ -680,7 +680,7 @@ Disk 1: A -&gt; E</code></pre>
 <p>Here is a demonstration of the function</p>
 <div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>THanoiG3R(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="26">
+<div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>'Puzzle must have at least 3 pegs'</code></pre>
 </div>
 </div>
@@ -719,7 +719,7 @@ Disk 1: Auxillary -&gt; End</code></pre>
 </section>
 <section id="optional-but-extra-credit-create-a-variation-of-the-tower-of-hanoi-problem-where-the-user-can-specify-the-number-of-disks-and-the-number-of-pegs.-your-solution-should-still-move-all-the-disks-from-the-starting-peg-to-the-target-peg-while-adhering-to-the-rules-of-the-tower-of-hanoi-problem." class="level4">
 <h4 class="anchored" data-anchor-id="optional-but-extra-credit-create-a-variation-of-the-tower-of-hanoi-problem-where-the-user-can-specify-the-number-of-disks-and-the-number-of-pegs.-your-solution-should-still-move-all-the-disks-from-the-starting-peg-to-the-target-peg-while-adhering-to-the-rules-of-the-tower-of-hanoi-problem.">6. (Optional, but extra credit) Create a variation of the Tower of Hanoi problem where the user can specify the number of disks and the number of pegs. Your solution should still move all the disks from the starting peg to the target peg while adhering to the rules of the Tower of Hanoi problem.</h4>
-<p>A recursive solution to this is to modify and implement the <a href="https://en.wikipedia.org/wiki/Tower_of_Hanoi#Frame%E2%80%93Stewart_algorithm">Frame-Stewart algorithm</a>. The representation of it on Wikipedia solves for the minimum number of steps not the actual algorithm that moves disks around. I will not be implementing it for this midterm because I have ran out of time and my brain is starting to melt.</p>
+<p>A recursive solution to this is to modify and implement the <a href="https://en.wikipedia.org/wiki/Tower_of_Hanoi#Frame%E2%80%93Stewart_algorithm">Frame-Stewart algorithm</a>. The representation of it on Wikipedia solves for the minimum number of steps, but apparently it has not been proven. I will not be implementing it for this midterm because I have ran out of time and my brain is starting to melt.</p>
 </section>
 </section>
 <section id="spell-checker" class="level2">
