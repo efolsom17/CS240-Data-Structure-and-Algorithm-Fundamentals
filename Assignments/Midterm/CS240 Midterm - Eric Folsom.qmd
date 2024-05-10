@@ -19,6 +19,9 @@ from heapq import nsmallest
 import cmd
 ```
 
+These are my written solutions to the problems on the midterm. There will be a link to the attached python script for each problem (on Github). I will be presenting some code and outputs, but for the spell checker I will provide a link to the python script and my thoughts and approaches to including each requirement of the spell checker. You can view the work that I did via following [Pull request](https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/pull/33) which shows all the commits that I have made on this assignment. Additionally I have included a [scratchwork](https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/blob/Midterm/Assignments/Midterm/ScratchWork.py)##UPDATE LINK AFTER COMMITTING TO MAIN## python script which contains my thoughts and kind of shows my working process.
+
+
 ## Hanoi's Tower
 
 

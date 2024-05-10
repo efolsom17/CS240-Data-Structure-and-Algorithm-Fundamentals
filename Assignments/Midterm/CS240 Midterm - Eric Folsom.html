@@ -103,6 +103,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<p>These are my written solutions to the problems on the midterm. There will be a link to the attached python script for each problem (on Github). I will be presenting some code and outputs, but for the spell checker I will provide a link to the python script and my thoughts and approaches to including each requirement of the spell checker. You can view the work that I did via following <a href="https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/pull/33">Pull request</a> which shows all the commits that I have made on this assignment. Additionally I have included a <a href="https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/blob/Midterm/Assignments/Midterm/ScratchWork.py">scratchwork</a>##UPDATE LINK AFTER COMMITTING TO MAIN## python script which contains my thoughts and kind of shows my working process.</p>
 <section id="hanois-tower" class="level2">
 <h2 class="anchored" data-anchor-id="hanois-tower">Hanoi’s Tower</h2>
 <p>The Tower of Hanoi problem involves three rods and a number of disks of different sizes which can slide onto any rod. The puzzle starts with the disks stacked in ascending order of size on one rod, the smallest at the top, making a cone.</p>
@@ -244,48 +245,45 @@ Disk 1: B -&gt; C</code></pre>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> moveStack(stack1 <span class="op">=</span> stack(), stack2 <span class="op">=</span> stack()):</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    temp <span class="op">=</span> stack1.pop()</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    stack2.push(temp)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># tower of of hanoi recursive solution that works on the stacks </span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tower_of_hanoi_stacks(n, starting_rod, middle_rod, ending_rod): <span class="co"># specify the starting rods you want</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">==</span> <span class="dv">1</span>: <span class="co"># Base case</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        moveStack(starting_rod, ending_rod)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Starting Rod:</span><span class="ch">\n</span><span class="sc">{</span>starting_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Auxilary Rod:</span><span class="ch">\n</span><span class="sc">{</span>middle_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Ending Rod:</span><span class="ch">\n</span><span class="sc">{</span>ending_rod<span class="sc">}</span><span class="ch">\</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="ss">        </span><span class="ch">\n</span><span class="ss"> Moved disk </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>: <span class="co"># if we are not on the last rod</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        tower_of_hanoi_stacks(n<span class="op">-</span><span class="dv">1</span>, starting_rod, ending_rod, middle_rod) <span class="co"># recursive call to move the n-1 disks to the middle rod using the ending rod as the axullary rod</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        moveStack(starting_rod, ending_rod) <span class="co"># move the current disk</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Starting Rod:</span><span class="ch">\n</span><span class="sc">{</span>starting_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Auxilary Rod:</span><span class="ch">\n</span><span class="sc">{</span>middle_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Ending Rod:</span><span class="ch">\n</span><span class="sc">{</span>ending_rod<span class="sc">}</span><span class="ch">\</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="ss">        </span><span class="ch">\n</span><span class="ss"> Moved disk </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        tower_of_hanoi_stacks(n<span class="op">-</span><span class="dv">1</span>, middle_rod, starting_rod, ending_rod) <span class="co"># move the remaining n-1 disks to the ending rod using the starting rod as the auxillary rod</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># tower of of hanoi recursive solution that works on the stacks </span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tower_of_hanoi_stacks(n, starting_rod, middle_rod, ending_rod): <span class="co"># specify the starting rods you want</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">==</span> <span class="dv">1</span>: <span class="co"># Base case</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        moveStack(starting_rod, ending_rod)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"AFTER</span><span class="ch">\n</span><span class="ss">Starting Rod:</span><span class="ch">\n</span><span class="sc">{</span>starting_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Auxilary Rod:</span><span class="ch">\n</span><span class="sc">{</span>middle_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Ending Rod:</span><span class="ch">\n</span><span class="sc">{</span>ending_rod<span class="sc">}</span><span class="ch">\</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="ss">        </span><span class="ch">\n</span><span class="ss"> Moved disk </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>: <span class="co"># if we are not on the last rod</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        tower_of_hanoi_stacks(n<span class="op">-</span><span class="dv">1</span>, starting_rod, ending_rod, middle_rod) <span class="co"># recursive call to move the n-1 disks to the middle rod using the ending rod as the axullary rod</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        moveStack(starting_rod, ending_rod) <span class="co"># move the current disk</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"AFTER</span><span class="ch">\n</span><span class="ss">Starting Rod:</span><span class="ch">\n</span><span class="sc">{</span>starting_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Auxilary Rod:</span><span class="ch">\n</span><span class="sc">{</span>middle_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Ending Rod:</span><span class="ch">\n</span><span class="sc">{</span>ending_rod<span class="sc">}</span><span class="ch">\</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="ss">        </span><span class="ch">\n</span><span class="ss"> Moved disk </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>        tower_of_hanoi_stacks(n<span class="op">-</span><span class="dv">1</span>, middle_rod, starting_rod, ending_rod) <span class="co"># move the remaining n-1 disks to the ending rod using the starting rod as the auxillary rod</span></span>
 <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co"># going to need to call the above:</span></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> TowerOfHanoi(n):<span class="co"># Tower of Hanoi with stacks and it will initialize the number of disks</span></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># n = number of disks</span></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">## initialize the starting, auxillary, and ending rods</span></span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    starting_rod <span class="op">=</span> stack()</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    auxillary_rod <span class="op">=</span> stack()</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    ending_rod <span class="op">=</span> stack()</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fill the starting rod</span></span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n,<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>):</span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>        starting_rod.push(i)</span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># display starting state</span></span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Start:"</span>)</span>
-<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Starting Rod:</span><span class="ch">\n</span><span class="sc">{</span>starting_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Auxillary Rod:</span><span class="ch">\n</span><span class="sc">{</span>auxillary_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Ending Rod:</span><span class="ch">\n</span><span class="sc">{</span>ending_rod<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now we can call the tower of hanoi function.</span></span>
-<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>    tower_of_hanoi_stacks(n, starting_rod, auxillary_rod, ending_rod)</span>
-<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># show the final state</span></span>
-<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Ending:"</span>)</span>
-<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Starting Rod:</span><span class="ch">\n</span><span class="sc">{</span>starting_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Auxillary Rod:</span><span class="ch">\n</span><span class="sc">{</span>auxillary_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Ending Rod:</span><span class="ch">\n</span><span class="sc">{</span>ending_rod<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co"># going to need to call the above:</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> TowerOfHanoi(n):<span class="co"># Tower of Hanoi with stacks and it will initialize the number of disks</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># n = number of disks</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    <span class="co">## initialize the starting, auxillary, and ending rods</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    starting_rod <span class="op">=</span> stack()</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    auxillary_rod <span class="op">=</span> stack()</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    ending_rod <span class="op">=</span> stack()</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fill the starting rod</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n,<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>        starting_rod.push(i)</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># display starting state</span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Start:"</span>)</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Starting Rod:</span><span class="ch">\n</span><span class="sc">{</span>starting_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Auxillary Rod:</span><span class="ch">\n</span><span class="sc">{</span>auxillary_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Ending Rod:</span><span class="ch">\n</span><span class="sc">{</span>ending_rod<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now we can call the tower of hanoi function. It will print its final state</span></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>    tower_of_hanoi_stacks(n, starting_rod, auxillary_rod, ending_rod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The output of the <code>TowerofHanoi()</code> function is as follows, I will be calling it on <span class="math inline">\(n=2\)</span> to save space:</p>
 <div class="cell" data-execution_count="7">
@@ -293,57 +291,35 @@ Disk 1: B -&gt; C</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Start:
 Starting Rod:
-| 1 |
-| 2 |
--------
+[2, 1]
 Auxillary Rod:
-
--------
+[]
 Ending Rod:
-
--------
+[]
+AFTER
 Starting Rod:
-| 2 |
--------
+[2]
 Auxilary Rod:
-
--------
+[]
 Ending Rod:
-| 1 |
--------        
+[1]        
  Moved disk 1
+AFTER
 Starting Rod:
-
--------
+[]
 Auxilary Rod:
-| 1 |
--------
+[1]
 Ending Rod:
-| 2 |
--------        
+[2]        
  Moved disk 2
+AFTER
 Starting Rod:
-
--------
+[]
 Auxilary Rod:
-
--------
+[]
 Ending Rod:
-| 1 |
-| 2 |
--------        
- Moved disk 1
-Ending:
-Starting Rod:
-
--------
-Auxillary Rod:
-
--------
-Ending Rod:
-| 1 |
-| 2 |
--------</code></pre>
+[2, 1]        
+ Moved disk 1</code></pre>
 </div>
 </div>
 </section>
