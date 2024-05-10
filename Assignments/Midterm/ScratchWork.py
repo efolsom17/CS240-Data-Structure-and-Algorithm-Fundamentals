@@ -102,13 +102,11 @@ def TowerOfHanoi(n):# Tower of Hanoi with stacks and it will initialize the numb
     print("Start:")
     print(f"Starting Rod:\n{starting_rod}\nAuxillary Rod:\n{auxillary_rod}\nEnding Rod:\n{ending_rod}")
     
-    # now we can call the tower of hanoi function.
+    # now we can call the tower of hanoi function. It will print its final state
     
     tower_of_hanoi_stacks(n, starting_rod, auxillary_rod, ending_rod)
     
-    # show the final state
-    print("Ending:")
-    print(f"Starting Rod:\n{starting_rod}\nAuxillary Rod:\n{auxillary_rod}\nEnding Rod:\n{ending_rod}")
+
 
 '''
 1 mod 3 = 1
