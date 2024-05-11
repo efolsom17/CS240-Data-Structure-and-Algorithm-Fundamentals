@@ -550,11 +550,12 @@ class SpellCheck(cmd.Cmd):
     
     def suggest(self, string):
         edit_distance = [] # store the edit distance
+        dictionary = self.dictionary
         for index in dictionary.table: # for each index in the hash table
             if index.head: #check if empty 
                 current = index.head # start at the head of the linked list for that index
                 while current: # traverse the list
-                    editdist = levenshteinDist(string, current.data) # calculate the edit distance using levenshtein distance
+                    editdist = self.levenshteinDist(string, current.data) # calculate the edit distance using levenshtein distance
                     edit_distance.append((editdist, current.data))
                     current = current.next
     
