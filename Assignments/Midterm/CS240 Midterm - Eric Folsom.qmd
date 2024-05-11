@@ -589,11 +589,11 @@ My Spell Checker Program can be found [here](https://github.com/efolsom17/CS240-
 
 In general the implementation of the Spell Checker was fairly straightforward. I did have to consult ChatGPT a bit to figure out how to make a CLI program, as well as for debugging and brainstorming purposes. I mostly consulted resources when it came to implementing the Levenshtein distance calculations
 
- - This [Medium Article](https://medium.com/@ethannam/understanding-the-levenshtein-distance-equation-for-beginners-c4285a5604f0) was very helpful in how it broke down the Wagner-Fischer Algorithm and walked through how to fill out the matrix by hand. Very useful when it came to implementing it in python. 
+ - This [Medium Article](https://medium.com/@ethannam/understanding-the-levenshtein-distance-equation-for-beginners-c4285a5604f0) was very helpful in how it broke down the Wagner-Fischer Algorithm and walked through how to fill out the matrix by hand. Very useful when it came to implementing it in python and I can compute the Levenshtein edit distance of any two strings by hand now. 
 - [Wikipedia - Wagner Fischer Algorithm](https://en.wikipedia.org/wiki/Wagner%E2%80%93Fischer_algorithm) 
 - [Wikipedia - Levenshtein Distance](https://en.wikipedia.org/wiki/Levenshtein_distance)
 - [Video by NeetCode](https://www.youtube.com/watch?v=XYi2-LPrwm4). This video went over my head when I watched it as it was one of the first videos I watched, but I just decided to watch/read as much as possible and kind of brute force the understanding
-- [Video by b001](https://www.youtube.com/watch?v=d-Eq6x1yssU&t). Really good explanation of the Wagner-Fischer algorithm and was helpful in a similar way that the Medium Article was. I can compute the Levenshtein edit distance of a string by hand now.
+- [Video by b001](https://www.youtube.com/watch?v=d-Eq6x1yssU&t). Really good explanation of the Wagner-Fischer algorithm and was helpful in a similar way that the Medium Article was.
 
 
 
