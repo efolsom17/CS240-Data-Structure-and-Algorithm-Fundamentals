@@ -103,6 +103,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<p>These are my written solutions to the problems on the midterm. There will be a link to the attached python script for each problem (on Github). I will be presenting some code and outputs, but for the spell checker I will provide a link to the python script and my thoughts and approaches to including each requirement of the spell checker. You can view the work that I did via following <a href="https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/pull/33">Pull</a> <a href="https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/pull/35">requests</a> which shows all the commits that I have made on this assignment. Additionally I have included a <a href="https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/blob/main/Assignments/Midterm/ScratchWork.py">scratchwork</a> python script which contains my thoughts and kind of shows my working process, here is the <a href="https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/tree/main/Assignments/Midterm">folder</a> containing all the files for this assignment as well.</p>
 <section id="hanois-tower" class="level2">
 <h2 class="anchored" data-anchor-id="hanois-tower">Hanoi’s Tower</h2>
 <p>The Tower of Hanoi problem involves three rods and a number of disks of different sizes which can slide onto any rod. The puzzle starts with the disks stacked in ascending order of size on one rod, the smallest at the top, making a cone.</p>
@@ -113,12 +114,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
 <li>No disk may be placed on top of a smaller disk.</li>
 </ol>
+<p>A python script containing the following implementations of this puzzle is available <a href="https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/blob/main/Assignments/Midterm/HanoisTower.py">here</a>.</p>
 <section id="the-following-resources-were-used-to-help-me-come-up-with-a-solution-to-the-problems-below" class="level4">
 <h4 class="anchored" data-anchor-id="the-following-resources-were-used-to-help-me-come-up-with-a-solution-to-the-problems-below">The following resources were used to help me come up with a solution to the problems below:</h4>
 <ul>
 <li><a href="https://www.youtube.com/watch?v=rf6uf3jNjbo&amp;list=PLzj1WDt0HB4qDn6heuU8w6x0Hzd8EVX0q">YouTube video by Reducible</a> was incredibly helpful for my understanding of how the algorithm works and how the recursion for this problem functions. From about 16 minutes until 20 minutes there is en elegent animation which describes the recursion taking place in the algorithm.</li>
 <li><a href="https://www.youtube.com/watch?v=PGuRmqpr6Oo">YouTube video by Numberphile</a> Was helpful for understanding the math behind the algorithm and to help me identify the pattern going on with moving disks which was helpful for my iterative approach. There was a harmonic version of the algorithm which helped ingrain the pattern in my mind.</li>
 <li><a href="https://www.youtube.com/watch?v=2SUvWfNJSsM">Youtube video by 3blue1brown</a> Showed a solution to the problem using binary counting to solve the problem. This was very helpful for my iterative apprach, even though I did not use binary counting in my approach to solving the problem. Was also helpful for my reasoning on the recursive version. Once the recursion was explained in a “from the perspective of the bottom disk” manner everything pretty much clicked for me.</li>
+<li><a href="https://en.wikipedia.org/wiki/Tower_of_Hanoi">Wikipedia</a> is always a helpful resource when it comes to learning about what the Tower of Hanoi problem is.</li>
 </ul>
 </section>
 <section id="implement-a-solution-for-the-tower-of-hanoi-problem-using-recursion.-your-solution-should-move-the-disks-from-the-starting-peg-to-the-target-peg-using-the-auxiliary-peg." class="level4">
@@ -238,54 +241,51 @@ Disk 2: A -&gt; C
 Disk 1: B -&gt; C</code></pre>
 </div>
 </div>
-<p>I decided to go a bit further with this approach and implement a solution to the problem that uses stacks to store the state of the three rods, and then pops and pushes the disks to shift them between rods.</p>
+<p>I tried to go a bit further with this approach and implement a solution to the problem that uses stacks to store the state of the three rods, and then pops and pushes the disks to shift them between rods. This works somewhat as in it ends in the correct state, but there are some instances where the intermediate steps are either displayed wrong or in a manner that is hard to understand. That is why I have included both of the implementations of this.</p>
 <div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function to move the top value of stack 1 to the top of stack 2</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> moveStack(stack1 <span class="op">=</span> stack(), stack2 <span class="op">=</span> stack()):</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    temp <span class="op">=</span> stack1.pop()</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    stack2.push(temp)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># tower of of hanoi recursive solution that works on the stacks </span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tower_of_hanoi_stacks(n, starting_rod, middle_rod, ending_rod): <span class="co"># specify the starting rods you want</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">==</span> <span class="dv">1</span>: <span class="co"># Base case</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        moveStack(starting_rod, ending_rod)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Starting Rod:</span><span class="ch">\n</span><span class="sc">{</span>starting_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Auxilary Rod:</span><span class="ch">\n</span><span class="sc">{</span>middle_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Ending Rod:</span><span class="ch">\n</span><span class="sc">{</span>ending_rod<span class="sc">}</span><span class="ch">\</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="ss">        </span><span class="ch">\n</span><span class="ss"> Moved disk </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>: <span class="co"># if we are not on the last rod</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        tower_of_hanoi_stacks(n<span class="op">-</span><span class="dv">1</span>, starting_rod, ending_rod, middle_rod) <span class="co"># recursive call to move the n-1 disks to the middle rod using the ending rod as the axullary rod</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        moveStack(starting_rod, ending_rod) <span class="co"># move the current disk</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Starting Rod:</span><span class="ch">\n</span><span class="sc">{</span>starting_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Auxilary Rod:</span><span class="ch">\n</span><span class="sc">{</span>middle_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Ending Rod:</span><span class="ch">\n</span><span class="sc">{</span>ending_rod<span class="sc">}</span><span class="ch">\</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="ss">        </span><span class="ch">\n</span><span class="ss"> Moved disk </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        tower_of_hanoi_stacks(n<span class="op">-</span><span class="dv">1</span>, middle_rod, starting_rod, ending_rod) <span class="co"># move the remaining n-1 disks to the ending rod using the starting rod as the auxillary rod</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># tower of of hanoi recursive solution that works on the stacks </span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tower_of_hanoi_stacks(n, starting_rod, middle_rod, ending_rod): <span class="co"># specify the starting rods you want</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">==</span> <span class="dv">1</span>: <span class="co"># Base case</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        moveStack(starting_rod, ending_rod)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"AFTER</span><span class="ch">\n</span><span class="ss">Starting Rod:</span><span class="ch">\n</span><span class="sc">{</span>starting_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Auxilary Rod:</span><span class="ch">\n</span><span class="sc">{</span>middle_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Ending Rod:</span><span class="ch">\n</span><span class="sc">{</span>ending_rod<span class="sc">}</span><span class="ch">\</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="ss">        </span><span class="ch">\n</span><span class="ss"> Moved disk </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>: <span class="co"># if we are not on the last rod</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        tower_of_hanoi_stacks(n<span class="op">-</span><span class="dv">1</span>, starting_rod, ending_rod, middle_rod) <span class="co"># recursive call to move the n-1 disks to the middle rod using the ending rod as the axullary rod</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        moveStack(starting_rod, ending_rod) <span class="co"># move the current disk</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"AFTER</span><span class="ch">\n</span><span class="ss">Starting Rod:</span><span class="ch">\n</span><span class="sc">{</span>starting_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Auxilary Rod:</span><span class="ch">\n</span><span class="sc">{</span>middle_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Ending Rod:</span><span class="ch">\n</span><span class="sc">{</span>ending_rod<span class="sc">}</span><span class="ch">\</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="ss">        </span><span class="ch">\n</span><span class="ss"> Moved disk </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>        tower_of_hanoi_stacks(n<span class="op">-</span><span class="dv">1</span>, middle_rod, starting_rod, ending_rod) <span class="co"># move the remaining n-1 disks to the ending rod using the starting rod as the auxillary rod</span></span>
 <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co"># going to need to call the above:</span></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> TowerOfHanoi(n):<span class="co"># Tower of Hanoi with stacks and it will initialize the number of disks</span></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># n = number of disks</span></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">## initialize the starting, auxillary, and ending rods</span></span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    starting_rod <span class="op">=</span> stack()</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    auxillary_rod <span class="op">=</span> stack()</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    ending_rod <span class="op">=</span> stack()</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fill the starting rod</span></span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n,<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>):</span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>        starting_rod.push(i)</span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># display starting state</span></span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Start:"</span>)</span>
-<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Starting Rod:</span><span class="ch">\n</span><span class="sc">{</span>starting_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Auxillary Rod:</span><span class="ch">\n</span><span class="sc">{</span>auxillary_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Ending Rod:</span><span class="ch">\n</span><span class="sc">{</span>ending_rod<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now we can call the tower of hanoi function.</span></span>
-<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>    tower_of_hanoi_stacks(n, starting_rod, auxillary_rod, ending_rod)</span>
-<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># show the final state</span></span>
-<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Ending:"</span>)</span>
-<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Starting Rod:</span><span class="ch">\n</span><span class="sc">{</span>starting_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Auxillary Rod:</span><span class="ch">\n</span><span class="sc">{</span>auxillary_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Ending Rod:</span><span class="ch">\n</span><span class="sc">{</span>ending_rod<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co"># going to need to call the above:</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> TowerOfHanoi(n):<span class="co"># Tower of Hanoi with stacks and it will initialize the number of disks</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># n = number of disks</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    <span class="co">## initialize the starting, auxillary, and ending rods</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    starting_rod <span class="op">=</span> stack()</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    auxillary_rod <span class="op">=</span> stack()</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    ending_rod <span class="op">=</span> stack()</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fill the starting rod</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n,<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>        starting_rod.push(i)</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># display starting state</span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Start:"</span>)</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Starting Rod:</span><span class="ch">\n</span><span class="sc">{</span>starting_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Auxillary Rod:</span><span class="ch">\n</span><span class="sc">{</span>auxillary_rod<span class="sc">}</span><span class="ch">\n</span><span class="ss">Ending Rod:</span><span class="ch">\n</span><span class="sc">{</span>ending_rod<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now we can call the tower of hanoi function. It will print its final state</span></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>    tower_of_hanoi_stacks(n, starting_rod, auxillary_rod, ending_rod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The output of the <code>TowerofHanoi()</code> function is as follows, I will be calling it on <span class="math inline">\(n=2\)</span> to save space:</p>
 <div class="cell" data-execution_count="7">
@@ -293,140 +293,594 @@ Disk 1: B -&gt; C</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Start:
 Starting Rod:
-| 1 |
-| 2 |
--------
+[2, 1]
 Auxillary Rod:
-
--------
+[]
 Ending Rod:
-
--------
+[]
+AFTER
 Starting Rod:
-| 2 |
--------
+[2]
 Auxilary Rod:
-
--------
+[]
 Ending Rod:
-| 1 |
--------        
+[1]        
  Moved disk 1
+AFTER
 Starting Rod:
-
--------
+[]
 Auxilary Rod:
-| 1 |
--------
+[1]
 Ending Rod:
-| 2 |
--------        
+[2]        
  Moved disk 2
+AFTER
 Starting Rod:
-
--------
+[]
 Auxilary Rod:
-
--------
+[]
 Ending Rod:
-| 1 |
-| 2 |
--------        
- Moved disk 1
-Ending:
-Starting Rod:
-
--------
-Auxillary Rod:
-
--------
-Ending Rod:
-| 1 |
-| 2 |
--------</code></pre>
+[2, 1]        
+ Moved disk 1</code></pre>
 </div>
 </div>
 </section>
 <section id="implement-a-solution-for-the-tower-of-hanoi-problem-using-an-iterative-approach." class="level4">
 <h4 class="anchored" data-anchor-id="implement-a-solution-for-the-tower-of-hanoi-problem-using-an-iterative-approach.">2. Implement a solution for the Tower of Hanoi problem using an iterative approach.</h4>
-<p>To implement a solution for the Tower of Hanoir problem using an iterative approach, I will try to build upon my recursive approach.</p>
+<p>To implement a solution for the Tower of Hanoir problem using an iterative approach, I will try to build upon my recursive approach. I plan to implement this solution using stacks to represent rods. I will represent disk sizes using an integer to represent the disk’s radius. The smallest disk will always be labeled <span class="math inline">\(1\)</span> and the largest disk will always be labeled <span class="math inline">\(n\)</span>.</p>
 <p>Lets begin by analysing the pattern of the solutions generated by our recursive function. We know that the number of steps required to solve the problem is given by <span class="math inline">\(2^n-1\)</span>. We can use the number of steps required to solve the puzzle as our iterator.</p>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi(<span class="dv">3</span>, <span class="st">'A'</span>,<span class="st">'B'</span>,<span class="st">'C'</span>)</span>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi(<span class="dv">3</span>, <span class="st">'S'</span>,<span class="st">'A'</span>,<span class="st">'E'</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">Output:</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">Step 1: Disk 1: A -&gt; C</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">Step 2: Disk 2: A -&gt; B</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">Step 3: Disk 1: C -&gt; B</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">Step 4: Disk 3: A -&gt; C</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">Step 5: Disk 1: B -&gt; A</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">Step 6: Disk 2: B -&gt; C</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">Step 7: Disk 1: A -&gt; C</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">Step 1: Disk 1: S -&gt; E</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">Step 2: Disk 2: S -&gt; A</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">Step 3: Disk 1: E -&gt; A</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">Step 4: Disk 3: S -&gt; E</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">Step 5: Disk 1: A -&gt; S</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">Step 6: Disk 2: A -&gt; E</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">Step 7: Disk 1: S -&gt; E</span></span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi(<span class="dv">4</span>,<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>)</span>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi(<span class="dv">4</span>,<span class="st">"S"</span>,<span class="st">"A"</span>,<span class="st">"E"</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">Output:</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">Step 1: Disk 1: A -&gt; B</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">Step 2: Disk 2: A -&gt; C</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">Step 3: Disk 1: B -&gt; C</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">Step 4: Disk 3: A -&gt; B</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">Step 5: Disk 1: C -&gt; A</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">Step 6: Disk 2: C -&gt; B</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">Step 7: Disk 1: A -&gt; B</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">Step 8: Disk 4: A -&gt; C</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">Step 9: Disk 1: B -&gt; C</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">Step 10: Disk 2: B -&gt; A</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">Step 11: Disk 1: C -&gt; A</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">Step 12: Disk 3: B -&gt; C</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">Step 13: Disk 1: A -&gt; B</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">Step 14: Disk 2: A -&gt; C</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co">Step 15: Disk 1: B -&gt; C</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">Step 1: Disk 1: S -&gt; A</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">Step 2: Disk 2: S -&gt; E</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">Step 3: Disk 1: A -&gt; E</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">Step 4: Disk 3: S -&gt; A</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">Step 5: Disk 1: E -&gt; S</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">Step 6: Disk 2: E -&gt; A</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">Step 7: Disk 1: S -&gt; A</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">Step 8: Disk 4: S -&gt; E</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">Step 9: Disk 1: A -&gt; E</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">Step 10: Disk 2: A -&gt; S</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">Step 11: Disk 1: E -&gt; S</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">Step 12: Disk 3: A -&gt; E</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">Step 13: Disk 1: S -&gt; A</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">Step 14: Disk 2: S -&gt; E</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co">Step 15: Disk 1: A -&gt; E</span></span>
 <span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Ignoring the actual number of the disk that is being moved, lets see if there is a pattern between what rods we are moving disks to and from. When <span class="math inline">\(n\)</span> is odd, the example where <span class="math inline">\(n=3\)</span>, we can break down the movements of the disks as such.</p>
-<p>In steps <span class="math inline">\(1\)</span>, <span class="math inline">\(4\)</span> and <span class="math inline">\(7\)</span>, we are moving a disk from the starting rod to the ending rod.</p>
-<p>In steps <span class="math inline">\(2\)</span> and <span class="math inline">\(5\)</span> we are moving a disk between the starting rod and the auxilary rod, swaping which direction we move the disks. In step <span class="math inline">\(2\)</span> we move the disk from the starting rod to the auxilary rod, and in step <span class="math inline">\(5\)</span> we move a disk from the auxillary rod to the starting rod.</p>
+<ul>
+<li><p>In steps <span class="math inline">\(1\)</span>, <span class="math inline">\(4\)</span> and <span class="math inline">\(7\)</span>, we are moving a disk from the starting rod to the ending rod.</p></li>
+<li><p>In steps <span class="math inline">\(2\)</span> and <span class="math inline">\(5\)</span> we are moving a disk between the starting rod and the auxilary rod, swaping which direction we move the disks. In step <span class="math inline">\(2\)</span> we move the disk from the starting rod to the auxilary rod, and in step <span class="math inline">\(5\)</span> we move a disk from the auxillary rod to the starting rod.</p></li>
+<li><p>In steps <span class="math inline">\(3\)</span> and <span class="math inline">\(6\)</span> we are moving a disk between the auxillary rod and the ending rod. In step <span class="math inline">\(3\)</span> we are moving a disk from the top of the ending rod to the top of the auxilary rod. In step <span class="math inline">\(5\)</span> we are doing the opposite moving a disk from the top of the auxillary rod to the top of ending rod.</p></li>
+</ul>
+<p>Lets analyze the case where <span class="math inline">\(n=4\)</span>. In this case <span class="math inline">\(n\)</span> is even.</p>
+<ul>
+<li><p>In Steps <span class="math inline">\(1\)</span>, <span class="math inline">\(4\)</span>, <span class="math inline">\(7\)</span>, <span class="math inline">\(10\)</span>, and <span class="math inline">\(13\)</span> we are moving disks between the beginning rod and the auxillary rod. In all of these steps besides step <span class="math inline">\(10\)</span> we are moving the disks from the beginning rod to the auxillary rod, in step <span class="math inline">\(10\)</span> we do the opposite.</p></li>
+<li><p>In steps <span class="math inline">\(2\)</span>, <span class="math inline">\(5\)</span>, <span class="math inline">\(8\)</span>, <span class="math inline">\(11\)</span>, and <span class="math inline">\(14\)</span> we are moving disks between the beginning rod and the ending rod in alternating fashion starting with moving disks from the beginning rod to the ending rod.</p></li>
+<li><p>In steps <span class="math inline">\(3\)</span>, <span class="math inline">\(6\)</span>, <span class="math inline">\(9\)</span>, <span class="math inline">\(12\)</span>, and <span class="math inline">\(15\)</span> we are moving disks between the auxillary rod and the ending rod. For all of the steps except for step <span class="math inline">\(6\)</span> we are moving a disk from the auxillary rod to the ending rod, in step <span class="math inline">\(6\)</span> we do the opposite.</p></li>
+</ul>
+<p>Lets return to the example of <span class="math inline">\(n=3\)</span>. We can notice some equivalency classes beginning to form, notably of form <span class="math inline">\(a \mod 3\)</span>:</p>
+<p><span class="math inline">\(\{1,4,7\} \mod 3 = [1]\)</span></p>
+<p><span class="math inline">\(\{2,5\} \mod 3 = [2]\)</span></p>
+<p><span class="math inline">\(\{3,6\} \mod 3 = [0]\)</span></p>
+<p>When <span class="math inline">\(n=4\)</span>, we can expand upon these equivalency classes as such:</p>
+<p><span class="math inline">\(\{1,4,7,10,13\} \mod 3 = [1]\)</span></p>
+<p><span class="math inline">\(\{2,5,8,11,14\} \mod 3 = [2]\)</span></p>
+<p><span class="math inline">\(\{3,6,9,12,15\} \mod 3 = [0]\)</span></p>
+<p>This provides us with a clear pattern for what we must do to implement a solution to the Tower of Hanoi problem iteratively. The big difference in the pattern is where we start to move the first disk which is dependent on if <span class="math inline">\(n\)</span> is odd or even. If <span class="math inline">\(n\)</span> is odd, we move the first disk to the ending rod, if <span class="math inline">\(n\)</span> is even, we move the first disk to the auxillary rod.</p>
+<p>We can dive deeper as well into the steps by looking at the value of the disks as we move them. Lets start with the case where <span class="math inline">\(n = 3\)</span>.</p>
+<p><em>Steps <span class="math inline">\(1\)</span>, <span class="math inline">\(4\)</span> and <span class="math inline">\(7\)</span></em></p>
+<ul>
+<li>The value of the disk does not matter, always moving in the same direction.</li>
+</ul>
+<p><em>Steps <span class="math inline">\(2\)</span> and <span class="math inline">\(5\)</span></em></p>
+<ul>
+<li>In step <span class="math inline">\(2\)</span>, disk <span class="math inline">\(2\)</span> gets moved from start rod to auxillary rod (to the right). Auxillary rod is empty and <span class="math inline">\(2\)</span> is greater than <span class="math inline">\(1\)</span> (disk <span class="math inline">\(1\)</span> is on the ending rod) so we have to move it to the auxillary rod. That is the only valid move</li>
+<li>In step <span class="math inline">\(5\)</span>, disk <span class="math inline">\(1\)</span> gets moved from auxillary rod to start rod (to the left).</li>
+</ul>
+<p><em>Steps <span class="math inline">\(3\)</span> and <span class="math inline">\(6\)</span></em></p>
+<ul>
+<li>In step <span class="math inline">\(3\)</span>, disk <span class="math inline">\(1\)</span> gets moved from end rod to auxillary rod (to the left).</li>
+<li>In step <span class="math inline">\(6\)</span>, disk <span class="math inline">\(2\)</span> gets moved from the auxillary rod to the end rod (to the right).</li>
+</ul>
+<p>Notice that in the above, when step#<span class="math inline">\(\mod 3 \neq 1\)</span>, if we are moving an odd disk, we move it to the left. If we are moving an even disk, we move it to the right.</p>
+<p>Now lets look at the case when <span class="math inline">\(n=4\)</span>:</p>
+<p><em>Steps <span class="math inline">\(1\)</span>, <span class="math inline">\(4\)</span>, <span class="math inline">\(7\)</span>, <span class="math inline">\(10\)</span>, and <span class="math inline">\(13\)</span></em></p>
+<ul>
+<li>We move disk <span class="math inline">\(1\)</span> on steps <span class="math inline">\(1,7\)</span> and <span class="math inline">\(13\)</span>. Each time we move disk <span class="math inline">\(1\)</span> to the right.</li>
+<li>We move disk <span class="math inline">\(2\)</span> to the left on step <span class="math inline">\(10\)</span>.</li>
+<li>we move disk <span class="math inline">\(3\)</span> to the right on step <span class="math inline">\(4\)</span>.</li>
+</ul>
+<p><em>Steps <span class="math inline">\(2\)</span>, <span class="math inline">\(5\)</span>, <span class="math inline">\(8\)</span>, <span class="math inline">\(11\)</span>, and <span class="math inline">\(14\)</span></em></p>
+<ul>
+<li>We move disk <span class="math inline">\(1\)</span> on steps <span class="math inline">\(5\)</span> and <span class="math inline">\(11\)</span>. Both times we move disk <span class="math inline">\(1\)</span> to the left.</li>
+<li>We move disk <span class="math inline">\(2\)</span> on steps <span class="math inline">\(2\)</span> and <span class="math inline">\(14\)</span>. Both times we move disk <span class="math inline">\(2\)</span> to the right.</li>
+<li>We move disk <span class="math inline">\(4\)</span> to the right on step <span class="math inline">\(8\)</span>.</li>
+</ul>
+<p><em>Steps <span class="math inline">\(3\)</span>, <span class="math inline">\(6\)</span>, <span class="math inline">\(9\)</span>, <span class="math inline">\(12\)</span>, and <span class="math inline">\(15\)</span></em></p>
+<ul>
+<li>We move disk <span class="math inline">\(1\)</span> on steps <span class="math inline">\(3\)</span>, <span class="math inline">\(9\)</span>, and <span class="math inline">\(15\)</span>. Each time we move disk <span class="math inline">\(1\)</span> to the left.</li>
+<li>We move disk <span class="math inline">\(2\)</span> on step <span class="math inline">\(6\)</span>. We move disk <span class="math inline">\(2\)</span> to the right.</li>
+<li>We move disk <span class="math inline">\(3\)</span> on step <span class="math inline">\(12\)</span>. We move disk <span class="math inline">\(3\)</span> to the left.</li>
+</ul>
+<p>Now a real pattern starts to emerge. The equivalency classes created by the step numbers corresponds to which rods we are moving disks between, while the even/oddness of the disk tells us what direction we are moving the disks between. The directions are switched depending on whether <span class="math inline">\(n\)</span> is even or odd. From the <a href="https://www.youtube.com/watch?v=PGuRmqpr6Oo">Numberphile video</a>, they introduce a remarkable observation. They use different colored prisms as their disks, where the color alternates between disks, this is just like my setup, where I have disks labeled by their radius instead of by color. The observation that they introduce is that in an optimal solution to the problem, we should never have two disks of the same color stacked on top of each other. We can translate this to my setup, this would correspond to the evenness and oddness of a disk. An odd disk should never be stacked on top of another odd disk and the same for an even disk. Our stacks of disks on each rod should follow the pattern odd, even, odd, even, <span class="math inline">\(\ldots\)</span>. We can use this pattern to figure out what valid move we can make between the two rods that we want to move disks between.</p>
+<p>We can use the number of steps required to solve the problem as our iterator.</p>
+<p>Next we should first check if <span class="math inline">\(n\)</span> is even or odd and assign the first steps as such.</p>
+<p><strong>Code Implementation</strong></p>
+<p>Lets try to implement the above in pseudocode:</p>
+<pre class="{plain}"><code>going to need to modify my stackMove function to compare the values of things at the top of stacks, this will tell us what move we can make (valid moves), then moves them between rods accordingly. checking the eveness of the disk seems like it would take a lot more work than I can accomplish during this time but might try to pursue this idea further.
+
+function hanoitoweriterative(n,starting rod, auxillary rod, end rod):
+    create stacks for each rod
+    fill in the first rod with values 1 through n, with n on the bottom
+    add some labels for the rods s,a,e = (Start, Auxilary, End)
+
+    if number of disks are even:
+        swap the end pole and the auxilary pole
+
+    for i in range (1, 2**n -1): # itll take 2^n -1 steps to solve the problem, iterate over this range.
+        EQUIVALENCY CLASSES WE DEFINED
+        if (i % 3 == 1): 
+            check even/odd of disk
+            if value of disk % 2 ! = 0 
+            move between start and end rod, going left (auxillary if n is even,  direction opposite)
+            else:
+            go in the other direction between the same rods as you just did
+
+        elif (i % 3 == 2):
+            check even/odd of disk
+            if value of disk % 2 ! = 0 
+            move between start and auxillary rod, going left (end if n is even, direction direction opposite)
+            else:
+            go in the other direction between the same rods as you just did
+
+        elif (i % 3 == 0):
+            check even/odd of disk
+            if value of disk % 2 ! = 0 
+            move between auxillary and end rod, going left (if n is even, direction direction opposite)
+            else:
+            go in the other direction between the same rods as you just did</code></pre>
+<p>Now lets implement this in python:</p>
+<p>I tried to follow my pseudocode as best as possible, but ran into a wall trying to come up with a way of checking the even/oddness of the disk that we are trying to move. I decided to opt for a similar approach to the one found <a href="https://www.geeksforgeeks.org/iterative-tower-of-hanoi/">here</a>, which utilizes a function that determines what valid move you can make between two disks to simplify the function. To do this I modified my <code>moveStack()</code> function that I used in my stack representation of the recursive solution.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to move disks between rods. Determines the valid move between the start and end rod, and then executes that move</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> moveDisk(start, end, s , e): <span class="co"># start and end are both stacks, s and e are labels for the stacks</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get the top value of each stack</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    topstart <span class="op">=</span> start.pop() </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    topend <span class="op">=</span> end.pop()</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compare values to determine valid movements</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if start is empty</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> topstart <span class="op">==</span> <span class="va">None</span>: <span class="co"># if start rod is empty</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        start.push(topend) <span class="co"># move the disk on the end rod to the start rod (only valid move)</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Disk </span><span class="sc">{</span>topend<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss"> -&gt; </span><span class="sc">{</span>s<span class="sc">}</span><span class="ss">"</span>) <span class="co"># display the move</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if end is empty</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> topend <span class="op">==</span> <span class="va">None</span>: <span class="co"># if the end rod is empty</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>        end.push(topstart) <span class="co"># move disk on start rod to end rod (only valid move)</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Disk </span><span class="sc">{</span>topstart<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>s<span class="sc">}</span><span class="ss"> -&gt; </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>) <span class="co"># dispaly the move</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compare the values and move them accordingly, figure out which disk is the larger of the two</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> topstart <span class="op">&gt;</span> topend: <span class="co"># disk on top of starting rod is bigger than disk on ending rod</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># move disk on end rod to start rod ( only valid move between the two rods)</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>        start.push(topstart) <span class="co"># put the top value of start back onto the rod</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>        start.push(topend) <span class="co"># put the top value of end on top of the start rod</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Disk </span><span class="sc">{</span>topend<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss"> -&gt; </span><span class="sc">{</span>s<span class="sc">}</span><span class="ss">"</span>) <span class="co"># display the move</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>: <span class="co">#disk on top of starting rod is smaller than the disk on the ending rod</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>        <span class="co"># move the disk on the start rod to the end rod ( only valid move between the two rods)</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>        end.push(topend) <span class="co"># put the top value of end back onto the end rod</span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>        end.push(topstart) <span class="co"># put the top value of start on top of the end rod</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Disk </span><span class="sc">{</span>topstart<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>s<span class="sc">}</span><span class="ss"> -&gt; </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>) <span class="co"># display the move</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tower_of_hanoi_it(n, starting<span class="op">=</span><span class="bu">str</span>, auxillary<span class="op">=</span><span class="bu">str</span>, ending<span class="op">=</span><span class="bu">str</span>): <span class="co"># n is number of rods, starting, auxillary, and ending strings are the lables for each of the rod.</span></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># initialize stacks</span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>    start <span class="op">=</span> stack(n)</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>    aux <span class="op">=</span> stack(n)</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>    end <span class="op">=</span> stack(n)</span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fill in starting stack (rod)</span></span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n,<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>        start.push(i)</span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>    <span class="co">#labels for printing</span></span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>    s, a, e <span class="op">=</span> starting, auxillary, ending</span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># check if n is even or odd, have to change some things if that is the case</span></span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (n <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>):</span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a>        <span class="co"># swap auxilary and end rods, the first step that will be made ( so we are moving disks between the correct rods)</span></span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a>        temp <span class="op">=</span> e </span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a>        e <span class="op">=</span> a</span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>        a <span class="op">=</span> temp</span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a>    <span class="co">#iterate through the moves required to solve the problem (1 to  2^n - 1)</span></span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,<span class="bu">int</span>(<span class="dv">2</span><span class="op">**</span>n)): <span class="co"># range 1 to 2^n-1, but because of how python's range function works we can just write 2^n</span></span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (i <span class="op">%</span> <span class="dv">3</span> <span class="op">==</span> <span class="dv">1</span>): <span class="co"># valid move between start and end rod (start and auxillary if n is even)</span></span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a>            moveDisk(start, end, s, e) <span class="co"># function to move the rods</span></span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> (i <span class="op">%</span> <span class="dv">3</span> <span class="op">==</span> <span class="dv">2</span>): <span class="co"># valid move between start and auxillary rod (start and end if n is even)</span></span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a>            moveDisk(start, aux, s, a) <span class="co"># function to move the rods</span></span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> (i <span class="op">%</span> <span class="dv">3</span> <span class="op">==</span> <span class="dv">0</span>): <span class="co"># valid move between auxillary and end rod</span></span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a>            moveDisk(aux, end, a, e) <span class="co"># funciton to move the rods</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Demonstrating our functions:</p>
+<p>The outputs are a little weird because of how I handled poping an empty stack in my stack implementation.</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi_it(<span class="dv">3</span>, <span class="st">"S"</span>, <span class="st">"A"</span>, <span class="st">"E"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Stack is empty
+Disk 1: S -&gt; E
+Stack is empty
+Disk 2: S -&gt; A
+Disk 1: E -&gt; A
+Stack is empty
+Disk 3: S -&gt; E
+Stack is empty
+Disk 1: A -&gt; S
+Disk 2: A -&gt; E
+Disk 1: S -&gt; E</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>tower_of_hanoi_it(<span class="dv">4</span>, <span class="st">"S"</span>, <span class="st">"A"</span>, <span class="st">"E"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Stack is empty
+Disk 1: S -&gt; A
+Stack is empty
+Disk 2: S -&gt; E
+Disk 1: A -&gt; E
+Stack is empty
+Disk 3: S -&gt; A
+Disk 1: E -&gt; S
+Disk 2: E -&gt; A
+Disk 1: S -&gt; A
+Stack is empty
+Disk 4: S -&gt; E
+Disk 1: A -&gt; E
+Stack is empty
+Disk 2: A -&gt; S
+Disk 1: E -&gt; S
+Disk 3: A -&gt; E
+Stack is empty
+Disk 1: S -&gt; A
+Disk 2: S -&gt; E
+Disk 1: A -&gt; E</code></pre>
+</div>
+</div>
 </section>
 <section id="compare-the-time-and-space-complexity-of-both-the-recursive-and-iterative-solutions-and-explain-the-differences." class="level4">
 <h4 class="anchored" data-anchor-id="compare-the-time-and-space-complexity-of-both-the-recursive-and-iterative-solutions-and-explain-the-differences.">3. Compare the time and space complexity of both the recursive and iterative solutions and explain the differences.</h4>
+<p>We can pretty much determine the time complexities of both the recursive and iterative solutions by looking at the optimal number of steps that it takes to solve the problem. We have previously shown that it will take <span class="math inline">\(2^n-1\)</span> steps to optimally solve the Tower of Hanoi Problem.</p>
+<p>Lets look a little deeper at the recursive solution:</p>
+<ul>
+<li><p>If we have <span class="math inline">\(n\)</span> disks, we have to make <span class="math inline">\(2\)</span> recursive calls on the <span class="math inline">\(n-1\)</span> disks and then a single operation to then move the disks between rods (this will take constant time so lets call that <span class="math inline">\(c\)</span>). Lets label the recursive funciton and the recursive calls <span class="math inline">\(h(n)\)</span> We can write this out as a formula, time <span class="math inline">\((h(n)) = 2\cdot time(h(n-1))+c\)</span>. Lets dive a bit deeper into how this breaks down for various <span class="math inline">\(n\)</span>:</p>
+<ul>
+<li><span class="math inline">\(n = 0\)</span>:
+<ul>
+<li>time <span class="math inline">\((h(0)) = 0\)</span></li>
+</ul></li>
+<li><span class="math inline">\(n=1\)</span>:
+<ul>
+<li>time <span class="math inline">\((h(1)) = 2\cdot time(h(0))+c = c\)</span>, since <span class="math inline">\(c\)</span> represents constant time we can say that <span class="math inline">\(c=1\)</span>, thus time <span class="math inline">\((h(1))=1\)</span></li>
+</ul></li>
+<li><span class="math inline">\(n =2\)</span>:
+<ul>
+<li>time <span class="math inline">\((h(2)) = 2\cdot time(h(1))+c = 3c = 3\)</span></li>
+</ul></li>
+<li><span class="math inline">\(n = 3\)</span>:
+<ul>
+<li>time <span class="math inline">\((h(3)) = 2\cdot time(h(2))+c = 7c = 7\)</span></li>
+</ul></li>
+<li><span class="math inline">\(n = 4\)</span>:
+<ul>
+<li>time <span class="math inline">\((h(4)) = 2\cdot time(h(3))+c = 15c = 15\)</span></li>
+</ul></li>
+</ul></li>
+</ul>
+<p>From the above pattern we can simplify, and get: time <span class="math inline">\((h(n)) = 2\cdot time(h(n-1))+c = (2^n-1)c\)</span>, where <span class="math inline">\(c=1\)</span> thus the time complexity for our recursive version is given by <span class="math inline">\(O(2^n-1)\)</span> which, ignoring constants simplifies to <span class="math inline">\(O(2^n)\)</span>.</p>
+<p>For the space complexity of this algorithm, we are constantly swapping items between rods, thus we are not creating any new items to store and we can re-use the same space for each step. The space will be <span class="math inline">\(n\)</span>, which is the number of disks as we only have to store the states of the <span class="math inline">\(n\)</span> disks as we go through the algorithm, thus the space complexity for the recursive version is <span class="math inline">\(O(n)\)</span>.</p>
+<p>Now lets turn to the iterative version.</p>
+<p>In the iterative version we have a few things to keep track of, the number of times that we iterate, and the operations that we execute each time we iterate through the funciton. We can also look at the operations we do before we begin the iteration piece, but in the grand scheme of things, those operations will take <span class="math inline">\(O(1)\)</span> constant time.</p>
+<p>So we have to look at our <code>moveDisk()</code> function. The <code>moveDisk()</code> funciton has 3 main operations which each take <span class="math inline">\(O(1)\)</span> operations. Those are the popping of the two stacks we want to move disks between, and then the actual operation where we move the disks between the stacks. In big-Oh notation, since these tasks are all constant time, our <code>moveDisk()</code> function will take <span class="math inline">\(O(3)\propto O(1)\)</span> constant time to complete.</p>
+<p>Looking at the iteration going on in the function, we iterate through the steps of the algorithm. Since we have calculated that the optimal solution will take <span class="math inline">\(2^n-1\)</span> steps, we iterate <span class="math inline">\(2^n-1\)</span> times. Each time we move thorugh our for loop, we do one operation, which is moving the disks between rods depending on where we are at in the pattern. We know that our <code>moveDisk()</code> function takes <span class="math inline">\(O(1)\)</span> constant time to execute, so do this <span class="math inline">\(2^n-1\)</span> times thus the time complexity can be <span class="math inline">\(O(n)=2^n-1\)</span>, ignoring constants we get a time complexity of <span class="math inline">\(O(n)= 2^n\)</span>. Thus the time complexity for our iterative implementation is <span class="math inline">\(O(2^n)\)</span></p>
+<p>Turning to the space complexity of our iterative implementation, we initialize <span class="math inline">\(3\)</span> stacks of size <span class="math inline">\(n\)</span>. Because we are only moving disks between these <span class="math inline">\(3\)</span> stacks, we can reuse the space that we first initialized. So we can write the space complexity as <span class="math inline">\(O(3n)\propto O(n)\)</span></p>
+<p>We can summarize the above into the following table:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">Recursive</th>
+<th style="text-align: center;">Iterative</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Time Complexity</td>
+<td style="text-align: center;"><span class="math inline">\(O(2^n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(2^n)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Space Complexity</td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\)</span></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="optional-but-extra-credit-create-a-graphical-user-interface-gui-that-demonstrates-the-steps-of-the-tower-of-hanoi-problem-as-the-disks-are-moved-from-the-starting-peg-to-the-target-peg.-the-gui-should-allow-the-user-to-specify-the-number-of-disks-and-the-speed-at-which-the-disks-move." class="level4">
 <h4 class="anchored" data-anchor-id="optional-but-extra-credit-create-a-graphical-user-interface-gui-that-demonstrates-the-steps-of-the-tower-of-hanoi-problem-as-the-disks-are-moved-from-the-starting-peg-to-the-target-peg.-the-gui-should-allow-the-user-to-specify-the-number-of-disks-and-the-speed-at-which-the-disks-move.">4. (Optional, but extra credit) Create a graphical user interface (GUI) that demonstrates the steps of the Tower of Hanoi problem as the disks are moved from the starting peg to the target peg. The GUI should allow the user to specify the number of disks and the speed at which the disks move.</h4>
+<p>I have never made a GUI program so I will not be attempting to make one for the first time here.</p>
 </section>
 <section id="create-a-variation-of-the-tower-of-hanoi-problem-where-the-user-can-specify-more-than-three-pegs.-your-solution-should-still-move-all-the-disks-from-the-starting-peg-to-the-target-peg-while-adhering-to-the-rules-of-the-tower-of-hanoi-problem." class="level4">
 <h4 class="anchored" data-anchor-id="create-a-variation-of-the-tower-of-hanoi-problem-where-the-user-can-specify-more-than-three-pegs.-your-solution-should-still-move-all-the-disks-from-the-starting-peg-to-the-target-peg-while-adhering-to-the-rules-of-the-tower-of-hanoi-problem.">5. Create a variation of the Tower of Hanoi problem where the user can specify more than three pegs. Your solution should still move all the disks from the starting peg to the target peg while adhering to the rules of the Tower of Hanoi problem.</h4>
+<p>For this problem I will be making the following assumptions:</p>
+<ol type="1">
+<li>The number of disks is fixed, I will use <span class="math inline">\(3\)</span> disks for my implementation</li>
+<li>The number of pegs(rods) must be greater than or equal to 3. Else we would not be able to solve the puzzle.</li>
+<li>The rules of the original Tower of Hanoi must be followed, one disk at a time, disks can only be placed on empty rods or on a rod with a larger disk.</li>
+</ol>
+<p>If there are only 3 rods, we will follow the same steps that we followed to get a solution using the original variation.</p>
+<p>If there are more than 3 rods, we will find the number of auxillary rods and then use that information to determine how we move disks between rods.</p>
+<p>If we have <span class="math inline">\(n\)</span> disks and <span class="math inline">\(r\)</span> rods, to move to the end rod from the start rod we will still have to move the <span class="math inline">\(n-1\)</span> rods from the starting disk to the auxillary disks. Then move the remaining disk to the ending rod. The simplest solution I can think of to this problem would be to take my recursive approach and rename the auxilary rod input to be auxillary rods an and then each time we move a disk to the auxillary rods we don’t specify which auxillary rod we are moving it to, just state that we are moving it to some auxillary rod.</p>
+<p>Okay, lets start by looking at the case when <span class="math inline">\(r=4\)</span>. Since we assume a fixed <span class="math inline">\(n\)</span>, there are <span class="math inline">\(3\)</span> disks to move to the ending rod. We label the disks in descending order, <span class="math inline">\(1,2,\)</span> and <span class="math inline">\(3\)</span>. The order of operations will be as follows:</p>
+<ol type="1">
+<li>Move disk <span class="math inline">\(1\)</span> to an open auxillary rod. ( 3 open rods total, 2 auxillary open)</li>
+<li>Move disk <span class="math inline">\(2\)</span> to an open auxillary rod. ( 2 open rods total, 1 auxillary open)</li>
+<li>Move disk <span class="math inline">\(3\)</span> to the end rod.</li>
+<li>Move disk <span class="math inline">\(2\)</span> to the end rod.</li>
+<li>Move disk <span class="math inline">\(1\)</span> to the end rod.</li>
+</ol>
+<p>Now lets look at the case where <span class="math inline">\(r = 5\)</span>. The order of operations is as follows:</p>
+<ol type="1">
+<li>Move disk <span class="math inline">\(1\)</span> to an open auxillary rod. (4 open rods total, 3 auxillary open)</li>
+<li>Move disk <span class="math inline">\(2\)</span> to an open auxillary rod. (3 open rods total, 2 auxillary open)</li>
+<li>Move disk <span class="math inline">\(3\)</span> to the end rod.</li>
+<li>Move disk <span class="math inline">\(2\)</span> to the end rod.</li>
+<li>Move disk <span class="math inline">\(1\)</span> to the end rod.</li>
+</ol>
+<p>With the above assumptions, this will hold for all <span class="math inline">\(r &gt;3\)</span></p>
+<p>Here is how I would implement this in python. I am going to utilize my pre-existing <code>tower_of_hanoi()</code> function when the number of rods is <span class="math inline">\(3\)</span>, I will throw an error if the number of rods is less than <span class="math inline">\(3\)</span>, and if the number of rods is greater than <span class="math inline">\(3\)</span> I will print the steps above and indicate how many available auxillary disks there are.</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tower of Hanoi more than 3 pegs, but only 3 disks</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> THanoiG3R(n): <span class="co"># number of rods, done with three disks.</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">&lt;</span><span class="dv">3</span>:</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"Puzzle must have at least 3 pegs"</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">==</span> <span class="dv">3</span>:</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> tower_of_hanoi(<span class="dv">3</span>, <span class="st">"Start"</span>, <span class="st">"Auxillary"</span>, <span class="st">"End"</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">&gt;</span> <span class="dv">3</span>:</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>        nopen <span class="op">=</span> n <span class="op">-</span><span class="dv">1</span> </span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>        auxopen <span class="op">=</span> nopen<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Disk 1: Start -&gt; Auxillary (</span><span class="sc">{</span>auxopen<span class="sc">}</span><span class="ss"> available)"</span>)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>        auxopen <span class="op">-=</span> <span class="dv">1</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Disk 2: Start -&gt; Auxillary (</span><span class="sc">{</span>auxopen<span class="sc">}</span><span class="ss"> available)"</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Disk 3: Start -&gt; End"</span>)</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Disk 2: Auxillary -&gt; End"</span>)</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Disk 1: Auxillary -&gt; End"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here is a demonstration of the function</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>THanoiG3R(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="29">
+<pre><code>'Puzzle must have at least 3 pegs'</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>THanoiG3R(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Disk 1: Start -&gt; End
+Disk 2: Start -&gt; Auxillary
+Disk 1: End -&gt; Auxillary
+Disk 3: Start -&gt; End
+Disk 1: Auxillary -&gt; Start
+Disk 2: Auxillary -&gt; End
+Disk 1: Start -&gt; End</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>THanoiG3R(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Disk 1: Start -&gt; Auxillary (2 available)
+Disk 2: Start -&gt; Auxillary (1 available)
+Disk 3: Start -&gt; End
+Disk 2: Auxillary -&gt; End
+Disk 1: Auxillary -&gt; End</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>THanoiG3R(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Disk 1: Start -&gt; Auxillary (3 available)
+Disk 2: Start -&gt; Auxillary (2 available)
+Disk 3: Start -&gt; End
+Disk 2: Auxillary -&gt; End
+Disk 1: Auxillary -&gt; End</code></pre>
+</div>
+</div>
 </section>
 <section id="optional-but-extra-credit-create-a-variation-of-the-tower-of-hanoi-problem-where-the-user-can-specify-the-number-of-disks-and-the-number-of-pegs.-your-solution-should-still-move-all-the-disks-from-the-starting-peg-to-the-target-peg-while-adhering-to-the-rules-of-the-tower-of-hanoi-problem." class="level4">
 <h4 class="anchored" data-anchor-id="optional-but-extra-credit-create-a-variation-of-the-tower-of-hanoi-problem-where-the-user-can-specify-the-number-of-disks-and-the-number-of-pegs.-your-solution-should-still-move-all-the-disks-from-the-starting-peg-to-the-target-peg-while-adhering-to-the-rules-of-the-tower-of-hanoi-problem.">6. (Optional, but extra credit) Create a variation of the Tower of Hanoi problem where the user can specify the number of disks and the number of pegs. Your solution should still move all the disks from the starting peg to the target peg while adhering to the rules of the Tower of Hanoi problem.</h4>
+<p>A recursive solution to this is to modify and implement the <a href="https://en.wikipedia.org/wiki/Tower_of_Hanoi#Frame%E2%80%93Stewart_algorithm">Frame-Stewart algorithm</a>. The representation of it on Wikipedia solves for the minimum number of steps, but apparently it has not been proven. I will not be implementing it for this midterm because I have ran out of time and my brain is starting to melt.</p>
 </section>
 </section>
 <section id="spell-checker" class="level2">
 <h2 class="anchored" data-anchor-id="spell-checker">Spell Checker</h2>
+<p>My Spell Checker Program can be found <a href="https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/blob/main/Assignments/Midterm/SpellCheck.py">here</a>. It is written in python. I have never written a CLI program before this so it is a little rough around the edges in some places, but I gave it my best attempt.</p>
+<section id="resources-used" class="level4">
+<h4 class="anchored" data-anchor-id="resources-used">Resources Used</h4>
+<p>In general the implementation of the Spell Checker was fairly straightforward. I did have to consult ChatGPT a bit to figure out how to make a CLI program, as well as for debugging and brainstorming purposes. I mostly consulted resources when it came to implementing the Levenshtein distance calculations</p>
+<ul>
+<li>This <a href="https://medium.com/@ethannam/understanding-the-levenshtein-distance-equation-for-beginners-c4285a5604f0">Medium Article</a> was very helpful in how it broke down the Wagner-Fischer Algorithm and walked through how to fill out the matrix by hand. Very useful when it came to implementing it in python and I can compute the Levenshtein edit distance of any two strings by hand now.</li>
+<li><a href="https://en.wikipedia.org/wiki/Wagner%E2%80%93Fischer_algorithm">Wikipedia - Wagner Fischer Algorithm</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Wikipedia - Levenshtein Distance</a></li>
+<li><a href="https://www.youtube.com/watch?v=XYi2-LPrwm4">Video by NeetCode</a>. This video went over my head when I watched it as it was one of the first videos I watched, but I just decided to watch/read as much as possible and kind of brute force the understanding</li>
+<li><a href="https://www.youtube.com/watch?v=d-Eq6x1yssU&amp;t">Video by b001</a>. Really good explanation of the Wagner-Fischer algorithm and was helpful in a similar way that the Medium Article was.</li>
+</ul>
+</section>
+<section id="code-implementaion-and-responsesthoughts-on-the-objectives-of-the-program." class="level4">
+<h4 class="anchored" data-anchor-id="code-implementaion-and-responsesthoughts-on-the-objectives-of-the-program.">Code Implementaion and responses/thoughts on the objectives of the program.</h4>
 <p>Create a spell checker console program that uses a hash table data structure to store a dictionary of words. Your program should be able to:</p>
 <ol type="1">
-<li><p>Load a dictionary of words from a file into the hash table. You will need to create this yourself. Aim for 20 to 100 words.</p></li>
-<li><p>Take a string of text as input and check each word in the text against the words in the dictionary stored in the hash table. Your program should identify any words that are not found in the dictionary and display them as “misspelled”.</p></li>
+<li><p>Load a dictionary of words from a file into the hash table. You will need to create this yourself. Aim for 20 to 100 words.</p>
+<p>For my dictionary I found a <a href="https://gist.github.com/deekayen/4148741">list of the 1000 most commmon</a> words in the english language on GitHub. I copied these to the <a href="https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/blob/main/Assignments/Midterm/Data/dictionary.txt">dictionary.txt</a> file and used that as my dicitonary.</p>
+<p>I then start by loading the dictionary into the hash table. Here is the python code for this:</p></li>
 </ol>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">1000</span> <span class="co"># hash table size</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>dictionary <span class="op">=</span> HashTable(n)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"./Data/dictionary.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> words:</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> [line.strip() <span class="cf">for</span> line <span class="kw">in</span> words] </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> word <span class="kw">in</span> words:</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    dictionary.insert(word)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> words</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
+<li><p>Take a string of text as input and check each word in the text against the words in the dictionary stored in the hash table. Your program should identify any words that are not found in the dictionary and display them as “misspelled”.</p>
+<p>My approach was to take the input string, and then take each word of the string and compare it to my dictionary hash table. I call <code>dictionary.contains()</code> on each word in the string to see if the dictionary contains the word. I then store the boolean value of <code>dictionary.contains()</code> for each word and use that to indicate whether a word is misspelled or not.</p>
 <pre class="{plain}"><code>def Misspell(string):
-    # split the string into each word, store it as a temp variable
-    # created an empty array the length of the temp variable ( call it spellings)
-    # for each word in the temp variable:
-    #   run dictionary.get(word) and append the spellings array with the truth value if the word is in the dictionary or not
-    # return the spellings array</code></pre>
-<ol start="3" type="1">
-<li><p>Implement a suggestion feature that suggests possible correct spellings for the misspelled words based on edit distance.</p></li>
-<li><p>Implement a Levenshtein distance algorithm to compute the edit distance between two words.</p></li>
-<li><p>Allow the user to add new words to the dictionary and update the hash table accordingly.</p></li>
-<li><p>Handle collisions in the hash table using separate chaining.</p></li>
-<li><p>Optimize the performance of your program in terms of time and space complexity.</p></li>
-<li><p>Your program should be user-friendly and have a command-line interface.</p></li>
+# split the string into each word, store it as a temp variable
+# created an empty array the length of the temp variable ( call it spellings)
+# for each word in the temp variable:
+#   run dictionary.get(word) and append the spellings array with the truth value if the word is in the dictionary or not
+# return the spellings array</code></pre>
+<p>Here is my actual implementation of this in python:</p></li>
 </ol>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> misspelled(string):</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    temp <span class="op">=</span> string.split()<span class="co"># split the string into each word, store it as a temp variable</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    spellings <span class="op">=</span> []<span class="co"># created an empty array the length of the temp variable ( call it spellings)</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> word <span class="kw">in</span> temp:<span class="co"># for each word in the temp variable:</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>     <span class="co">#   run dictionary.contains(word) and append the spellings array with the truth value</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>        spellings.append(<span class="kw">not</span>(dictionary.contains(word)))</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># return the spellings array</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> spellings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I utilized this list of boolean values to help me with implementing my suggestion feature.</p>
+<ol start="3" type="1">
+<li><p>Implement a suggestion feature that suggests possible correct spellings for the misspelled words based on edit distance.</p>
+<p>For this I decided to create a list of pairs of the string and its corresponding boolean value returned from invoking the <code>misspelled()</code> function on the string. I then took all the values which according to <code>misspelled()</code> were misspelled and compared the edit distance to each string in the dictionary. I stored the key, edit distance pair in an array and then chose the 5 strings with the smallest edit distances. I computed the edit distance using a Levenshtein distance algorithm. Initially I did it using the naive recursive method, but I adapted it to use the Wagner-Fischer algorithm to calculate the edit distance.</p></li>
+<li><p>Implement a Levenshtein distance algorithm to compute the edit distance between two words.</p>
+<p>To implement a Levenshtein distance algorithm to calculate the edit distance between two strings I first went to <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Wikipedia</a> to learn what the Levenshtein distance was (also edit distances in general). The piecewise representation of this algorithm made a lot of sense to me, so I decided to implement it in python as best I could directly from the piecewise function.</p>
+<p>Here is what I was able to implement for the recursive version of the Levenshtein distance algorithm:</p></li>
+</ol>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> levenshteinDist(strA, strB):</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> <span class="bu">len</span>(strA) <span class="co"># length of string A</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    j <span class="op">=</span> <span class="bu">len</span>(strB) <span class="co"># length of string B</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">## Check if either of the strings are empty ( base case )</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>  i <span class="op">==</span> <span class="dv">0</span>: <span class="co"># string A is empty</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> j <span class="co"># length of string B for number of delete edits needed</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> j <span class="op">==</span> <span class="dv">0</span>: <span class="co"># string B is empty</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> i <span class="co"># length of string A for number of delete edits needed</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">## Recursive case 1, both characters match, compare the rest of both strings</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> strA[i<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> strB[j<span class="op">-</span><span class="dv">1</span>]: <span class="co"># if the last characters of strings A and B are the same</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> levenshteinDist(strA[:<span class="op">-</span><span class="dv">1</span>],strB[:<span class="op">-</span><span class="dv">1</span>]) <span class="co"># recursively call the function on the remaining characters in both strings.</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Recursive case 2, characters don't match, calculate the amount of edits needed to make the strings match:</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">+</span> <span class="bu">min</span>( <span class="co"># adds 1 each time any of these are invoked, cost of doing the edit operation</span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>        levenshteinDist(strA, strB[:<span class="op">-</span><span class="dv">1</span>]), <span class="co"># insert character into string A from string B</span></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>        levenshteinDist(strA[:<span class="op">-</span><span class="dv">1</span>], strB), <span class="co"># delete the last character from string A</span></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>        levenshteinDist(strA[:<span class="op">-</span><span class="dv">1</span>], strB[:<span class="op">-</span><span class="dv">1</span>]) <span class="co"># substitute the last character in string A for the last character in string B.</span></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This works, but it is slow when the strings are longer. An approach using the matrix method to calculate the Levenshtein distance seems to be much more computationally efficient.</p>
+<p>A better approach to calculating the Levenshtein edit distance between two strings would be to use the <a href="https://en.wikipedia.org/wiki/Wagner%E2%80%93Fischer_algorithm">Wagner-Fischer Algorithm</a>.</p>
+<p>The Wagner-Fischer Algorithm works as follows, we take the two strings we want to compare and overlay them as row/column labels for a matrix <span class="math inline">\(D = m+1 \times n+1\)</span>, where <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span> are the lengths of the two strings respectively. The dimensions of <span class="math inline">\(D\)</span> are <span class="math inline">\(m+1 \times n+1\)</span> because we want to be able to compare the edit costs between a string and an empty string. We use this matrix to store the edit distances between all prefixes of each string. We compute the edit distance between each string in a similar way as we did recursively. We compare the costs of doing all of the different operations, and then at the index of the matrix we are in, we pick which edit operation will give us the minimum value based on the characters of the two strings that we are at. Doing this will eventually fill out a matrix where the last row, column index will contain the minimum edit distance between the two strings.</p>
+<p>The Code to implement the Wagner-Fischer Algorithm is as follows:</p>
+<p>This was a fairly quick and dirty implementation of this based on some pseudocode that I had seen places as well as from some videos and websites that described how we navigate the distance matrix.</p>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">### Wagner Fischer Algorithm for levenshtein distance</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> levenshteinDist(str1, str2):</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> <span class="bu">len</span>(str1)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(str2)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># initialize distance matrix</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    distance <span class="op">=</span> [[<span class="dv">0</span> <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(n<span class="op">+</span><span class="dv">1</span>)] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(m<span class="op">+</span><span class="dv">1</span>)]</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># i, row</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># j, column</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># distance[i][j], value at row i, column j</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    distance[<span class="dv">0</span>][<span class="dv">0</span>] <span class="op">=</span> <span class="dv">0</span> <span class="co"># comparing two empty strings, 0 comparisons to start</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fill in the first row (comparing any prefix of str2 to an empty str1)</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,n<span class="op">+</span><span class="dv">1</span>):</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>        distance[<span class="dv">0</span>][j] <span class="op">=</span> j</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fill in the first column (comparing any prefix of str1 to an empty str2)</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,m<span class="op">+</span><span class="dv">1</span>):</span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>        distance[i][<span class="dv">0</span>] <span class="op">=</span> i</span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compare strings follow the same rules as recursion</span></span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># comparing at row, column pair distance(i,j)</span></span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># for each row</span></span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,m<span class="op">+</span><span class="dv">1</span>): <span class="co"># row 0 is the empty string row</span></span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># go to colum j so we can compare prefixes at the row,column pair i,j in the respective strings</span></span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,n<span class="op">+</span><span class="dv">1</span>): <span class="co"># column 0 is the empty string column</span></span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>            <span class="co"># calculate the substitution cost, 1 if the characters match, 0 if we don't have to change anything</span></span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> str1[i<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> str2[j<span class="op">-</span><span class="dv">1</span>]: <span class="co"># characters match</span></span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>                sub <span class="op">=</span> <span class="dv">0</span> <span class="co"># no substitution cost</span></span>
+<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>: <span class="co"># characters don't match</span></span>
+<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a>                sub <span class="op">=</span> <span class="dv">1</span> <span class="co"># substitution cost of 1</span></span>
+<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a>            <span class="co"># insert edit cost at distance[i][j] based on the costs set during the recursive version</span></span>
+<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a>            distance[i][j] <span class="op">=</span> <span class="bu">min</span>(</span>
+<span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a>                distance[i][j<span class="op">-</span><span class="dv">1</span>]<span class="op">+</span> <span class="dv">1</span>, <span class="co"># insert a character, add 1 because we are making an edit</span></span>
+<span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a>                distance[i<span class="op">-</span><span class="dv">1</span>][j]<span class="op">+</span> <span class="dv">1</span>, <span class="co"># delete a character, add 1 because we are making an edit</span></span>
+<span id="cb33-38"><a href="#cb33-38" aria-hidden="true" tabindex="-1"></a>                distance[i<span class="op">-</span><span class="dv">1</span>][j<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> sub <span class="co"># substitute or don't change the character</span></span>
+<span id="cb33-39"><a href="#cb33-39" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb33-40"><a href="#cb33-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> distance[m<span class="op">-</span><span class="dv">1</span>][n<span class="op">-</span><span class="dv">1</span>] <span class="co"># return the edit distance</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For the recursive implementation, we are making at least two recursive calls for each character in each string, but can go up to 3 recursive calls for each character in each string if none of the characters in the strings match. Thus we can say that the the worst case time complexity for the recursive approach is <span class="math inline">\(O(3^{m+n})\)</span>, where <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span> are the lengths of strings <span class="math inline">\(1\)</span> and <span class="math inline">\(2\)</span> respectively.</p>
+<p>In the iterative approach, using the Wagner-Fischer algorithm, we have a for loop that iterates through each row, with a sub for loop that iterates through each column of the matrix. The total number of iterations we will have to complete is <span class="math inline">\(m \cdot n\)</span>, each iteration we perform a singular <span class="math inline">\(O(1)\)</span> operation, which is inserting a value into the matrix. Thus the time complexity of the Wagner-Fischer algorithm is <span class="math inline">\(O(m\cdot n)\)</span>, where <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span> are the lengths of strings <span class="math inline">\(1\)</span> and <span class="math inline">\(2\)</span> respectively.</p>
+<p>Additionally, the Wagner-Fischer algorithm is much more space efficient than the recursive approach. Instead of having to store each recursive call, which can add up when we are comparing longer strings, we are simply storing a matrix of dimension <span class="math inline">\(m+1 \times n+1\)</span>, where <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span> are the lengths of strings <span class="math inline">\(1\)</span> and <span class="math inline">\(2\)</span> respectively..</p>
+<ol start="5" type="1">
+<li>Allow the user to add new words to the dictionary and update the hash table accordingly.</li>
+</ol>
+<p>The user is able to add new words to the dictionary with <code>add</code> and can view the dictionary with <code>dictionary</code>. The dictionary gets reset whenever you re-run the program.</p>
+<ol start="6" type="1">
+<li><p>Handle collisions in the hash table using separate chaining.</p>
+<p>For this I modified my hash table data structure to handle chaining using a linked list instead of an array.</p></li>
+<li><p>Optimize the performance of your program in terms of time and space complexity.</p></li>
+</ol>
+<p>I did this by implementing the Wagner-Fischer Algorithm to calculate the Levenshtein edit distance after first implementing the recursive algorithm.</p>
+<ol start="8" type="1">
+<li><p>Your program should be user-friendly and have a command-line interface.</p>
+<p>Gave it my best attempt at this, I have never made a CLI program before. Tried to provide the user with as much information as possible.</p>
+<p>Commands are <code>check</code>, <code>add</code>, <code>dictionary</code>, <code>help</code>, and <code>exit</code>.</p>
+<ul>
+<li><code>check</code> followed by any string will check the spelling of the string.</li>
+<li><code>add</code> followed by a word will add that word to the dictionary.</li>
+<li><code>dictionary</code> returns the dictionary in alphabetical order (except for “I”, which refuses to budge from the top of the list)</li>
+<li><code>help</code> displays the available commands.</li>
+<li><code>exit</code> is very self explanatory, it exits the program.</li>
+</ul></li>
+</ol>
+</section>
 </section>
 <section id="code-library" class="level2">
 <h2 class="anchored" data-anchor-id="code-library">Code Library</h2>
-<p>My code library from this course can be found on my <a href="https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/tree/main/cs240functions/src/cs240functions">GitHub</a>. It is a functioning python module that can be installed locally if the folder is downloaded (I am pretty sure at least). The file <code>'__init.py'</code> is the module that intializes the library and doesn’t contain any funcitons. I am continually updating it to enhance some of the funcitons when I notice a problem I encounter when trying to use these algorithms and data structures in later points in the quarter. Will contain more content by the end of the course.</p>
+<p>My code library from this course can be found on my <a href="https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/tree/main/cs240functions/src/cs240functions">GitHub</a>. It is a functioning python module that can be installed locally if the folder is downloaded (I am pretty sure at least). The file <code>'__init__.py'</code> is the module that intializes the library and doesn’t contain any funcitons. I am continually updating it to enhance some of the functions when I notice a problem I encounter wehn attempting to use these algorithms and data structures in later points in the quarter. Will contain more content by the end of the course.</p>
 </section>
 
 </main>

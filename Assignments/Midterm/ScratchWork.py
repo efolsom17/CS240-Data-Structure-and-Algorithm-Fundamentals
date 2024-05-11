@@ -25,8 +25,6 @@ import cmd
 # []    []      [2]
 # []    []      [3]
 
-from cs240functions import Stack as stack
-
 # Some stuff I did while testing:
 test1 = stack()
 test2 = stack()
@@ -118,15 +116,142 @@ def TowerOfHanoi(n):# Tower of Hanoi with stacks and it will initialize the numb
 7 mod 3 = 1
 '''
 
+# Tower of hanoi iterative
 
+'''
+P-code:
 
+going to need to modify my stackMove function to compare the values of things at the top of stacks ( i can bring back moveDisk)
+
+function hanoitoweriterative(n,starting rod, auxillary rod, end rod):
+    create stacks for each rod
+    fill in the first rod with values 1 through n, with n on the bottom
+    add some labels for the rods s,a,e = (Start, Auxilary, End)
+
+    if number of disks are even:
+        swap the end pole and the auxilary pole
+
+    for i in range (1, 2**n -1): # itll take 2^n -1 steps to solve the problem, iterate over this range.
+        EQUIVALENCY CLASSES WE DEFINED
+        if (i % 3 == 1): 
+            check even/odd of disk
+            if value of disk % 2 ! = 0 
+            move between start and end rod, going left (auxillary if n is even,  direction opposite)
+            else:
+            go in the other direction between the same rods as you just did
+            
+            actually it would be better to compare the size (value ) of the discs that are on the rods that we are trying to move disks
+            to and from. This will determine what move we can make. 
+
+        elif (i % 3 == 2):
+            check even/odd of disk
+            if value of disk % 2 ! = 0 
+            move between start and auxillary rod, going left (end if n is even, direction opposite)
+            else:
+            go in the other direction between the same rods as you just did
+
+        elif (i % 3 == 0):
+            check even/odd of disk
+            if value of disk % 2 ! = 0 
+            move between auxillary and end rod, going left (if n is even,  direction opposite)
+            else:
+            go in the other direction between the same rods as you just did
+'''
+
+## The grand return of moveDisk!!!!1
+## moves a disk between two poles based on the rules of hanoi's tower. It will look at the values of the top disks of the rods that
+## we are trying to move disks between and based on the values determine what valid move we can make (direction). 
+
+def moveDisk(start, end, s , e): # start and end are both stacks, s and e are labels for the stacks
+    # get the top value of each stack
+    topstart = start.pop() 
+    topend = end.pop()
+    
+    # compare values to determine valid movements
+    
+    # if start is empty
+    if topstart == None: # if start rod is empty
+        start.push(topend) # move the disk on the end rod to the start rod (only valid move)
+        print(f"Disk {topend}: {e} -> {s}") # display the move
+    
+    # if end is empty
+    elif topend == None: # if the end rod is empty
+        end.push(topstart) # move disk on start rod to end rod (only valid move)
+        print(f"Disk {topstart}: {s} -> {e}") # dispaly the move
+        
+    # compare the values and move them accordingly, 
+    elif topstart > topend: # disk on top of starting rod is bigger than disk on ending rod
+        # move disk on end rod to start rod ( only valid move between the two rods)
+        start.push(topstart) # put the top value of start back onto the rod
+        start.push(topend) # put the top value of end on top of the start rod
+        print(f"Disk {topend}: {e} -> {s}") # display the move
+    else: #disk on top of starting rod is smaller than the disk on the ending rod
+        # move the disk on the start rod to the end rod ( only valid move between the two rods)
+        end.push(topend) # put the top value of end back onto the end rod
+        end.push(topstart) # put the top value of start on top of the end rod
+        print(f"Disk {topstart}: {s} -> {e}") # display the move
+
+def tower_of_hanoi_it(n, start, aux, end):
+    # initialize stacks
+    start = stack(n)
+    aux = stack(n)
+    end = stack(n)
+ 
+    
+    # fill in starting stack (rod)
+    for i in range(n,0,-1):
+        start.push(i)
+    
+    #labels for printing
+    s, a, e = 'Start', 'Aux', 'End'
+    
+    # check if n is even or odd, have to change some things if that is the case
+    if (n % 2 == 0):
+        # swap auxilary and end rods, the first step that will be made ( so we are moving disks between the correct rods)
+        temp = e 
+        e = a
+        a = temp
+    
+    
+    
+    #iterate through the number of moves
+    for i in range(1,int(2**n)): # range 1 to 2^n-1, but because of how python's range function works we can just write 2^n
+        if (i % 3 == 1): # valid move between start and end rod (start and auxillary if n is even)
+            moveDisk(start, end, s, e) # function to move the rods
+        elif (i % 3 == 2): # valid move between start and auxillary rod (start and end if n is even)
+            moveDisk(start, aux, s, a) # function to move the rods
+    
+        elif (i % 3 == 0): # valid move between auxillary and end rod
+            moveDisk(aux, end, a, e) # funciton to move the rods
+        
+
+# Tower of Hanoi more than 3 pegs, but only 3 disks
+
+def THanoiG3R(n): # number of rods, done with three disks.
+    
+    if n <3:
+        return f"Puzzle must have at least 3 pegs"
+    if n == 3:
+        return tower_of_hanoi(3, "Start", "Auxillary", "End")
+    if n > 3:
+        nopen = n -1 
+        auxopen = nopen-1
+        print(f"Disk 1: Start -> Auxillary ({auxopen} available)")
+        auxopen -= 1
+        print(f"Disk 2: Start -> Auxillary ({auxopen} available)")
+        print(f"Disk 3: Start -> End")
+        print(f"Disk 2: Auxillary -> End")
+        print(f"Disk 1: Auxillary -> End")
+
+    
 '''
 Tower of Hanoi Resources:
 
 https://www.youtube.com/watch?v=PGuRmqpr6Oo
 https://www.youtube.com/watch?v=2SUvWfNJSsM # inspiration for iterative version also helped me wrap my head around the recursion going on as well.
 https://www.youtube.com/watch?v=bdMfjfT0lKk
-https://cs.stackexchange.com/questions/96624/how-to-solve-tower-of-hanoi-iteratively
+https://www.geeksforgeeks.org/iterative-tower-of-hanoi/
+https://en.wikipedia.org/wiki/Tower_of_Hanoi#Frame%E2%80%93Stewart_algorithm
 '''
 
 
@@ -265,7 +390,11 @@ Recursion is going to get really bad when the words are long :/, good thing my d
 
 
 Levenshtein Resources:
-
+https://medium.com/@ethannam/understanding-the-levenshtein-distance-equation-for-beginners-c4285a5604f0 # super helpful to get me thinking about matrices again.
+https://en.wikipedia.org/wiki/Wagner%E2%80%93Fischer_algorithm 
+https://en.wikipedia.org/wiki/Levenshtein_distance
+https://www.youtube.com/watch?v=XYi2-LPrwm4 this video went over my head when I watched it, but I just decided to watch/read as much as possible and kind of brute force the understanding
+https://www.youtube.com/watch?v=d-Eq6x1yssU&t Really good explanation of the wagner fischer algorithm to compute the levenshtein edit distance
 
 
 '''
@@ -310,8 +439,82 @@ def levenshteinDist(strA, strB):
             levenshteinDist(strA[:-1], strB), # delete the last character from string A
             levenshteinDist(strA[:-1], strB[:-1]) # substitute the last character in string A for the last character in string B.
             )
-        
+
+
+### Wagner Fischer Algorithm for levenshtein distance
+def levDist(str1, str2):
+    m = len(str1)
+    n = len(str2)
+    # initialize distance matrix
+    distance = [[0 for j in range(n+1)] for i in range(m+1)]
+    # i, row
+    # j, column
+    # distance[i][j], value at row i, column j
     
+    distance[0][0] = 0 # comparing two empty strings, 0 comparisons to start
+    
+    # fill in the first row (comparing any prefix of str2 to an empty str1)
+    for j in range(1,n+1):
+        distance[0][j] = j
+
+    # fill in the first column (comparing any prefix of str1 to an empty str2)
+    for i in range(1,m+1):
+        distance[i][0] = i
+    
+    # compare strings follow the same rules as recursion
+    # comparing at row, column pair distance(i,j)
+    
+    # for each row
+    for i in range(1,m+1): # row 0 is the empty string row
+        # go to colum j so we can compare prefixes at the row,column pair i,j in the respective strings
+        for j in range(1,n+1): # column 0 is the empty string column
+            
+            # calculate the substitution cost, 1 if the characters match, 0 if we don't have to change anything
+            if str1[i-1] == str2[j-1]: # characters match
+                sub = 0 # no substitution cost
+            else: # characters don't match
+                sub = 1 # substitution cost of 1
+            # insert edit cost at distance[i][j] based on the costs set during the recursive version
+            # calculates minimum edit distance for the pair i,j
+            distance[i][j] = min(
+                distance[i][j-1]+ 1, # insert a character, add 1 because we are making an edit
+                distance[i-1][j]+ 1, # delete a character, add 1 because we are making an edit
+                distance[i-1][j-1] + sub # substitute or don't change the character
+            )
+    return distance[m][n]
+
+# This works now, kind of returns a slightly different matrix than what I had imagined it would be, but this is basically my quick and dirty implementation of it based on what I read about the algorithm
+    
+    
+def misspelled(string):
+        temp = string.split()# split the string into each word, store it as a temp variable
+        spellings = []# created an empty array the length of the temp variable ( call it spellings)
+        for word in temp:# for each word in the temp variable:
+         #   run dictionary.contains(word) and append the spellings array with the truth value
+            spellings.append(not(dictionary.contains(word)))
+        # return the spellings array
+        return spellings
+    
+def do_check(string):
+    'Check the spelling of a string'
+    if not string: # ensure that a string has been passed through
+        print("You must enter a string") # tell the user to enter a string
+        return
+    print(f"Input: {string}")
+    spellings = misspelled(string) # returning just the string doesn't work, because if anything is true it exits the CLI loop.
+    string_words = string.split()
+    string_misspell = []
+    for i in range(0,len(spellings)-1):
+        string_misspell.append((string_words[i],spellings[i]))
+    for word, misspell in string_misspell:
+        if misspell:
+            print(f"{word} is spelled wrong") # tell the user the word is misspelled
+            suggestions = suggest(word) # get the suggestions for the word
+            print("Suggested replacements:") # print the suggested replacement words.
+            for item in suggestions:
+                print(item)
+    return
+  
 '''
 
 Okay how do I create a CLI program?????
@@ -325,7 +528,7 @@ class SpellCheck(cmd.Cmd):
         \n Check the spelling of a string using 'check string'\
         \n Add a new word to the dictionary with 'add word'\
         \n View the dictionary with 'dictionary'\
-        \n Exit with 'exit"
+        \n Exit with 'exit'"
     prompt = ""
     def do_exit(self, arg):
         'Exit the shell'
@@ -345,11 +548,12 @@ class SpellCheck(cmd.Cmd):
     
     def suggest(self, string):
         edit_distance = [] # store the edit distance
+        dictionary = self.dictionary
         for index in dictionary.table: # for each index in the hash table
             if index.head: #check if empty 
                 current = index.head # start at the head of the linked list for that index
                 while current: # traverse the list
-                    editdist = levenshteinDist(string, current.data) # calculate the edit distance using levenshtein distance
+                    editdist = self.levenshteinDist(string, current.data) # calculate the edit distance using levenshtein distance
                     edit_distance.append((editdist, current.data))
                     current = current.next
     
@@ -360,28 +564,46 @@ class SpellCheck(cmd.Cmd):
         return suggestions
 
 
-    def levenshteinDist(self, strA, strB):
-        i = len(strA) # length of string A
-        j = len(strB) # length of string B
-    
-        ## Check if either of the strings are empty ( base case )
+    def levenshteinDist(self, str1, str2):
+        m = len(str1)
+        n = len(str2)
+        # initialize distance matrix
+        distance = [[0 for j in range(n+1)] for i in range(m+1)]
+        # i, row
+        # j, column
+        # distance[i][j], value at row i, column j
+        
+        distance[0][0] = 0 # comparing two empty strings, 0 comparisons to start
+        
+        # fill in the first row (comparing any prefix of str2 to an empty str1)
+        for j in range(1,n+1):
+            distance[0][j] = j
 
-        if  i == 0: # string A is empty
-            return j # length of string B for number of delete edits needed
-        if j == 0: # string B is empty
-            return i
-    
-    ## Recursive case 1, both characters match, compare the rest of both strings
-    
-        if strA[i-1] == strB[j-1]: # if the last characters of strings A and B are the same
-            return levenshteinDist(strA[:-1],strB[:-1]) # recursively call the function on the remaining characters in both strings.
-    
-    # Recursive case 2, characters don't match, calculate the amount of edits needed to make the strings match:
-        return 1 + min( # adds 1 each time any of these are invoked, cost of doing the edit operation
-                levenshteinDist(strA, strB[:-1]), # insert character into string A from string B
-                levenshteinDist(strA[:-1], strB), # delete the last character from string A
-                levenshteinDist(strA[:-1], strB[:-1]) # substitute the last character in string A for the last character in string B.
+        # fill in the first column (comparing any prefix of str1 to an empty str2)
+        for i in range(1,m+1):
+            distance[i][0] = i
+        
+        # compare strings follow the same rules as recursion
+        # comparing at row, column pair distance(i,j)
+        
+        # for each row
+        for i in range(1,m+1): # row 0 is the empty string row
+            # go to colum j so we can compare prefixes at the row,column pair i,j in the respective strings
+            for j in range(1,n+1): # column 0 is the empty string column
+                
+                # calculate the substitution cost, 1 if the characters match, 0 if we don't have to change anything
+                if str1[i-1] == str2[j-1]: # characters match
+                    sub = 0 # no substitution cost
+                else: # characters don't match
+                    sub = 1 # substitution cost of 1
+                # insert edit cost at distance[i][j] based on the costs set during the recursive version
+                # calculates minimum edit distance for the pair i,j
+                distance[i][j] = min(
+                    distance[i][j-1]+ 1, # insert a character, add 1 because we are making an edit
+                    distance[i-1][j]+ 1, # delete a character, add 1 because we are making an edit
+                    distance[i-1][j-1] + sub # substitute or don't change the character
                 )
+        return distance[m][n]
         
         
     
@@ -401,16 +623,18 @@ class SpellCheck(cmd.Cmd):
             return
         print(f"Input: {string}")
         spellings = self.misspelled(string) # returning just the string doesn't work, because if anything is true it exits the CLI loop.
-        for word, misspelled in zip(string.split(),spellings):
-            mispelled = 0
+        string_words = string.split()
+        string_misspell = []
+        for i in range(0,len(spellings)-1):
+            string_misspell.append((string_words[i],spellings[i]))
+        for word, misspelled in string_misspell:
             if misspelled:
-                misspelled +=1
                 print(f"{word} is spelled wrong") # tell the user the word is misspelled
                 suggestions = self.suggest(word) # get the suggestions for the word
                 print("Suggested replacements:") # print the suggested replacement words.
                 for item in suggestions:
                     print(item)
-            return
+        return
             
                 
     def do_add(self, string):
