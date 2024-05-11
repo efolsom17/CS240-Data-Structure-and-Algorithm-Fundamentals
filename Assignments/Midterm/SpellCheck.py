@@ -1,3 +1,4 @@
+# CS240 Spring 2024 Midterm - Eric Folsom
 ## Spell checker program, CLI and stores the dictionary as a hash table. 
 from cs240functions import HashTable
 from cs240functions import DoubleLinkedList
