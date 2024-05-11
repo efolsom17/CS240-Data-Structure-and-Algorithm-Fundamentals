@@ -19,7 +19,7 @@ from heapq import nsmallest
 import cmd
 ```
 
-These are my written solutions to the problems on the midterm. There will be a link to the attached python script for each problem (on Github). I will be presenting some code and outputs, but for the spell checker I will provide a link to the python script and my thoughts and approaches to including each requirement of the spell checker. You can view the work that I did via following [Pull](https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/pull/33) [requests]() which shows all the commits that I have made on this assignment. Additionally I have included a [scratchwork](https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/blob/main/Assignments/Midterm/ScratchWork.py) python script which contains my thoughts and kind of shows my working process.
+These are my written solutions to the problems on the midterm. There will be a link to the attached python script for each problem (on Github). I will be presenting some code and outputs, but for the spell checker I will provide a link to the python script and my thoughts and approaches to including each requirement of the spell checker. You can view the work that I did via following [Pull](https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/pull/33) [requests](https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/pull/35) which shows all the commits that I have made on this assignment. Additionally I have included a [scratchwork](https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/blob/main/Assignments/Midterm/ScratchWork.py) python script which contains my thoughts and kind of shows my working process.
 
 
 ## Hanoi's Tower
@@ -32,6 +32,8 @@ The goal of the puzzle is to move the entire stack to another rod, obeying the f
 1. Only one disk can be moved at a time
 2. Each move consists of taking the upper disk from one of the stacks and placing it on top of another stack or on an empty rod.   
 3. No disk may be placed on top of a smaller disk.
+
+A python script containing the following implementations of this puzzle is available [here](https://github.com/efolsom17/CS240-Data-Structure-and-Algorithm-Fundamentals/blob/main/Assignments/Midterm/HanoisTower.py).
 
 #### The following resources were used to help me come up with a solution to the problems below:
 

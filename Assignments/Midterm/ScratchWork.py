@@ -252,7 +252,6 @@ Tower of Hanoi Resources:
 https://www.youtube.com/watch?v=PGuRmqpr6Oo
 https://www.youtube.com/watch?v=2SUvWfNJSsM # inspiration for iterative version also helped me wrap my head around the recursion going on as well.
 https://www.youtube.com/watch?v=bdMfjfT0lKk
-https://cs.stackexchange.com/questions/96624/how-to-solve-tower-of-hanoi-iteratively
 https://www.geeksforgeeks.org/iterative-tower-of-hanoi/
 https://en.wikipedia.org/wiki/Tower_of_Hanoi#Frame%E2%80%93Stewart_algorithm
 '''
@@ -397,7 +396,7 @@ https://medium.com/@ethannam/understanding-the-levenshtein-distance-equation-for
 https://en.wikipedia.org/wiki/Wagner%E2%80%93Fischer_algorithm 
 https://en.wikipedia.org/wiki/Levenshtein_distance
 https://www.youtube.com/watch?v=XYi2-LPrwm4 this video went over my head when I watched it, but I just decided to watch/read as much as possible and kind of brute force the understanding
-https://www.youtube.com/watch?v=d-Eq6x1yssU&t=694s Really good explanation of the wagner fischer algorithm to compute the levenshtein edit distance
+https://www.youtube.com/watch?v=d-Eq6x1yssU&t Really good explanation of the wagner fischer algorithm to compute the levenshtein edit distance
 
 
 '''
