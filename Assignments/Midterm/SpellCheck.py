@@ -6,15 +6,11 @@ from heapq import nsmallest
 import cmd
 
 '''
-Accomplishes:
+Accomplishes the following:
 
-1. Load a dictionary of words from a file into the hash table.  You will need to create this yourself.  Aim for 20 to 100 words. (oops I did 1000 words for my dictionary) 
-
-EaSY
+1. Load a dictionary of words from a file into the hash table. 
 
 2. Take a string of text as input and check each word in the text against the words in the dictionary stored in the hash table. Your program should identify any words that are not found in the dictionary and display them as "misspelled".
-
-Did this, returns an array with the True if a word is misspelled and False if a word is correctly Spelled.
 
 3. Implement a suggestion feature that suggests possible correct spellings for the misspelled words based on edit distance.
 
@@ -23,8 +19,6 @@ Did this, returns an array with the True if a word is misspelled and False if a 
 5. Allow the user to add new words to the dictionary and update the hash table accordingly.
 
 6. Handle collisions in the hash table using separate chaining.
-
-Chains using an array to store collisions.
 
 7. Optimize the performance of your program in terms of time and space complexity.
 
