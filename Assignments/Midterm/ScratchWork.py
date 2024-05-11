@@ -25,8 +25,6 @@ import cmd
 # []    []      [2]
 # []    []      [3]
 
-from cs240functions import Stack as stack
-
 # Some stuff I did while testing:
 test1 = stack()
 test2 = stack()
