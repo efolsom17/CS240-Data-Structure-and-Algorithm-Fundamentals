@@ -682,7 +682,7 @@ Disk 1: A -&gt; E</code></pre>
 <p>Here is a demonstration of the function</p>
 <div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>THanoiG3R(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="29">
+<div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>'Puzzle must have at least 3 pegs'</code></pre>
 </div>
 </div>
@@ -857,7 +857,7 @@ Disk 1: Auxillary -&gt; End</code></pre>
 <ol start="5" type="1">
 <li>Allow the user to add new words to the dictionary and update the hash table accordingly.</li>
 </ol>
-<p>The user is able to add new words to the dictionary with <code>add</code> and can view the dictionary with <code>dictionary</code>. The dictionary gets reset whenever you re-run the program.</p>
+<p>The user is able to add new words to the dictionary with <code>add</code> and can view the dictionary with <code>dictionary</code>. The dictionary gets reset whenever you re-run the program. I could, in the future return to this and modify it such that when the user exits the program, we overwrite the <code>dictionary.txt</code> file that we read with an updated dictionary from the session.</p>
 <ol start="6" type="1">
 <li><p>Handle collisions in the hash table using separate chaining.</p>
 <p>For this I modified my hash table data structure to handle chaining using a linked list instead of an array.</p></li>

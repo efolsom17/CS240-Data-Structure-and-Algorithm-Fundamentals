@@ -747,7 +747,7 @@ Additionally, the Wagner-Fischer algorithm is much more space efficient than the
 
 5. Allow the user to add new words to the dictionary and update the hash table accordingly.
 
-The user is able to add new words to the dictionary with `add` and can view the dictionary with `dictionary`. The dictionary gets reset whenever you re-run the program.
+The user is able to add new words to the dictionary with `add` and can view the dictionary with `dictionary`. The dictionary gets reset whenever you re-run the program. I could, in the future return to this and modify it such that when the user exits the program, we overwrite the `dictionary.txt` file that we read with an updated dictionary from the session. 
 
 6. Handle collisions in the hash table using separate chaining.
 
