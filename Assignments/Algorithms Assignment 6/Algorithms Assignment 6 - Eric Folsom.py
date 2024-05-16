@@ -30,8 +30,9 @@ class BinarySearchTree:
     def __init__(self, data):
         # check if data is a single point of data or if it is an array.
         if data is not list: # if the data that we input is not a list
-            self.root = TreeNode(data) # assign the root as whatever data we inputed
+            self.root = TreeNode(data) # assign the root as whatever data we inputed 
         else: # if it is a list
             mid  = len(data)//2
             self.root = TreeNode(mid)# Assign the middle index to be the root of the binary search tree.
+            # Call insert function on all the 
             
