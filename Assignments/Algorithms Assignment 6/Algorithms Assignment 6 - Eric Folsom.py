@@ -24,7 +24,7 @@ class TreeNode:
 # inputted as child nodes
 # Something like, if you insert an array, it would choose the middle index of the array to be the root. then assign nodes
 # by the rules of a binary search tree. If you only inputed a single data point, that data would be the root. Or you could make an empty 
-# binary search tree
+# binary search tree. Might be a good idea to assign the first index of the array to be the root, because then we are not assuming that our data is sorted.
         
 class BinarySearchTree:
     def __init__(self, data):
@@ -34,5 +34,27 @@ class BinarySearchTree:
         else: # if it is a list
             mid  = len(data)//2
             self.root = TreeNode(mid)# Assign the middle index to be the root of the binary search tree.
-            # Call insert function on all the 
+            # Call insert function on all the remaining elements
+            for i in range(mid): # indices from 0 to mid-1
+                pass # this is where the insert function gets called
+            for i in range(mid+1,len(data)): # indices from mid+1 to the last index of data
+                pass # this is where the insert function gets called
+    
+    #insert a value into the binary search tree
+    def insert(self, node, data):
+        pass
+    
+    # delete a value from the binary serach tree
+    
+    # search for a value in the binary search tree (does the tree contain this value or not), might call this contains
+    
+    # find the minimum value (.min)
+    
+    # find the maximum value (.max)
+    
+    # in order traversal
+    
+    # pre order traversal
+    
+    # post order traversal.
             
