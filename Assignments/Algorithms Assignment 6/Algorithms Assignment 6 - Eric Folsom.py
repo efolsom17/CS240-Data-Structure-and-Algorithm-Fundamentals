@@ -46,15 +46,50 @@ class BinarySearchTree:
     
     # delete a value from the binary serach tree
     
+    def delete(self, data):
+        pass
+    
     # search for a value in the binary search tree (does the tree contain this value or not), might call this contains
+    def contains(self, node, data):
+        pass
     
     # find the minimum value (.min)
+    def getmin(self, node):
+        pass
     
     # find the maximum value (.max)
-    
-    # in order traversal
+    def getmax(self, node):
+        pass
     
     # pre order traversal
+    '''
+    Visit root node first
+    Recursively do a pre-order traversal of the left subtree
+    recursively do a pre-order traversal of the right subtree
+    'pre' because we visit the node before the recursive traversal of the subtrees
+    '''
+    def preOrder(self, node):
+        pass
+    
+    # in order traversal
+    '''
+    recursively do an in-order traversal of the left subtree
+    visit the root node
+    recursively do an in-order traversal of the right subtree
+    
+    'in-order' because we recursively traverse the left subtree, then visit the middle (root), then traverse the right subtree
+    '''
+    def inOrder(self, node):
+        pass
+    
     
     # post order traversal.
+    '''
+    recursively do post-order traversal of the left subtree
+    recursively do post-order traversal of the right subtree
+    visit the root node
+    "post" because we visit the root node after traversing both subtrees.
+    '''
+    def postOrder(self, node):
+        pass
             
