@@ -27,7 +27,7 @@ class TreeNode:
 # binary search tree. Might be a good idea to assign the first index of the array to be the root, because then we are not assuming that our data is sorted.
         
 class BinarySearchTree:
-    def __init__(self, data):
+    def __init__(self, data = None):
         # check if data is a single point of data or if it is an array.
         if data is not list: # if the data that we input is not a list
             self.root = TreeNode(data) # assign the root as whatever data we inputed 
@@ -40,9 +40,29 @@ class BinarySearchTree:
             for i in range(mid+1,len(data)): # indices from mid+1 to the last index of data
                 pass # this is where the insert function gets called
     
-    #insert a value into the binary search tree
-    def insert(self, node, data):
-        pass
+    #insert a value into the binary search tree, insert a new node with the given data
+    def insert(self, data):
+        # check if the tree is empty
+        if self.root is None: # if tree is empty, new node becomes root
+            self.root = TreeNode(data)
+        # else, the tree already has data
+        else:
+            #find the correct position for the new node
+            current = self.root # start at the root of the tree
+            while True:# while current \neq None
+                if data < current.data: # if the data is less than the root value:
+                    # go to the left subtree
+                    if current.left is None: # if there is no left subtree
+                        current.left = TreeNode(data) # create the left subtree
+                        break # stop, we have inserted the data where it belongs
+                    current = current.left # traverse to the next node
+                
+                else: # if the data is greater than or equal to the root node value:
+                    # go to the right subtree
+                    if current.right is None: # if the right leaf node doesn't exist
+                        current.right = TreeNode(data) # create the right leaf node.
+                        break # stop we have inserted the data where it belongs
+                    current = current.right # go to the next rigth subtree.
     
     # delete a value from the binary serach tree
     
