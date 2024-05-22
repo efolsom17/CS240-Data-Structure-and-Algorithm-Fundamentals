@@ -56,18 +56,73 @@ class AVLTree():
     
     # Insert data into the AVL tree, going to use a helper method like i did with bst            
     def insert(self, data):
-        pass
+        self.root = self._insert_node(self.root, data) #  call our helperfunction to insert the data starting at the root of the tree.
     
-    # Delete a node from the AVL tree, going to use a helper method like i did with bst
-    def delete(self, node, data):
-        pass
+    # helper method for the insert
+    def _insert_node(self, node, data):
+        # find the correct position of the node
+        if node is None: # if the node doesn't exist, base case
+            return TreeNode(data)  # insert the node as the data
+        # if the value we are inputing is less than the value of the data at the current node
+        if data < node.data:
+            node.left = self._insert_node(node.left, data)# recursive call on the left subtree
+        else: # value we are inputing is greater than the value of the data at the current node
+            node.right = self._insert_node(node.right, data) # recursive call on the right subtree
+        
+        '''
+        Height, balance, and rotation functions go here
+        '''
+        
+        return node
+        
+    # Delete Node
+    
+    def delete(self, data):
+        # call the _delete_node method starting at the root node.
+       self.root = self._delete_node(self.root, data)
+    
+    # helper method to delete a node while keeping binary search tree logic in place
+    def _delete_node(self, node, data):
+        if node is None: # Check if the node is empty
+            return node # Returns None if the node we are trying to delete is empty
+        # Theses are basically to get us to the place in the tree where the value we want do delete is located
+        if data < node.data: #if the value we want to delete is less than the node data
+            # go to the left subtree 
+            node.left = self._delete_node(node.left, data) # recursive call on the left subtree to delete the value
+        elif data > node.data: # If the value we want to delete is greter than the node data
+            # go to the right subtree
+            node.right = self._delete_node(node.right, data) # recursive call on the right subtree to delete the value
+        # once we find the node with the data we want to delete
+        else: 
+            # nodes with only one child node
+            
+            # No left child node
+            if node.left is None:
+                return node.right # Replace the node with its right child node
+            # No right child node
+            elif node.right is None:
+                return node.left # Replace the node with its left child node
+            
+            # Node with both child nodes
+            # get get the in order sucessor, smallest value in the right subtree 
+            temp = self._minNode(node.right) # getting the min value from the right subtree ( i.e value just greater than the value we are deleting)
+            # copy the data of the in order sucessor to the node
+            node.data = temp.data
+            # delete in order sucessor
+            node.right = self._delete_node(node.right, temp.data)
+            
+        '''
+        Height, balance, and rotation stuff goes here.
+        '''
+             
+        return node # returns the updated node
     
     # Funciton to perform a left rotation
-    def leftRotate(self, x):
+    def leftRotate(self, x): # x is the node that we are performing the rotation on
         pass
     
     # funciton to perform a right rotation
-    def rightRotate(self, x):
+    def rightRotate(self, x): # x is the node that we are performing the rotation on
         pass
     
     # function to get the height of a node
