@@ -13,6 +13,8 @@ Resources used:
 
 https://www.w3schools.com/dsa/dsa_theory_trees.php - Helped me get started and I enjoyed the animations and interactive elements which helped me wrap my head around what we are trying to implement.
 https://www.programiz.com/dsa/binary-search-tree - Again helped me understand how everything worked. 
+https://en.wikipedia.org/wiki/Binary_search_tree - Helpful with pseudocode, used as inspiration as well.
+ChatGPT - Helped me implement the ideas I took from the above links as a Class in python.
 
 I used both w3schools and programiz as inspiration for how I would program this as well as understanding what each function should do. I thought that w3schools was the most helpful, as their animations and explanations
 of what the methods they immplemented did was very helpful. I found that their explanations of the recursion going on in some of the functions that they implemented to be some of the best recursive explanations, 
