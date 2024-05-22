@@ -83,7 +83,48 @@ class BinarySearchTree:
     
     # helper method to delete a node while keeping binary search tree logic in place
     def _delete_node(self, node, data):
-        pass
+        if node is None: # Check if the node is empty
+            return node # Returns None if the node we are trying to delete is empty
+        
+        
+        # Theses are basically to get us to the place in the tree where the value we want do delete is located
+        if data < node.data: #if the value we want to delete is less than the node data
+            # go to the left subtree 
+            node.left = self._delete_node(node.left, data) # recursive call on the left subtree to delete the value
+        elif data > node.data: # If the value we want to delete is greter than the node data
+            # go to the right subtree
+            node.right = self._delete_node(node.right, data) # recursive call on the right subtree to delete the value
+        
+        # once we find the node with the data we want to delete
+        else: 
+            # nodes with only one child node
+            
+            # No left child node
+            if node.left is None:
+                return node.right # Replace the node with its right child node
+            # No right child node
+            elif node.right is None:
+                return node.left # Replace the node with its left child node
+            
+            # Node with both child nodes
+            # get get the in order sucessor, smallest value in the right subtree 
+            temp = self._minNode(node.right) # getting the min value from the right subtree ( i.e value just greater than the value we are deleting)
+            # copy the data of the in order sucessor to the node
+            node.data = temp.data
+            # delete in order sucessor
+            node.right = self._delete_node(node.right, temp.data)
+             
+        return node # returns the updated node
+    
+    
+    
+    # another helper method to get the node with the minimum value in a given subtree
+    def _minNode(self, node):
+        current = node # start at the given node
+        while current.left is not None: # while the node that we are at has a left leaf node
+            current = current.left # keep traversing down the left
+        return current # return the node that we stop at
+    
     # search for a value in the binary search tree (does the tree contain this value or not), might call this contains
     '''
     Start at the root
@@ -92,22 +133,51 @@ class BinarySearchTree:
         if the value we are looking for is greater than the root, searhc the right subtree
         Eventually if we don't find the value after searching the whole tree, return False 
     '''
-    def contains(self, node, data):
-        pass
-    
+    def contains(self, data):
+        # start at the root of the bst
+        current = self.root
+        # traverse the tree
+        while current: # while current \neq None
+            if data == current.data: # if we find the value we want to find
+                return True # return True
+            elif data < current.data: # if the value we are searching for is less than the value of the current node
+                # traverse the left of the tree
+                current = current.left
+            else: # if the value we are searching for is greater than the value of the current node
+                current = current.right # traverse the right side of the tree
+        # if we search all the way and we haven't found the value, i.e, Current == None
+        return False # False, the BST does not contain the value
+            
     # find the minimum value (.min)
     '''
     traverse all the way to the left and return the value
     '''
-    def getmin(self, node):
-        pass
+    def getmin(self):
+        if self.root is None: # check if the root exists
+            return None #  if it doesn't return None
+        # root exists
+        current = self.root
+        # traverse the left of the tree
+        while current.left: # while current.left \neq None
+            current = current.left # continue traversing to the left
+        return current.data # return the value of the last node in the left subtree
     
     # find the maximum value (.max)
     '''
     traverse all the way to the right and return the value
     '''
     def getmax(self, node):
-        pass
+        if self.root is None: # check if the root exists
+            return None # if it doesn't return None
+        # Root exists, traverse the right subtree
+        current = self.root
+        # traverse the right of the tree
+        while current.right: # while current.right \neq None
+            current = current.right # continue traversing the right subtree
+        return current.data #  return the value of the last node in the right subtree
+    
+    
+    ## TRAVERSAL METHODS - Going to use recursive helper methods for these, 
     
     # pre order traversal
     '''
@@ -116,7 +186,10 @@ class BinarySearchTree:
     recursively do a pre-order traversal of the right subtree
     'pre' because we visit the node before the recursive traversal of the subtrees
     '''
-    def preOrder(self, node):
+    def preOrder(self):
+        pass
+    
+    def _preOrder(self, node, result):
         pass
     
     # in order traversal
@@ -127,7 +200,10 @@ class BinarySearchTree:
     
     'in-order' because we recursively traverse the left subtree, then visit the middle (root), then traverse the right subtree
     '''
-    def inOrder(self, node):
+    def inOrder(self):
+        pass
+    
+    def _inOrder(self, node, result):
         pass
     
     
@@ -138,6 +214,9 @@ class BinarySearchTree:
     visit the root node
     "post" because we visit the root node after traversing both subtrees.
     '''
-    def postOrder(self, node):
+    def postOrder(self):
+        pass
+    
+    def _postOrder(self, node, result):
         pass
             
