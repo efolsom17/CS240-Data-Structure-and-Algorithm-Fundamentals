@@ -53,7 +53,7 @@ class BinarySearchTree:
     compare the value at each node
         less than the root, go left
         greater than the root, go right
-        do the above until 
+        do the above until we have found the correct position to put the value
     '''
     def insert(self, data):
         # check if the tree is empty
