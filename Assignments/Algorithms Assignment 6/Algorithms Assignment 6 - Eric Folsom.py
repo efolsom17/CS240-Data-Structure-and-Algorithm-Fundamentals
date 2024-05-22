@@ -8,6 +8,17 @@ Implementing a binary search tree in python
  Going to need a tree node, similar to the nodes that I created for my linked lists,
  just instead of prev, and next, i'll hae left and right. SHould probably include tree height just so that I can
  easily transition it into an AVL tree. I think a lot of this can be done with recursion. Might try to do this iteratively as well
+ 
+Resources used:
+
+https://www.w3schools.com/dsa/dsa_theory_trees.php - Helped me get started and I enjoyed the animations and interactive elements which helped me wrap my head around what we are trying to implement.
+https://www.programiz.com/dsa/binary-search-tree - Again helped me understand how everything worked. 
+
+I used both w3schools and programiz as inspiration for how I would program this as well as understanding what each function should do. I thought that w3schools was the most helpful, as their animations and explanations
+of what the methods they immplemented did was very helpful. I found that their explanations of the recursion going on in some of the functions that they implemented to be some of the best recursive explanations, 
+and has helped me be more comfortable implementing recursive solutions in my work.
+I had help from ChatGPT to implement my ideas as a class, as the recursive methods were a bit tricky to get working when I tried to build this as a class. The helper functions were some suggetsions from there that
+I oppted to implement as to me it simplified a lot of the programing. ChatGPT also greatley simplified the __init__ method of the BST, which my initial implementation was very complicated and didn't really work when I tested it.
 '''
 
 ## Tree Node ##
@@ -17,7 +28,6 @@ class TreeNode:
         self.data = data # data we want to add to our tree
         self.left = None # starting as None for now
         self.right = None # starting as None for now
-        self.height = 1 # height from that node is 1 by default
 
 
 ## Going to need to start with the first data point inserted as the root node, then all the subsequent data
@@ -28,17 +38,11 @@ class TreeNode:
         
 class BinarySearchTree:
     def __init__(self, data = None):
-        # check if data is a single point of data or if it is an array.
-        if data is not list: # if the data that we input is not a list
-            self.root = TreeNode(data) # assign the root as whatever data we inputed 
-        else: # if it is a list
-            mid  = len(data)//2
-            self.root = TreeNode(mid)# Assign the middle index to be the root of the binary search tree.
-            # Call insert function on all the remaining elements
-            for i in range(mid): # indices from 0 to mid-1
-                pass # this is where the insert function gets called
-            for i in range(mid+1,len(data)): # indices from mid+1 to the last index of data
-                pass # this is where the insert function gets called
+        # Initialize the BST
+        self.root = None # set the root as None by default
+        if data: # if data \neq None
+            for item in data: #  for each item of/in data
+                self.insert(item) # insert the item into the BST using our insert method
     
     #insert a value into the binary search tree, insert a new node with the given data
     '''
@@ -177,7 +181,7 @@ class BinarySearchTree:
         return current.data #  return the value of the last node in the right subtree
     
     
-    ## TRAVERSAL METHODS - Going to use recursive helper methods for these, 
+    ## TRAVERSAL METHODS - Going to use recursive helper methods for these, the recursive helper methods were adapted from w3schools and programiz's implementations with the help of ChatGPT.
     
     # pre order traversal
     '''
@@ -187,10 +191,17 @@ class BinarySearchTree:
     'pre' because we visit the node before the recursive traversal of the subtrees
     '''
     def preOrder(self):
-        pass
+        # root, left, right
+        result = [] # array for storing and printing traversal
+        self._preOrder(self.root, result) # call our helper function starting at the root node
+        return result # return the result array
     
-    def _preOrder(self, node, result):
-        pass
+    def _preOrder(self, node, result): # node is starting node, result is the storage array to store the results of our traversal
+        if node is None: # if the starting node is empty (base case)
+            return # stop, go up one layer in the recursive stack
+        result.append(node.data) # add the starting (root) node to the results array, doing this instead of printing it as im trying to make this a class for some reason
+        self._preOrder(node.left, result) # recursive preOrder traversal on the left subtree
+        self._preOrder(node.right, result) # revursive preOrder traversal on the right subtree 
     
     # in order traversal
     '''
@@ -201,11 +212,17 @@ class BinarySearchTree:
     'in-order' because we recursively traverse the left subtree, then visit the middle (root), then traverse the right subtree
     '''
     def inOrder(self):
-        pass
+        # left, root, right
+        result = [] # array for storing and printing traversal
+        self._inOrder(self.root, result) # call our helper function starting at the root node
+        return result # return the result array
     
-    def _inOrder(self, node, result):
-        pass
-    
+    def _inOrder(self, node, result):# node is starting node, result is the storage array to store the results of our traversal
+        if node is None: #  if the starting node is empty, base case
+            return # stop, go up one layer in the recursive stack
+        self._inOrder(node.left, result) # recursive call on the left subtree
+        result.append(node.data) # add the node data to the result array
+        self._inOrder(node.right, result) # recursive call on the right subtree
     
     # post order traversal.
     '''
@@ -215,8 +232,15 @@ class BinarySearchTree:
     "post" because we visit the root node after traversing both subtrees.
     '''
     def postOrder(self):
-        pass
+        # left, right, root
+        result = [] # array for storing and printing traversal
+        self._postOrder(self.root, result) # call our helper function starting at the root node
+        return result # return the result array
     
-    def _postOrder(self, node, result):
-        pass
+    def _postOrder(self, node, result):# node is starting node, result is the storage array to store the results of our traversal
+        if node is None: # if the startiung node is empty, base case
+            return # stop, go up one layer in the recursive stack
+        self._postOrder(node.left, result) #  recursive call on the left subtree
+        self._postOrder(node.right, result) # recursive call on the right subtree
+        result.append(node.data) # add the node data to the results array
             
