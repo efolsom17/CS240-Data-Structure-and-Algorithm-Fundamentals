@@ -170,7 +170,7 @@ class BinarySearchTree:
     '''
     traverse all the way to the right and return the value
     '''
-    def getmax(self, node):
+    def getmax(self):
         if self.root is None: # check if the root exists
             return None # if it doesn't return None
         # Root exists, traverse the right subtree
@@ -244,3 +244,29 @@ class BinarySearchTree:
         self._postOrder(node.right, result) # recursive call on the right subtree
         result.append(node.data) # add the node data to the results array
             
+
+
+##### TESTING #####
+test = BinarySearchTree()
+test.insert(10)
+test.insert(5)
+test.insert(15)
+test.insert(2)
+test.insert(7)
+test.insert(12)
+test.insert(18)
+print("Preorder:", test.preOrder())
+print("Inorder:", test.inOrder())
+print("Postorder:", test.postOrder())
+print("Min:", test.getmin())
+print("Max:", test.getmax())
+print("Contains 7:", test.contains(7))
+print("Contains 20:", test.contains(20))
+test.delete(10)
+print("Inorder after deleting 10:", test.inOrder())
+
+# pretty sure this tree is very unbalanced, start with inserting 0, then we insert values higher than 0 the rest of the way.
+test2 = BinarySearchTree([i for i in range(10)])
+print(test2.preOrder())
+print(test2.inOrder())
+print(test2.postOrder())
