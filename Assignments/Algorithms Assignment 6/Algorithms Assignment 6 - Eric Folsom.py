@@ -85,7 +85,8 @@ class BinarySearchTree:
     if there are both child nodes, find the in-order sucessor, swap values with the node, then delete it.
     '''
     def delete(self, data):
-        pass
+        # call the _delete_node method starting at the root node.
+       self.root = self._delete_node(self.root, data)
     
     # helper method to delete a node while keeping binary search tree logic in place
     def _delete_node(self, node, data):
