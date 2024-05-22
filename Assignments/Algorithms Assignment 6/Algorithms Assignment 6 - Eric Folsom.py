@@ -41,6 +41,14 @@ class BinarySearchTree:
                 pass # this is where the insert function gets called
     
     #insert a value into the binary search tree, insert a new node with the given data
+    '''
+    Start at the root
+        If it doesn't exist, then insert the value there
+    compare the value at each node
+        less than the root, go left
+        greater than the root, go right
+        do the above until 
+    '''
     def insert(self, data):
         # check if the tree is empty
         if self.root is None: # if tree is empty, new node becomes root
@@ -49,11 +57,11 @@ class BinarySearchTree:
         else:
             #find the correct position for the new node
             current = self.root # start at the root of the tree
-            while True:# while current \neq None
+            while current:# while current \neq None
                 if data < current.data: # if the data is less than the root value:
                     # go to the left subtree
-                    if current.left is None: # if there is no left subtree
-                        current.left = TreeNode(data) # create the left subtree
+                    if current.left is None: # if there is no left leaf node
+                        current.left = TreeNode(data) # create the left leaf node
                         break # stop, we have inserted the data where it belongs
                     current = current.left # traverse to the next node
                 
@@ -65,19 +73,39 @@ class BinarySearchTree:
                     current = current.right # go to the next rigth subtree.
     
     # delete a value from the binary serach tree
-    
+    '''
+    Check if the node is a leaf node, then remove it by removing the link to it
+    If the node only has one child node connect the child node the the parent node of the node we are deleting
+    if there are both child nodes, find the in-order sucessor, swap values with the node, then delete it.
+    '''
     def delete(self, data):
         pass
     
+    # helper method to delete a node while keeping binary search tree logic in place
+    def _delete_node(self, node, data):
+        pass
     # search for a value in the binary search tree (does the tree contain this value or not), might call this contains
+    '''
+    Start at the root
+        if its the value we are looking for return True
+        if the value we are looking for is less than the root, continue searching the left subtree
+        if the value we are looking for is greater than the root, searhc the right subtree
+        Eventually if we don't find the value after searching the whole tree, return False 
+    '''
     def contains(self, node, data):
         pass
     
     # find the minimum value (.min)
+    '''
+    traverse all the way to the left and return the value
+    '''
     def getmin(self, node):
         pass
     
     # find the maximum value (.max)
+    '''
+    traverse all the way to the right and return the value
+    '''
     def getmax(self, node):
         pass
     
