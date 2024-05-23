@@ -127,11 +127,16 @@ class AVLTree():
     
     # function to get the height of a node
     def getHeight(self, node):
-        pass
+        if node is None: # if the node has no data, 
+            return 0 # set the height of the node to 0
+        return node.height #  else return the height of the node.
     
     # Function to get the balance factor of a node
     def getBalanceFactor(self, node):
-        pass
+        # balance factor is the height of left subtree - height of right subtree
+        if node is None:
+            return 0
+        return self.getHeight(node.left)-self.getHeight(node.right)
    
    ##### FUNCTIONS THAT I AM REUSING FROM BST , they don't make any changes to the tree.
     
