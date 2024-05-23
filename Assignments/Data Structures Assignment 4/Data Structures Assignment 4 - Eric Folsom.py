@@ -366,3 +366,12 @@ class AVLTree():
         self._postOrder(node.left, result) #  recursive call on the left subtree
         self._postOrder(node.right, result) # recursive call on the right subtree
         result.append(node.data) # add the node data to the results array
+        
+        
+
+##### Testing #####
+test = [12,5,8,16,24,3,7,8,9,19]
+test = AVLTree(test)
+
+test.display
+
