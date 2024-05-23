@@ -141,10 +141,47 @@ class AVLTree():
         return node # returns the updated node
     
     # Funciton to perform a left rotation
+    '''
+    We have a setup like this
+    
+                P
+                X
+            a       Y
+                b       y
+    
+    
+    Let x and y be nodes
+    X is a node (could be the root), y is the right child node of X
+    if y has a left subtree assign X as the parent of hte left subtree of y
+    if the parent of X is None(X is the root), make y the root of the tree
+    elif X is the left child node of some parent node p, set y as the left child of p
+    else assign y as the right child of p
+    Make Y the parent of X
+    
+    End should look like this:
+    
+                P
+                Y
+            X       y
+        a    b
+    '''
     def leftRotate(self, x): # x is the node that we are performing the rotation on
         pass
     
     # funciton to perform a right rotation
+    '''
+    Start
+                P
+                Y
+            X       a
+        y     b
+    
+    If X has a right subtree, assign Y as the parent of the right subtree of X.
+    If the parent of Y is None (Y is the root), assign X as the root of the tree
+    Elif Y is the right child of its parent P, make X as the right child of P.
+    Else, assign X as the left child of P.
+    Make X the parent of Y.
+    '''
     def rightRotate(self, x): # x is the node that we are performing the rotation on
         pass
     
