@@ -1,6 +1,6 @@
 ############### Algorithms Assignment 6 - Eric Folsom ################
 
-
+import sys
 
 '''
 Implementing a binary search tree in python
@@ -53,7 +53,7 @@ class BinarySearchTree:
     compare the value at each node
         less than the root, go left
         greater than the root, go right
-        do the above until 
+        do the above until we have found the correct position to put the value
     '''
     def insert(self, data):
         # check if the tree is empty
@@ -246,6 +246,30 @@ class BinarySearchTree:
         self._postOrder(node.left, result) #  recursive call on the left subtree
         self._postOrder(node.right, result) # recursive call on the right subtree
         result.append(node.data) # add the node data to the results array
+        
+    ##### Methods to display the tree, will use a helper method to simplify calling it, took this pretty much from the programiz AVL Tree implementation
+    
+    def display(self): 
+        self._display(self.root, "", True) # call the helper method starting at the root
+    
+    # helper function to display the tree like a tree
+    def _display(self, node, indent, last):
+        # node, current node pointer
+        # indent, how much to indent the current line
+        # last, True or False, indicates if the node we are displaying is the last node on its level
+        if node:
+            sys.stdout.write(indent)
+            if last: # if last is true
+                sys.stdout.write("R----") # indicate that the node is a right child node or the Root node if its the start
+                indent += "    "
+            else:
+                sys.stdout.write("L----") # indicate that the node is a left child node
+                indent += "|   "
+            print(node.data)
+            self._display(node.left, indent, False) # last is false because if its the left subtree, there will still be another node on that level
+            self._display(node.right, indent, True) # last is True because if its the right subtree, there will not be another node on that level
+            
+
             
 
 
@@ -273,3 +297,26 @@ test2 = BinarySearchTree([i for i in range(10)])
 print(test2.preOrder())
 print(test2.inOrder())
 print(test2.postOrder())
+
+'''
+Display Output information:
+
+test.display()
+
+R----12
+    L----5
+    |   L----2
+    |   R----7
+    R----15
+        R----18
+        
+Tells us that the root is 12, with child nodes, 5 and 15
+5 then has child nodes 2 and 7.
+15 has a child node of 18
+
+                12
+            5       15
+        2       7       18
+        
+Better description is above
+'''
