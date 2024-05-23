@@ -166,7 +166,15 @@ class AVLTree():
         a    b
     '''
     def leftRotate(self, x): # x is the node that we are performing the rotation on
-        pass
+        y = x.right # assign y as the right child of X
+        T2 = y.left # assign t2 as the left child of y
+        y.left = x # Make X the left child of Y
+        x.right = T2 # Make t2 as the right child of X
+        # update heights
+        x.height = 1 + max(self.getHeight(x.left), self.getHeight(x.right))
+        y.height = 1 + max(self.getHeight(y.left), self.getHeight(y.right))
+        # return y as the new root of the subtree (parent of X)
+        return y
     
     # funciton to perform a right rotation
     '''
@@ -183,7 +191,16 @@ class AVLTree():
     Make X the parent of Y.
     '''
     def rightRotate(self, x): # x is the node that we are performing the rotation on
-        pass
+        y = x.left # assign y as the left child of X
+        T2 = y.right # Assign T2 as the right child of y
+        y.right = x # assign X as the right child of y
+        x.left = T2 # assign t2 as the left child of X
+        # update heights
+        x.height = 1 + max(self.getHeight(x.left), self.getHeight(x.right))
+        y.height = 1 + max(self.getHeight(y.left), self.getHeight(y.right))
+        # return Y as the new root of the subtree.
+        return y
+        
     
     # function to get the height of a node
     def getHeight(self, node):
