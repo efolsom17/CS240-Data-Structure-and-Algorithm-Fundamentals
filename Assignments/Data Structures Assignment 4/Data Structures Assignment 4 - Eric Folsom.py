@@ -61,7 +61,7 @@ class AVLTree():
     # helper method for the insert
     def _insert_node(self, node, data):
         # find the correct position of the node
-        if node is None: # if the node doesn't exist, base case
+        if node is None: # if there is no data at the node, base case
             return TreeNode(data)  # insert the node as the data
         # if the value we are inputing is less than the value of the data at the current node
         if data < node.data:
@@ -69,9 +69,32 @@ class AVLTree():
         else: # value we are inputing is greater than the value of the data at the current node
             node.right = self._insert_node(node.right, data) # recursive call on the right subtree
         
-        '''
-        Height, balance, and rotation functions go here
-        '''
+        # updating the height
+        node.height = 1 + max(self.getHeight(node.left), self.getHeight(node.right))
+        
+        # Balance factor
+        balanceFactor = self.getBalanceFactor(node)
+        
+        # Rotations, from w3schools
+        
+        
+            # Left Left
+        if balanceFactor > 1 and data < node.left.data:
+            return self.rightRotate(node)
+
+        # Right Right
+        if balanceFactor < -1 and data > node.right.data:
+            return self.leftRotate(node)
+
+        # Left Right
+        if balanceFactor > 1 and data > node.left.data:
+            node.left = self.leftRotate(node.left)
+            return self.rightRotate(node)
+
+        # Right Left
+        if balanceFactor < -1 and data < node.right.data:
+            node.right = self.rightRotate(node.right)
+            return self.leftRotate(node)
         
         return node
         
