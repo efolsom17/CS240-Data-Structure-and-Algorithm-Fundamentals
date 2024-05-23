@@ -133,10 +133,15 @@ class AVLTree():
             node.data = temp.data
             # delete in order sucessor
             node.right = self._delete_node(node.right, temp.data)
-            
-        '''
-        Height, balance, and rotation stuff goes here.
-        '''
+                
+        # updating the height
+        node.height = 1 + max(self.getHeight(node.left), self.getHeight(node.right))
+        
+        # Balance factor
+        balanceFactor = self.getBalanceFactor(node)    
+        
+        # Rotations, a little combination of w3schools and programiz
+        
              
         return node # returns the updated node
     
