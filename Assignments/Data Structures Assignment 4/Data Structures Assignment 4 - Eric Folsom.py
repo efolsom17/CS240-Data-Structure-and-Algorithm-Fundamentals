@@ -12,6 +12,7 @@ an AVL tree in python.
 ChatGPT: Used for help on implementing things in python and debugging. I am starting to find ChatGPT very helpful for creating tests for my code. I can prompt it by giving it my code and asking it to provide some tests for my code.
  
 '''
+import sys # used for displaying the tree.
 
 ## Tree Node ##
 
@@ -367,11 +368,34 @@ class AVLTree():
         self._postOrder(node.right, result) # recursive call on the right subtree
         result.append(node.data) # add the node data to the results array
         
+    ##### Methods to display the tree, will use a helper method to simplify calling it, took this pretty much from the programiz AVL Tree implementation
+    
+    def display(self): 
+        self._display(self.root, "", True) # call the helper method starting at the root
+    
+    # helper function to display the tree like a tree
+    def _display(self, node, indent, last):
+        # node, current node pointer
+        # indent, how much to indent the current line
+        # last, True or False, indicates if the node we are displaying is the last node on its level
+        if node:
+            sys.stdout.write(indent)
+            if last: # if last is true
+                sys.stdout.write("R----") # indicate that the node is a right child node or the Root node if its the start
+                indent += "    "
+            else:
+                sys.stdout.write("L----") # indicate that the node is a left child node
+                indent += "|   "
+            print(node.data)
+            self._display(node.left, indent, False) # last is false because if its the left subtree, there will still be another node on that level
+            self._display(node.right, indent, True) # last is True because if its the right subtree, there will not be another node on that level
+
+        
         
 
 ##### Testing #####
 test = [12,5,8,16,24,3,7,8,9,19]
 test = AVLTree(test)
 
-test.display
+test.display()
 
