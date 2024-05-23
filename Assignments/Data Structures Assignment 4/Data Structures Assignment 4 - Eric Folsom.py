@@ -399,3 +399,113 @@ test = AVLTree(test)
 
 test.display()
 
+'''
+R----8
+    L----5
+    |   L----3
+    |   R----7
+    R----16
+        L----9
+        |   L----8
+        |   R----12
+        R----24
+            L----19
+            
+Equivalently
+
+            8
+        5        16
+      3   7     9    24
+             8    12    19
+                    
+'''
+
+test.insert(10)
+test.display()
+
+'''
+R----9
+    L----8
+    |   L----5
+    |   |   L----3
+    |   |   R----7
+    |   R----8
+    R----16
+        L----12
+        |   L----10
+        R----24
+            L----19
+            
+Equivalently
+            9
+        8       16
+      5    8   12    24
+    3    7   10    19
+
+'''
+
+test.insert(20)
+test.delete(9)
+test.display()
+
+'''
+R----10
+    L----8
+    |   L----5
+    |   |   L----3
+    |   |   R----7
+    |   R----8
+    R----16
+        L----12
+        R----20
+            L----19
+            R----24
+
+Equivalently
+
+            10
+          8     16
+        5  8  12    20
+      3  7        19   24
+
+'''
+
+print(f"Contains 12: {test.contains(12)}")
+print(f"Contains 15: {test.contains(15)}")
+print(f"Pre-Order Traversal: {test.preOrder()}")
+print(f"In-Order Traversal: {test.inOrder()}")
+print(f"Post-Order Taversal: {test.postOrder()}")
+print(f"Minimum: {test.getmin()}")
+print(f"Maximum: {test.getmax()}")
+print(f"Height: {test.getHeight(test.root)}")
+
+
+## With BST this created a very unbalanced tree.
+test2 = AVLTree()
+for item in range(11):
+    test2.insert(item)
+test2.display()
+
+'''
+R----3
+    L----1
+    |   L----0
+    |   R----2
+    R----7
+        L----5
+        |   L----4
+        |   R----6
+        R----9
+            L----8
+            R----10
+
+Equivalently
+
+            3
+        1       7
+      0  2   5    9
+            4 6  8 10
+
+
+This is still a little unbalanced I think.
+'''
