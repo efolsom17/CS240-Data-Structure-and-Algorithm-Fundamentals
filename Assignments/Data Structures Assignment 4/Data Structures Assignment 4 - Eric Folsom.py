@@ -141,6 +141,25 @@ class AVLTree():
         balanceFactor = self.getBalanceFactor(node)    
         
         # Rotations, a little combination of w3schools and programiz
+        # For balancing the tree when we delete a node
+        
+        # Left Left
+        if balanceFactor > 1 and self.getBalance(node.left) >= 0:
+            return self.rightRotate(node)
+
+        # Left Right
+        if balanceFactor > 1 and self.getBalance(node.left) < 0:
+            node.left = self.leftRotate(node.left)
+            return self.rightRotate(node)
+
+        # Right Right
+        if balanceFactor < -1 and self.getBalance(node.right) <= 0:
+            return self.leftRotate(node)
+
+        # Right Left
+        if balanceFactor < -1 and self.getBalance(node.right) > 0:
+            node.right = self.rightRotate(node.right)
+            return self.leftRotate(node)
         
              
         return node # returns the updated node
