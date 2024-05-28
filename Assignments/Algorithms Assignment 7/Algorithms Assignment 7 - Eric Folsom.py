@@ -57,7 +57,9 @@ def build_max_heap(arr):
     
 def HeapSort(arr):
     arr = arr[:] # keep the original array intact, work with a copy of the original array
-    pass
+    
+    
+    return arr # return the sorted array
 
 def HeapSearch(arr, value):
     pass
