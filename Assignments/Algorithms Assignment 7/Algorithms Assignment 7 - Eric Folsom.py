@@ -24,14 +24,25 @@ heapsort - continually builds a max-heap, then places the root node at the end o
 
 heapSearch - Do Heapsort, but when we extract the root element, compare the value of the root to the value we are searching for, if it is the value we want, return true, else do heapify on the rest of the array and if nothing is found return FAlse.
     EVEN BETTER, HEAPSORT into like Binary Search since we have a sorted array.
+    Decided for this to modify my heapsort function. After we sort an element, we compare the element with the value we are searching for, if we can't find it we continue heapifying the array.
+    
+
+Resources used:
+    Videos from Canvas: the 3 and 6 minute videos on Heaps were very helpful in my understanding of how heaps functioned and their operations.
+    https://www.programiz.com/dsa/heap-data-structure: Nice reading on heaps and also helps with understanding the heapSort function. 
+        There are nice graphics that help break down what is going on at each step of the process
+        https://www.programiz.com/dsa/heap-sort, spefically for the sort portion. 
+        
 '''
+
+from cs240functions import BinarySearchRec as BinarySearch
 
 ## Heapify - Takes in an Array
 
 def heapify(array, n, i): 
     # array: array storing the data in our heap
     # n: length of the array
-    # i: index
+    # i: index of the root we are heapifying
     large = i # set the largest value to be index i (root)
     left = 2 * i + 1 # left child of node i
     right = 2 * i + 2 # right child of node i
@@ -58,9 +69,38 @@ def build_max_heap(arr):
     
 def HeapSort(arr):
     arr = arr[:] # keep the original array intact, work with a copy of the original array
+    build_max_heap(arr)
     
-    
+    for i in range(len(arr)-1, 0, -1):
+        # swap elements
+        arr[i], arr[0] = arr[0], arr[i]
+        # after we swap the elements, they are in sorted positions
+        # index 0 is the root of the max heap which is the largest value, so we swap it with index i (counting down, so i is at the end of the array.)
+        # now that that value is in the correct position, we call heapify on the new "root" ( index 0 ), to get the largest remaining value in index 0, so we can swap.
+        # heapify the root
+        heapify(arr, i, 0)
     return arr # return the sorted array
 
-def HeapSearch(arr, value):
-    pass
+def HeapSearch(arr, value): # does it contain the value, could try and modify the heapsort function, 
+    # or I could just heapsort into binary search...(my binary search implemention needs to be modified to do this, wont do this method)
+    arr = arr[:] # keep the original array intact, work with a copy of the original array
+    build_max_heap(arr)
+    
+    for i in range(len(arr)-1, 0, -1):
+        # swap elements
+        arr[i], arr[0] = arr[0], arr[i]
+        # compare the value that we just swapped into the correct position with the value we are searching for
+        if arr[i] == value: # if the value we just sorted equals the value we are looking for
+            return True # return True, the heap does contain the value we are looking for
+        else: # else if the value we just sorted does not the qual the value we are looking
+            heapify(arr, i, 0) # continue heapifying on the new root root.
+    return False # sorted the array fully and we did not find the item we were looking for
+
+def getminHeap(arr): # heapsort the array then return the value index 0
+    arr = HeapSort(arr)
+    return arr[0] 
+
+def getmaxHeap(arr): # create a max heap from the array and extract the root
+    arr = arr[:]
+    build_max_heap(arr)
+    return arr[0]
