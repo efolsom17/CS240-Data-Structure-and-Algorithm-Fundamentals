@@ -23,6 +23,7 @@ build_max_heap - builds a max-heap from an array. calls heapify
 heapsort - continually builds a max-heap, then places the root node at the end of the array and then continues the same process with an array one smaller. Do this until the whole array is sorted.
 
 heapSearch - Do Heapsort, but when we extract the root element, compare the value of the root to the value we are searching for, if it is the value we want, return true, else do heapify on the rest of the array and if nothing is found return FAlse.
+    EVEN BETTER, HEAPSORT into like Binary Search since we have a sorted array.
 '''
 
 ## Heapify - Takes in an Array
