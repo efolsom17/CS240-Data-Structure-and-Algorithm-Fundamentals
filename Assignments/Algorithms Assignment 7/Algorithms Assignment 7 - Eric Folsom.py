@@ -1,7 +1,7 @@
 ###  CS240 Algorithms Assignment 7 - Eric Folsom ###
 
 '''
-Heap Data structure that has heap sort and heap search.
+Heap Data structure that has heap sort and heap search (need to clarify if the search is for any value or if its for the min and max values).
 
 Should also include insertion and deletion probably, as well as the min and max values.
 
@@ -56,6 +56,7 @@ def build_max_heap(arr):
         heapify(arr, n, i)
     
 def HeapSort(arr):
+    arr = arr[:] # keep the original array intact, work with a copy of the original array
     pass
 
 def HeapSearch(arr, value):
