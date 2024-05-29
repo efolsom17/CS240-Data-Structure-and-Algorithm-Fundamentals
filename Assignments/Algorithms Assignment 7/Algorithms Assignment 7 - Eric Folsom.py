@@ -34,8 +34,9 @@ Resources used:
         https://www.programiz.com/dsa/heap-sort, spefically for the sort portion. 
         
 '''
+import random # testing purposes
 
-from cs240functions import BinarySearchRec as BinarySearch
+
 
 ## Heapify - Takes in an Array
 
@@ -44,15 +45,15 @@ def heapify(array, n, i):
     # n: length of the array
     # i: index of the root we are heapifying
     large = i # set the largest value to be index i (root)
-    left = 2 * i + 1 # left child of node i
-    right = 2 * i + 2 # right child of node i
+    left = 2 * i + 1 # left child of node i (index)
+    right = 2 * i + 2 # right child of node i (index)
     
     
     # finding the largest value among the root and its children
-    if left < n and array[i] < array[left]: # if left index is still within the bounds of the array AND the value at index i is less than its left child node
+    if left < n and array[large] < array[left]: # if left index is still within the bounds of the array AND the value at index i is less than its left child node's value
         large = left # set the large node to be the index of node i's left child
     
-    if right < n and array[i] < array[right]: # if the right index is still within the bound of the array AND the value at index i is less than its right child node
+    if right < n and array[large] < array[right]: # if the right index is still within the bound of the array AND the value at index i is less than its right child node
         large = right # set the large node to be the index of node i's right child
     
     
@@ -64,14 +65,14 @@ def heapify(array, n, i):
 def build_max_heap(arr):
     n = len(arr) # set n as the 
     
-    for i in range(n//2, -1,-1):
+    for i in range( (n//2) - 1, -1,-1):
         heapify(arr, n, i)
     
 def HeapSort(arr):
     arr = arr[:] # keep the original array intact, work with a copy of the original array
     build_max_heap(arr)
     
-    for i in range(len(arr)-1, 0, -1):
+    for i in range(len(arr)-1, -1, -1):
         # swap elements
         arr[i], arr[0] = arr[0], arr[i]
         # after we swap the elements, they are in sorted positions
@@ -104,3 +105,17 @@ def getmaxHeap(arr): # create a max heap from the array and extract the root
     arr = arr[:]
     build_max_heap(arr)
     return arr[0]
+
+
+#### Testing / Demonstration ####
+random.seed(1234567890)
+test = [random.randint(1, 50) for _ in range(25)]
+print(f"Random array: {test}")
+# building a max heap from the random array
+build_max_heap(test)
+print(f"Array as a Heap: {test}")
+# Searching the heap
+print(f"Contains 11: {HeapSearch(test, 11)}")
+print(f"Contains 10: {HeapSearch(test, 10)}")
+# Sorting
+print(f"Sorted array using HeapSort: {HeapSort(test)}")
