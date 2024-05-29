@@ -3,7 +3,6 @@
 '''
 Heap Data structure that has heap sort and heap search (need to clarify if the search is for any value or if its for the min and max values).
 
-Should also include insertion and deletion probably, as well as the min and max values.
 
 My idea for a search implementation would be to do heap sort until the value that we are extracting is the value we are searching for, and then if we have ran heap sort on the entire array, and the value didn't come up, we
 decide that the value is not found in our heap.
@@ -117,5 +116,7 @@ print(f"Array as a Heap: {test}")
 # Searching the heap
 print(f"Contains 11: {HeapSearch(test, 11)}")
 print(f"Contains 10: {HeapSearch(test, 10)}")
+print(f"Min: {getminHeap(test)}")
+print(f"Max: {getmaxHeap(test)}")
 # Sorting
 print(f"Sorted array using HeapSort: {HeapSort(test)}")
