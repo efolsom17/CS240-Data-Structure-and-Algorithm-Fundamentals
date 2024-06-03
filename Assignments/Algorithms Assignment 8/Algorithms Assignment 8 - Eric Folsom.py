@@ -67,8 +67,9 @@ I am going to base most of my implementation off of what I have read in Grokking
 Resources:
 
 https://www.manning.com/books/grokking-algorithms
-https://wikipedia.readthedocs.io/en/latest/code.html
-
+https://www.thewikipediagame.com/ - For testing 
+https://wikipedia.readthedocs.io/en/latest/code.html - Documentation for the wikipedia module, fairly straightforward.
+https://docs.python.org/3/tutorial/errors.html - Ran into errors while making my wikipedia game pathfinder. Relied on the documentation to help me with some extra assitance from chatGPT when I got stuck.
 '''
 
 import wikipedia #  for accessing and searching wikipedia links, already noticed some funny business however with it
@@ -148,8 +149,22 @@ def bfs_wikipediaGame(start, target):
         if article == target: # if we are at the page we want 
             return path # return the path we took to get to it
         
-        links = wikipedia.page(article).links # creates a WikipediaPage object for the article that we are looking for and extracts the links as a list, similar to the above for link in graph[check]
-        for link in links:
-            if link not in checked:
-                search_queue.append((link, path + [link]))
-                checked.add(link)
+        ## Exception handling here; I got to learn about the try statement and the except
+        try: # trys to create links, if one of the errors are thrown do what is described
+            links = wikipedia.page(article).links # creates a WikipediaPage object for the article that we are looking for and extracts the links as a list, similar to the above for link in graph[check]
+        except wikipedia.DisambiguationError as e: # ran into this error the first time I tested this, a term links to multiple pages
+            links = e.options # if a page is disambiguous, links to multiple pages, assign all those links as the links from that article to be searched
+        except wikipedia.PageError: # error is raised if the page does not exist, found this after fixing disambiguation error
+            continue # skip the page, doesn't exist
+
+
+
+        for link in links: # for each link in the links from the given article
+            if link not in checked: # if the link hasn't been checked yet
+                search_queue.append((link, path + [link])) # add the article and its path to the queue to be checked
+                checked.add(link) # note that we have checked that article
+
+
+## Testing: 
+
+#bfs_wikipediaGame('Vietnamese Language', 'Shield')
