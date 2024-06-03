@@ -56,5 +56,9 @@ In pseudocode this looks something like the following:
 We can take care of the unvisited neighbors part by adding each node to a checked array or set so that we can see if the node we are going to check has already been checked and can skip it if it has been.
 I am more familiar with using an array for that kind of thing, but apparently using a set() is more efficient in python. 
 
-I saw that BFS is used with webcrawlers so I wanted to try and make something along those lines.
+I saw that BFS is used with webcrawlers so I wanted to try and make something along those lines. I was trying to figure out an application for it and I decided on a wikipedia game bot thing. 
+The wikipedia game is where you try and see how many clicks it takes to get between two wikipedia articles by only clicking on other wikipedia links in the article. 
+
+I am going to try and implement this by treating each wikipedia article as a node, and then keeping track of the the other articles (nodes) that it links to. This will probably be slow because there are so many
+links on each wikipedia article so maybe I limit it to 10 links per article?? 
 '''
