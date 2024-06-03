@@ -61,4 +61,75 @@ The wikipedia game is where you try and see how many clicks it takes to get betw
 
 I am going to try and implement this by treating each wikipedia article as a node, and then keeping track of the the other articles (nodes) that it links to. This will probably be slow because there are so many
 links on each wikipedia article so maybe I limit it to 10 links per article?? 
+
+I am going to base most of my implementation off of what I have read in Grokking and in other places.
+
+Resources:
+
+https://www.manning.com/books/grokking-algorithms
+https://wikipedia.readthedocs.io/en/latest/code.html
+
 '''
+
+import wikipedia #  for accessing and searching wikipedia links, already noticed some funny business however with it
+# the pages for  'baseball' and 'basketball' are swapped so I wonder if there are more instances like that. 
+
+from collections import deque # using this instead of my own implementation just because I don't really trust my implementation of it (mostly because of my linked list)
+# also because grokking uses it
+
+## Simple version to start then gonna build upon to get wikipedia game thing going
+
+def bfs_wiki_test(graph, start, target):
+    search_queue = deque([(start, [start])]) # creating the queue. Created as a tuple, contains the starting node and the path (the array)
+    
+    checked = [start] # array for nodes that we have checked, putting the starting node in for now
+    
+    while search_queue: # While the queue of nodes to be searched is not empty
+        
+        check, path = search_queue.popleft() # get the value to check and the path that we took to get to it from the starting node
+        
+        if check == target: # if we have reached the value we are trying to get to
+            return path # return the path we took from the starting node
+        
+        
+        # for each of the other nodes that the node we are checking links to
+        for link in graph[check]: 
+            if link not in checked: # if the node that it links to has not been checked yet
+                search_queue.append((link, path+[link])) # add the node that it links to to the queue and update the path that we have taken to get there
+                checked.append(link) # add that link to the list of links that we have already checked
+    return None # no path found
+    
+    
+    
+### testing
+
+test_graph = {
+    'A': ['B', 'C', 'D'],
+    'B': ['E', 'H'],
+    'C': ['E','D'],
+    'D': ['F'],
+    'E': ['H'],
+    'F': ['G'],
+    'G': ['D'],
+    'H': ['A']
+    }
+    
+bfs_wiki_test(test_graph, 'A', 'E')
+
+### Example Graph from my explanation
+
+ex_graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F', 'G'],
+    'D': [],
+    'E': [],
+    'F': [],
+    'G': []
+}
+
+'''
+From my initial example graph the path from A to F would be A -> C -> F
+'''
+
+bfs_wiki_test(ex_graph, 'A', 'F')
