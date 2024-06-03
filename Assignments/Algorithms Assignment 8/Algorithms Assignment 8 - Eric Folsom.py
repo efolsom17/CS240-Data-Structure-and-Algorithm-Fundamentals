@@ -183,6 +183,7 @@ def bfs_wikipediaGame(start, target):
 # vtm = wikipedia.page('Vietnamese Language')
 # vtm.links
 # len(vtm.links) # 1113 links just from the 'Vietnamese Language' article on wikipedia, no wonder this thing is slow.
+## Ran it for 30 min before it timed out, probably got rate limited
 
 
 '''
