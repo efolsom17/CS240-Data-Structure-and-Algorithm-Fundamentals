@@ -76,6 +76,7 @@ I am going to base most of my implementation off of what I have read in Grokking
 Resources:
 
 https://www.manning.com/books/grokking-algorithms
+https://www.w3schools.com/dsa/dsa_algo_graphs_traversal.php
 https://www.thewikipediagame.com/ - For testing 
 https://wikipedia.readthedocs.io/en/latest/code.html - Documentation for the wikipedia module, fairly straightforward.
 https://docs.python.org/3/tutorial/errors.html - Ran into errors while making my wikipedia game pathfinder. Relied on the documentation to help me with some extra assitance from chatGPT when I got stuck.
@@ -147,7 +148,7 @@ bfs_wiki_test(ex_graph, 'A', 'F')
 ## Now to do the real thing with actual wikipedia, gonna need to play around with the library a bit but I think I Have a grasp on it a little. Links are in alphabetical order from each page it seems
 # Each article/page is considered a node
 
-## This doesn't really work/ Takes a really long time to work if it does, ran it for 10 min and didn't resolve
+## This doesn't really work (works in theory)/ Takes a really long time to work if it does, ran it for 10 min and didn't resolve
 
 def bfs_wikipediaGame(start, target):
     search_queue = deque([(start, [start])]) # create the same queue, with the starting page to search and the path that we take starting at the starting page
@@ -182,3 +183,23 @@ def bfs_wikipediaGame(start, target):
 # vtm = wikipedia.page('Vietnamese Language')
 # vtm.links
 # len(vtm.links) # 1113 links just from the 'Vietnamese Language' article on wikipedia, no wonder this thing is slow.
+
+
+'''
+                        Depth First Search
+                        
+- Basically explores as far as possible along each branch of a graph or tree and then backtracks to explore the other unvisited branches of the
+tree or graph.
+
+- Uses a graph or tree like BFS, and is usually recursive to perform the DFS.
+- Examples are the BST traversal methods: pre-order, in-order, and post-order traversal. These are DFS traversal methods.
+
+How it works:
+    1. Start DFS traversal on a node
+    2. Recursively call DFS traversal on each of the adjacent nodes if they haven't been visited yet
+
+
+Resources:
+https://www.w3schools.com/dsa/dsa_algo_graphs_traversal.php
+https://www.w3schools.com/dsa/dsa_algo_graphs_cycledetection.php
+'''
