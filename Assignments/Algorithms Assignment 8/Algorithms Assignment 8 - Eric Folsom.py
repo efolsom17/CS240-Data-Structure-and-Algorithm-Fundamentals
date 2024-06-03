@@ -5,7 +5,16 @@
 
 - Basically perform a search at each level. We Can think of a graph as having levels based on the linkeage from a specific starting node. 
 
-Example:
+- Involves a graph. Graphs have nodes (vertices) and edges (links) which point to other nodes. Also uses a queue to keep track of the node that we are going to search.
+
+1. Start at the root of the graph
+2. Visit all the nodes at each level
+    Dequeue a node from the front of the queue
+    visit the the node and mark it as such
+    Enqueue all its adjacent nodes that have not been visited to the back of the queue
+3. repeat continue this process until the queue is empty or the node we want to find it found.
+
+Example (More like BFT than BFS):
 
 
 Suppose we have the graph:
@@ -138,6 +147,8 @@ bfs_wiki_test(ex_graph, 'A', 'F')
 ## Now to do the real thing with actual wikipedia, gonna need to play around with the library a bit but I think I Have a grasp on it a little. Links are in alphabetical order from each page it seems
 # Each article/page is considered a node
 
+## This doesn't really work/ Takes a really long time to work if it does, ran it for 10 min and didn't resolve
+
 def bfs_wikipediaGame(start, target):
     search_queue = deque([(start, [start])]) # create the same queue, with the starting page to search and the path that we take starting at the starting page
     checked = set()  # Set to keep track of checked articles, using a set this time because apparently it is faster than an array 
@@ -158,7 +169,7 @@ def bfs_wikipediaGame(start, target):
             continue # skip the page, doesn't exist
 
 
-
+        ### THIS IS WHAT CAUSES THIS TO BE SO SLOW, THERES JUST SO MANY LINKS TO CHECK
         for link in links: # for each link in the links from the given article
             if link not in checked: # if the link hasn't been checked yet
                 search_queue.append((link, path + [link])) # add the article and its path to the queue to be checked
@@ -166,5 +177,8 @@ def bfs_wikipediaGame(start, target):
 
 
 ## Testing: 
-
-#bfs_wikipediaGame('Vietnamese Language', 'Shield')
+# Search terms taken from https://www.thewikipediagame.com/
+# bfs_wikipediaGame('Vietnamese Language', 'Shield')
+# vtm = wikipedia.page('Vietnamese Language')
+# vtm.links
+# len(vtm.links) # 1113 links just from the 'Vietnamese Language' article on wikipedia, no wonder this thing is slow.
