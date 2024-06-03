@@ -133,3 +133,23 @@ From my initial example graph the path from A to F would be A -> C -> F
 '''
 
 bfs_wiki_test(ex_graph, 'A', 'F')
+
+## Now to do the real thing with actual wikipedia, gonna need to play around with the library a bit but I think I Have a grasp on it a little. Links are in alphabetical order from each page it seems
+# Each article/page is considered a node
+
+def bfs_wikipediaGame(start, target):
+    search_queue = deque([(start, [start])]) # create the same queue, with the starting page to search and the path that we take starting at the starting page
+    checked = set()  # Set to keep track of checked articles, using a set this time because apparently it is faster than an array 
+    checked.add(start) # and with how many links there are on a wikipedia page its probably a good idea to use this instead
+
+    while search_queue: # while the queue to search is not empty
+        article, path = search_queue.popleft() # same as the simple version, get the article string to search and the path that we took to get to it
+        
+        if article == target: # if we are at the page we want 
+            return path # return the path we took to get to it
+        
+        links = wikipedia.page(article).links # creates a WikipediaPage object for the article that we are looking for and extracts the links as a list, similar to the above for link in graph[check]
+        for link in links:
+            if link not in checked:
+                search_queue.append((link, path + [link]))
+                checked.add(link)
