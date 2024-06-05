@@ -169,7 +169,14 @@ def bfs_wikipediaGame(start, target):
         except wikipedia.PageError: # error is raised if the page does not exist, found this after fixing disambiguation error
             continue # skip the page, doesn't exist
 
-
+        ## This might resolve the large amount of links but I will just comment it out for now
+        # Basically if the target article is in the links from a specific article
+        # add the target article to the path and then return the path, should stop us from searching all the links to get to the one we want to go to
+        #if target in links:
+        #    path = path +[target]
+        #    return path
+        
+        
         ### THIS IS WHAT CAUSES THIS TO BE SO SLOW, THERES JUST SO MANY LINKS TO CHECK
         for link in links: # for each link in the links from the given article
             if link not in checked: # if the link hasn't been checked yet
@@ -204,6 +211,7 @@ Resources:
 https://www.w3schools.com/dsa/dsa_algo_graphs_traversal.php
 https://www.w3schools.com/dsa/dsa_algo_graphs_cycledetection.php
 https://www.programiz.com/dsa/graph-dfs
+ChatGPT - For brainstorming and bouncing ideas off of. Was helpful for explaining code that I found on the internet.
 '''
 
 ## Starting Simple, Going to make a simple DFS traversal method and then adapt it to find a cycle and print the cycle in the graph.
@@ -231,8 +239,46 @@ print(dfs_trav(test_graph, 'A')) ## From my drawing of this graph, kinda a weird
 
 '''
 Now I want to change my DFS algorithm to determine if there is a cycle in the graph.
+Going to also print the path of the cycle if It is found.
+Will also need to keep track of the nodes that are in the current recursive stack
+
+I want to do something similar to my wikipedia game bot, detect cycles in wikipedia articles, could be a way of seeing what articles are related to each other.
+But given how my wikipedia game bot went, I don't think it would be a good idea to try and implement this at the current time.
 '''
 
+def dfs_cycles(graph, start, visited = None, recurs = None, path = None):
+    # graph: graph we want to detect a cycle on
+    # start: starting node
+    # visited: list of nodes that have been visited
+    # recurs: list of nodes that have been visited in the current recursive stack
+    # path: path we have taken to get to a certain node based on the starting node
+    
+    # runs the first time we call this
+    if visited == None:
+        visited = []
+    if recurs == None:
+        recurs = []
+    if path is None:
+        path = []
+        
+    visited.append(start) # mark the starting node as visited
+    recurs.append(start) # add the starting node to the nodes in the recursive stack 
+    path.append(start) # add the starting node to the path
+    
+    for link in graph[start]: # for each neighboring node from the starting node
+        if link not in visited: # check if we have visited the node
+            if dfs_cycles(graph, link, visited, recurs, path): # recursive call, if this returns true, propogates true up the recursive stack, means that there is a cycle deeper in the graph
+                return True # return true if there is a cycle
+        elif link in recurs: # if the node linked to the starting node has already been visited in this recursive stack
+            cycle_index = path.index(link) # get the index of the path list that contains the first node of the cycle
+            cycle_path = path[cycle_index:] + [link] # creates the path of the cycle from the start of the cycle to the end of the cycle
+            print(f"Cycle: {cycle_path}") # print the cycle
+            return True # returns true if there is a cycle detected
+    # if we have explored all the way to the end and there was no cycle detected
+    recurs.remove(start) # remove the current node fromm the recursive stack
+    path.pop() # remove the current node from the path ( will be the last node we added to the path)
+    return False # No cycle detected, return False
+        
 ### Test Graphs
 
 test1_nocycle = {
@@ -246,6 +292,17 @@ test1_nocycle = {
 }
 
 
+'''
+            1
+          /   \
+         2     3
+        / \   / \
+       4   5 6   7
+
+'''
+
+
+
 test2_cycle = {
     1: [2,3],
     2: [4,5],
@@ -255,3 +312,15 @@ test2_cycle = {
     6: [],
     7: [3]
 }
+
+'''
+            1
+          /   \
+         2     3
+        / \   / \
+       4   5 6   7
+       |_________|
+'''
+
+print(dfs_cycles(test1_nocycle, 1))
+print(dfs_cycles(test2_cycle, 1))
