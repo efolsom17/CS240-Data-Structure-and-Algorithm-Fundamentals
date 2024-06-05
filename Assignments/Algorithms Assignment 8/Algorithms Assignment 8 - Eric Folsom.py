@@ -126,7 +126,7 @@ test_graph = {
     'H': ['A']
     }
     
-bfs_wiki_test(test_graph, 'A', 'E')
+bfs_wiki_test(test_graph, 'A', 'E') # A -> B -> E
 
 ### Example Graph from my explanation
 
