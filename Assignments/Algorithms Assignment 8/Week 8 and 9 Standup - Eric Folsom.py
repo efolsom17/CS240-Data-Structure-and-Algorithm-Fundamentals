@@ -71,3 +71,17 @@ def bfs_wikipediaGame(start, target):
 # vtm.links
 # len(vtm.links) # 1113 links just from the 'Vietnamese Language' article on wikipedia, no wonder this thing is slow.
 ## Ran it for 30 min before it timed out, probably got rate limited
+
+
+test_graph = {
+    'A': ['B', 'C', 'D'],
+    'B': ['E', 'H'],
+    'C': ['E','D'],
+    'D': ['F'],
+    'E': ['H'],
+    'F': ['G'],
+    'G': ['D'],
+    'H': ['A']
+    }
+    
+bfs_wiki_test(test_graph, 'A', 'E') # A -> B -> E
