@@ -211,7 +211,7 @@ Resources:
 https://www.w3schools.com/dsa/dsa_algo_graphs_traversal.php
 https://www.w3schools.com/dsa/dsa_algo_graphs_cycledetection.php
 https://www.programiz.com/dsa/graph-dfs
-ChatGPT - For brainstorming and bouncing ideas off of. Was helpful for explaining code that I found on the internet.
+ChatGPT - For brainstorming and bouncing ideas off of. Was helpful for explaining code that I found on the internet as well as debugging my own code.
 '''
 
 ## Starting Simple, Going to make a simple DFS traversal method and then adapt it to find a cycle and print the cycle in the graph.
