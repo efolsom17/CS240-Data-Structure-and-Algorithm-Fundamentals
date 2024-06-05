@@ -219,7 +219,7 @@ def dfs_trav(graph, start, visited = None):
     
     for link in graph[start]: # for  each other node that the starting node links to
         if link not in visited: # check it we have visited that node
-            dfs_trav(graph, link, visited) # recursive call to perform dfs on the neighboring node
+            dfs_trav(graph, link, visited) # recursive call to perform dfs on the neighboring nodes
     
     return visited # returns the nodes that we visit on our traversal. Should be in order of the nodes that we visit.
 
@@ -231,6 +231,27 @@ print(dfs_trav(test_graph, 'A')) ## From my drawing of this graph, kinda a weird
 
 '''
 Now I want to change my DFS algorithm to determine if there is a cycle in the graph.
-
-
 '''
+
+### Test Graphs
+
+test1_nocycle = {
+    1: [2,3],
+    2: [4,5],
+    3: [6,7],
+    4: [],
+    5: [],
+    6: [],
+    7: []
+}
+
+
+test2_cycle = {
+    1: [2,3],
+    2: [4,5],
+    3: [1,6,7],
+    4: [7],
+    5: [],
+    6: [],
+    7: [3]
+}
