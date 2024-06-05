@@ -203,4 +203,34 @@ How it works:
 Resources:
 https://www.w3schools.com/dsa/dsa_algo_graphs_traversal.php
 https://www.w3schools.com/dsa/dsa_algo_graphs_cycledetection.php
+https://www.programiz.com/dsa/graph-dfs
+'''
+
+## Starting Simple, Going to make a simple DFS traversal method and then adapt it to find a cycle and print the cycle in the graph.
+
+def dfs_trav(graph, start, visited = None):
+    # graph, is the graph that we want to perform dfs on
+    # start is the node to start at
+    # visited is an array of the nodes that we have already visited, default None
+    if visited == None: # if we are just starting the dfs traversal, will run by default on the first time we call dfs_trav on a graph
+        visited = [] # create the array to store the visited nodes
+    
+    visited.append(start) # add the starting node to the visited array
+    
+    for link in graph[start]: # for  each other node that the starting node links to
+        if link not in visited: # check it we have visited that node
+            dfs_trav(graph, link, visited) # recursive call to perform dfs on the neighboring node
+    
+    return visited # returns the nodes that we visit on our traversal. Should be in order of the nodes that we visit.
+
+
+
+## testing my basic version
+
+print(dfs_trav(test_graph, 'A')) ## From my drawing of this graph, kinda a weird looking thing, this works
+
+'''
+Now I want to change my DFS algorithm to determine if there is a cycle in the graph.
+
+
 '''
