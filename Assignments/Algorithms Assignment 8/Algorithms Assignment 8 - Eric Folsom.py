@@ -81,7 +81,6 @@ https://www.youtube.com/watch?v=HZ5YTanv5QE - Breadth-first search in 4 minutes
 https://www.thewikipediagame.com/ - For testing 
 https://wikipedia.readthedocs.io/en/latest/code.html - Documentation for the wikipedia module, fairly straightforward.
 https://docs.python.org/3/tutorial/errors.html - Ran into errors while making my wikipedia game pathfinder. Relied on the documentation to help me with some extra assitance from chatGPT when I got stuck.
-https://www.youtube.com/watch?v=HZ5YTanv5QE: Breadth-First Search in 4 minutes
 '''
 
 import wikipedia #  for accessing and searching wikipedia links, already noticed some funny business however with it
@@ -215,7 +214,6 @@ https://www.w3schools.com/dsa/dsa_algo_graphs_cycledetection.php
 https://www.programiz.com/dsa/graph-dfs
 https://www.youtube.com/watch?v=Urx87-NMm6c - Depth-first search in 4 minutes
 ChatGPT - For brainstorming and bouncing ideas off of. Was helpful for explaining code that I found on the internet as well as debugging my own code.
-https://www.youtube.com/watch?v=Urx87-NMm6c: Depth-First Search in 4 Minutes
 '''
 
 ## Starting Simple, Going to make a simple DFS traversal method and then adapt it to find a cycle and print the cycle in the graph.
