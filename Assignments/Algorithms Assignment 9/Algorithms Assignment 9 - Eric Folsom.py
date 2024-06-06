@@ -117,4 +117,41 @@ print(f"Path from 'A' to 'G': {path}\nDistance: {distance}")
 
 '''
                     Prim's Algorithm
+                    
+Prim's algorithm is an algorithm for finding a Minimum Spanning Tree (MST) on a graph. A MST is the collection of all edges
+required to connect all vertices in an undirected graph, with the minimum total edge weight. It is considered a "greedy" algorithm because it chooses
+the locally optimal solution, which will in turn lead to a globally optimal solution.
+
+Algorithm:
+
+1. Choose a random node as the starting node, and include it as the first node in the MST
+2. Commpare the edges from the MST. Choose the edge with the lowest weight that connects a node among the MST nodes to a node outside the MST
+3. Add that edge and node to the MST.
+4. Repeat steps 2 and 3 until all the nodes are in the MST. 
+
+P-code:
+
+def prims(graph):
+    Create and empty list of nodes to keep track of the nodes that we have visited
+    pick a random node
+    Add the starting node to the list of visited nodes
+    examine all neighboring nodes from the starting node
+        Pick the node with the smallest distance fromm the starting node
+    add the new node to 
+
+Resources:
+https://www.w3schools.com/dsa/dsa_algo_mst_prim.php
+https://en.wikipedia.org/wiki/Prim%27s_algorithm
+https://www.programiz.com/dsa/prim-algorithm
+https://www.youtube.com/watch?v=cplfcGZmX7I
 '''
+# Graph for testing Prim's Algorithm on.
+test_graph2 = {
+        'A': [(3, 'D', 'A'), (3, 'C', 'A'), (2, 'B', 'A')],
+        'B': [(2, 'A', 'B'), (4, 'C', 'B'), (3, 'E', 'B')],
+        'C': [(3, 'A', 'C'), (5, 'D', 'C'), (6, 'F', 'C'), (1, 'E', 'C'), (4, 'B', 'C')],
+        'D': [(3, 'A', 'D'), (5, 'C', 'D'), (7, 'F', 'D')],
+        'E': [(8, 'F', 'E'), (1, 'C', 'E'), (3, 'B', 'E')],
+        'F': [(9, 'G', 'F'), (8, 'E', 'F'), (6, 'C', 'F'), (7, 'D', 'F')],
+        'G': [(9, 'F', 'G')],
+    }
