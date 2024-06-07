@@ -56,6 +56,10 @@ function dijkstra( graph, start, end):
 
 I am mostly adapting the code from Grokking as well as fromm w3schools. I took a lot of inspiration for the P-code and algorithm explanation from the Wikipedia article.     
 
+Time Complexity: O(V^2), where V is the number of nodes. It takes O(V) to find the node with the lowest distance, and since this must be done one each node conncted
+to the starting node, of which there are V of them, it will take O(V^2) to complete Dijkstra's algorithm. If we were to use a heap instead of list the time complexity could be improved to
+O(V\cdot \log(V) + E), where E is the number of edges, or neighboring nodes. 
+
 Resources:
 Grokking
 https://www.w3schools.com/dsa/dsa_algo_graphs_dijkstra.php
@@ -120,7 +124,8 @@ print(f"Path from 'A' to 'G': {path}\nDistance: {distance}")
                     
 Prim's algorithm is an algorithm for finding a Minimum Spanning Tree (MST) on a graph. A MST is the collection of all edges
 required to connect all vertices in an undirected graph, with the minimum total edge weight. It is considered a "greedy" algorithm because it chooses
-the locally optimal solution, which will in turn lead to a globally optimal solution.
+the locally optimal solution, which will in turn lead to a globally optimal solution. Compared to Dijkstra's algorithm, Prim's does not find the shortest path between two nodes,
+instead Prim's algorithm finds the shortest path which connects each node in a graph.
 
 Algorithm:
 
@@ -135,9 +140,22 @@ def prims(graph):
     Create and empty list of nodes to keep track of the nodes that we have visited
     pick a random node
     Add the starting node to the list of visited nodes
-    examine all neighboring nodes from the starting node
-        Pick the node with the smallest distance fromm the starting node
-    add the new node to 
+    Add the edges from the starting node to the list of edges
+    While there are still nodes that we haven't visited
+        examine all neighboring nodes from the starting node (O(E), O(V) in the worst case)
+        Pick the node with the smallest distance from the starting node
+        determine which node to visit next, pick the node that hasn't been visited or if both haven't been visited the node with the lowest weight, or could be none
+        If we select a node to traverse to
+            remove that node from the list of unvisited nodes
+            add that node to the list of visited nodes
+            add the weight of the node to the total weight of the graph
+            Add all edges from the new node to the list of edges in the MST, only edges that connect to nodes that haven't been visited yet
+    return the MST and its total Weight.
+
+
+
+Time Complexity: O(V^2), worst case, where V is the number of Nodes. 
+        If I were to use a priority queue instead of a list to store the values, the time complexity can be droped to O(E\log(V)), where E is the number of edges in the graph.
 
 Resources:
 https://www.w3schools.com/dsa/dsa_algo_mst_prim.php
@@ -145,8 +163,65 @@ https://en.wikipedia.org/wiki/Prim%27s_algorithm
 https://www.programiz.com/dsa/prim-algorithm
 https://www.youtube.com/watch?v=cplfcGZmX7I
 '''
+
+# Function for finding the minmum edge that connects a visited node to an unvisited node
+
+def get_min_edge(edges, visited): # (O(E) where E is the edges on a graph, O(V) in worst case)
+    min_edge = (infinit, None, None)
+    for edge in edges:
+        weight, n1, n2 = edge # assign the value of the weight, the neighboring node, and the parent node of the neighboring node
+        if (n1 in visited and n2 not in visited) or (n2 in visited and n1 not in visited): # if one of the two nodes has been visited and the other hasn't been:
+            if weight < min_edge[0]: # if the weight is less than the current minimum weight
+                min_edge = edge
+    return min_edge
+
+def prims(graph, start):
+    unvisited = list(graph.keys()) # list of nodes we haven't visited yet O(V)
+    visited = [] # empty list of nodes that we have visited
+    total_weight = 0 # total weight/cost initialized as 0 because we are at the starting node
+    MST = [] # minimum spanning tree produced by the algorithm
+    edges = [] # set of edges that are being considered in the MST
+    
+    unvisited.remove(start) # we have visited the starting node so remove it from the set of unvisited nodes
+    visited.append(start) # add the starting node to the list of nodes we have visited
+    
+    # Add all the edges from the starting node to the list of edges
+    for weight, neighbor, parent in graph[start]:
+        edges.append((weight, start, neighbor))
+    
+    
+    while unvisited: #Loops until all the nodes have been visited (V times, V is the number of Nodes)
+        # Find the edge with the minimum cost that connects a visited node to an unvisited node
+        weight, n1, n2 = get_min_edge(edges, visited) # O(E) per iteration, done V times, simplifies to O(V^2), ( O(E)\cdot O(V))
+        new_node = None # initialize the new node that we will visit as none
+        
+        # determine which node we should visit next
+        if n1 in unvisited and n2 in visited:
+            new_node = n1 # if node 1 is unvisited, then visit node 1
+            MST.append((n2,n1,weight)) # add its edge to the MST 
+            
+        elif n1 in visited and n2 in unvisited: 
+            new_node = n2 # if node 2 is unvisited, then visit node 2
+            MST.append((n1,n2,weight)) # add its edge to the MST
+        
+        # if a new node has been selected to traverse to
+        if new_node != None:
+            unvisited.remove(new_node) # remove the new node from the list of visited nodes
+            visited.append(new_node) # add the new node to the lsit of visited nodes
+            total_weight += weight # add the weight of the edge to the total weight
+            
+            # add all the edges fromm the new node to the edges list
+            for weight, neighbor, parent in graph[new_node]:
+                if neighbor not in visited: # only considering nodes we haven't visited yet
+                    edges.append((weight, new_node, neighbor))
+                    
+    return MST, total_weight # return the MST and the total weight/cost
+
+
+
+## testing
 # Graph for testing Prim's Algorithm on.
-test_graph2 = {
+test_graph2 = { # tuple(weight, neighbor, parent of neighbor)
         'A': [(3, 'D', 'A'), (3, 'C', 'A'), (2, 'B', 'A')],
         'B': [(2, 'A', 'B'), (4, 'C', 'B'), (3, 'E', 'B')],
         'C': [(3, 'A', 'C'), (5, 'D', 'C'), (6, 'F', 'C'), (1, 'E', 'C'), (4, 'B', 'C')],
@@ -155,3 +230,6 @@ test_graph2 = {
         'F': [(9, 'G', 'F'), (8, 'E', 'F'), (6, 'C', 'F'), (7, 'D', 'F')],
         'G': [(9, 'F', 'G')],
     }
+
+mst, total_weight = prims(test_graph2, "A")
+print(f"Minimum Spanning Tree (MST): {mst}\nTotal weight: {total_weight}")
