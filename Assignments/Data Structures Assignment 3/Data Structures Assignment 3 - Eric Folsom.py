@@ -127,7 +127,7 @@ class HashTableString:
         if n % 2 == 0: # Check if n is even ( even numbers are not prime)
             n = n - 1 # ensure that n is odd
         while not self._isPrime(n): # call the isPrime function above to check if the number is prime, while this is not true
-            n -=2 # go to the next odd number, 
+            n -= 2 # go to the next odd number, 
         # once isPrime(n) == True
         return n # return the prime number
 
